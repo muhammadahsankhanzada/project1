@@ -9,30 +9,30 @@ class DriverShopsListScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<String> productNames = [
-      'Organic Ketchup',
-      'Almond Butter',
-      'Coconut Oil',
-      'Quinoa',
-      'Dark Chocolate',
-      'Oat Milk',
-      'Avocado Oil',
-      'Chia Seeds',
-      'Maple Syrup',
-      'Brown Rice',
-    ];
-    List<int> productQuantities = [
-      2, // Organic Ketchup
-      1, // Almond Butter
-      3, // Coconut Oil
-      1, // Quinoa
-      5, // Dark Chocolate
-      4, // Oat Milk
-      2, // Avocado Oil
-      6, // Chia Seeds
-      1, // Maple Syrup
-      3, // Brown Rice
-    ];
+    // List<String> productNames = [
+    //   'Organic Ketchup',
+    //   'Almond Butter',
+    //   'Coconut Oil',
+    //   'Quinoa',
+    //   'Dark Chocolate',
+    //   'Oat Milk',
+    //   'Avocado Oil',
+    //   'Chia Seeds',
+    //   'Maple Syrup',
+    //   'Brown Rice',
+    // ];
+    // List<int> productQuantities = [
+    //   2, // Organic Ketchup
+    //   1, // Almond Butter
+    //   3, // Coconut Oil
+    //   1, // Quinoa
+    //   5, // Dark Chocolate
+    //   4, // Oat Milk
+    //   2, // Avocado Oil
+    //   6, // Chia Seeds
+    //   1, // Maple Syrup
+    //   3, // Brown Rice
+    // ];
     return Scaffold(
       backgroundColor: AppColors.lightGreen,
       appBar: AppBar(

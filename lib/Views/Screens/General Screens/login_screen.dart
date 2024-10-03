@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:project1/Utils/colors.dart';
-import 'package:project1/Utils/constants.dart';
 import 'package:project1/Utils/text_styles.dart';
 import 'package:project1/Views/Screens/General%20Screens/forget_password_screen.dart';
 import 'package:project1/Views/Screens/Driver%20Screens/driver_items_list_and_cart_screen.dart';

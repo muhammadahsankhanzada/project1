@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/text_styles.dart';
-import 'package:project1/Views/Screens/Driver%20Screens/driver_items_list_screen.dart';
 import 'package:project1/Views/Screens/Driver%20Screens/driver_warehouse_cart_screen.dart';
-import 'package:project1/Views/Screens/driver_category_screen.dart';
+import 'package:project1/Views/Screens/Driver%20Screens/driver_category_screen.dart';
 
 class DriverItemsListAndCartScreen extends StatelessWidget {
   const DriverItemsListAndCartScreen({super.key});
