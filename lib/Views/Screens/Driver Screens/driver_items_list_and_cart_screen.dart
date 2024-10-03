@@ -3,6 +3,7 @@ import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/text_styles.dart';
 import 'package:project1/Views/Screens/Driver%20Screens/driver_items_list_screen.dart';
 import 'package:project1/Views/Screens/Driver%20Screens/driver_warehouse_cart_screen.dart';
+import 'package:project1/Views/Screens/driver_category_screen.dart';
 
 class DriverItemsListAndCartScreen extends StatelessWidget {
   const DriverItemsListAndCartScreen({super.key});
@@ -47,17 +48,17 @@ class DriverItemsListAndCartScreen extends StatelessWidget {
                       ],
                     ),
                     TabBar(
-                      labelColor: AppColors.black,
+                      labelColor: AppColors.white,
                       labelStyle: AppTextStyles.nameHeadingTextStyle(),
                       tabs: [
                         Tab(
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Icon(Icons.list),
+                              Icon(Icons.category),
                               SizedBox(width: 5),
                               Text(
-                                'Items',
+                                'Categories',
                               ),
                             ],
                           ),
@@ -81,7 +82,7 @@ class DriverItemsListAndCartScreen extends StatelessWidget {
               ),
               Expanded(
                 child: TabBarView(children: [
-                  DriverItemsListScreen(),
+                  DriverCategoryScreen(),
                   DriverWarehouseCartScreen(),
                 ]),
               ),

@@ -3,6 +3,7 @@ import 'package:lottie/lottie.dart';
 import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/constants.dart';
 import 'package:project1/Utils/text_styles.dart';
+import 'package:project1/Views/Screens/Driver%20Screens/driver_items_list_and_cart_screen.dart';
 import 'package:project1/Views/Screens/Driver%20Screens/driver_shops_list_screen.dart';
 import 'package:project1/Views/Widgets/universal_button.dart';
 
@@ -224,10 +225,10 @@ class _DriverWarehouseCartScreenState extends State<DriverWarehouseCartScreen> {
                     Align(
                       alignment: Alignment.center,
                       child: isRequestButtonClicked
-                          ? Lottie.network(
+                          ? Lottie.asset(
                               !isRequestApproved
-                                  ? 'https://lottie.host/ccbbf6ae-e12e-4513-b725-e4e771264379/rtPobWdST1.json'
-                                  : 'https://lottie.host/7cf93999-5780-4622-aaae-3a76cbf96987/i1oZrYCLlU.json',
+                                  ? 'assets/animations/waiting.json'
+                                  : 'assets/animations/approved.json',
                               width: 150,
                               height: 150,
                               fit: BoxFit.fill,
@@ -332,6 +333,22 @@ class _DriverWarehouseCartScreenState extends State<DriverWarehouseCartScreen> {
                             }),
                       ),
                     ),
+                    Visibility(
+                      visible: isRequestButtonClicked && !isRequestApproved,
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: UniversalButton(
+                            title: 'Cancel Request',
+                            buttonColor: AppColors.red.withOpacity(.7),
+                            ontap: () {
+                              Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          DriverItemsListAndCartScreen()));
+                            }),
+                      ),
+                    ),
                     SizedBox(height: 40),
                     if (isRequestApproved)
                       Row(
@@ -352,7 +369,11 @@ class _DriverWarehouseCartScreenState extends State<DriverWarehouseCartScreen> {
                               buttonWidth: 150,
                               title: 'Cancel',
                               ontap: () {
-                                Navigator.pop(context);
+                                Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            DriverItemsListAndCartScreen()));
                               }),
                         ],
                       ),

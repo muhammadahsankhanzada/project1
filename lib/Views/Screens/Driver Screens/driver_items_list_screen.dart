@@ -18,22 +18,26 @@ class _DriverItemsListScreenState extends State<DriverItemsListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.lightGreen,
-      // appBar: AppBar(
-      //     title: Text('Driver'),
-      //     centerTitle: true,
-      //     backgroundColor: AppColors.green),
+      appBar: AppBar(
+          title: Text(
+            'Organic Ketchup',
+            style: AppTextStyles.nameHeadingTextStyle(),
+          ),
+          centerTitle: true,
+          backgroundColor: AppColors.green),
       body: Column(
         children: [
-          Align(
-            alignment: Alignment.centerLeft,
-            child: Container(
-              margin: EdgeInsets.only(top: 10, left: 10),
-              child: Text(
-                'Categories',
-                style: AppTextStyles.nameHeadingTextStyle(size: 20),
-              ),
-            ),
-          ),
+          // Align(
+          //   alignment: Alignment.centerLeft,
+          //   child: Container(
+          //     margin: EdgeInsets.only(top: 10, left: 10),
+          //     child: Text(
+          //       'Categories',
+          //       style: AppTextStyles.nameHeadingTextStyle(size: 20),
+          //     ),
+          //   ),
+          // ),
+          SizedBox(height: 10),
           Container(
             height: 35,
             margin: EdgeInsets.symmetric(vertical: 15),

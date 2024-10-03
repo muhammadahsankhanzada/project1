@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/constants.dart';
 import 'package:project1/Utils/text_styles.dart';
@@ -30,6 +31,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
+      // backgroundColor: AppColors.lightGreen,
       appBar: AppBar(
           title: Text(
             'Login',
@@ -43,19 +45,19 @@ class _LoginScreenState extends State<LoginScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Image.asset(
+              Lottie.asset(
+                'assets/animations/login.json',
                 width: 200,
-                Constants.logoImage,
+                fit: BoxFit.fill,
               ),
               Container(
-                margin: EdgeInsets.only(top: 20),
                 width: screenWidth,
                 decoration: BoxDecoration(
-                  color: AppColors.white,
-                ),
+                    // color: AppColors.white,
+                    ),
                 child: Container(
-                  margin: EdgeInsets.only(top: 30, left: 20, right: 20),
-                  padding: EdgeInsets.only(top: 20, right: 20, left: 20),
+                  margin: EdgeInsets.only(left: 20, right: 20),
+                  padding: EdgeInsets.only(right: 20, left: 20),
                   width: screenWidth,
                   child: Form(
                     key: _formKey,
@@ -129,7 +131,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           ),
                         ),
-                        SizedBox(height: 50),
+                        SizedBox(height: 30),
                         UniversalButton(
                             ontap: () {
                               if (_formKey.currentState!.validate()) {

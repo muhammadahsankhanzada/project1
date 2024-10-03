@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/text_styles.dart';
 import 'package:project1/Views/Widgets/custom_snackbar.dart';
@@ -23,12 +24,7 @@ class ForgetPasswordScreen extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(
-                Icons.lock,
-                size: 50,
-                color: AppColors.green,
-              ),
-              SizedBox(height: 30),
+              Lottie.asset('assets/animations/forgetPassword.json', width: 200),
               Text(
                 'Request a Password Reset',
                 style: AppTextStyles.nameHeadingTextStyle(),
