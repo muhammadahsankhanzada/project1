@@ -20,6 +20,13 @@ class _DriverReturnItemScreenState extends State<DriverReturnItemScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.red.shade100,
+      appBar: AppBar(
+          title: Text(
+            'Return Items',
+            style: AppTextStyles.nameHeadingTextStyle(),
+          ),
+          centerTitle: true,
+          backgroundColor: AppColors.green),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,

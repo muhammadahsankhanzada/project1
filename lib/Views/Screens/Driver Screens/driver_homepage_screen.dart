@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:project1/Utils/colors.dart';
-import 'package:project1/Utils/constants.dart';
 import 'package:project1/Utils/text_styles.dart';
-import 'package:project1/Views/Screens/Driver%20Screens/driver_store_cart_screen.dart';
-import 'package:project1/Views/Screens/Driver%20Screens/driver_required_items_screen.dart';
-import 'package:project1/Views/Screens/Driver%20Screens/driver_return_item_screen.dart';
+import 'package:project1/Views/Screens/Driver%20Screens/driver_end_trip_screen.dart';
+import 'package:project1/Views/Screens/Driver%20Screens/driver_warehouse_cart_screen.dart';
+import 'package:project1/Views/Screens/Driver%20Screens/driver_category_screen.dart';
 
-class DriverRequiredAndReturnItemsScreen extends StatelessWidget {
-  const DriverRequiredAndReturnItemsScreen({super.key});
+class DriverHomepageScreen extends StatelessWidget {
+  const DriverHomepageScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-        length: 2,
+        length: 3,
         child: Scaffold(
           // appBar: AppBar(
           //   title: Text(
@@ -32,59 +31,35 @@ class DriverRequiredAndReturnItemsScreen extends StatelessWidget {
             children: [
               // SizedBox(height: 30),
               Container(
-                padding: EdgeInsets.only(top: 20, left: 20, right: 20),
+                padding: EdgeInsets.only(top: 20),
                 color: AppColors.green,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(height: 5),
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        // SizedBox(width: 20),
+                        SizedBox(width: 20),
                         InkWell(
                             onTap: () {
                               Navigator.pop(context);
                             },
                             child: Icon(Icons.arrow_back)),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            CircleAvatar(
-                              radius: 20,
-                              backgroundImage: AssetImage(Constants.logoImage),
-                            ),
-                            SizedBox(width: 10),
-                            Text(
-                              'Ahsan Store',
-                              style: AppTextStyles.nameHeadingTextStyle(),
-                            ),
-                            // SizedBox(width: 40),
-                          ],
-                        ),
-                        InkWell(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          DriverStoreCartScreen()));
-                            },
-                            child: Icon(Icons.shopping_cart_outlined)),
                       ],
                     ),
                     TabBar(
-                      labelColor: AppColors.black,
+                      labelColor: AppColors.white,
                       labelStyle: AppTextStyles.nameHeadingTextStyle(),
                       tabs: [
                         Tab(
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Icon(Icons.assignment_add),
+                              Icon(Icons.category),
                               SizedBox(width: 5),
                               Text(
-                                'Required',
+                                'Categories',
+                                style: TextStyle(fontSize: 15),
                               ),
                             ],
                           ),
@@ -92,11 +67,25 @@ class DriverRequiredAndReturnItemsScreen extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Icon(Icons.assignment_return_outlined),
+                            Icon(Icons.shopping_cart),
                             SizedBox(width: 5),
                             Tab(
                               child: Text(
-                                'Return',
+                                'Cart',
+                                style: TextStyle(fontSize: 15),
+                              ),
+                            ),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(Icons.check_circle),
+                            SizedBox(width: 5),
+                            Tab(
+                              child: Text(
+                                'Delivered',
+                                style: TextStyle(fontSize: 15),
                               ),
                             ),
                           ],
@@ -108,8 +97,9 @@ class DriverRequiredAndReturnItemsScreen extends StatelessWidget {
               ),
               Expanded(
                 child: TabBarView(children: [
-                  DriverRequiredItemsScreen(),
-                  DriverReturnItemScreen(),
+                  DriverCategoryScreen(),
+                  DriverWarehouseCartScreen(),
+                  DriverEndTripScreen(),
                 ]),
               ),
             ],

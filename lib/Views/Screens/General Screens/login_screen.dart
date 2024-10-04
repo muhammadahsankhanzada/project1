@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/text_styles.dart';
+import 'package:project1/Views/Screens/Admin%20Screens/admin_homepage.dart';
 import 'package:project1/Views/Screens/General%20Screens/forget_password_screen.dart';
-import 'package:project1/Views/Screens/Driver%20Screens/driver_items_list_and_cart_screen.dart';
+import 'package:project1/Views/Screens/Driver%20Screens/driver_homepage_screen.dart';
+import 'package:project1/Views/Screens/Manager%20Screens/manager_homepage.dart';
+import 'package:project1/Views/Screens/Super%20Admin%20Screens/super_admin_homepage.dart';
 import 'package:project1/Views/Widgets/universal_button.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -133,14 +136,46 @@ class _LoginScreenState extends State<LoginScreen> {
                         SizedBox(height: 30),
                         UniversalButton(
                             ontap: () {
-                              if (_formKey.currentState!.validate()) {
-                                login();
-                              }
+                              // if (_formKey.currentState!.validate()) {
+                              //   // login();
+                              //   if (emailController.text == 'driver' &&
+                              //       passwordController.text == '123') {
+                              //     Navigator.push(
+                              //         context,
+                              //         MaterialPageRoute(
+                              //             builder: (context) =>
+                              //                 DriverHomepageScreen()));
+                              //   }
+                              //   if (emailController.text == 'manager' &&
+                              //       passwordController.text == '123') {
+                              //     Navigator.push(
+                              //         context,
+                              //         MaterialPageRoute(
+                              //             builder: (context) =>
+                              //                 ManagerHomepage()));
+                              //   }
+                              //   if (emailController.text == 'admin' &&
+                              //       passwordController.text == '123') {
+                              //     Navigator.push(
+                              //         context,
+                              //         MaterialPageRoute(
+                              //             builder: (context) =>
+                              //                 AdminHomepage()));
+                              //   }
+                              //   if (emailController.text == 'superadmin' &&
+                              //       passwordController.text == '123') {
+                              //     Navigator.push(
+                              //         context,
+                              //         MaterialPageRoute(
+                              //             builder: (context) =>
+                              //                 SuperAdminHomepage()));
+                              //   }
+                              // }
+
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) =>
-                                          DriverItemsListAndCartScreen()));
+                                      builder: (context) => ManagerHomepage()));
                             },
                             title: 'Login'),
                       ],

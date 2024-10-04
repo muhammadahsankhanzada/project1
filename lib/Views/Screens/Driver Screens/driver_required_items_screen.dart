@@ -45,6 +45,13 @@ class _DriverRequiredItemsScreenState extends State<DriverRequiredItemsScreen> {
     // ];
     return Scaffold(
       backgroundColor: AppColors.lightGreen,
+      appBar: AppBar(
+          title: Text(
+            'Required Items',
+            style: AppTextStyles.nameHeadingTextStyle(),
+          ),
+          centerTitle: true,
+          backgroundColor: AppColors.green),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
