@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:project1/Models/products_dummy_data_model.dart';
 import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/constants.dart';
 import 'package:project1/Utils/text_styles.dart';
@@ -21,42 +22,6 @@ class _DriverWarehouseCartScreenState extends State<DriverWarehouseCartScreen> {
   int quantity = 0;
   @override
   Widget build(BuildContext context) {
-    List<String> productNames = [
-      'Organic Ketchup',
-      'Almond Butter',
-      'Coconut Oil',
-      'Quinoa',
-      'Dark Chocolate',
-      'Oat Milk',
-      'Avocado Oil',
-      'Chia Seeds',
-      'Maple Syrup',
-      'Brown Rice',
-    ];
-    List<int> productQuantities = [
-      2, // Organic Ketchup
-      1, // Almond Butter
-      3, // Coconut Oil
-      1, // Quinoa
-      5, // Dark Chocolate
-      4, // Oat Milk
-      2, // Avocado Oil
-      6, // Chia Seeds
-      1, // Maple Syrup
-      3, // Brown Rice
-    ];
-    List<double> productPrices = [
-      250.0, // Organic Ketchup
-      500.0, // Almond Butter
-      300.0, // Coconut Oil
-      400.0, // Quinoa
-      150.0, // Dark Chocolate
-      200.0, // Oat Milk
-      450.0, // Avocado Oil
-      100.0, // Chia Seeds
-      350.0, // Maple Syrup
-      150.0, // Brown Rice
-    ];
     return Scaffold(
       backgroundColor: AppColors.lightGreen,
       body: Center(
@@ -165,25 +130,27 @@ class _DriverWarehouseCartScreenState extends State<DriverWarehouseCartScreen> {
                     Divider(
                       color: AppColors.black,
                     ),
-                    for (int i = 0; i < productQuantities.length; i++)
+                    for (int i = 0;
+                        i < productsDummyDataModelContent.length;
+                        i++)
                       Row(
                         children: [
                           Expanded(
                             flex: 2,
                             child: Text(
-                              productNames[i],
+                              productsDummyDataModelContent[i].name,
                               style: AppTextStyles.belowMainHeadingTextStyle(),
                             ),
                           ),
                           Expanded(
                             child: Text(
-                              'x${productQuantities[i]}',
+                              'x${productsDummyDataModelContent[i].quantity}',
                               style: AppTextStyles.nameHeadingTextStyle(),
                             ),
                           ),
                           Expanded(
                             child: Text(
-                              'Rs. ${productPrices[i]}',
+                              'Rs. ${productsDummyDataModelContent[i].price}',
                               style: AppTextStyles.belowMainHeadingTextStyle(),
                             ),
                           ),

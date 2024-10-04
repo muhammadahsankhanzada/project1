@@ -3,8 +3,6 @@ import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/constants.dart';
 import 'package:project1/Utils/text_styles.dart';
 import 'package:project1/Views/Screens/Driver%20Screens/driver_store_cart_screen.dart';
-import 'package:project1/Views/Screens/Driver%20Screens/driver_required_items_screen.dart';
-import 'package:project1/Views/Screens/Driver%20Screens/driver_return_item_screen.dart';
 import 'package:project1/Views/Screens/Driver%20Screens/driver_store_required_category_screen.dart';
 import 'package:project1/Views/Screens/Driver%20Screens/driver_store_return_category_screen.dart';
 
