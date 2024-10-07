@@ -26,9 +26,16 @@ class ManagerHomepage extends StatelessWidget {
         length: 2,
         child: Scaffold(
           appBar: AppBar(
-            title: Text(
-              'Manager',
-              style: AppTextStyles.nameHeadingTextStyle(),
+            title: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(Icons.people),
+                SizedBox(width: 10),
+                Text(
+                  'Manager',
+                  style: AppTextStyles.nameHeadingTextStyle(),
+                ),
+              ],
             ),
             centerTitle: true,
             backgroundColor: AppColors.green,
