@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/constants.dart';
 import 'package:project1/Utils/text_styles.dart';
-import 'package:project1/Views/Screens/Manager%20Screens/manager_approved_requests_details_screen.dart';
+import 'package:project1/Views/Screens/Manager%20Screens/Approved%20Requests/manager_approved_requests_details_screen.dart';
 
 class ManagerApprovedRequestsScreen extends StatelessWidget {
   const ManagerApprovedRequestsScreen({super.key});

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/text_styles.dart';
-import 'package:project1/Views/Screens/Driver%20Screens/driver_deliverd_orders_summary_screen.dart';
+import 'package:project1/Views/Screens/Driver%20Screens/Delivered/driver_deliverd_orders_summary_screen.dart';
 
 class DriverEndTripScreen extends StatelessWidget {
   const DriverEndTripScreen({super.key});

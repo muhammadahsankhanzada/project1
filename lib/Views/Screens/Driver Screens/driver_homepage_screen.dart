@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/constants.dart';
 import 'package:project1/Utils/text_styles.dart';
-import 'package:project1/Views/Screens/Driver%20Screens/driver_end_trip_screen.dart';
-import 'package:project1/Views/Screens/Driver%20Screens/driver_warehouse_cart_screen.dart';
-import 'package:project1/Views/Screens/Driver%20Screens/driver_category_screen.dart';
+import 'package:project1/Views/Screens/Driver%20Screens/Delivered/driver_end_trip_screen.dart';
+import 'package:project1/Views/Screens/Driver%20Screens/Driver%20Cart/driver_warehouse_cart_screen.dart';
+import 'package:project1/Views/Screens/Driver%20Screens/Driver%20Category/driver_category_screen.dart';
 import 'package:project1/Views/Screens/General%20Screens/login_screen.dart';
 import 'package:project1/Views/Widgets/custom_snackbar.dart';
 

@@ -1,15 +1,57 @@
 import 'package:flutter/material.dart';
 import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/text_styles.dart';
+import 'package:project1/Views/Screens/Admin%20Screens/Accounts%20Management/admin_accounts_management_screen.dart';
+import 'package:project1/Views/Screens/Admin%20Screens/admin_check_inventory_screen.dart';
 import 'package:project1/Views/Screens/Admin%20Screens/admin_check_reports_screen.dart';
-import 'package:project1/Views/Screens/Admin%20Screens/admin_create_new_account_screen.dart';
-import 'package:project1/Views/Screens/Admin%20Screens/admin_delete_account_screen.dart';
+import 'package:project1/Views/Screens/Admin%20Screens/admin_manager_records_screen.dart';
+import 'package:project1/Views/Screens/Admin%20Screens/Shop%20Records/admin_shop_records_screen.dart';
+import 'package:project1/Views/Screens/Admin%20Screens/admin_warehouse_details_screen.dart';
+import 'package:project1/Views/Screens/Manager%20Screens/Driver%20Records/manager_driver_records_screen.dart';
 
 class AdminHomepage extends StatelessWidget {
   const AdminHomepage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final List<Map<String, dynamic>> options = [
+      {
+        'title': 'Accounts',
+        'icon': Icons.person,
+        'screen': AdminAccountsManagementScreen(),
+      },
+      {
+        'title': 'Check Inventory',
+        'icon': Icons.inventory,
+        'screen': AdminCheckInventoryScreen(),
+      },
+      {
+        'title': 'Driver Records',
+        'icon': Icons.directions_car,
+        'screen': ManagerDriverRecordsScreen(),
+      },
+      {
+        'title': 'Shop Records',
+        'icon': Icons.shop,
+        'screen': AdminShopRecordsScreen(),
+      },
+      {
+        'title': 'Manager Records',
+        'icon': Icons.supervisor_account,
+        'screen': AdminManagerRecordsScreen(),
+      },
+      {
+        'title': 'Check Reports',
+        'icon': Icons.assessment,
+        'screen': AdminCheckReportsScreen(),
+      },
+      {
+        'title': 'Warehouse Details',
+        'icon': Icons.store,
+        'screen': AdminWarehouseDetailsScreen(),
+      },
+    ];
+
     return Scaffold(
       appBar: AppBar(
           title: Row(
@@ -17,7 +59,10 @@ class AdminHomepage extends StatelessWidget {
             children: [
               Icon(Icons.admin_panel_settings),
               SizedBox(width: 10),
-              Text('Admin Dashboard'),
+              Text(
+                'Admin Dashboard',
+                style: AppTextStyles.nameHeadingTextStyle(),
+              ),
             ],
           ),
           centerTitle: true,
@@ -43,34 +88,17 @@ class AdminHomepage extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 20),
-              customContainer(
-                  ontap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                AdminCreateNewAccountScreen()));
-                  },
-                  title: 'Create New Account',
-                  icon: Icons.person),
-              customContainer(
-                  ontap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => AdminDeleteAccountScreen()));
-                  },
-                  title: 'Delete an Account',
-                  icon: Icons.delete),
-              customContainer(
-                  ontap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => AdminCheckReportsScreen()));
-                  },
-                  title: 'Check Reports',
-                  icon: Icons.assessment),
+              ...options.map((option) {
+                return customContainer(
+                    ontap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => option['screen']));
+                    },
+                    title: option['title'],
+                    icon: option['icon']);
+              }).toList(),
             ],
           ),
         ),

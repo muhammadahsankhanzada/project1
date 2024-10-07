@@ -2,19 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/constants.dart';
 import 'package:project1/Utils/text_styles.dart';
-import 'package:project1/Views/Screens/Manager%20Screens/manager_driver_records_details_screen.dart';
-import 'package:project1/Views/Widgets/universal_button.dart';
+import 'package:project1/Views/Screens/Admin%20Screens/Shop%20Records/admin_shop_records_details_screen.dart';
 
-class ManagerDriverRecordsScreen extends StatefulWidget {
-  const ManagerDriverRecordsScreen({super.key});
+class AdminShopRecordsScreen extends StatefulWidget {
+  const AdminShopRecordsScreen({super.key});
 
   @override
-  State<ManagerDriverRecordsScreen> createState() =>
-      _ManagerDriverRecordsScreenState();
+  State<AdminShopRecordsScreen> createState() => _AdminShopRecordsScreenState();
 }
 
-class _ManagerDriverRecordsScreenState
-    extends State<ManagerDriverRecordsScreen> {
+class _AdminShopRecordsScreenState extends State<AdminShopRecordsScreen> {
   var _searchController = TextEditingController();
   @override
   Widget build(BuildContext context) {
@@ -22,7 +19,7 @@ class _ManagerDriverRecordsScreenState
       backgroundColor: AppColors.lightGreen,
       appBar: AppBar(
         title: Text(
-          'Drivers Records',
+          'Shop Records',
           style: AppTextStyles.nameHeadingTextStyle(),
         ),
         centerTitle: true,
@@ -43,7 +40,7 @@ class _ManagerDriverRecordsScreenState
               // },
               keyboardType: TextInputType.name,
               decoration: InputDecoration(
-                hintText: 'Driver name...',
+                hintText: 'Search shops...',
                 hintStyle: AppTextStyles.nameHeadingTextStyle(size: 15),
                 prefixIcon: Padding(
                   padding: const EdgeInsets.only(left: 20, right: 10),
@@ -70,7 +67,7 @@ class _ManagerDriverRecordsScreenState
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          ManagerDriverRecordsDetailsScreen()));
+                                          AdminShopRecordsDetailsScreen()));
                             },
                             borderRadius: BorderRadius.circular(40),
                             child: Container(
@@ -98,7 +95,7 @@ class _ManagerDriverRecordsScreenState
                                               CrossAxisAlignment.start,
                                           children: [
                                             Text(
-                                              'Muhammad Ahsan',
+                                              'Ahsan Store',
                                               style: AppTextStyles
                                                   .nameHeadingTextStyle(
                                                       size: 15),
@@ -106,12 +103,12 @@ class _ManagerDriverRecordsScreenState
                                             Row(
                                               children: [
                                                 Text(
-                                                  'Route: ',
+                                                  'Located: ',
                                                   style: TextStyle(
                                                     fontWeight: FontWeight.w500,
                                                   ),
                                                 ),
-                                                Text('Shah Faisal to Saddar'),
+                                                Text('Shah Faisal Colony'),
                                               ],
                                             ),
                                           ],
