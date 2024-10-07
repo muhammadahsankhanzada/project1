@@ -3,8 +3,8 @@ import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/constants.dart';
 import 'package:project1/Utils/text_styles.dart';
 import 'package:project1/Views/Screens/Driver%20Screens/Driver%20Cart/Start%20Trip/Shop%20Final%20Order%20Summary/driver_store_cart_screen.dart';
-import 'package:project1/Views/Screens/Driver%20Screens/Driver%20Cart/driver_store_return_category_screen.dart';
-import 'package:project1/Views/Screens/Driver%20Screens/driver_store_required_category_screen.dart';
+import 'package:project1/Views/Screens/Driver%20Screens/Driver%20Cart/Start%20Trip/Shop%20Return%20Items/driver_store_return_category_screen.dart';
+import 'package:project1/Views/Screens/Driver%20Screens/Driver%20Cart/Start%20Trip/Shop%20Required%20Items/driver_store_required_category_screen.dart';
 
 class DriverStoreRequiredAndReturnItemsScreen extends StatelessWidget {
   const DriverStoreRequiredAndReturnItemsScreen({super.key});
