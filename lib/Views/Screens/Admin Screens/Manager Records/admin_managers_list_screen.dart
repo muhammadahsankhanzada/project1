@@ -2,31 +2,29 @@ import 'package:flutter/material.dart';
 import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/constants.dart';
 import 'package:project1/Utils/text_styles.dart';
-import 'package:project1/Views/Screens/Manager%20Screens/Driver%20Records/manager_driver_records_details_screen.dart';
+import 'package:project1/Views/Screens/Admin%20Screens/Manager%20Records/admin_manager_records_details_screen.dart';
 
-class ManagerDriverRecordsScreen extends StatefulWidget {
-  const ManagerDriverRecordsScreen({super.key});
+class AdminManagersListScreen extends StatefulWidget {
+  const AdminManagersListScreen({super.key});
 
   @override
-  State<ManagerDriverRecordsScreen> createState() =>
-      _ManagerDriverRecordsScreenState();
+  State<AdminManagersListScreen> createState() =>
+      _AdminManagersListScreenState();
 }
 
-class _ManagerDriverRecordsScreenState
-    extends State<ManagerDriverRecordsScreen> {
+class _AdminManagersListScreenState extends State<AdminManagersListScreen> {
   var _searchController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.lightGreen,
       appBar: AppBar(
-        title: Text(
-          'Drivers Records',
-          style: AppTextStyles.nameHeadingTextStyle(),
-        ),
-        centerTitle: true,
-        backgroundColor: AppColors.green,
-      ),
+          title: Text(
+            'Manager Records',
+            style: AppTextStyles.nameHeadingTextStyle(),
+          ),
+          centerTitle: true,
+          backgroundColor: AppColors.green),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15),
         child: Column(
@@ -42,7 +40,7 @@ class _ManagerDriverRecordsScreenState
               // },
               keyboardType: TextInputType.name,
               decoration: InputDecoration(
-                hintText: 'Search driver name...',
+                hintText: 'Search manager name...',
                 hintStyle: AppTextStyles.nameHeadingTextStyle(size: 15),
                 prefixIcon: Padding(
                   padding: const EdgeInsets.only(left: 20, right: 10),
@@ -69,7 +67,7 @@ class _ManagerDriverRecordsScreenState
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          ManagerDriverRecordsDetailsScreen()));
+                                          AdminManagerRecordsDetailsScreen()));
                             },
                             borderRadius: BorderRadius.circular(40),
                             child: Container(
@@ -105,12 +103,12 @@ class _ManagerDriverRecordsScreenState
                                             Row(
                                               children: [
                                                 Text(
-                                                  'Route: ',
+                                                  'Address: ',
                                                   style: TextStyle(
                                                     fontWeight: FontWeight.w500,
                                                   ),
                                                 ),
-                                                Text('Shah Faisal to Saddar'),
+                                                Text('Shah Faisal Colony'),
                                               ],
                                             ),
                                           ],

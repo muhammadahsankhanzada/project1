@@ -49,21 +49,31 @@ class ManagerPendingRequestsScreen extends StatelessWidget {
                         children: [
                           CircleAvatar(
                             radius: 20,
-                            backgroundImage: AssetImage(Constants.logoImage),
+                            backgroundImage: AssetImage(Constants.myImage),
                           ),
                           SizedBox(width: 10),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'Ahsan Store',
+                                'Muhammad Ahsan',
                                 style:
                                     AppTextStyles.belowMainHeadingTextStyle(),
                               ),
-                              Text(
-                                'Shah Faisal, Karachi',
-                                style: AppTextStyles.belowMainHeadingTextStyle(
-                                    fontSize: 12),
+                              Row(
+                                children: [
+                                  Text(
+                                    'Route: ',
+                                    style: AppTextStyles.nameHeadingTextStyle(
+                                        size: 12),
+                                  ),
+                                  Text(
+                                    'Shah Faisal, Karachi',
+                                    style:
+                                        AppTextStyles.belowMainHeadingTextStyle(
+                                            fontSize: 12),
+                                  ),
+                                ],
                               ),
                               SizedBox(height: 10),
                               Text(
@@ -83,7 +93,7 @@ class ManagerPendingRequestsScreen extends StatelessWidget {
                                       const EdgeInsets.only(top: 20, right: 10),
                                   child: Icon(
                                     Icons.arrow_forward,
-                                    color: AppColors.green,
+                                    color: AppColors.grey,
                                   ),
                                 ),
                                 // SizedBox(height: 20),

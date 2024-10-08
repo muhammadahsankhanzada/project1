@@ -37,7 +37,13 @@ class AdminShopRecordsDetailsScreen extends StatelessWidget {
                   EdgeInsets.only(top: 30, left: 15, right: 20, bottom: 30),
               margin: EdgeInsets.only(right: 25),
               decoration: BoxDecoration(
-                color: AppColors.white.withOpacity(.7),
+                gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      AppColors.lightGreen,
+                      AppColors.white.withOpacity(.5),
+                    ]),
                 borderRadius: BorderRadius.only(
                   bottomRight: Radius.circular(30),
                 ),
@@ -112,15 +118,78 @@ class AdminShopRecordsDetailsScreen extends StatelessWidget {
                     ],
                   ),
                 ),
-                SizedBox(height: 20),
-                Divider(
-                  indent: 50,
-                  endIndent: 50,
-                  color: AppColors.grey,
-                ),
-                SizedBox(height: 30),
               ]),
-            )
+            ),
+            SizedBox(height: 20),
+            Padding(
+              padding: const EdgeInsets.only(left: 15),
+              child: Align(
+                alignment: Alignment.topLeft,
+                child: Text(
+                  'Orders Completed',
+                  style: AppTextStyles.nameHeadingTextStyle(size: 18),
+                ),
+              ),
+            ),
+            SizedBox(height: 15),
+            for (int i = 0; i < 5; i++)
+              Align(
+                alignment: Alignment.topLeft,
+                child: Column(
+                  children: [
+                    Container(
+                      padding: EdgeInsets.all(15),
+                      margin: EdgeInsets.only(right: 30),
+                      decoration: BoxDecoration(
+                        border: Border(
+                          top: BorderSide(color: AppColors.lightGrey),
+                          bottom: BorderSide(color: AppColors.lightGrey),
+                          right: BorderSide(color: AppColors.lightGrey),
+                        ),
+                        borderRadius: BorderRadius.only(
+                          topRight: Radius.circular(35),
+                          bottomRight: Radius.circular(35),
+                        ),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 15, right: 15),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  '6th Oct 2024',
+                                  style:
+                                      AppTextStyles.belowMainHeadingTextStyle(),
+                                ),
+                                Text(
+                                  'Products Requested: 30',
+                                  style:
+                                      AppTextStyles.belowMainHeadingTextStyle(
+                                          fontSize: 12),
+                                ),
+                              ],
+                            ),
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                Icon(
+                                  Icons.done_all,
+                                  color: AppColors.green,
+                                ),
+                              ],
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 15),
+                  ],
+                ),
+              ),
           ],
         ),
       ),

@@ -2,16 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/constants.dart';
 import 'package:project1/Utils/text_styles.dart';
+import 'package:project1/Views/Screens/Admin%20Screens/Warehouse%20Records/admin_warehouse_details_screen.dart';
 
-class AdminManagerRecordsScreen extends StatefulWidget {
-  const AdminManagerRecordsScreen({super.key});
+class AdminWarehouseListScreen extends StatefulWidget {
+  const AdminWarehouseListScreen({super.key});
 
   @override
-  State<AdminManagerRecordsScreen> createState() =>
-      _AdminManagerRecordsScreenState();
+  State<AdminWarehouseListScreen> createState() =>
+      _AdminWarehouseListScreenState();
 }
 
-class _AdminManagerRecordsScreenState extends State<AdminManagerRecordsScreen> {
+class _AdminWarehouseListScreenState extends State<AdminWarehouseListScreen> {
   var _searchController = TextEditingController();
   @override
   Widget build(BuildContext context) {
@@ -19,7 +20,7 @@ class _AdminManagerRecordsScreenState extends State<AdminManagerRecordsScreen> {
       backgroundColor: AppColors.lightGreen,
       appBar: AppBar(
           title: Text(
-            'Manager Records',
+            'Warehouses',
             style: AppTextStyles.nameHeadingTextStyle(),
           ),
           centerTitle: true,
@@ -39,7 +40,7 @@ class _AdminManagerRecordsScreenState extends State<AdminManagerRecordsScreen> {
               // },
               keyboardType: TextInputType.name,
               decoration: InputDecoration(
-                hintText: 'Search manager name...',
+                hintText: 'Search warehouse name...',
                 hintStyle: AppTextStyles.nameHeadingTextStyle(size: 15),
                 prefixIcon: Padding(
                   padding: const EdgeInsets.only(left: 20, right: 10),
@@ -62,11 +63,11 @@ class _AdminManagerRecordsScreenState extends State<AdminManagerRecordsScreen> {
                         children: [
                           InkWell(
                             onTap: () {
-                              // Navigator.push(
-                              //     context,
-                              //     MaterialPageRoute(
-                              //         builder: (context) =>
-                              //             ManagerDriverRecordsDetailsScreen()));
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          AdminWarehouseDetailsScreen()));
                             },
                             borderRadius: BorderRadius.circular(40),
                             child: Container(
@@ -81,7 +82,7 @@ class _AdminManagerRecordsScreenState extends State<AdminManagerRecordsScreen> {
                                 children: [
                                   CircleAvatar(
                                     backgroundImage:
-                                        AssetImage(Constants.logoImage),
+                                        AssetImage(Constants.backgroundImage),
                                   ),
                                   SizedBox(width: 15),
                                   Expanded(
@@ -94,7 +95,7 @@ class _AdminManagerRecordsScreenState extends State<AdminManagerRecordsScreen> {
                                               CrossAxisAlignment.start,
                                           children: [
                                             Text(
-                                              'Muhammad Ahsan',
+                                              'Warehouse 01',
                                               style: AppTextStyles
                                                   .nameHeadingTextStyle(
                                                       size: 15),
@@ -113,7 +114,7 @@ class _AdminManagerRecordsScreenState extends State<AdminManagerRecordsScreen> {
                                           ],
                                         ),
                                         Icon(
-                                          Icons.assessment,
+                                          Icons.store,
                                         )
                                       ],
                                     ),

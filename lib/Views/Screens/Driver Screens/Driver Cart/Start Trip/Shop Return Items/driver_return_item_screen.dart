@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project1/Models/product_categories_dummy_model.dart';
 import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/constants.dart';
 import 'package:project1/Utils/text_styles.dart';
@@ -55,11 +56,11 @@ class _DriverReturnItemScreenState extends State<DriverReturnItemScreen> {
               margin: EdgeInsets.symmetric(vertical: 15),
               width: double.infinity,
               child: ListView.builder(
-                itemCount: 8,
+                itemCount: productCategoriesDummyModelContents.length,
                 itemBuilder: (context, index) {
                   return Container(
                     margin: EdgeInsets.only(left: 5, right: 5),
-                    padding: EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+                    padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
                         border: Border.all(
@@ -67,7 +68,7 @@ class _DriverReturnItemScreenState extends State<DriverReturnItemScreen> {
                           width: 2,
                         )),
                     child: Text(
-                      'Tomato',
+                      productCategoriesDummyModelContents[index].name,
                       style: AppTextStyles.nameHeadingTextStyle(size: 15),
                     ),
                   );

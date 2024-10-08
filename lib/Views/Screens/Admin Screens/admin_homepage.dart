@@ -4,9 +4,9 @@ import 'package:project1/Utils/text_styles.dart';
 import 'package:project1/Views/Screens/Admin%20Screens/Accounts%20Management/admin_accounts_management_screen.dart';
 import 'package:project1/Views/Screens/Admin%20Screens/admin_check_inventory_screen.dart';
 import 'package:project1/Views/Screens/Admin%20Screens/admin_check_reports_screen.dart';
-import 'package:project1/Views/Screens/Admin%20Screens/admin_manager_records_screen.dart';
+import 'package:project1/Views/Screens/Admin%20Screens/Manager%20Records/admin_managers_list_screen.dart';
 import 'package:project1/Views/Screens/Admin%20Screens/Shop%20Records/admin_shop_records_screen.dart';
-import 'package:project1/Views/Screens/Admin%20Screens/admin_warehouse_details_screen.dart';
+import 'package:project1/Views/Screens/Admin%20Screens/Warehouse%20Records/admin_warehouse_list_screen.dart';
 import 'package:project1/Views/Screens/Manager%20Screens/Driver%20Records/manager_driver_records_screen.dart';
 
 class AdminHomepage extends StatelessWidget {
@@ -38,7 +38,7 @@ class AdminHomepage extends StatelessWidget {
       {
         'title': 'Manager Records',
         'icon': Icons.supervisor_account,
-        'screen': AdminManagerRecordsScreen(),
+        'screen': AdminManagersListScreen(),
       },
       {
         'title': 'Check Reports',
@@ -48,7 +48,7 @@ class AdminHomepage extends StatelessWidget {
       {
         'title': 'Warehouse Details',
         'icon': Icons.store,
-        'screen': AdminWarehouseDetailsScreen(),
+        'screen': AdminWarehouseListScreen(),
       },
     ];
 

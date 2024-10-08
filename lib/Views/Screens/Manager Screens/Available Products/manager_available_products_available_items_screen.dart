@@ -69,7 +69,8 @@ class ManagerAvailableProductsAvailableItemsScreen extends StatelessWidget {
                             width: 120,
                             decoration: BoxDecoration(
                               image: DecorationImage(
-                                  image: AssetImage(Constants.logoImage)),
+                                  fit: BoxFit.fill,
+                                  image: AssetImage(Constants.backgroundImage)),
                               color: AppColors.white.withOpacity(.9),
                               borderRadius: BorderRadius.circular(10),
                             ),

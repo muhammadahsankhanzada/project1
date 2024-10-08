@@ -51,6 +51,22 @@ class _ManagerAddProductsScreenState extends State<ManagerAddProductsScreen> {
                   ),
                 ),
                 SizedBox(height: 30),
+                InkWell(
+                  onTap: () {},
+                  borderRadius: BorderRadius.circular(10),
+                  child: Container(
+                      height: 150,
+                      width: 200,
+                      decoration: BoxDecoration(
+                          border: Border.all(color: AppColors.grey),
+                          borderRadius: BorderRadius.circular(10)),
+                      child: Icon(
+                        Icons.camera_alt,
+                        size: 30,
+                        color: AppColors.green,
+                      )),
+                ),
+                SizedBox(height: 20),
                 textField(
                     hint: 'Name',
                     icon: Icons.fastfood,
@@ -84,22 +100,7 @@ class _ManagerAddProductsScreenState extends State<ManagerAddProductsScreen> {
                       }
                       return null;
                     }),
-                InkWell(
-                  onTap: () {},
-                  borderRadius: BorderRadius.circular(10),
-                  child: Container(
-                      height: 150,
-                      width: 200,
-                      decoration: BoxDecoration(
-                          border: Border.all(color: AppColors.grey),
-                          borderRadius: BorderRadius.circular(10)),
-                      child: Icon(
-                        Icons.camera_alt,
-                        size: 30,
-                        color: AppColors.green,
-                      )),
-                ),
-                SizedBox(height: 30),
+                SizedBox(height: 10),
                 UniversalButton(
                     buttonWidth: 250,
                     title: 'Add Product',

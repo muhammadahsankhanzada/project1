@@ -82,7 +82,7 @@ class _AdminShopRecordsScreenState extends State<AdminShopRecordsScreen> {
                                 children: [
                                   CircleAvatar(
                                     backgroundImage:
-                                        AssetImage(Constants.logoImage),
+                                        AssetImage(Constants.myImage),
                                   ),
                                   SizedBox(width: 15),
                                   Expanded(

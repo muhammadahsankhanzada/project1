@@ -13,7 +13,7 @@ class ManagerPendingRequestDetailsScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Ahsan Store',
+          'Muhammad Ahsan',
           style: AppTextStyles.nameHeadingTextStyle(),
         ),
         centerTitle: true,

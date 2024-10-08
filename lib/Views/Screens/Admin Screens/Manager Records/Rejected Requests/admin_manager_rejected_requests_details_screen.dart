@@ -3,8 +3,8 @@ import 'package:project1/Models/products_dummy_data_model.dart';
 import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/text_styles.dart';
 
-class ManagerApprovedRequestsDetailsScreen extends StatelessWidget {
-  const ManagerApprovedRequestsDetailsScreen({super.key});
+class AdminManagerRejectedRequestsDetailsScreen extends StatelessWidget {
+  const AdminManagerRejectedRequestsDetailsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

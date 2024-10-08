@@ -43,7 +43,7 @@ class _ManagerDriverRecordsDetailsScreenState
               Row(
                 children: [
                   CircleAvatar(
-                    backgroundImage: AssetImage(Constants.logoImage),
+                    backgroundImage: AssetImage(Constants.myImage),
                   ),
                   SizedBox(width: 10),
                   Column(

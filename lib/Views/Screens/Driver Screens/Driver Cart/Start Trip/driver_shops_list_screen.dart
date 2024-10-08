@@ -111,7 +111,7 @@ class DriverShopsListScreen extends StatelessWidget {
                         children: [
                           CircleAvatar(
                             radius: 30,
-                            backgroundImage: AssetImage(Constants.logoImage),
+                            backgroundImage: AssetImage(Constants.myImage),
                           ),
                           SizedBox(width: 10),
                           Column(
@@ -120,7 +120,7 @@ class DriverShopsListScreen extends StatelessWidget {
                               SizedBox(
                                 width: 250,
                                 child: Text(
-                                  'Muhammad Ahsan Communications',
+                                  'Ahsan Store',
                                   overflow: TextOverflow.ellipsis,
                                   maxLines: 1,
                                   style: AppTextStyles.nameHeadingTextStyle(),

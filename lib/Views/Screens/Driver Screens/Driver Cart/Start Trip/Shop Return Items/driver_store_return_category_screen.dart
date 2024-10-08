@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project1/Models/product_categories_dummy_model.dart';
 import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/constants.dart';
 import 'package:project1/Utils/text_styles.dart';
@@ -21,7 +22,7 @@ class DriverStoreReturnCategoryScreen extends StatelessWidget {
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                 ),
-                itemCount: 20,
+                itemCount: productCategoriesDummyModelContents.length,
                 itemBuilder: (context, index) {
                   return Column(
                     // crossAxisAlignment: CrossAxisAlignment.start,
@@ -40,7 +41,10 @@ class DriverStoreReturnCategoryScreen extends StatelessWidget {
                           width: 180,
                           decoration: BoxDecoration(
                             image: DecorationImage(
-                                image: AssetImage(Constants.logoImage)),
+                                fit: BoxFit.fill,
+                                image: NetworkImage(
+                                    productCategoriesDummyModelContents[index]
+                                        .imageUrl)),
                             color: AppColors.white.withOpacity(.9),
                             borderRadius: BorderRadius.circular(10),
                           ),
@@ -48,7 +52,7 @@ class DriverStoreReturnCategoryScreen extends StatelessWidget {
                       ),
                       SizedBox(height: 5),
                       Text(
-                        'Organic Ketchup',
+                        productCategoriesDummyModelContents[index].name,
                         style: AppTextStyles.nameHeadingTextStyle(
                           size: 16,
                         ),
