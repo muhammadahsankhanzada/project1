@@ -7,7 +7,9 @@ import 'package:project1/Views/Screens/Admin%20Screens/admin_check_reports_scree
 import 'package:project1/Views/Screens/Admin%20Screens/Manager%20Records/admin_managers_list_screen.dart';
 import 'package:project1/Views/Screens/Admin%20Screens/Shop%20Records/admin_shop_records_screen.dart';
 import 'package:project1/Views/Screens/Admin%20Screens/Warehouse%20Records/admin_warehouse_list_screen.dart';
+import 'package:project1/Views/Screens/General%20Screens/login_screen.dart';
 import 'package:project1/Views/Screens/Manager%20Screens/Driver%20Records/manager_driver_records_screen.dart';
+import 'package:project1/Views/Widgets/custom_snackbar.dart';
 
 class AdminHomepage extends StatelessWidget {
   const AdminHomepage({super.key});
@@ -55,13 +57,34 @@ class AdminHomepage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
           title: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Icon(Icons.admin_panel_settings),
               SizedBox(width: 10),
-              Text(
-                'Admin Dashboard',
-                style: AppTextStyles.nameHeadingTextStyle(),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.admin_panel_settings),
+                  SizedBox(width: 10),
+                  Text(
+                    'Admin Dashboard',
+                    style: AppTextStyles.nameHeadingTextStyle(),
+                  ),
+                ],
+              ),
+              Row(
+                children: [
+                  InkWell(
+                      onTap: () {
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => LoginScreen()));
+
+                        customSnackbar(context, 'Logout');
+                      },
+                      child: Icon(Icons.logout)),
+                  SizedBox(width: 10),
+                ],
               ),
             ],
           ),
