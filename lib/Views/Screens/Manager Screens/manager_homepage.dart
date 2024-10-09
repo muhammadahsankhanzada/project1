@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project1/Models/manager_homepage_items.dart';
 import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/constants.dart';
 import 'package:project1/Utils/text_styles.dart';
@@ -16,14 +17,6 @@ class ManagerHomepage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<String> categoryList = [
-      'Pending Requests',
-      'Approved Requests',
-      'Add Product',
-      'Delete Product',
-      'Available Products',
-      'Driver Records'
-    ];
     return DefaultTabController(
         length: 2,
         child: Scaffold(
@@ -75,7 +68,7 @@ class ManagerHomepage extends StatelessWidget {
                   CircleAvatar(
                     radius: 25,
                     backgroundImage: AssetImage(
-                      Constants.logoImage,
+                      Constants.myImage,
                     ),
                   ),
                   SizedBox(width: 10),
@@ -104,7 +97,7 @@ class ManagerHomepage extends StatelessWidget {
                         crossAxisCount: 2,
                         mainAxisSpacing: 5,
                         crossAxisSpacing: 5),
-                    itemCount: categoryList.length,
+                    itemCount: managerHomepageContents.length,
                     itemBuilder: (context, index) {
                       return categoryContainer(() {
                         if (index % 6 == 0) {
@@ -149,7 +142,8 @@ class ManagerHomepage extends StatelessWidget {
                                   builder: (context) =>
                                       ManagerDriverRecordsScreen()));
                         }
-                      }, Constants.logoImage, categoryList[index]);
+                      }, managerHomepageContents[index].image,
+                          managerHomepageContents[index].title);
                     }),
               )
             ],
@@ -174,10 +168,13 @@ categoryContainer(VoidCallback ontap, String image, String title) {
           borderRadius: BorderRadius.circular(15),
         ),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Image.asset(
               image,
               width: 100,
+              height: 60,
             ),
             SizedBox(height: 10),
             Text(
