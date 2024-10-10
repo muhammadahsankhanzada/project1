@@ -3,6 +3,12 @@ import 'package:project1/Models/driver_list_dummy_model.dart';
 import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/constants.dart';
 import 'package:project1/Utils/text_styles.dart';
+import 'package:project1/Views/Screens/Admin%20Screens/Accounts%20Management/admin_create_new_account_screen.dart';
+import 'package:project1/Views/Screens/Admin%20Screens/Accounts%20Management/admin_delete_account_screen.dart';
+import 'package:project1/Views/Screens/Manager%20Screens/Add%20Products/manager_add_products_screen.dart';
+import 'package:project1/Views/Screens/Manager%20Screens/Delete%20Products/manager_delete_products_screen.dart';
+import 'package:project1/Views/Screens/Manager%20Screens/Driver%20Records/manager_driver_records_details_screen.dart';
+import 'package:project1/Views/Screens/Manager%20Screens/Driver%20Records/manager_driver_records_screen.dart';
 
 class SuperAdminUserManagementScreen extends StatelessWidget {
   const SuperAdminUserManagementScreen({super.key});
@@ -27,12 +33,23 @@ class SuperAdminUserManagementScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 customContainer(
-                  ontap: () {},
+                  ontap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                AdminCreateNewAccountScreen()));
+                  },
                   title: 'Create Account',
                 ),
                 SizedBox(width: 15),
                 customContainer(
-                  ontap: () {},
+                  ontap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => AdminDeleteAccountScreen()));
+                  },
                   borderColor: AppColors.red,
                   title: 'Delete Account',
                 ),
@@ -92,11 +109,11 @@ class SuperAdminUserManagementScreen extends StatelessWidget {
                         children: [
                           InkWell(
                             onTap: () {
-                              // Navigator.push(
-                              //     context,
-                              //     MaterialPageRoute(
-                              //         builder: (context) =>
-                              //             AdminManagerRecordsDetailsScreen()));
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          ManagerDriverRecordsDetailsScreen()));
                             },
                             borderRadius: BorderRadius.circular(40),
                             child: Container(

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project1/Models/product_categories_dummy_model.dart';
-import 'package:project1/Models/products_dummy_data_model.dart';
 import 'package:project1/Utils/colors.dart';
-import 'package:project1/Utils/constants.dart';
 import 'package:project1/Utils/extra/product_categories_list.dart';
 import 'package:project1/Utils/text_styles.dart';
 import 'package:project1/Views/Screens/Manager%20Screens/Available%20Products/manager_available_products_items_list_screen.dart';

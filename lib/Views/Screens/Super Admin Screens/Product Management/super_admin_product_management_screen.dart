@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/text_styles.dart';
+import 'package:project1/Views/Screens/Admin%20Screens/admin_check_inventory_screen.dart';
+import 'package:project1/Views/Screens/Driver%20Screens/Driver%20Category/driver_category_screen.dart';
+import 'package:project1/Views/Screens/Manager%20Screens/Add%20Products/manager_add_products_screen.dart';
+import 'package:project1/Views/Screens/Manager%20Screens/Delete%20Products/manager_delete_products_screen.dart';
 
 class SuperAdminProductManagementScreen extends StatelessWidget {
   const SuperAdminProductManagementScreen({super.key});
@@ -18,16 +22,51 @@ class SuperAdminProductManagementScreen extends StatelessWidget {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          // customContainer(
+          //     icon: Icons.visibility,
+          //     ontap: () {
+          //       Navigator.push(
+          //           context,
+          //           MaterialPageRoute(
+          //               builder: (context) => AdminCheckInventoryScreen()));
+          //     },
+          //     title: 'View All Products'),
           customContainer(
-              icon: Icons.visibility, ontap: () {}, title: 'View All Products'),
+              icon: Icons.add_card,
+              ontap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => ManagerAddProductsScreen()));
+              },
+              title: 'Add Products'),
           customContainer(
-              icon: Icons.add_card, ontap: () {}, title: 'Add Products'),
+              icon: Icons.edit,
+              ontap: () {
+                // Navigator.push(
+                //     context,
+                //     MaterialPageRoute(
+                //         builder: (context) => AdminCheckInventoryScreen()));
+              },
+              title: 'Edit Products'),
           customContainer(
-              icon: Icons.edit, ontap: () {}, title: 'Edit Products'),
+              icon: Icons.delete,
+              ontap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => ManagerDeleteProductsScreen()));
+              },
+              title: 'Delete Products'),
           customContainer(
-              icon: Icons.delete, ontap: () {}, title: 'Delete Products'),
-          customContainer(
-              icon: Icons.inventory, ontap: () {}, title: 'Inventory'),
+              icon: Icons.inventory,
+              ontap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => AdminCheckInventoryScreen()));
+              },
+              title: 'Inventory'),
         ],
       ),
     );
@@ -60,7 +99,7 @@ class SuperAdminProductManagementScreen extends StatelessWidget {
             SizedBox(width: 10),
             InkWell(
               onTap: ontap,
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(50),
               child: Container(
                 padding: EdgeInsets.symmetric(horizontal: 50, vertical: 20),
                 decoration: BoxDecoration(
