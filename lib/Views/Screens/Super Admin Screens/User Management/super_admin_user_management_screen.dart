@@ -1,18 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:project1/Models/admins_list_dummy_model.dart';
 import 'package:project1/Models/driver_list_dummy_model.dart';
+import 'package:project1/Models/manager_list_dummy_model.dart';
 import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/constants.dart';
 import 'package:project1/Utils/text_styles.dart';
 import 'package:project1/Views/Screens/Admin%20Screens/Accounts%20Management/admin_create_new_account_screen.dart';
 import 'package:project1/Views/Screens/Admin%20Screens/Accounts%20Management/admin_delete_account_screen.dart';
-import 'package:project1/Views/Screens/Manager%20Screens/Add%20Products/manager_add_products_screen.dart';
-import 'package:project1/Views/Screens/Manager%20Screens/Delete%20Products/manager_delete_products_screen.dart';
+import 'package:project1/Views/Screens/Admin%20Screens/Manager%20Records/admin_manager_records_details_screen.dart';
 import 'package:project1/Views/Screens/Manager%20Screens/Driver%20Records/manager_driver_records_details_screen.dart';
-import 'package:project1/Views/Screens/Manager%20Screens/Driver%20Records/manager_driver_records_screen.dart';
 
-class SuperAdminUserManagementScreen extends StatelessWidget {
+class SuperAdminUserManagementScreen extends StatefulWidget {
   const SuperAdminUserManagementScreen({super.key});
 
+  @override
+  State<SuperAdminUserManagementScreen> createState() =>
+      _SuperAdminUserManagementScreenState();
+}
+
+class _SuperAdminUserManagementScreenState
+    extends State<SuperAdminUserManagementScreen> {
+  bool isUserDriver = true;
+  bool isUserManager = false;
+  bool isUserAdmin = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -65,36 +75,69 @@ class SuperAdminUserManagementScreen extends StatelessWidget {
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-                    decoration: BoxDecoration(
-                      color: AppColors.white.withOpacity(.7),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Text(
-                      'Drivers',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
+                  InkWell(
+                    onTap: () {
+                      setState(() {
+                        isUserDriver = true;
+                        isUserManager = false;
+                        isUserAdmin = false;
+                      });
+                    },
+                    borderRadius: BorderRadius.circular(10),
+                    child: Container(
+                      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                      decoration: BoxDecoration(
+                        color:
+                            AppColors.white.withOpacity(isUserDriver ? .7 : .5),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Text(
+                        'Drivers',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   ),
                   SizedBox(width: 10),
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-                    decoration: BoxDecoration(
-                      color: AppColors.white.withOpacity(.5),
-                      borderRadius: BorderRadius.circular(10),
+                  InkWell(
+                    onTap: () {
+                      setState(() {
+                        isUserDriver = false;
+                        isUserManager = true;
+                        isUserAdmin = false;
+                      });
+                    },
+                    borderRadius: BorderRadius.circular(10),
+                    child: Container(
+                      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                      decoration: BoxDecoration(
+                        color: AppColors.white
+                            .withOpacity(isUserManager ? .7 : .5),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Text('Managers'),
                     ),
-                    child: Text('Managers'),
                   ),
                   SizedBox(width: 10),
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-                    decoration: BoxDecoration(
-                      color: AppColors.white.withOpacity(.5),
-                      borderRadius: BorderRadius.circular(10),
+                  InkWell(
+                    onTap: () {
+                      setState(() {
+                        isUserDriver = false;
+                        isUserManager = false;
+                        isUserAdmin = true;
+                      });
+                    },
+                    borderRadius: BorderRadius.circular(10),
+                    child: Container(
+                      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                      decoration: BoxDecoration(
+                        color:
+                            AppColors.white.withOpacity(isUserAdmin ? .7 : .5),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Text('Admins'),
                     ),
-                    child: Text('Admins'),
                   ),
                 ],
               ),
@@ -103,8 +146,24 @@ class SuperAdminUserManagementScreen extends StatelessWidget {
             Expanded(
                 child: ListView.builder(
                     shrinkWrap: true,
-                    itemCount: driversListContents.length,
+                    itemCount: isUserDriver
+                        ? driversListContents.length
+                        : isUserManager
+                            ? managersListContents.length
+                            : adminsListContents.length,
                     itemBuilder: (context, index) {
+                      String name;
+                      String address;
+                      if (isUserDriver) {
+                        name = driversListContents[index].name;
+                        address = driversListContents[index].address;
+                      } else if (isUserManager) {
+                        name = managersListContents[index].name;
+                        address = managersListContents[index].address;
+                      } else {
+                        name = adminsListContents[index].name;
+                        address = adminsListContents[index].address;
+                      }
                       return Column(
                         children: [
                           InkWell(
@@ -112,8 +171,17 @@ class SuperAdminUserManagementScreen extends StatelessWidget {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) =>
-                                          ManagerDriverRecordsDetailsScreen()));
+                                      builder: (context) => isUserDriver
+                                          ? ManagerDriverRecordsDetailsScreen(
+                                              driverName: name,
+                                              driverRoute: address,
+                                            )
+                                          : isUserManager
+                                              ? AdminManagerRecordsDetailsScreen(
+                                                  managerName: name)
+                                              : ManagerDriverRecordsDetailsScreen(
+                                                  driverName: name,
+                                                  driverRoute: address)));
                             },
                             borderRadius: BorderRadius.circular(40),
                             child: Container(
@@ -144,7 +212,7 @@ class SuperAdminUserManagementScreen extends StatelessWidget {
                                               width: 200,
                                               child: Text(
                                                 overflow: TextOverflow.ellipsis,
-                                                driversListContents[index].name,
+                                                name,
                                                 style: AppTextStyles
                                                     .nameHeadingTextStyle(
                                                         size: 15),
@@ -163,8 +231,7 @@ class SuperAdminUserManagementScreen extends StatelessWidget {
                                                   child: Text(
                                                       overflow:
                                                           TextOverflow.ellipsis,
-                                                      driversListContents[index]
-                                                          .address),
+                                                      address),
                                                 ),
                                               ],
                                             ),

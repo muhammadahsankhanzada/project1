@@ -5,7 +5,13 @@ import 'package:project1/Utils/text_styles.dart';
 import 'package:project1/Views/Screens/Manager%20Screens/Driver%20Records/manager_driver_records_trip_details_screen.dart';
 
 class ManagerDriverRecordsDetailsScreen extends StatefulWidget {
-  const ManagerDriverRecordsDetailsScreen({super.key});
+  final String driverName;
+  final String driverRoute;
+  const ManagerDriverRecordsDetailsScreen({
+    super.key,
+    required this.driverName,
+    required this.driverRoute,
+  });
 
   @override
   State<ManagerDriverRecordsDetailsScreen> createState() =>
@@ -50,7 +56,7 @@ class _ManagerDriverRecordsDetailsScreenState
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Muhammad Ahsan',
+                        widget.driverName,
                         style: AppTextStyles.nameHeadingTextStyle(size: 15),
                       ),
                       Row(
@@ -61,7 +67,7 @@ class _ManagerDriverRecordsDetailsScreenState
                               fontWeight: FontWeight.w500,
                             ),
                           ),
-                          Text('Shah Faisal to Saddar'),
+                          Text(widget.driverRoute),
                         ],
                       ),
                     ],

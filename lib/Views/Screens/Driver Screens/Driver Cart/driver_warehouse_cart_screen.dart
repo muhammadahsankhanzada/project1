@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:project1/Models/products_dummy_data_model.dart';
+import 'package:project1/Models/cart_dummy_model.dart';
 import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/constants.dart';
 import 'package:project1/Utils/text_styles.dart';
@@ -19,6 +19,7 @@ class DriverWarehouseCartScreen extends StatefulWidget {
 class _DriverWarehouseCartScreenState extends State<DriverWarehouseCartScreen> {
   bool isRequestButtonClicked = false;
   bool isRequestApproved = false;
+
   int quantity = 0;
   @override
   Widget build(BuildContext context) {
@@ -33,68 +34,88 @@ class _DriverWarehouseCartScreenState extends State<DriverWarehouseCartScreen> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 SizedBox(height: 20),
-                ...List.generate(4, (index) {
+                ...List.generate(driverCartContents.length, (index) {
                   return Container(
                     margin: EdgeInsets.only(bottom: 10),
-                    padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                    padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
                     decoration: BoxDecoration(
                       color: AppColors.white,
                       borderRadius: BorderRadius.circular(50),
                     ),
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Image.asset(
                           Constants.logoImage,
                           width: 120,
                         ),
                         SizedBox(width: 10),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Organic Ketchup',
-                              style:
-                                  AppTextStyles.nameHeadingTextStyle(size: 15),
-                            ),
-                            Text(
-                              '20 Packs',
-                              style: AppTextStyles.belowMainHeadingTextStyle(
-                                  fontSize: 12),
-                            ),
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            IconButton(
-                                padding: EdgeInsets.zero,
-                                onPressed: () {
-                                  quantity--;
-                                  setState(() {});
-                                },
-                                icon: Icon(
-                                  Icons.remove_circle,
-                                  // size: 20,
-                                  color: AppColors.green,
-                                )),
-                            Text(
-                              quantity.toString(),
-                              style:
-                                  AppTextStyles.nameHeadingTextStyle(size: 15),
-                            ),
-                            IconButton(
-                                onPressed: () {
-                                  quantity++;
-                                  setState(() {});
-                                },
-                                padding: EdgeInsets.zero,
-                                icon: Icon(
-                                  Icons.add_circle,
-                                  color: AppColors.green,
-                                  // size: 20,
-                                )),
-                          ],
+                        Expanded(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  SizedBox(
+                                    width: 80,
+                                    child: Text(
+                                      overflow: TextOverflow.ellipsis,
+                                      driverCartContents[index].name,
+                                      style: AppTextStyles.nameHeadingTextStyle(
+                                          size: 15),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 80,
+                                    child: Text(
+                                      overflow: TextOverflow.ellipsis,
+                                      'Rs. ${(driverCartContents[index].price * driverCartContents[index].quantity).toStringAsFixed(0)}',
+                                      style: AppTextStyles
+                                          .belowMainHeadingTextStyle(
+                                              fontSize: 12),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                children: [
+                                  IconButton(
+                                      padding: EdgeInsets.zero,
+                                      onPressed: () {
+                                        if (driverCartContents[index].quantity >
+                                            0) {
+                                          driverCartContents[index].quantity--;
+                                          setState(() {});
+                                        }
+                                      },
+                                      icon: Icon(
+                                        Icons.remove_circle,
+                                        // size: 20,
+                                        color: AppColors.green,
+                                      )),
+                                  Text(
+                                    driverCartContents[index]
+                                        .quantity
+                                        .toString(),
+                                    style: AppTextStyles.nameHeadingTextStyle(
+                                        size: 15),
+                                  ),
+                                  IconButton(
+                                      onPressed: () {
+                                        driverCartContents[index].quantity++;
+                                        setState(() {});
+                                      },
+                                      padding: EdgeInsets.zero,
+                                      icon: Icon(
+                                        Icons.add_circle,
+                                        color: AppColors.green,
+                                        // size: 20,
+                                      )),
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
                       ],
                     ),
@@ -130,27 +151,25 @@ class _DriverWarehouseCartScreenState extends State<DriverWarehouseCartScreen> {
                     Divider(
                       color: AppColors.black,
                     ),
-                    for (int i = 0;
-                        i < productsDummyDataModelContent.length;
-                        i++)
+                    for (int i = 0; i < driverCartContents.length; i++)
                       Row(
                         children: [
                           Expanded(
                             flex: 2,
                             child: Text(
-                              productsDummyDataModelContent[i].name,
+                              driverCartContents[i].name,
                               style: AppTextStyles.belowMainHeadingTextStyle(),
                             ),
                           ),
                           Expanded(
                             child: Text(
-                              'x${productsDummyDataModelContent[i].quantity}',
+                              'x${driverCartContents[i].quantity}',
                               style: AppTextStyles.nameHeadingTextStyle(),
                             ),
                           ),
                           Expanded(
                             child: Text(
-                              'Rs. ${productsDummyDataModelContent[i].price}',
+                              'Rs. ${(driverCartContents[i].price * driverCartContents[i].quantity).toStringAsFixed(0)}',
                               style: AppTextStyles.belowMainHeadingTextStyle(),
                             ),
                           ),

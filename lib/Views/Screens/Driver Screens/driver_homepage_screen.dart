@@ -49,8 +49,7 @@ class DriverHomepageScreen extends StatelessWidget {
                             children: [
                               SizedBox(width: 20),
                               CircleAvatar(
-                                backgroundImage:
-                                    AssetImage(Constants.logoImage),
+                                backgroundImage: AssetImage(Constants.myImage),
                               ),
                               SizedBox(width: 10),
                               Column(

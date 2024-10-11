@@ -1,11 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:project1/Models/product_categories_dummy_model.dart';
 import 'package:project1/Utils/colors.dart';
+import 'package:project1/Utils/constants.dart';
 import 'package:project1/Utils/text_styles.dart';
 import 'package:project1/Views/Widgets/custom_snackbar.dart';
 
 class DriverItemsListScreen extends StatefulWidget {
-  const DriverItemsListScreen({super.key});
+  final String categoryName;
+  final int categoryIndex;
+
+  const DriverItemsListScreen({
+    super.key,
+    required this.categoryName,
+    required this.categoryIndex,
+  });
 
   @override
   State<DriverItemsListScreen> createState() => _DriverItemsListScreenState();
@@ -13,14 +21,22 @@ class DriverItemsListScreen extends StatefulWidget {
 
 class _DriverItemsListScreenState extends State<DriverItemsListScreen> {
   int quantity = 0;
-  Color categoryBackgroundColor = Colors.transparent;
+  int selectedCategoryIndex = 0;
+
+  // Initial Index of Category
+  @override
+  void initState() {
+    super.initState();
+    selectedCategoryIndex = widget.categoryIndex;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.lightGreen,
       appBar: AppBar(
           title: Text(
-            'Organic Ketchup',
+            productCategoriesDummyModelContents[selectedCategoryIndex].name,
             style: AppTextStyles.nameHeadingTextStyle(),
           ),
           centerTitle: true,
@@ -47,14 +63,19 @@ class _DriverItemsListScreenState extends State<DriverItemsListScreen> {
               itemBuilder: (context, index) {
                 return InkWell(
                   onTap: () {
-                    categoryBackgroundColor = AppColors.green;
-                    setState(() {});
+                    setState(() {
+                      selectedCategoryIndex = index;
+                    });
+
+                    // categoryBackgroundColor = AppColors.green;
                   },
                   child: Container(
                     margin: EdgeInsets.only(left: 5, right: 5),
                     padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                     decoration: BoxDecoration(
-                        color: categoryBackgroundColor,
+                        color: selectedCategoryIndex == index
+                            ? AppColors.green
+                            : Colors.transparent,
                         borderRadius: BorderRadius.circular(20),
                         border: Border.all()),
                     child: Text(
@@ -86,8 +107,10 @@ class _DriverItemsListScreenState extends State<DriverItemsListScreen> {
                                     crossAxisCount: 2,
                                     mainAxisSpacing: 15,
                                     crossAxisSpacing: 1),
-                            itemCount:
-                                productCategoriesDummyModelContents.length,
+                            itemCount: productCategoriesDummyModelContents[
+                                    selectedCategoryIndex]
+                                .products
+                                .length,
                             itemBuilder: (context, index) {
                               return Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -102,10 +125,8 @@ class _DriverItemsListScreenState extends State<DriverItemsListScreen> {
                                         decoration: BoxDecoration(
                                           image: DecorationImage(
                                               fit: BoxFit.fill,
-                                              image: NetworkImage(
-                                                  productCategoriesDummyModelContents[
-                                                          index]
-                                                      .imageUrl)),
+                                              image: AssetImage(
+                                                  Constants.backgroundImage)),
                                           color:
                                               AppColors.white.withOpacity(.9),
                                           borderRadius:
@@ -144,8 +165,25 @@ class _DriverItemsListScreenState extends State<DriverItemsListScreen> {
                                                           padding:
                                                               EdgeInsets.zero,
                                                           onPressed: () {
-                                                            quantity--;
-                                                            setState(() {});
+                                                            if (productCategoriesDummyModelContents[
+                                                                        selectedCategoryIndex]
+                                                                    .products[
+                                                                        index]
+                                                                    .quantity >
+                                                                0) {
+                                                              productCategoriesDummyModelContents[
+                                                                      selectedCategoryIndex]
+                                                                  .products[
+                                                                      index]
+                                                                  .quantity--;
+                                                              //
+                                                              print(productCategoriesDummyModelContents[
+                                                                      selectedCategoryIndex]
+                                                                  .products[
+                                                                      index]
+                                                                  .quantity);
+                                                              setState(() {});
+                                                            }
                                                           },
                                                           icon: Icon(
                                                             Icons.remove_circle,
@@ -153,7 +191,11 @@ class _DriverItemsListScreenState extends State<DriverItemsListScreen> {
                                                           )),
                                                       Flexible(
                                                         child: Text(
-                                                          quantity.toString(),
+                                                          productCategoriesDummyModelContents[
+                                                                  selectedCategoryIndex]
+                                                              .products[index]
+                                                              .quantity
+                                                              .toString(),
                                                           style: AppTextStyles
                                                               .nameHeadingTextStyle(
                                                                   size: 15),
@@ -161,7 +203,14 @@ class _DriverItemsListScreenState extends State<DriverItemsListScreen> {
                                                       ),
                                                       IconButton(
                                                           onPressed: () {
-                                                            quantity++;
+                                                            productCategoriesDummyModelContents[
+                                                                    selectedCategoryIndex]
+                                                                .products[index]
+                                                                .quantity++; //
+                                                            print(productCategoriesDummyModelContents[
+                                                                    selectedCategoryIndex]
+                                                                .products[index]
+                                                                .quantity);
                                                             setState(() {});
                                                           },
                                                           padding:
@@ -185,7 +234,8 @@ class _DriverItemsListScreenState extends State<DriverItemsListScreen> {
                                         children: [
                                           Text(
                                             productCategoriesDummyModelContents[
-                                                    index]
+                                                    selectedCategoryIndex]
+                                                .products[index]
                                                 .name,
                                             style: AppTextStyles
                                                 .belowMainHeadingTextStyle(
@@ -193,7 +243,7 @@ class _DriverItemsListScreenState extends State<DriverItemsListScreen> {
                                             ),
                                           ),
                                           Text(
-                                            'Rs. 250',
+                                            'Rs. ${productCategoriesDummyModelContents[selectedCategoryIndex].products[index].price.toStringAsFixed(0)}',
                                             style: AppTextStyles
                                                 .belowMainHeadingTextStyle(
                                                     fontSize: 12),

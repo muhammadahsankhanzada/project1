@@ -5,9 +5,16 @@ import 'package:project1/Utils/extra/product_categories_list.dart';
 import 'package:project1/Utils/text_styles.dart';
 import 'package:project1/Views/Screens/Manager%20Screens/Available%20Products/manager_available_products_items_list_screen.dart';
 
-class ManagerAvailableProductsScreen extends StatelessWidget {
+class ManagerAvailableProductsScreen extends StatefulWidget {
   const ManagerAvailableProductsScreen({super.key});
 
+  @override
+  State<ManagerAvailableProductsScreen> createState() =>
+      _ManagerAvailableProductsScreenState();
+}
+
+class _ManagerAvailableProductsScreenState
+    extends State<ManagerAvailableProductsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -80,7 +87,9 @@ class ManagerAvailableProductsScreen extends StatelessWidget {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
-                                        ManagerAvailableProductsItemsListScreen()));
+                                        ManagerAvailableProductsItemsListScreen(
+                                            // categoryIndex: index,
+                                            )));
                           },
                           child: Container(
                             height: 150,

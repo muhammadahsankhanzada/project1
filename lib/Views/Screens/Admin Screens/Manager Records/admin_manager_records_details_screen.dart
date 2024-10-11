@@ -7,7 +7,11 @@ import 'package:project1/Views/Screens/Manager%20Screens/Approved%20Requests/man
 import 'package:project1/Views/Screens/Manager%20Screens/Pending%20Requests/manager_pending_requests_screen.dart';
 
 class AdminManagerRecordsDetailsScreen extends StatelessWidget {
-  const AdminManagerRecordsDetailsScreen({super.key});
+  final String managerName;
+  const AdminManagerRecordsDetailsScreen({
+    super.key,
+    required this.managerName,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +50,7 @@ class AdminManagerRecordsDetailsScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    'Muhammad Ahsan',
+                    managerName,
                     style: AppTextStyles.nameHeadingTextStyle(size: 15),
                   ),
                   Text(

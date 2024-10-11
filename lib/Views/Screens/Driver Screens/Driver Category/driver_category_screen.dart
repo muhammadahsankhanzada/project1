@@ -32,8 +32,13 @@ class DriverCategoryScreen extends StatelessWidget {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) =>
-                                      DriverItemsListScreen()));
+                                  builder: (context) => DriverItemsListScreen(
+                                        categoryName:
+                                            productCategoriesDummyModelContents[
+                                                    index]
+                                                .name,
+                                        categoryIndex: index,
+                                      )));
                         },
                         child: Container(
                           height: 150,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project1/Models/manager_list_dummy_model.dart';
 import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/constants.dart';
 import 'package:project1/Utils/text_styles.dart';
@@ -14,6 +15,23 @@ class AdminManagersListScreen extends StatefulWidget {
 
 class _AdminManagersListScreenState extends State<AdminManagersListScreen> {
   var _searchController = TextEditingController();
+  List<ManagerListDummyModel> filteredManagersList = managersListContents;
+  List<ManagerListDummyModel> allManagersList = managersListContents;
+  void _filterManagers(String query) {
+    if (query.isEmpty) {
+      setState(() {
+        filteredManagersList = allManagersList;
+      });
+    } else {
+      setState(() {
+        filteredManagersList = allManagersList
+            .where((manager) =>
+                manager.name.toLowerCase().contains(query.toLowerCase()))
+            .toList();
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,6 +50,7 @@ class _AdminManagersListScreenState extends State<AdminManagersListScreen> {
             SizedBox(height: 20),
             TextFormField(
               controller: _searchController,
+              onChanged: _filterManagers,
               // validator: (value) {
               //   if (value == null || value.isEmpty) {
               //     return 'Enter driver name here';
@@ -57,7 +76,7 @@ class _AdminManagersListScreenState extends State<AdminManagersListScreen> {
             SizedBox(height: 20),
             Expanded(
                 child: ListView.builder(
-                    itemCount: 2,
+                    itemCount: filteredManagersList.length,
                     itemBuilder: (context, index) {
                       return Column(
                         children: [
@@ -67,7 +86,11 @@ class _AdminManagersListScreenState extends State<AdminManagersListScreen> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          AdminManagerRecordsDetailsScreen()));
+                                          AdminManagerRecordsDetailsScreen(
+                                            managerName:
+                                                filteredManagersList[index]
+                                                    .name,
+                                          )));
                             },
                             borderRadius: BorderRadius.circular(40),
                             child: Container(
@@ -94,11 +117,16 @@ class _AdminManagersListScreenState extends State<AdminManagersListScreen> {
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
-                                            Text(
-                                              'Muhammad Ahsan',
-                                              style: AppTextStyles
-                                                  .nameHeadingTextStyle(
-                                                      size: 15),
+                                            SizedBox(
+                                              width: 150,
+                                              child: Text(
+                                                overflow: TextOverflow.ellipsis,
+                                                filteredManagersList[index]
+                                                    .name,
+                                                style: AppTextStyles
+                                                    .nameHeadingTextStyle(
+                                                        size: 15),
+                                              ),
                                             ),
                                             Row(
                                               children: [
@@ -108,7 +136,15 @@ class _AdminManagersListScreenState extends State<AdminManagersListScreen> {
                                                     fontWeight: FontWeight.w500,
                                                   ),
                                                 ),
-                                                Text('Shah Faisal Colony'),
+                                                SizedBox(
+                                                  width: 150,
+                                                  child: Text(
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      filteredManagersList[
+                                                              index]
+                                                          .address),
+                                                ),
                                               ],
                                             ),
                                           ],

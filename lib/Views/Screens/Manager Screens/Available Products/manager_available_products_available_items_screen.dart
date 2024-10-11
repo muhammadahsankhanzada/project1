@@ -1,11 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:project1/Models/product_categories_dummy_model.dart';
 import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/constants.dart';
 import 'package:project1/Utils/text_styles.dart';
 
-class ManagerAvailableProductsAvailableItemsScreen extends StatelessWidget {
-  const ManagerAvailableProductsAvailableItemsScreen({super.key});
+class ManagerAvailableProductsAvailableItemsScreen extends StatefulWidget {
+  // final categoryindex;
+  const ManagerAvailableProductsAvailableItemsScreen({
+    super.key,
+    // required this.categoryindex,
+  });
 
+  @override
+  State<ManagerAvailableProductsAvailableItemsScreen> createState() =>
+      _ManagerAvailableProductsAvailableItemsScreenState();
+}
+
+class _ManagerAvailableProductsAvailableItemsScreenState
+    extends State<ManagerAvailableProductsAvailableItemsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,20 +40,24 @@ class ManagerAvailableProductsAvailableItemsScreen extends StatelessWidget {
             margin: EdgeInsets.symmetric(vertical: 15),
             width: double.infinity,
             child: ListView.builder(
-              itemCount: 8,
+              itemCount: productCategoriesDummyModelContents.length,
               itemBuilder: (context, index) {
-                return Container(
-                  margin: EdgeInsets.only(left: 5, right: 5),
-                  padding: EdgeInsets.symmetric(horizontal: 8, vertical: 6),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      border: Border.all(
-                        color: AppColors.green,
-                        width: 2,
-                      )),
-                  child: Text(
-                    'Tomato',
-                    style: AppTextStyles.nameHeadingTextStyle(size: 15),
+                return InkWell(
+                  borderRadius: BorderRadius.circular(20),
+                  onTap: () {},
+                  child: Container(
+                    margin: EdgeInsets.only(left: 5, right: 5),
+                    padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        border: Border.all(
+                          color: AppColors.green,
+                          width: 2,
+                        )),
+                    child: Text(
+                      productCategoriesDummyModelContents[index].name,
+                      style: AppTextStyles.nameHeadingTextStyle(size: 15),
+                    ),
                   ),
                 );
               },

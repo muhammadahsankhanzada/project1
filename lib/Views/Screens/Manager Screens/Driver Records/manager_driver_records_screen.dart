@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project1/Models/driver_list_dummy_model.dart';
 import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/constants.dart';
 import 'package:project1/Utils/text_styles.dart';
@@ -15,6 +16,23 @@ class ManagerDriverRecordsScreen extends StatefulWidget {
 class _ManagerDriverRecordsScreenState
     extends State<ManagerDriverRecordsScreen> {
   var _searchController = TextEditingController();
+  List<DriversListModel> filteredDriversList = driversListContents;
+  List<DriversListModel> allDriversList = driversListContents;
+  void _filterDrivers(String query) {
+    if (query.isEmpty) {
+      setState(() {
+        filteredDriversList = allDriversList;
+      });
+    } else {
+      setState(() {
+        filteredDriversList = allDriversList
+            .where((driver) =>
+                driver.name.toLowerCase().contains(query.toLowerCase()))
+            .toList();
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,6 +52,7 @@ class _ManagerDriverRecordsScreenState
             SizedBox(height: 20),
             TextFormField(
               controller: _searchController,
+              onChanged: _filterDrivers,
               // validator: (value) {
               //   if (value == null || value.isEmpty) {
               //     return 'Enter driver name here';
@@ -59,7 +78,7 @@ class _ManagerDriverRecordsScreenState
             SizedBox(height: 20),
             Expanded(
                 child: ListView.builder(
-                    itemCount: 2,
+                    itemCount: filteredDriversList.length,
                     itemBuilder: (context, index) {
                       return Column(
                         children: [
@@ -69,7 +88,13 @@ class _ManagerDriverRecordsScreenState
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          ManagerDriverRecordsDetailsScreen()));
+                                          ManagerDriverRecordsDetailsScreen(
+                                            driverName:
+                                                filteredDriversList[index].name,
+                                            driverRoute:
+                                                filteredDriversList[index]
+                                                    .address,
+                                          )));
                             },
                             borderRadius: BorderRadius.circular(40),
                             child: Container(
@@ -96,11 +121,15 @@ class _ManagerDriverRecordsScreenState
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
-                                            Text(
-                                              'Muhammad Ahsan',
-                                              style: AppTextStyles
-                                                  .nameHeadingTextStyle(
-                                                      size: 15),
+                                            SizedBox(
+                                              width: 150,
+                                              child: Text(
+                                                overflow: TextOverflow.ellipsis,
+                                                filteredDriversList[index].name,
+                                                style: AppTextStyles
+                                                    .nameHeadingTextStyle(
+                                                        size: 15),
+                                              ),
                                             ),
                                             Row(
                                               children: [
@@ -110,7 +139,14 @@ class _ManagerDriverRecordsScreenState
                                                     fontWeight: FontWeight.w500,
                                                   ),
                                                 ),
-                                                Text('Shah Faisal to Saddar'),
+                                                SizedBox(
+                                                  width: 150,
+                                                  child: Text(
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      filteredDriversList[index]
+                                                          .address),
+                                                ),
                                               ],
                                             ),
                                           ],

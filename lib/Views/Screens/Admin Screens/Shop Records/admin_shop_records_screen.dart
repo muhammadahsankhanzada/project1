@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project1/Models/shops_list_dummy_model.dart';
 import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/constants.dart';
 import 'package:project1/Utils/text_styles.dart';
@@ -13,6 +14,23 @@ class AdminShopRecordsScreen extends StatefulWidget {
 
 class _AdminShopRecordsScreenState extends State<AdminShopRecordsScreen> {
   var _searchController = TextEditingController();
+  List<ShopListModel> filteredShopsList = shopsListContents;
+  List<ShopListModel> allShopsList = shopsListContents;
+  void _filterShops(String query) {
+    if (query.isEmpty) {
+      setState(() {
+        filteredShopsList = allShopsList;
+      });
+    } else {
+      setState(() {
+        filteredShopsList = allShopsList
+            .where(
+                (shop) => shop.name.toLowerCase().contains(query.toLowerCase()))
+            .toList();
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,6 +50,7 @@ class _AdminShopRecordsScreenState extends State<AdminShopRecordsScreen> {
             SizedBox(height: 20),
             TextFormField(
               controller: _searchController,
+              onChanged: _filterShops,
               // validator: (value) {
               //   if (value == null || value.isEmpty) {
               //     return 'Enter driver name here';
@@ -57,7 +76,7 @@ class _AdminShopRecordsScreenState extends State<AdminShopRecordsScreen> {
             SizedBox(height: 20),
             Expanded(
                 child: ListView.builder(
-                    itemCount: 2,
+                    itemCount: filteredShopsList.length,
                     itemBuilder: (context, index) {
                       return Column(
                         children: [
@@ -95,7 +114,7 @@ class _AdminShopRecordsScreenState extends State<AdminShopRecordsScreen> {
                                               CrossAxisAlignment.start,
                                           children: [
                                             Text(
-                                              'Ahsan Store',
+                                              filteredShopsList[index].name,
                                               style: AppTextStyles
                                                   .nameHeadingTextStyle(
                                                       size: 15),
@@ -108,7 +127,8 @@ class _AdminShopRecordsScreenState extends State<AdminShopRecordsScreen> {
                                                     fontWeight: FontWeight.w500,
                                                   ),
                                                 ),
-                                                Text('Shah Faisal Colony'),
+                                                Text(filteredShopsList[index]
+                                                    .address),
                                               ],
                                             ),
                                           ],
