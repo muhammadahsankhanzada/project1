@@ -79,7 +79,13 @@ class SuperAdminShopManagementScreen extends StatelessWidget {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          AdminShopRecordsDetailsScreen()));
+                                          AdminShopRecordsDetailsScreen(
+                                            shopName:
+                                                shopsListContents[index].name,
+                                            shopAddress:
+                                                shopsListContents[index]
+                                                    .address,
+                                          )));
                             },
                             borderRadius: BorderRadius.circular(40),
                             child: Container(

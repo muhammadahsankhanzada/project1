@@ -2,9 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/text_styles.dart';
 
-class AdminWarehouseDetailsScreen extends StatelessWidget {
-  const AdminWarehouseDetailsScreen({super.key});
+class AdminWarehouseDetailsScreen extends StatefulWidget {
+  final String warehouseName;
 
+  const AdminWarehouseDetailsScreen({super.key, required this.warehouseName});
+
+  @override
+  State<AdminWarehouseDetailsScreen> createState() =>
+      _AdminWarehouseDetailsScreenState();
+}
+
+class _AdminWarehouseDetailsScreenState
+    extends State<AdminWarehouseDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     Map<String, dynamic> warehouseDummyDetails = {
@@ -49,7 +58,7 @@ class AdminWarehouseDetailsScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Warehouse 01',
+                      widget.warehouseName,
                       style: AppTextStyles.nameHeadingTextStyle(),
                     ),
                     Text(

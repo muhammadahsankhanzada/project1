@@ -81,7 +81,12 @@ class SuperAdminWarehouseManagementScreen extends StatelessWidget {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          AdminWarehouseDetailsScreen()));
+                                          AdminWarehouseDetailsScreen(
+                                            warehouseName:
+                                                warehousesDummyListContents[
+                                                        index]
+                                                    .name,
+                                          )));
                             },
                             borderRadius: BorderRadius.circular(40),
                             child: Container(

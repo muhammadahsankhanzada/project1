@@ -2,9 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/text_styles.dart';
 
-class AdminShopRecordsDetailsScreen extends StatelessWidget {
-  const AdminShopRecordsDetailsScreen({super.key});
+class AdminShopRecordsDetailsScreen extends StatefulWidget {
+  final String shopName;
+  final String shopAddress;
+  const AdminShopRecordsDetailsScreen({
+    super.key,
+    required this.shopName,
+    required this.shopAddress,
+  });
 
+  @override
+  State<AdminShopRecordsDetailsScreen> createState() =>
+      _AdminShopRecordsDetailsScreenState();
+}
+
+class _AdminShopRecordsDetailsScreenState
+    extends State<AdminShopRecordsDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     Map<String, dynamic> storeDetails = {
@@ -23,7 +36,7 @@ class AdminShopRecordsDetailsScreen extends StatelessWidget {
       backgroundColor: AppColors.lightGreen,
       appBar: AppBar(
         title: Text(
-          'Ahsan Store',
+          widget.shopName,
           style: AppTextStyles.nameHeadingTextStyle(),
         ),
         centerTitle: true,

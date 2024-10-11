@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project1/Models/warehouses_list_dummy_model.dart';
 import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/constants.dart';
 import 'package:project1/Utils/text_styles.dart';
@@ -57,7 +58,7 @@ class _AdminWarehouseListScreenState extends State<AdminWarehouseListScreen> {
             SizedBox(height: 20),
             Expanded(
                 child: ListView.builder(
-                    itemCount: 2,
+                    itemCount: warehousesDummyListContents.length,
                     itemBuilder: (context, index) {
                       return Column(
                         children: [
@@ -67,7 +68,12 @@ class _AdminWarehouseListScreenState extends State<AdminWarehouseListScreen> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          AdminWarehouseDetailsScreen()));
+                                          AdminWarehouseDetailsScreen(
+                                            warehouseName:
+                                                warehousesDummyListContents[
+                                                        index]
+                                                    .name,
+                                          )));
                             },
                             borderRadius: BorderRadius.circular(40),
                             child: Container(
@@ -94,11 +100,17 @@ class _AdminWarehouseListScreenState extends State<AdminWarehouseListScreen> {
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
-                                            Text(
-                                              'Warehouse 01',
-                                              style: AppTextStyles
-                                                  .nameHeadingTextStyle(
-                                                      size: 15),
+                                            SizedBox(
+                                              width: 150,
+                                              child: Text(
+                                                overflow: TextOverflow.ellipsis,
+                                                warehousesDummyListContents[
+                                                        index]
+                                                    .name,
+                                                style: AppTextStyles
+                                                    .nameHeadingTextStyle(
+                                                        size: 15),
+                                              ),
                                             ),
                                             Row(
                                               children: [
@@ -108,7 +120,15 @@ class _AdminWarehouseListScreenState extends State<AdminWarehouseListScreen> {
                                                     fontWeight: FontWeight.w500,
                                                   ),
                                                 ),
-                                                Text('Shah Faisal Colony'),
+                                                SizedBox(
+                                                  width: 150,
+                                                  child: Text(
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      warehousesDummyListContents[
+                                                              index]
+                                                          .address),
+                                                ),
                                               ],
                                             ),
                                           ],

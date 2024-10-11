@@ -86,7 +86,13 @@ class _AdminShopRecordsScreenState extends State<AdminShopRecordsScreen> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          AdminShopRecordsDetailsScreen()));
+                                          AdminShopRecordsDetailsScreen(
+                                            shopName:
+                                                filteredShopsList[index].name,
+                                            shopAddress:
+                                                filteredShopsList[index]
+                                                    .address,
+                                          )));
                             },
                             borderRadius: BorderRadius.circular(40),
                             child: Container(
