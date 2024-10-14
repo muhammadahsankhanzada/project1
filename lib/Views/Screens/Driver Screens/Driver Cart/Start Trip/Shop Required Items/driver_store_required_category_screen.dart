@@ -33,7 +33,9 @@ class DriverRequiredCategoryScreen extends StatelessWidget {
                               context,
                               MaterialPageRoute(
                                   builder: (context) =>
-                                      DriverRequiredItemsScreen()));
+                                      DriverRequiredItemsScreen(
+                                        categoryIndex: index,
+                                      )));
                         },
                         child: Container(
                           height: 150,

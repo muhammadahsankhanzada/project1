@@ -4,9 +4,16 @@ import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/text_styles.dart';
 import 'package:project1/Views/Screens/Driver%20Screens/Driver%20Cart/Start%20Trip/Shop%20Return%20Items/driver_return_item_screen.dart';
 
-class DriverStoreReturnCategoryScreen extends StatelessWidget {
+class DriverStoreReturnCategoryScreen extends StatefulWidget {
   const DriverStoreReturnCategoryScreen({super.key});
 
+  @override
+  State<DriverStoreReturnCategoryScreen> createState() =>
+      _DriverStoreReturnCategoryScreenState();
+}
+
+class _DriverStoreReturnCategoryScreenState
+    extends State<DriverStoreReturnCategoryScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,7 +31,6 @@ class DriverStoreReturnCategoryScreen extends StatelessWidget {
                 itemCount: productCategoriesDummyModelContents.length,
                 itemBuilder: (context, index) {
                   return Column(
-                    // crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       InkWell(
                         borderRadius: BorderRadius.circular(10),
@@ -32,8 +38,9 @@ class DriverStoreReturnCategoryScreen extends StatelessWidget {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) =>
-                                      DriverReturnItemScreen()));
+                                  builder: (context) => DriverReturnItemScreen(
+                                        categoryIndex: index,
+                                      )));
                         },
                         child: Container(
                           height: 150,

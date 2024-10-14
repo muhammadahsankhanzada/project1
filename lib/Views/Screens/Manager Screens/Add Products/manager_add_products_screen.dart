@@ -4,7 +4,11 @@ import 'package:project1/Utils/text_styles.dart';
 import 'package:project1/Views/Widgets/universal_button.dart';
 
 class ManagerAddProductsScreen extends StatefulWidget {
-  const ManagerAddProductsScreen({super.key});
+  final List<String> warehouseList;
+  const ManagerAddProductsScreen({
+    super.key,
+    required this.warehouseList,
+  });
 
   @override
   State<ManagerAddProductsScreen> createState() =>
@@ -16,6 +20,19 @@ class _ManagerAddProductsScreenState extends State<ManagerAddProductsScreen> {
   var productPriceController = TextEditingController();
   var productCategoryController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  String? selectedCategoryValue;
+  final List<String> categoryValues = [
+    'Electronics',
+    'Home Appliances',
+    'Fashion'
+  ];
+
+  @override
+  void initState() {
+    super.initState();
+    print(widget.warehouseList);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -78,17 +95,57 @@ class _ManagerAddProductsScreenState extends State<ManagerAddProductsScreen> {
                       }
                       return null;
                     }),
-                textField(
-                    hint: 'Category',
-                    icon: Icons.grid_view,
-                    controller: productCategoryController,
-                    keyboardType: TextInputType.name,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Product category required';
-                      }
-                      return null;
-                    }),
+                Container(
+                  width: double.infinity,
+                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 3),
+                  decoration: BoxDecoration(
+                    border: Border.all(color: AppColors.grey),
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  child: DropdownButtonHideUnderline(
+                    child: DropdownButton<String>(
+                      hint: Row(
+                        children: [
+                          Icon(
+                            Icons.grid_view,
+                            color: AppColors.green,
+                          ),
+                          SizedBox(width: 10),
+                          Text(
+                            'Select Category',
+                            style: AppTextStyles.nameHeadingTextStyle(size: 15),
+                          ),
+                        ],
+                      ),
+                      value: selectedCategoryValue,
+                      onChanged: (String? newCategoryValue) {
+                        selectedCategoryValue = newCategoryValue;
+                        setState(() {});
+                        print(selectedCategoryValue);
+                      },
+                      items: categoryValues
+                          .map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                            value: value,
+                            child: Row(
+                              children: [
+                                Icon(
+                                  Icons.grid_view,
+                                  color: AppColors.green,
+                                ),
+                                SizedBox(width: 10),
+                                Text(
+                                  value,
+                                  style: AppTextStyles.nameHeadingTextStyle(
+                                      size: 15),
+                                ),
+                              ],
+                            ));
+                      }).toList(),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 20),
                 textField(
                     hint: 'Price',
                     icon: Icons.attach_money,

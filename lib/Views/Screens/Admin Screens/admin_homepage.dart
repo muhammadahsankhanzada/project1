@@ -141,9 +141,10 @@ class AdminHomepage extends StatelessWidget {
           child: Container(
             padding: EdgeInsets.symmetric(horizontal: 30, vertical: 20),
             decoration: BoxDecoration(
-              border: Border.all(
-                color: AppColors.grey,
-              ),
+              color: AppColors.lightGrey.withOpacity(.2),
+              // border: Border.all(
+              //   color: AppColors.grey,
+              // ),
               borderRadius: BorderRadius.circular(10),
             ),
             child: Row(

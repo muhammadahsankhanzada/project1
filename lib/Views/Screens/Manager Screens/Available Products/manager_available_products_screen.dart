@@ -88,8 +88,8 @@ class _ManagerAvailableProductsScreenState
                                 MaterialPageRoute(
                                     builder: (context) =>
                                         ManagerAvailableProductsItemsListScreen(
-                                            // categoryIndex: index,
-                                            )));
+                                          categoryIndex: index,
+                                        )));
                           },
                           child: Container(
                             height: 150,

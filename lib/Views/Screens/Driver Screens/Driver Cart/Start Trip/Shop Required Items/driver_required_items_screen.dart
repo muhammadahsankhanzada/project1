@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project1/Models/product_categories_dummy_model.dart';
+import 'package:project1/Models/products_dummy_data_model.dart';
 import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/constants.dart';
 import 'package:project1/Utils/text_styles.dart';
@@ -7,7 +8,11 @@ import 'package:project1/Views/Widgets/custom_snackbar.dart';
 import 'package:project1/Views/Widgets/universal_button.dart';
 
 class DriverRequiredItemsScreen extends StatefulWidget {
-  const DriverRequiredItemsScreen({super.key});
+  final categoryIndex;
+  const DriverRequiredItemsScreen({
+    super.key,
+    required this.categoryIndex,
+  });
 
   @override
   State<DriverRequiredItemsScreen> createState() =>
@@ -15,35 +20,16 @@ class DriverRequiredItemsScreen extends StatefulWidget {
 }
 
 class _DriverRequiredItemsScreenState extends State<DriverRequiredItemsScreen> {
+  int selectedCategoryIndex = 0;
   bool isProductSelected = false;
-  int quantity = 1;
-  int price = 200;
+  @override
+  void initState() {
+    super.initState();
+    selectedCategoryIndex = widget.categoryIndex;
+  }
+
   @override
   Widget build(BuildContext context) {
-    // List<String> productNames = [
-    //   'Organic Ketchup',
-    //   'Almond Butter',
-    //   'Coconut Oil',
-    //   'Quinoa',
-    //   'Dark Chocolate',
-    //   'Oat Milk',
-    //   'Avocado Oil',
-    //   'Chia Seeds',
-    //   'Maple Syrup',
-    //   'Brown Rice',
-    // ];
-    // List<int> productQuantities = [
-    //   2, // Organic Ketchup
-    //   1, // Almond Butter
-    //   3, // Coconut Oil
-    //   1, // Quinoa
-    //   5, // Dark Chocolate
-    //   4, // Oat Milk
-    //   2, // Avocado Oil
-    //   6, // Chia Seeds
-    //   1, // Maple Syrup
-    //   3, // Brown Rice
-    // ];
     return Scaffold(
       backgroundColor: AppColors.lightGreen,
       appBar: AppBar(
@@ -57,56 +43,7 @@ class _DriverRequiredItemsScreenState extends State<DriverRequiredItemsScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            // SizedBox(height: 30),
-            // Text(
-            //   'Inventory',
-            //   style: AppTextStyles.mainHeadingTextStyle(),
-            // ),
-            // SizedBox(height: 20),
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.center,
-            //   children: [
-            //     Flexible(
-            //       child: Wrap(
-            //         alignment: WrapAlignment.center,
-            //         spacing: 5,
-            //         runSpacing: 5,
-            //         children: [
-            //           for (int i = 0; i < 10; i++)
-            //             Container(
-            //               height: 40,
-            //               padding: EdgeInsets.symmetric(
-            //                   horizontal: 20, vertical: 10),
-            //               decoration: BoxDecoration(
-            //                 color: AppColors.lightGrey,
-            //                 borderRadius: BorderRadius.circular(30),
-            //               ),
-            //               child: Text(
-            //                 '${productNames[i]} (${productQuantities[i]})',
-            //                 style:
-            //                     AppTextStyles.belowMainHeadingTextStyle(),
-            //               ),
-            //             ),
-            //         ],
-            //       ),
-            //     ),
-            //   ],
-            // ),
-            // SizedBox(height: 20),
-            // Divider(
-            //   color: AppColors.black,
-            //   indent: 10,
-            //   endIndent: 10,
-            // ),
             SizedBox(height: 20),
-            // Align(
-            //   alignment: Alignment.topLeft,
-            //   child: Text(
-            //     'Select required items',
-            //     style: AppTextStyles.nameHeadingTextStyle(),
-            //   ),
-            // ),
-            // SizedBox(height: 20),
             Align(
               alignment: Alignment.centerLeft,
               child: Container(
@@ -124,18 +61,29 @@ class _DriverRequiredItemsScreenState extends State<DriverRequiredItemsScreen> {
               child: ListView.builder(
                 itemCount: productCategoriesDummyModelContents.length,
                 itemBuilder: (context, index) {
-                  return Container(
-                    margin: EdgeInsets.only(left: 5, right: 5),
-                    padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        border: Border.all(
-                          color: AppColors.green,
-                          width: 2,
-                        )),
-                    child: Text(
-                      productCategoriesDummyModelContents[index].name,
-                      style: AppTextStyles.nameHeadingTextStyle(size: 15),
+                  return InkWell(
+                    onTap: () {
+                      selectedCategoryIndex = index;
+                      setState(() {});
+                    },
+                    borderRadius: BorderRadius.circular(20),
+                    child: Container(
+                      margin: EdgeInsets.only(left: 5, right: 5),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: selectedCategoryIndex == index
+                              ? AppColors.green
+                              : AppColors.transparent,
+                          border: Border.all(
+                            color: AppColors.green,
+                            width: 2,
+                          )),
+                      child: Text(
+                        productCategoriesDummyModelContents[index].name,
+                        style: AppTextStyles.nameHeadingTextStyle(size: 15),
+                      ),
                     ),
                   );
                 },
@@ -143,7 +91,10 @@ class _DriverRequiredItemsScreenState extends State<DriverRequiredItemsScreen> {
               ),
             ),
             SizedBox(height: 10),
-            ...List.generate(2, (index) {
+            ...List.generate(
+                productCategoriesDummyModelContents[selectedCategoryIndex]
+                    .products
+                    .length, (index) {
               return Container(
                 margin: EdgeInsets.only(bottom: 10, left: 20, right: 20),
                 padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
@@ -164,18 +115,21 @@ class _DriverRequiredItemsScreenState extends State<DriverRequiredItemsScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          'Organic Ketchup',
+                          productCategoriesDummyModelContents[
+                                  selectedCategoryIndex]
+                              .products[index]
+                              .name,
                           style: AppTextStyles.nameHeadingTextStyle(size: 15),
                         ),
                         Text(
-                          '(4 available)',
+                          '${productCategoriesDummyModelContents[selectedCategoryIndex].products[index].quantity} available',
                           style: AppTextStyles.nameHeadingTextStyle(
                             size: 13,
                           ),
                         ),
                         SizedBox(height: 20),
                         Text(
-                          'Rs. ${price * quantity}',
+                          'Rs. ${(productCategoriesDummyModelContents[selectedCategoryIndex].products[index].price * productCategoriesDummyModelContents[selectedCategoryIndex].products[index].quantity).toStringAsFixed(0)}',
                           style: AppTextStyles.belowMainHeadingTextStyle(
                               fontSize: 13, textColor: AppColors.green),
                         ),
@@ -204,8 +158,17 @@ class _DriverRequiredItemsScreenState extends State<DriverRequiredItemsScreen> {
                             IconButton(
                                 padding: EdgeInsets.zero,
                                 onPressed: () {
-                                  quantity--;
-                                  setState(() {});
+                                  if (productCategoriesDummyModelContents[
+                                              selectedCategoryIndex]
+                                          .products[index]
+                                          .quantity >
+                                      0) {
+                                    productCategoriesDummyModelContents[
+                                            selectedCategoryIndex]
+                                        .products[index]
+                                        .quantity--;
+                                    setState(() {});
+                                  }
                                 },
                                 icon: Icon(
                                   Icons.remove_circle,
@@ -213,13 +176,20 @@ class _DriverRequiredItemsScreenState extends State<DriverRequiredItemsScreen> {
                                   color: AppColors.green,
                                 )),
                             Text(
-                              quantity.toString(),
+                              productCategoriesDummyModelContents[
+                                      selectedCategoryIndex]
+                                  .products[index]
+                                  .quantity
+                                  .toString(),
                               style:
                                   AppTextStyles.nameHeadingTextStyle(size: 15),
                             ),
                             IconButton(
                                 onPressed: () {
-                                  quantity++;
+                                  productCategoriesDummyModelContents[
+                                          selectedCategoryIndex]
+                                      .products[index]
+                                      .quantity++;
                                   setState(() {});
                                 },
                                 padding: EdgeInsets.zero,
@@ -236,31 +206,6 @@ class _DriverRequiredItemsScreenState extends State<DriverRequiredItemsScreen> {
                 ),
               );
             }),
-            // SizedBox(height: 20),
-            // InkWell(
-            //   onTap: () {
-            //     Navigator.push(
-            //         context,
-            //         MaterialPageRoute(
-            //             builder: (context) => DriverReturnItemScreen()));
-            //   },
-            //   child: Align(
-            //     alignment: Alignment.centerRight,
-            //     child: Container(
-            //       padding:
-            //           EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-            //       decoration: BoxDecoration(
-            //         border: Border.all(color: AppColors.green),
-            //         borderRadius: BorderRadius.circular(30),
-            //       ),
-            //       child: Text(
-            //         "Return Items",
-            //         style: AppTextStyles.nameHeadingTextStyle(size: 16),
-            //       ),
-            //     ),
-            //   ),
-            // ),
-
             SizedBox(height: 20),
             UniversalButton(
                 title: 'Add items',

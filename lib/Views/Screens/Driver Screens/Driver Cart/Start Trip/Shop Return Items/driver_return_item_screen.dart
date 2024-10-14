@@ -7,7 +7,11 @@ import 'package:project1/Views/Widgets/custom_snackbar.dart';
 import 'package:project1/Views/Widgets/universal_button.dart';
 
 class DriverReturnItemScreen extends StatefulWidget {
-  const DriverReturnItemScreen({super.key});
+  final categoryIndex;
+  const DriverReturnItemScreen({
+    super.key,
+    required this.categoryIndex,
+  });
 
   @override
   State<DriverReturnItemScreen> createState() => _DriverReturnItemScreenState();
@@ -15,8 +19,13 @@ class DriverReturnItemScreen extends StatefulWidget {
 
 class _DriverReturnItemScreenState extends State<DriverReturnItemScreen> {
   bool isProductSelected = false;
-  int quantity = 1;
-  int price = 200;
+  int selectedCategoryIndex = 0;
+  @override
+  void initState() {
+    super.initState();
+    selectedCategoryIndex = widget.categoryIndex;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,25 +67,39 @@ class _DriverReturnItemScreenState extends State<DriverReturnItemScreen> {
               child: ListView.builder(
                 itemCount: productCategoriesDummyModelContents.length,
                 itemBuilder: (context, index) {
-                  return Container(
-                    margin: EdgeInsets.only(left: 5, right: 5),
-                    padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        border: Border.all(
-                          color: AppColors.red,
-                          width: 2,
-                        )),
-                    child: Text(
-                      productCategoriesDummyModelContents[index].name,
-                      style: AppTextStyles.nameHeadingTextStyle(size: 15),
+                  return InkWell(
+                    onTap: () {
+                      selectedCategoryIndex = index;
+                      setState(() {});
+                    },
+                    borderRadius: BorderRadius.circular(20),
+                    child: Container(
+                      margin: EdgeInsets.only(left: 5, right: 5),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                      decoration: BoxDecoration(
+                          color: selectedCategoryIndex == index
+                              ? AppColors.green
+                              : AppColors.transparent,
+                          borderRadius: BorderRadius.circular(20),
+                          border: Border.all(
+                            color: AppColors.red,
+                            width: 2,
+                          )),
+                      child: Text(
+                        productCategoriesDummyModelContents[index].name,
+                        style: AppTextStyles.nameHeadingTextStyle(size: 15),
+                      ),
                     ),
                   );
                 },
                 scrollDirection: Axis.horizontal,
               ),
             ),
-            ...List.generate(3, (index) {
+            ...List.generate(
+                productCategoriesDummyModelContents[selectedCategoryIndex]
+                    .products
+                    .length, (index) {
               return Container(
                 margin: EdgeInsets.only(bottom: 10, left: 20, right: 20),
                 padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
@@ -97,18 +120,21 @@ class _DriverReturnItemScreenState extends State<DriverReturnItemScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          'Organic Ketchup',
+                          productCategoriesDummyModelContents[
+                                  selectedCategoryIndex]
+                              .products[index]
+                              .name,
                           style: AppTextStyles.nameHeadingTextStyle(size: 15),
                         ),
                         Text(
-                          '(4 available)',
+                          '(${productCategoriesDummyModelContents[selectedCategoryIndex].products[index].quantity} available)',
                           style: AppTextStyles.nameHeadingTextStyle(
                             size: 13,
                           ),
                         ),
                         SizedBox(height: 20),
                         Text(
-                          'Rs. ${price * quantity}',
+                          'Rs. ${(productCategoriesDummyModelContents[selectedCategoryIndex].products[index].price * productCategoriesDummyModelContents[selectedCategoryIndex].products[index].quantity).toStringAsFixed(0)}',
                           style: AppTextStyles.belowMainHeadingTextStyle(
                               fontSize: 13, textColor: AppColors.green),
                         ),
@@ -137,8 +163,17 @@ class _DriverReturnItemScreenState extends State<DriverReturnItemScreen> {
                             IconButton(
                                 padding: EdgeInsets.zero,
                                 onPressed: () {
-                                  quantity--;
-                                  setState(() {});
+                                  if (productCategoriesDummyModelContents[
+                                              selectedCategoryIndex]
+                                          .products[index]
+                                          .quantity >
+                                      0) {
+                                    productCategoriesDummyModelContents[
+                                            selectedCategoryIndex]
+                                        .products[index]
+                                        .quantity--;
+                                    setState(() {});
+                                  }
                                 },
                                 icon: Icon(
                                   Icons.remove_circle,
@@ -146,13 +181,20 @@ class _DriverReturnItemScreenState extends State<DriverReturnItemScreen> {
                                   color: AppColors.red.shade400,
                                 )),
                             Text(
-                              quantity.toString(),
+                              productCategoriesDummyModelContents[
+                                      selectedCategoryIndex]
+                                  .products[index]
+                                  .quantity
+                                  .toString(),
                               style:
                                   AppTextStyles.nameHeadingTextStyle(size: 15),
                             ),
                             IconButton(
                                 onPressed: () {
-                                  quantity++;
+                                  productCategoriesDummyModelContents[
+                                          selectedCategoryIndex]
+                                      .products[index]
+                                      .quantity++;
                                   setState(() {});
                                 },
                                 padding: EdgeInsets.zero,

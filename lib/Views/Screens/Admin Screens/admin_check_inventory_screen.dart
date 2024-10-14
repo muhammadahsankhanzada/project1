@@ -4,9 +4,15 @@ import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/text_styles.dart';
 import 'package:project1/Views/Screens/Manager%20Screens/Available%20Products/manager_available_products_items_list_screen.dart';
 
-class AdminCheckInventoryScreen extends StatelessWidget {
+class AdminCheckInventoryScreen extends StatefulWidget {
   const AdminCheckInventoryScreen({super.key});
 
+  @override
+  State<AdminCheckInventoryScreen> createState() =>
+      _AdminCheckInventoryScreenState();
+}
+
+class _AdminCheckInventoryScreenState extends State<AdminCheckInventoryScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,19 +47,32 @@ class AdminCheckInventoryScreen extends StatelessWidget {
                 child: ListView.builder(
                   itemCount: productCategoriesDummyModelContents.length,
                   itemBuilder: (context, index) {
-                    return Container(
-                      margin: EdgeInsets.only(left: 5, right: 5),
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          border: Border.all(
+                    return InkWell(
+                      onTap: () {
+                        setState(() {});
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    ManagerAvailableProductsItemsListScreen(
+                                        categoryIndex: index)));
+                      },
+                      borderRadius: BorderRadius.circular(20),
+                      child: Container(
+                        margin: EdgeInsets.only(left: 5, right: 5),
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                        decoration: BoxDecoration(
                             color: AppColors.green,
-                            width: 2,
-                          )),
-                      child: Text(
-                        productCategoriesDummyModelContents[index].name,
-                        style: AppTextStyles.nameHeadingTextStyle(size: 15),
+                            borderRadius: BorderRadius.circular(20),
+                            border: Border.all(
+                              color: AppColors.green,
+                              width: 2,
+                            )),
+                        child: Text(
+                          productCategoriesDummyModelContents[index].name,
+                          style: AppTextStyles.nameHeadingTextStyle(size: 15),
+                        ),
                       ),
                     );
                   },
@@ -79,7 +98,9 @@ class AdminCheckInventoryScreen extends StatelessWidget {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
-                                        ManagerAvailableProductsItemsListScreen()));
+                                        ManagerAvailableProductsItemsListScreen(
+                                          categoryIndex: index,
+                                        )));
                           },
                           child: Container(
                             height: 150,

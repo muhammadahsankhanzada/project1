@@ -21,6 +21,7 @@ class UniversalButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: ontap,
+      borderRadius: BorderRadius.circular(30),
       child: Container(
         height: buttonHeight,
         width: buttonWidth,

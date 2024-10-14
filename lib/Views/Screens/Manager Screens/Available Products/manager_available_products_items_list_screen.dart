@@ -5,10 +5,10 @@ import 'package:project1/Views/Screens/Manager%20Screens/Available%20Products/ma
 import 'package:project1/Views/Screens/Manager%20Screens/Available%20Products/manager_available_products_return_items_screen.dart';
 
 class ManagerAvailableProductsItemsListScreen extends StatefulWidget {
-  // final categoryIndex;
+  final int categoryIndex;
   const ManagerAvailableProductsItemsListScreen({
     super.key,
-    // required this.categoryIndex,
+    required this.categoryIndex,
   });
 
   @override
@@ -18,11 +18,11 @@ class ManagerAvailableProductsItemsListScreen extends StatefulWidget {
 
 class _ManagerAvailableProductsItemsListScreenState
     extends State<ManagerAvailableProductsItemsListScreen> {
-  // int selectedCategoryIndex = 0;
+  int selectedCategoryIndex = 0;
   @override
   void initState() {
     super.initState();
-    // selectedCategoryIndex = widget.categoryIndex;
+    selectedCategoryIndex = widget.categoryIndex;
   }
 
   @override
@@ -80,9 +80,11 @@ class _ManagerAvailableProductsItemsListScreenState
               Expanded(
                 child: TabBarView(children: [
                   ManagerAvailableProductsAvailableItemsScreen(
-                      // categoryindex: selectedCategoryIndex,
-                      ),
-                  ManagerAvailableProductsReturnItemsScreen(),
+                    categoryindex: selectedCategoryIndex,
+                  ),
+                  ManagerAvailableProductsReturnItemsScreen(
+                    categoryIndex: widget.categoryIndex,
+                  ),
                 ]),
               ),
             ],

@@ -5,10 +5,10 @@ import 'package:project1/Utils/constants.dart';
 import 'package:project1/Utils/text_styles.dart';
 
 class ManagerAvailableProductsAvailableItemsScreen extends StatefulWidget {
-  // final categoryindex;
+  final int categoryindex;
   const ManagerAvailableProductsAvailableItemsScreen({
     super.key,
-    // required this.categoryindex,
+    required this.categoryindex,
   });
 
   @override
@@ -18,6 +18,13 @@ class ManagerAvailableProductsAvailableItemsScreen extends StatefulWidget {
 
 class _ManagerAvailableProductsAvailableItemsScreenState
     extends State<ManagerAvailableProductsAvailableItemsScreen> {
+  int selectedCategoryIndex = 0;
+  @override
+  void initState() {
+    super.initState();
+    selectedCategoryIndex = widget.categoryindex;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,11 +51,17 @@ class _ManagerAvailableProductsAvailableItemsScreenState
               itemBuilder: (context, index) {
                 return InkWell(
                   borderRadius: BorderRadius.circular(20),
-                  onTap: () {},
+                  onTap: () {
+                    selectedCategoryIndex = index;
+                    setState(() {});
+                  },
                   child: Container(
                     margin: EdgeInsets.only(left: 5, right: 5),
                     padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                     decoration: BoxDecoration(
+                        color: selectedCategoryIndex == index
+                            ? AppColors.green
+                            : AppColors.transparent,
                         borderRadius: BorderRadius.circular(20),
                         border: Border.all(
                           color: AppColors.green,
@@ -74,7 +87,10 @@ class _ManagerAvailableProductsAvailableItemsScreenState
                     mainAxisSpacing: 5,
                     crossAxisSpacing: 5,
                   ),
-                  itemCount: 20,
+                  itemCount:
+                      productCategoriesDummyModelContents[selectedCategoryIndex]
+                          .products
+                          .length,
                   itemBuilder: (context, index) {
                     return Center(
                       child: Column(
@@ -93,7 +109,10 @@ class _ManagerAvailableProductsAvailableItemsScreenState
                           ),
                           SizedBox(height: 2),
                           Text(
-                            'Organic Ketchup',
+                            productCategoriesDummyModelContents[
+                                    selectedCategoryIndex]
+                                .products[index]
+                                .name,
                             style: AppTextStyles.nameHeadingTextStyle(
                               size: 12,
                             ),

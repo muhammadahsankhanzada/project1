@@ -37,7 +37,9 @@ class SuperAdminProductManagementScreen extends StatelessWidget {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => ManagerAddProductsScreen()));
+                        builder: (context) => ManagerAddProductsScreen(
+                              warehouseList: ['Alpha Warehouse'],
+                            )));
               },
               title: 'Add Products'),
           customContainer(

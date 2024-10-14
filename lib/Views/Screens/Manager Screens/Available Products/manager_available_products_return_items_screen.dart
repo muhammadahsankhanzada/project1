@@ -4,8 +4,26 @@ import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/constants.dart';
 import 'package:project1/Utils/text_styles.dart';
 
-class ManagerAvailableProductsReturnItemsScreen extends StatelessWidget {
-  const ManagerAvailableProductsReturnItemsScreen({super.key});
+class ManagerAvailableProductsReturnItemsScreen extends StatefulWidget {
+  final int categoryIndex;
+  const ManagerAvailableProductsReturnItemsScreen({
+    super.key,
+    required this.categoryIndex,
+  });
+
+  @override
+  State<ManagerAvailableProductsReturnItemsScreen> createState() =>
+      _ManagerAvailableProductsReturnItemsScreenState();
+}
+
+class _ManagerAvailableProductsReturnItemsScreenState
+    extends State<ManagerAvailableProductsReturnItemsScreen> {
+  int selectedCategoryIndex = 0;
+  @override
+  void initState() {
+    super.initState();
+    selectedCategoryIndex = widget.categoryIndex;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,18 +49,28 @@ class ManagerAvailableProductsReturnItemsScreen extends StatelessWidget {
             child: ListView.builder(
               itemCount: productCategoriesDummyModelContents.length,
               itemBuilder: (context, index) {
-                return Container(
-                  margin: EdgeInsets.only(left: 5, right: 5),
-                  padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      border: Border.all(
-                        color: AppColors.green,
-                        width: 2,
-                      )),
-                  child: Text(
-                    productCategoriesDummyModelContents[index].name,
-                    style: AppTextStyles.nameHeadingTextStyle(size: 15),
+                return InkWell(
+                  onTap: () {
+                    selectedCategoryIndex = index;
+                    setState(() {});
+                  },
+                  borderRadius: BorderRadius.circular(20),
+                  child: Container(
+                    margin: EdgeInsets.only(left: 5, right: 5),
+                    padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                    decoration: BoxDecoration(
+                        color: selectedCategoryIndex == index
+                            ? AppColors.green
+                            : AppColors.transparent,
+                        borderRadius: BorderRadius.circular(20),
+                        border: Border.all(
+                          color: AppColors.green,
+                          width: 2,
+                        )),
+                    child: Text(
+                      productCategoriesDummyModelContents[index].name,
+                      style: AppTextStyles.nameHeadingTextStyle(size: 15),
+                    ),
                   ),
                 );
               },
@@ -59,7 +87,10 @@ class ManagerAvailableProductsReturnItemsScreen extends StatelessWidget {
                     mainAxisSpacing: 5,
                     crossAxisSpacing: 5,
                   ),
-                  itemCount: 20,
+                  itemCount:
+                      productCategoriesDummyModelContents[selectedCategoryIndex]
+                          .products
+                          .length,
                   itemBuilder: (context, index) {
                     return Center(
                       child: Column(
@@ -78,7 +109,10 @@ class ManagerAvailableProductsReturnItemsScreen extends StatelessWidget {
                           ),
                           SizedBox(height: 2),
                           Text(
-                            'Organic Ketchup',
+                            productCategoriesDummyModelContents[
+                                    selectedCategoryIndex]
+                                .products[index]
+                                .name,
                             style: AppTextStyles.nameHeadingTextStyle(
                               size: 12,
                             ),
