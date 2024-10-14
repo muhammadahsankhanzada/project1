@@ -16,9 +16,9 @@ class ManagerAddProductsScreen extends StatefulWidget {
 }
 
 class _ManagerAddProductsScreenState extends State<ManagerAddProductsScreen> {
-  var productNameController = TextEditingController();
-  var productPriceController = TextEditingController();
-  var productCategoryController = TextEditingController();
+  var _productNameController = TextEditingController();
+  var _productPriceController = TextEditingController();
+  var _productQuantityController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   String? selectedCategoryValue;
   final List<String> categoryValues = [
@@ -30,7 +30,9 @@ class _ManagerAddProductsScreenState extends State<ManagerAddProductsScreen> {
   @override
   void initState() {
     super.initState();
-    print(widget.warehouseList);
+    for (var warehouse in widget.warehouseList) {
+      print(warehouse);
+    }
   }
 
   @override
@@ -87,7 +89,7 @@ class _ManagerAddProductsScreenState extends State<ManagerAddProductsScreen> {
                 textField(
                     hint: 'Name',
                     icon: Icons.fastfood,
-                    controller: productNameController,
+                    controller: _productNameController,
                     keyboardType: TextInputType.name,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -149,11 +151,22 @@ class _ManagerAddProductsScreenState extends State<ManagerAddProductsScreen> {
                 textField(
                     hint: 'Price',
                     icon: Icons.attach_money,
-                    controller: productPriceController,
+                    controller: _productPriceController,
                     keyboardType: TextInputType.number,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Product price required';
+                      }
+                      return null;
+                    }),
+                textField(
+                    hint: 'Quantity',
+                    icon: Icons.numbers,
+                    controller: _productQuantityController,
+                    keyboardType: TextInputType.number,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Product quantity required';
                       }
                       return null;
                     }),

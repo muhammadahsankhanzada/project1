@@ -14,9 +14,20 @@ class ManagerDeleteProductsScreen extends StatefulWidget {
 
 class _ManagerDeleteProductsScreenState
     extends State<ManagerDeleteProductsScreen> {
-  final _categoryController = TextEditingController();
-  final _productController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  String? selectedCategoryValue;
+  final List<String> categoryValuesList = [
+    'Electronics',
+    'Home Appliances',
+    'Fashion'
+  ];
+  String? selectedProductValue;
+  final List<String> productValuesList = [
+    'Laptop',
+    'Smart Phone',
+    'Camera',
+    'Tablet',
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,29 +63,40 @@ class _ManagerDeleteProductsScreenState
                   ),
                 ),
                 SizedBox(height: 20),
-                textField(
-                    hint: 'Select a Category',
-                    icon: Icons.grid_view,
-                    controller: _categoryController,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Select a category first';
-                      }
-                      return null;
-                    },
-                    keyboardType: TextInputType.name),
-                textField(
-                    hint: 'Select a Product',
-                    icon: Icons.fastfood,
-                    controller: _productController,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Select a product first';
-                      }
-                      return null;
-                    },
-                    keyboardType: TextInputType.name),
+                //Category DropDown
+                productDropDownButton(
+                  icon: Icons.grid_view,
+                  hint: 'Select a Category',
+                  currentSelectedValue: selectedCategoryValue,
+                  dropDownValuesList: categoryValuesList,
+                  onChanged: (String? newSelectedValue) {
+                    selectedCategoryValue = newSelectedValue;
+                    setState(() {});
+                    print(selectedCategoryValue);
+                  },
+                ),
                 SizedBox(height: 20),
+                //Product DropDown
+                Visibility(
+                  visible: selectedCategoryValue != null,
+                  child: Column(
+                    children: [
+                      productDropDownButton(
+                        icon: Icons.fastfood,
+                        hint: 'Select a Product',
+                        currentSelectedValue: selectedProductValue,
+                        dropDownValuesList: productValuesList,
+                        onChanged: (String? newSelectedValue) {
+                          selectedProductValue = newSelectedValue;
+                          setState(() {});
+                          print(selectedProductValue);
+                        },
+                      ),
+                      SizedBox(height: 20),
+                    ],
+                  ),
+                ),
+
                 UniversalButton(
                     buttonWidth: 250,
                     title: 'Delete Product',
@@ -149,37 +171,57 @@ class _ManagerDeleteProductsScreenState
     );
   }
 
-  // Custom Textfield
-  textField({
-    required String hint,
+  productDropDownButton({
     required IconData icon,
-    required TextEditingController controller,
-    required FormFieldValidator validator,
-    required TextInputType keyboardType,
+    required String hint,
+    required String? currentSelectedValue,
+    required List<String> dropDownValuesList,
+    required ValueChanged<String?> onChanged,
   }) {
-    return Column(
-      children: [
-        TextFormField(
-          controller: controller,
-          validator: validator,
-          keyboardType: keyboardType,
-          decoration: InputDecoration(
-            hintText: hint,
-            hintStyle: AppTextStyles.nameHeadingTextStyle(size: 15),
-            prefixIcon: Padding(
-              padding: const EdgeInsets.only(left: 20, right: 10),
-              child: Icon(
+    return Container(
+      width: double.infinity,
+      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 3),
+      decoration: BoxDecoration(
+        border: Border.all(color: AppColors.grey),
+        borderRadius: BorderRadius.circular(30),
+      ),
+      child: DropdownButtonHideUnderline(
+        child: DropdownButton<String>(
+          hint: Row(
+            children: [
+              Icon(
                 icon,
                 color: AppColors.green,
               ),
-            ),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(30),
-            ),
+              SizedBox(width: 10),
+              Text(
+                hint,
+                style: AppTextStyles.nameHeadingTextStyle(size: 15),
+              ),
+            ],
           ),
+          value: currentSelectedValue,
+          onChanged: onChanged,
+          items:
+              dropDownValuesList.map<DropdownMenuItem<String>>((String value) {
+            return DropdownMenuItem<String>(
+                value: value,
+                child: Row(
+                  children: [
+                    Icon(
+                      icon,
+                      color: AppColors.green,
+                    ),
+                    SizedBox(width: 10),
+                    Text(
+                      value,
+                      style: AppTextStyles.nameHeadingTextStyle(size: 15),
+                    ),
+                  ],
+                ));
+          }).toList(),
         ),
-        SizedBox(height: 20),
-      ],
+      ),
     );
   }
 }

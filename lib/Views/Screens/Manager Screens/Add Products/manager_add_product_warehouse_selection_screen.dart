@@ -3,6 +3,7 @@ import 'package:project1/Models/warehouses_list_dummy_model.dart';
 import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/text_styles.dart';
 import 'package:project1/Views/Screens/Manager%20Screens/Add%20Products/manager_add_products_screen.dart';
+import 'package:project1/Views/Widgets/custom_snackbar.dart';
 import 'package:project1/Views/Widgets/universal_button.dart';
 
 class ManagerAddProductWarehouseSelectionScreen extends StatefulWidget {
@@ -16,12 +17,18 @@ class ManagerAddProductWarehouseSelectionScreen extends StatefulWidget {
 class _ManagerAddProductWarehouseSelectionScreenState
     extends State<ManagerAddProductWarehouseSelectionScreen> {
   List<bool> selectedWarehouses = [];
+  bool isSelectionModeOn = false;
   // Color containerBackgroundColor = AppColors.lightGreen;
   @override
   void initState() {
     super.initState();
     selectedWarehouses =
         List<bool>.filled(warehousesDummyListContents.length, false);
+  }
+
+  void _updateSelectionMode() {
+    // Check if any warehouse is selected
+    isSelectionModeOn = selectedWarehouses.any((selected) => selected);
   }
 
   @override
@@ -37,9 +44,11 @@ class _ManagerAddProductWarehouseSelectionScreenState
         actions: [
           InkWell(
             onTap: () {
+              bool selectAll = !isSelectionModeOn;
               for (int i = 0; i < selectedWarehouses.length; i++) {
-                selectedWarehouses[i] = !selectedWarehouses[i];
+                selectedWarehouses[i] = selectAll;
               }
+              isSelectionModeOn = selectAll;
               setState(() {});
             },
             borderRadius: BorderRadius.circular(5),
@@ -50,7 +59,7 @@ class _ManagerAddProductWarehouseSelectionScreenState
                 borderRadius: BorderRadius.circular(5),
               ),
               child: Text(
-                'Select all',
+                isSelectionModeOn ? 'Deselect all' : 'Select all',
                 style: AppTextStyles.belowMainHeadingTextStyle(fontSize: 12),
               ),
             ),
@@ -63,22 +72,32 @@ class _ManagerAddProductWarehouseSelectionScreenState
           padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
           child: Column(
             children: [
+              SizedBox(height: 10),
               ListView.builder(
                   itemCount: warehousesDummyListContents.length,
                   shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
                   itemBuilder: (context, index) {
                     return Column(
                       children: [
                         InkWell(
                           onLongPress: () {
                             print('longtap');
+                            isSelectionModeOn = true;
                             selectedWarehouses[index] =
                                 !selectedWarehouses[index];
+                            _updateSelectionMode();
                             setState(() {});
                           },
                           onTap: () {
                             print('ontap');
-                            if (!selectedWarehouses[index]) {
+                            if (isSelectionModeOn) {
+                              selectedWarehouses[index] =
+                                  !selectedWarehouses[index];
+                              _updateSelectionMode();
+
+                              setState(() {});
+                            } else {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -90,22 +109,16 @@ class _ManagerAddProductWarehouseSelectionScreenState
                                             ],
                                           )));
                             }
-                            // else {
-                            //   selectedWarehouses[index] =
-                            //       !selectedWarehouses[index];
-                            //   setState(() {});
-                            // }
                           },
-                          borderRadius: BorderRadius.circular(30),
+                          borderRadius: BorderRadius.circular(20),
                           child: Container(
-                            width: double.infinity,
                             padding: EdgeInsets.symmetric(
-                                horizontal: 20, vertical: 15),
+                                horizontal: 20, vertical: 40),
                             decoration: BoxDecoration(
                                 color: selectedWarehouses[index]
                                     ? AppColors.green.withOpacity(.7)
                                     : AppColors.lightGreen,
-                                borderRadius: BorderRadius.circular(30)),
+                                borderRadius: BorderRadius.circular(20)),
                             child: Center(
                                 child: Text(
                               warehousesDummyListContents[index].name,
@@ -119,24 +132,30 @@ class _ManagerAddProductWarehouseSelectionScreenState
                     );
                   }),
               SizedBox(height: 10),
-              UniversalButton(
-                  title: 'Continue',
-                  ontap: () {
-                    List<String> selectedWarehouseNames = [];
-                    for (int i = 0; i < selectedWarehouses.length; i++) {
-                      if (selectedWarehouses[i]) {
-                        selectedWarehouseNames
-                            .add(warehousesDummyListContents[i].name);
+              Visibility(
+                visible: isSelectionModeOn,
+                child: UniversalButton(
+                    title: 'Continue',
+                    ontap: () {
+                      List<String> selectedWarehouseNames = [];
+                      for (int i = 0; i < selectedWarehouses.length; i++) {
+                        if (selectedWarehouses[i]) {
+                          selectedWarehouseNames
+                              .add(warehousesDummyListContents[i].name);
+                        }
                       }
-                    }
-                    if (selectedWarehouseNames.isNotEmpty) {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => ManagerAddProductsScreen(
-                                  warehouseList: selectedWarehouseNames)));
-                    }
-                  }),
+                      if (selectedWarehouseNames.isNotEmpty) {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ManagerAddProductsScreen(
+                                    warehouseList: selectedWarehouseNames)));
+                      } else {
+                        customSnackbar(
+                            context, 'Select a Warehouse to continue');
+                      }
+                    }),
+              ),
             ],
           ),
         ),
