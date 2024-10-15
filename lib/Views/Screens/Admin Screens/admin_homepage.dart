@@ -9,6 +9,7 @@ import 'package:project1/Views/Screens/Admin%20Screens/Shop%20Records/admin_shop
 import 'package:project1/Views/Screens/Admin%20Screens/Warehouse%20Records/admin_warehouse_list_screen.dart';
 import 'package:project1/Views/Screens/General%20Screens/login_screen.dart';
 import 'package:project1/Views/Screens/Manager%20Screens/Driver%20Records/manager_driver_records_screen.dart';
+import 'package:project1/Views/Screens/Super%20Admin%20Screens/Product%20Management/super_admin_product_management_screen.dart';
 import 'package:project1/Views/Widgets/custom_snackbar.dart';
 
 class AdminHomepage extends StatelessWidget {
@@ -18,9 +19,14 @@ class AdminHomepage extends StatelessWidget {
   Widget build(BuildContext context) {
     final List<Map<String, dynamic>> options = [
       {
-        'title': 'Accounts',
+        'title': 'Accounts Management',
         'icon': Icons.person,
         'screen': AdminAccountsManagementScreen(),
+      },
+      {
+        'title': 'Product Management',
+        'icon': Icons.fastfood,
+        'screen': SuperAdminProductManagementScreen(),
       },
       {
         'title': 'Check Inventory',
