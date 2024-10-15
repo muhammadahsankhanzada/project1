@@ -99,7 +99,8 @@ class _AdminCreateNewAccountScreenState
                     }),
                 SizedBox(height: 10),
                 // Show filtered usernames in a dropdown-like manner
-                if (filteredUsernames.isNotEmpty)
+                if (filteredUsernames.isNotEmpty &&
+                    _searchUserController.text.isNotEmpty)
                   Container(
                     decoration: BoxDecoration(
                       border: Border.all(color: AppColors.green),
@@ -120,6 +121,7 @@ class _AdminCreateNewAccountScreenState
                       }).toList(),
                     ),
                   ),
+                SizedBox(height: 20),
                 Visibility(
                   visible: isUserNameSelected,
                   child: UniversalButton(
@@ -189,7 +191,7 @@ class _AdminCreateNewAccountScreenState
                             });
                       }),
                 ),
-                SizedBox(height: 20),
+                // SizedBox(height: 20),
               ],
             ),
           ),
