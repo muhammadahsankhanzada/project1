@@ -3,7 +3,9 @@ import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/text_styles.dart';
 import 'package:project1/Views/Screens/Admin%20Screens/admin_check_inventory_screen.dart';
 import 'package:project1/Views/Screens/Manager%20Screens/Add%20Products/manager_add_product_warehouse_selection_screen.dart';
+import 'package:project1/Views/Screens/Manager%20Screens/Delete%20Products/manager_delete_product_warehouse_selection_screen.dart';
 import 'package:project1/Views/Screens/Manager%20Screens/Delete%20Products/manager_delete_products_screen.dart';
+import 'package:project1/Views/Screens/Super%20Admin%20Screens/Product%20Management/super_admin_edit_product_warehouse_selection_screen.dart';
 import 'package:project1/Views/Screens/Super%20Admin%20Screens/Product%20Management/super_admin_edit_products_screen.dart';
 
 class SuperAdminProductManagementScreen extends StatelessWidget {
@@ -47,7 +49,8 @@ class SuperAdminProductManagementScreen extends StatelessWidget {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => SuperAdminEditProductsScreen()));
+                        builder: (context) =>
+                            SuperAdminEditProductWarehouseSelectionScreen()));
               },
               title: 'Edit Products'),
           customContainer(
@@ -56,7 +59,8 @@ class SuperAdminProductManagementScreen extends StatelessWidget {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => ManagerDeleteProductsScreen()));
+                        builder: (context) =>
+                            ManagerDeleteProductWarehouseSelectionScreen()));
               },
               title: 'Delete Products'),
           customContainer(

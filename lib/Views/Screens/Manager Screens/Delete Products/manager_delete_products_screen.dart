@@ -5,7 +5,11 @@ import 'package:project1/Views/Widgets/custom_snackbar.dart';
 import 'package:project1/Views/Widgets/universal_button.dart';
 
 class ManagerDeleteProductsScreen extends StatefulWidget {
-  const ManagerDeleteProductsScreen({super.key});
+  final List<String> warehouseList;
+  const ManagerDeleteProductsScreen({
+    super.key,
+    required this.warehouseList,
+  });
 
   @override
   State<ManagerDeleteProductsScreen> createState() =>
