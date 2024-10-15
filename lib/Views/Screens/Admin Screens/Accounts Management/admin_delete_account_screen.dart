@@ -14,8 +14,42 @@ class AdminDeleteAccountScreen extends StatefulWidget {
 
 class _AdminCreateNewAccountScreenState
     extends State<AdminDeleteAccountScreen> {
-  var _emailController = TextEditingController();
+  var _searchUserController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+
+  List<String> predefinedUsernames = [
+    'user1',
+    'user2',
+    'user3',
+    'user4',
+    'admin',
+    'testuser',
+    'example',
+  ];
+  List<String> filteredUsernames = [];
+  bool isUserNameSelected = false;
+
+  @override
+  void initState() {
+    super.initState();
+    filteredUsernames = predefinedUsernames;
+  }
+
+  void _filterUsernames(String query) {
+    if (query.isEmpty) {
+      setState(() {
+        filteredUsernames = predefinedUsernames;
+      });
+    } else {
+      setState(() {
+        filteredUsernames = predefinedUsernames
+            .where((username) =>
+                username.toLowerCase().contains(query.toLowerCase()))
+            .toList();
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,82 +86,109 @@ class _AdminCreateNewAccountScreenState
                 ),
                 SizedBox(height: 30),
                 textField(
-                    hint: 'Email...',
-                    icon: Icons.email_outlined,
-                    controller: _emailController,
-                    keyboardType: TextInputType.emailAddress,
+                    hint: 'Search Username...',
+                    icon: Icons.person,
+                    controller: _searchUserController,
+                    keyboardType: TextInputType.name,
+                    onChanged: _filterUsernames,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Email is required';
+                        return 'Select a user.';
                       }
                       return null;
                     }),
                 SizedBox(height: 10),
-                UniversalButton(
-                    buttonWidth: 250,
-                    title: 'Delete',
-                    ontap: () {
-                      if (_formKey.currentState!.validate()) {}
-                      showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return AlertDialog(
-                              contentPadding: EdgeInsets.zero,
-                              content: Container(
-                                height: 200,
-                                width: 300,
-                                padding: EdgeInsets.symmetric(horizontal: 20),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(30),
-                                  color: AppColors.lightGreen,
-                                ),
-                                child: Column(
-                                  children: [
-                                    SizedBox(height: 20),
-                                    Text(
-                                      'Confirm Deletion?',
-                                      style:
-                                          AppTextStyles.nameHeadingTextStyle(),
-                                    ),
-                                    SizedBox(height: 20),
-                                    Text(
-                                      'Are you sure you want to delete this user\'s account.',
-                                      style: AppTextStyles
-                                          .belowMainHeadingTextStyle(),
-                                    ),
-                                    SizedBox(height: 30),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                      children: [
-                                        UniversalButton(
-                                            title: 'Delete',
-                                            buttonHeight: 40,
-                                            buttonWidth: 110,
-                                            buttonColor:
-                                                AppColors.green.withOpacity(.7),
-                                            ontap: () {
-                                              Navigator.pop(context);
+                // Show filtered usernames in a dropdown-like manner
+                if (filteredUsernames.isNotEmpty)
+                  Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(color: AppColors.green),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Column(
+                      children: filteredUsernames.map((username) {
+                        return ListTile(
+                          title: Text(username),
+                          onTap: () {
+                            _searchUserController.text = username;
+                            setState(() {
+                              filteredUsernames = [];
+                              isUserNameSelected = true;
+                            });
+                          },
+                        );
+                      }).toList(),
+                    ),
+                  ),
+                Visibility(
+                  visible: isUserNameSelected,
+                  child: UniversalButton(
+                      buttonWidth: 250,
+                      title: 'Delete',
+                      ontap: () {
+                        if (_formKey.currentState!.validate()) {}
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                contentPadding: EdgeInsets.zero,
+                                content: Container(
+                                  height: 200,
+                                  width: 300,
+                                  padding: EdgeInsets.symmetric(horizontal: 20),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(30),
+                                    color: AppColors.lightGreen,
+                                  ),
+                                  child: Column(
+                                    children: [
+                                      SizedBox(height: 20),
+                                      Text(
+                                        'Confirm Deletion?',
+                                        style: AppTextStyles
+                                            .nameHeadingTextStyle(),
+                                      ),
+                                      SizedBox(height: 20),
+                                      Text(
+                                        'Are you sure you want to delete this user\'s account.',
+                                        style: AppTextStyles
+                                            .belowMainHeadingTextStyle(),
+                                      ),
+                                      SizedBox(height: 30),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        children: [
+                                          UniversalButton(
+                                              title: 'Delete',
+                                              buttonHeight: 40,
+                                              buttonWidth: 110,
+                                              buttonColor: AppColors.green
+                                                  .withOpacity(.7),
+                                              ontap: () {
+                                                Navigator.pop(context);
 
-                                              customSnackbar(
-                                                  context, 'Account deleted.');
-                                            }),
-                                        UniversalButton(
-                                            title: 'Cancel',
-                                            buttonHeight: 40,
-                                            buttonWidth: 110,
-                                            buttonColor: AppColors.red.shade300,
-                                            ontap: () {
-                                              Navigator.pop(context);
-                                            }),
-                                      ],
-                                    ),
-                                  ],
+                                                customSnackbar(context,
+                                                    'Account deleted.');
+                                              }),
+                                          UniversalButton(
+                                              title: 'Cancel',
+                                              buttonHeight: 40,
+                                              buttonWidth: 110,
+                                              buttonColor:
+                                                  AppColors.red.shade300,
+                                              ontap: () {
+                                                Navigator.pop(context);
+                                              }),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            );
-                          });
-                    }),
+                              );
+                            });
+                      }),
+                ),
                 SizedBox(height: 20),
               ],
             ),
@@ -143,6 +204,7 @@ class _AdminCreateNewAccountScreenState
     required TextEditingController controller,
     required FormFieldValidator validator,
     required TextInputType keyboardType,
+    required ValueChanged<String> onChanged,
   }) {
     return Column(
       children: [
@@ -150,6 +212,7 @@ class _AdminCreateNewAccountScreenState
           controller: controller,
           validator: validator,
           keyboardType: keyboardType,
+          onChanged: onChanged,
           decoration: InputDecoration(
             hintText: hint,
             hintStyle: AppTextStyles.nameHeadingTextStyle(size: 15),
