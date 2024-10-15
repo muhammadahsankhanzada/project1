@@ -13,7 +13,7 @@ class UniversalButton extends StatelessWidget {
     required this.title,
     this.buttonWidth = 200,
     required this.ontap,
-    this.buttonColor = AppColors.green,
+    this.buttonColor = AppColors.universalButton,
     this.buttonHeight = 50,
   });
 
@@ -21,20 +21,21 @@ class UniversalButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: ontap,
-      borderRadius: BorderRadius.circular(30),
+      borderRadius: BorderRadius.circular(10),
       child: Container(
         height: buttonHeight,
         width: buttonWidth,
         padding: EdgeInsets.all(10),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(30),
+          borderRadius: BorderRadius.circular(10),
           color: buttonColor,
         ),
         child: Center(
-          child: Text(
-            title,
-            style: AppTextStyles.nameHeadingTextStyle(size: 16),
-          ),
+          child: Text(title,
+              style: TextStyle(
+                color: AppColors.white,
+                fontSize: 17,
+              )),
         ),
       ),
     );

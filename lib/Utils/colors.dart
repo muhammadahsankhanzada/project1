@@ -14,4 +14,7 @@ class AppColors {
   static const black3 = Color(0xff343434);
   static const black2 = Color(0xff2b2b2b);
   static const black1 = Color(0xff1c1c1c);
+  /////////////
+  static const loginBackground = Color(0xff75D2B3);
+  static const universalButton = Color(0xff2C2C2C);
 }

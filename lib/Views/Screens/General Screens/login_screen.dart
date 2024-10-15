@@ -31,158 +31,181 @@ class _LoginScreenState extends State<LoginScreen> {
     final screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       // backgroundColor: AppColors.lightGreen,
-      appBar: AppBar(
-          title: Text(
-            'Login',
-            style: AppTextStyles.nameHeadingTextStyle(),
-          ),
-          centerTitle: true,
-          backgroundColor: AppColors.green),
+      // appBar: AppBar(
+      //     title: Text(
+      //       'Login',
+      //       style: AppTextStyles.nameHeadingTextStyle(),
+      //     ),
+      //     centerTitle: true,
+      //     backgroundColor: AppColors.green),
       body: Center(
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Lottie.asset(
-                'assets/animations/login.json',
-                width: 200,
-                fit: BoxFit.fill,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SizedBox(height: 50),
+            Container(
+              width: 150,
+              height: 150,
+              padding: EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                color: AppColors.loginBackground.withOpacity(.3),
+                shape: BoxShape.circle,
               ),
-              Container(
-                width: screenWidth,
+              child: Container(
+                padding: EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                    // color: AppColors.white,
-                    ),
-                child: Container(
-                  margin: EdgeInsets.only(left: 20, right: 20),
-                  padding: EdgeInsets.only(right: 20, left: 20),
-                  width: screenWidth,
-                  child: Form(
-                    key: _formKey,
-                    child: Column(
-                      children: [
-                        Text(
-                          "Login to your Account",
-                          style: AppTextStyles.mainHeadingTextStyle(),
-                        ),
-                        SizedBox(height: 30),
-                        TextFormField(
-                          controller: emailController,
-                          keyboardType: TextInputType.emailAddress,
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Email is required';
-                            }
-                            return null;
-                          },
-                          decoration: InputDecoration(
-                            hintText: 'Email',
-                            hintStyle:
-                                AppTextStyles.nameHeadingTextStyle(size: 15),
-                            prefixIcon: Icon(
-                              Icons.email_outlined,
-                              color: AppColors.black,
-                            ),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(30),
-                            ),
+                  color: AppColors.white,
+                  shape: BoxShape.circle,
+                ),
+                child: Lottie.asset(
+                  'assets/animations/login.json',
+                  fit: BoxFit.fill,
+                ),
+              ),
+            ),
+            SizedBox(height: 10),
+            Text(
+              'Welcome Back',
+              style: AppTextStyles.nameHeadingTextStyle(size: 18),
+            ),
+            SizedBox(height: 30),
+            Expanded(
+              child: Container(
+                padding: EdgeInsets.only(right: 30, left: 30, top: 25),
+                decoration: BoxDecoration(
+                    color: AppColors.loginBackground.withOpacity(.3),
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(60),
+                      topRight: Radius.circular(60),
+                    )),
+                width: screenWidth,
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Login to your Account",
+                        style: AppTextStyles.belowMainHeadingTextStyle(
+                            fontSize: 20),
+                      ),
+                      SizedBox(height: 30),
+                      TextFormField(
+                        controller: emailController,
+                        keyboardType: TextInputType.emailAddress,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Email is required';
+                          }
+                          return null;
+                        },
+                        decoration: InputDecoration(
+                          hintText: 'Enter your Email / Phone Number',
+                          filled: true,
+                          fillColor: AppColors.white,
+                          prefixIcon: Icon(
+                            Icons.email_outlined,
+                            color: AppColors.black,
+                          ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
                           ),
                         ),
-                        SizedBox(height: 20),
-                        TextFormField(
-                          controller: passwordController,
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Password is required';
-                            }
-                            return null;
-                          },
-                          obscureText: true,
-                          decoration: InputDecoration(
-                            hintText: 'Password',
-                            hintStyle:
-                                AppTextStyles.nameHeadingTextStyle(size: 15),
-                            prefixIcon: Icon(
-                              Icons.lock_outlined,
-                              color: AppColors.black,
-                            ),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(30),
-                            ),
+                      ),
+                      SizedBox(height: 20),
+                      TextFormField(
+                        controller: passwordController,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Password is required';
+                          }
+                          return null;
+                        },
+                        obscureText: true,
+                        decoration: InputDecoration(
+                          hintText: 'Enter your Password',
+                          filled: true,
+                          fillColor: AppColors.white,
+                          prefixIcon: Icon(
+                            Icons.shield_outlined,
+                            color: AppColors.black,
+                          ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
                           ),
                         ),
-                        SizedBox(height: 20),
-                        GestureDetector(
-                          onTap: () {
+                      ),
+                      SizedBox(height: 20),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      ForgetPasswordScreen()));
+                        },
+                        child: Container(
+                          alignment: Alignment.centerRight,
+                          child: Text(
+                            "Forgot Password?",
+                            style: AppTextStyles.belowMainHeadingTextStyle(
+                                fontSize: 18),
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 30),
+                      UniversalButton(
+                          ontap: () {
+                            // if (_formKey.currentState!.validate()) {
+                            //   // login();
+                            //   if (emailController.text == 'driver' &&
+                            //       passwordController.text == '123') {
+                            //     Navigator.push(
+                            //         context,
+                            //         MaterialPageRoute(
+                            //             builder: (context) =>
+                            //                 DriverHomepageScreen()));
+                            //   }
+                            //   if (emailController.text == 'manager' &&
+                            //       passwordController.text == '123') {
+                            //     Navigator.push(
+                            //         context,
+                            //         MaterialPageRoute(
+                            //             builder: (context) =>
+                            //                 ManagerHomepage()));
+                            //   }
+                            //   if (emailController.text == 'admin' &&
+                            //       passwordController.text == '123') {
+                            //     Navigator.push(
+                            //         context,
+                            //         MaterialPageRoute(
+                            //             builder: (context) =>
+                            //                 AdminHomepage()));
+                            //   }
+                            //   if (emailController.text == 'superadmin' &&
+                            //       passwordController.text == '123') {
+                            //     Navigator.push(
+                            //         context,
+                            //         MaterialPageRoute(
+                            //             builder: (context) =>
+                            //                 SuperAdminHomepage()));
+                            //   }
+                            // }
+
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
-                                        ForgetPasswordScreen()));
+                                        DriverHomepageScreen()));
                           },
-                          child: Container(
-                            alignment: Alignment.centerRight,
-                            child: Text(
-                              "Forgot Password?",
-                              style:
-                                  AppTextStyles.nameHeadingTextStyle(size: 16),
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: 30),
-                        UniversalButton(
-                            ontap: () {
-                              // if (_formKey.currentState!.validate()) {
-                              //   // login();
-                              //   if (emailController.text == 'driver' &&
-                              //       passwordController.text == '123') {
-                              //     Navigator.push(
-                              //         context,
-                              //         MaterialPageRoute(
-                              //             builder: (context) =>
-                              //                 DriverHomepageScreen()));
-                              //   }
-                              //   if (emailController.text == 'manager' &&
-                              //       passwordController.text == '123') {
-                              //     Navigator.push(
-                              //         context,
-                              //         MaterialPageRoute(
-                              //             builder: (context) =>
-                              //                 ManagerHomepage()));
-                              //   }
-                              //   if (emailController.text == 'admin' &&
-                              //       passwordController.text == '123') {
-                              //     Navigator.push(
-                              //         context,
-                              //         MaterialPageRoute(
-                              //             builder: (context) =>
-                              //                 AdminHomepage()));
-                              //   }
-                              //   if (emailController.text == 'superadmin' &&
-                              //       passwordController.text == '123') {
-                              //     Navigator.push(
-                              //         context,
-                              //         MaterialPageRoute(
-                              //             builder: (context) =>
-                              //                 SuperAdminHomepage()));
-                              //   }
-                              // }
-
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          DriverHomepageScreen()));
-                            },
-                            title: 'Login'),
-                      ],
-                    ),
+                          title: 'Login'),
+                    ],
                   ),
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
