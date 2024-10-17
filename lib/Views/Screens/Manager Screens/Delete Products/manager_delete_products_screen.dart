@@ -35,13 +35,14 @@ class _ManagerDeleteProductsScreenState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.lightWhiteBackground,
       appBar: AppBar(
         title: Text(
           'Delete Products',
-          style: AppTextStyles.nameHeadingTextStyle(),
+          style: AppTextStyles.nameHeadingTextStyle(size: 15),
         ),
         centerTitle: true,
-        backgroundColor: AppColors.green,
+        backgroundColor: AppColors.lightWhiteBackground,
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -50,12 +51,14 @@ class _ManagerDeleteProductsScreenState
             key: _formKey,
             child: Column(
               children: [
-                SizedBox(height: 30),
+                SizedBox(height: 20),
                 Align(
                   alignment: Alignment.topLeft,
                   child: Text(
                     'Delete Product',
-                    style: AppTextStyles.nameHeadingTextStyle(size: 20),
+                    style: AppTextStyles.simpleHeadingTextStyle(
+                        fontSize: 20,
+                        textColor: AppColors.universalButtonGreen),
                   ),
                 ),
                 Align(
@@ -104,6 +107,7 @@ class _ManagerDeleteProductsScreenState
                 UniversalButton(
                     buttonWidth: 250,
                     title: 'Delete Product',
+                    borderRadius: 30,
                     ontap: () {
                       if (_formKey.currentState!.validate()) {}
 

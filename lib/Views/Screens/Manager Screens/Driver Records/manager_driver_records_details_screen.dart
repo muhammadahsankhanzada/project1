@@ -31,14 +31,18 @@ class _ManagerDriverRecordsDetailsScreenState
       'Total trips': '30',
     };
     return Scaffold(
-      backgroundColor: AppColors.lightGreen,
+      backgroundColor: AppColors.lightWhiteBackground,
       appBar: AppBar(
         title: Text(
           'Driver Info',
-          style: AppTextStyles.nameHeadingTextStyle(),
+          style: AppTextStyles.simpleHeadingTextStyle(
+            fontWeight: FontWeight.bold,
+            textColor: AppColors.universalButtonGreen,
+            fontSize: 18,
+          ),
         ),
         centerTitle: true,
-        backgroundColor: AppColors.green,
+        backgroundColor: AppColors.lightWhiteBackground,
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -192,7 +196,7 @@ class _ManagerDriverRecordsDetailsScreenState
                                         padding: const EdgeInsets.only(
                                             top: 20, right: 10),
                                         child: Icon(
-                                          Icons.done_all,
+                                          Icons.done_rounded,
                                           color: AppColors.green,
                                         ),
                                       ),

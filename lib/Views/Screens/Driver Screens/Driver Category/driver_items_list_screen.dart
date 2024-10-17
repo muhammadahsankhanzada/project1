@@ -3,7 +3,7 @@ import 'package:project1/Models/product_categories_dummy_model.dart';
 import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/constants.dart';
 import 'package:project1/Utils/text_styles.dart';
-import 'package:project1/Views/Widgets/custom_snackbar.dart';
+import 'package:project1/Views/Widgets/universal_button.dart';
 
 class DriverItemsListScreen extends StatefulWidget {
   final String categoryName;
@@ -20,6 +20,7 @@ class DriverItemsListScreen extends StatefulWidget {
 }
 
 class _DriverItemsListScreenState extends State<DriverItemsListScreen> {
+  var _searchController = TextEditingController();
   int quantity = 0;
   int selectedCategoryIndex = 0;
 
@@ -33,14 +34,14 @@ class _DriverItemsListScreenState extends State<DriverItemsListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.lightGreen,
+      backgroundColor: AppColors.lightWhiteBackground,
       appBar: AppBar(
           title: Text(
             productCategoriesDummyModelContents[selectedCategoryIndex].name,
             style: AppTextStyles.nameHeadingTextStyle(),
           ),
           centerTitle: true,
-          backgroundColor: AppColors.green),
+          backgroundColor: AppColors.lightWhiteBackground),
       body: Column(
         children: [
           // Align(
@@ -73,11 +74,11 @@ class _DriverItemsListScreenState extends State<DriverItemsListScreen> {
                     margin: EdgeInsets.only(left: 5, right: 5),
                     padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                     decoration: BoxDecoration(
-                        color: selectedCategoryIndex == index
-                            ? AppColors.green
-                            : Colors.transparent,
-                        borderRadius: BorderRadius.circular(20),
-                        border: Border.all()),
+                      color: selectedCategoryIndex == index
+                          ? AppColors.green
+                          : Colors.white,
+                      borderRadius: BorderRadius.circular(20),
+                    ),
                     child: Text(
                       productCategoriesDummyModelContents[index].name,
                       style: AppTextStyles.nameHeadingTextStyle(size: 15),
@@ -88,6 +89,34 @@ class _DriverItemsListScreenState extends State<DriverItemsListScreen> {
               scrollDirection: Axis.horizontal,
             ),
           ),
+          SizedBox(height: 10),
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 15),
+            child: TextFormField(
+              controller: _searchController,
+              // validator: (value) {
+              //   if (value == null || value.isEmpty) {
+              //     return 'Enter driver name here';
+              //   }
+              //   return null;
+              // },
+              keyboardType: TextInputType.name,
+              decoration: InputDecoration(
+                hintText: 'Search',
+                filled: true,
+                fillColor: AppColors.white,
+                contentPadding: EdgeInsets.symmetric(horizontal: 30),
+                suffixIcon: Icon(
+                  Icons.search,
+                ),
+                border: OutlineInputBorder(
+                  borderSide: BorderSide.none,
+                  borderRadius: BorderRadius.circular(30),
+                ),
+              ),
+            ),
+          ),
+          SizedBox(height: 15),
           Expanded(
             child: SizedBox(
               // height: 570,
@@ -106,156 +135,135 @@ class _DriverItemsListScreenState extends State<DriverItemsListScreen> {
                                 SliverGridDelegateWithFixedCrossAxisCount(
                                     crossAxisCount: 2,
                                     mainAxisSpacing: 15,
-                                    crossAxisSpacing: 1),
+                                    crossAxisSpacing: 15),
                             itemCount: productCategoriesDummyModelContents[
                                     selectedCategoryIndex]
                                 .products
                                 .length,
                             itemBuilder: (context, index) {
-                              return Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Container(
-                                        height: 120,
-                                        width: 150,
-                                        decoration: BoxDecoration(
-                                          image: DecorationImage(
-                                              fit: BoxFit.fill,
-                                              image: AssetImage(
-                                                  Constants.backgroundImage)),
-                                          color:
-                                              AppColors.white.withOpacity(.9),
+                              return Container(
+                                width: 180,
+                                padding: EdgeInsets.only(
+                                    left: 10, right: 5, top: 10, bottom: 10),
+                                decoration: BoxDecoration(
+                                  color: AppColors.white,
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: Column(
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        ClipRRect(
                                           borderRadius:
                                               BorderRadius.circular(10),
-                                        ),
-                                        child: Padding(
-                                          padding: const EdgeInsets.only(
-                                              right: 10, bottom: 10),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.end,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.end,
-                                            children: [
-                                              Container(
-                                                width: 100,
-                                                height: 40,
-                                                decoration: BoxDecoration(
-                                                  color: AppColors.white
-                                                      .withOpacity(.9),
-                                                  borderRadius:
-                                                      BorderRadius.circular(20),
-                                                ),
-                                                child: Center(
-                                                  child: Row(
-                                                    mainAxisSize:
-                                                        MainAxisSize.min,
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .center,
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .center,
-                                                    children: [
-                                                      IconButton(
-                                                          padding:
-                                                              EdgeInsets.zero,
-                                                          onPressed: () {
-                                                            if (productCategoriesDummyModelContents[
-                                                                        selectedCategoryIndex]
-                                                                    .products[
-                                                                        index]
-                                                                    .quantity >
-                                                                0) {
-                                                              productCategoriesDummyModelContents[
-                                                                      selectedCategoryIndex]
-                                                                  .products[
-                                                                      index]
-                                                                  .quantity--;
-                                                              //
-                                                              print(productCategoriesDummyModelContents[
-                                                                      selectedCategoryIndex]
-                                                                  .products[
-                                                                      index]
-                                                                  .quantity);
-                                                              setState(() {});
-                                                            }
-                                                          },
-                                                          icon: Icon(
-                                                            Icons.remove_circle,
-                                                            size: 20,
-                                                          )),
-                                                      Flexible(
-                                                        child: Text(
-                                                          productCategoriesDummyModelContents[
-                                                                  selectedCategoryIndex]
-                                                              .products[index]
-                                                              .quantity
-                                                              .toString(),
-                                                          style: AppTextStyles
-                                                              .nameHeadingTextStyle(
-                                                                  size: 15),
-                                                        ),
-                                                      ),
-                                                      IconButton(
-                                                          onPressed: () {
-                                                            productCategoriesDummyModelContents[
-                                                                    selectedCategoryIndex]
-                                                                .products[index]
-                                                                .quantity++; //
-                                                            print(productCategoriesDummyModelContents[
-                                                                    selectedCategoryIndex]
-                                                                .products[index]
-                                                                .quantity);
-                                                            setState(() {});
-                                                          },
-                                                          padding:
-                                                              EdgeInsets.zero,
-                                                          icon: Icon(
-                                                            Icons.add_circle,
-                                                            size: 20,
-                                                          )),
-                                                    ],
-                                                  ),
-                                                ),
-                                              )
-                                            ],
+                                          child: Image.asset(
+                                            fit: BoxFit.fill,
+                                            Constants.backgroundImage,
+                                            width: 80,
+                                            height: 120,
                                           ),
                                         ),
-                                      ),
-                                      SizedBox(height: 5),
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            productCategoriesDummyModelContents[
-                                                    selectedCategoryIndex]
-                                                .products[index]
-                                                .name,
-                                            style: AppTextStyles
-                                                .belowMainHeadingTextStyle(
-                                              fontSize: 16,
+                                        SizedBox(width: 10),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            SizedBox(
+                                              width: 60,
+                                              child: Text(
+                                                'Iphone 15 pro max',
+                                                maxLines: 2,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: AppTextStyles
+                                                    .simpleHeadingTextStyle(
+                                                        fontSize: 10),
+                                              ),
                                             ),
-                                          ),
-                                          Text(
-                                            'Rs. ${productCategoriesDummyModelContents[selectedCategoryIndex].products[index].price.toStringAsFixed(0)}',
-                                            style: AppTextStyles
-                                                .belowMainHeadingTextStyle(
-                                                    fontSize: 12),
-                                          )
-                                        ],
-                                      )
-                                    ],
-                                  ),
-                                ],
+                                            Text(
+                                              'New',
+                                              style: AppTextStyles
+                                                  .simpleHeadingTextStyle(
+                                                      fontSize: 10,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                            ),
+                                            Container(
+                                              width: 60,
+                                              margin: EdgeInsets.symmetric(
+                                                  vertical: 5),
+                                              padding: EdgeInsets.symmetric(
+                                                  horizontal: 5),
+                                              decoration: BoxDecoration(
+                                                border: Border.all(),
+                                                borderRadius:
+                                                    BorderRadius.circular(30),
+                                              ),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceEvenly,
+                                                children: [
+                                                  Icon(
+                                                    Icons.remove_circle,
+                                                    size: 15,
+                                                  ),
+                                                  Text('0'),
+                                                  Icon(
+                                                    Icons.add_circle,
+                                                    size: 15,
+                                                  )
+                                                ],
+                                              ),
+                                            ),
+                                            Text(
+                                              'Rs. 95000/-',
+                                              style: AppTextStyles
+                                                  .simpleHeadingTextStyle(
+                                                      fontSize: 12,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                            ),
+                                            Text(
+                                              'Rate',
+                                              style: AppTextStyles
+                                                  .simpleHeadingTextStyle(
+                                                      textColor: AppColors.red,
+                                                      fontSize: 11,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                            ),
+                                            Row(
+                                              children: [
+                                                for (int i = 0; i < 4; i++)
+                                                  Icon(
+                                                    Icons.star,
+                                                    size: 13,
+                                                  ),
+                                              ],
+                                            )
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(height: 10),
+                                    UniversalButton(
+                                        title: 'Add to Cart',
+                                        buttonWidth: 120,
+                                        buttonHeight: 35,
+                                        buttonColor:
+                                            AppColors.universalButtonGreen,
+                                        textSize: 12,
+                                        ontap: () {}),
+                                  ],
+                                ),
                               );
                             }),
-                        SizedBox(height: 50),
+                        SizedBox(height: 30),
                       ],
                     ),
                   ),
@@ -276,20 +284,6 @@ class _DriverItemsListScreenState extends State<DriverItemsListScreen> {
           // ),
         ],
       ),
-      floatingActionButton: SizedBox(
-          width: 300,
-          child: FloatingActionButton(
-              backgroundColor: AppColors.green,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30)),
-              child: Text(
-                'Add to Cart',
-                style: AppTextStyles.nameHeadingTextStyle(),
-              ),
-              onPressed: () {
-                customSnackbar(context, 'Items added to cart');
-              })),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }

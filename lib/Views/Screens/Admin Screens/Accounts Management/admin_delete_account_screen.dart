@@ -53,13 +53,14 @@ class _AdminCreateNewAccountScreenState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.lightWhiteBackground,
       appBar: AppBar(
         title: Text(
           'Delete Account',
           style: AppTextStyles.nameHeadingTextStyle(),
         ),
         centerTitle: true,
-        backgroundColor: AppColors.green,
+        backgroundColor: AppColors.lightWhiteBackground,
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -222,7 +223,6 @@ class _AdminCreateNewAccountScreenState
               padding: const EdgeInsets.only(left: 20, right: 10),
               child: Icon(
                 icon,
-                color: AppColors.green,
               ),
             ),
             border: OutlineInputBorder(

@@ -61,21 +61,46 @@ class AdminHomepage extends StatelessWidget {
     ];
 
     return Scaffold(
+      backgroundColor: AppColors.lightWhiteBackground,
       appBar: AppBar(
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               SizedBox(width: 10),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(Icons.admin_panel_settings),
-                  SizedBox(width: 10),
-                  Text(
-                    'Admin Dashboard',
-                    style: AppTextStyles.nameHeadingTextStyle(),
+              Material(
+                elevation: 4,
+                borderRadius: BorderRadius.circular(10),
+                child: Container(
+                  padding: EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    color: AppColors.lightGreen1,
+                    borderRadius: BorderRadius.circular(10),
                   ),
-                ],
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.grid_view_outlined,
+                        color: AppColors.universalButtonGreen,
+                      ),
+                      SizedBox(width: 10),
+                      Text(
+                        'Admin Dashboard',
+                        style: AppTextStyles.simpleHeadingTextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      SizedBox(width: 10),
+                      Text(
+                        'Welcome!',
+                        style: AppTextStyles.simpleHeadingTextStyle(
+                          fontWeight: FontWeight.bold,
+                          textColor: AppColors.red,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ),
               Row(
                 children: [
@@ -95,42 +120,91 @@ class AdminHomepage extends StatelessWidget {
             ],
           ),
           centerTitle: true,
-          backgroundColor: AppColors.green),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15),
-          child: Column(
-            children: [
-              SizedBox(height: 20),
-              Align(
-                alignment: Alignment.topLeft,
-                child: Text(
-                  'Welcome, Admin!',
-                  style: AppTextStyles.nameHeadingTextStyle(),
+          backgroundColor: AppColors.lightWhiteBackground),
+      body: Column(
+        children: [
+          SizedBox(height: 10),
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 15),
+            child: TextFormField(
+              // controller: _searchController,
+              // validator: (value) {
+              //   if (value == null || value.isEmpty) {
+              //     return 'Enter driver name here';
+              //   }
+              //   return null;
+              // },
+              keyboardType: TextInputType.name,
+              decoration: InputDecoration(
+                hintText: 'Search',
+                filled: true,
+                fillColor: AppColors.white,
+                contentPadding: EdgeInsets.symmetric(horizontal: 30),
+                suffixIcon: Icon(
+                  Icons.search,
+                ),
+                border: OutlineInputBorder(
+                  borderSide: BorderSide.none,
+                  borderRadius: BorderRadius.circular(30),
                 ),
               ),
-              Align(
-                alignment: Alignment.topLeft,
-                child: Text(
-                  'Let\'s manage controls and access.',
-                  style: AppTextStyles.belowMainHeadingTextStyle(fontSize: 15),
-                ),
-              ),
-              SizedBox(height: 20),
-              ...options.map((option) {
-                return customContainer(
-                    ontap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => option['screen']));
-                    },
-                    title: option['title'],
-                    icon: option['icon']);
-              }).toList(),
-            ],
+            ),
           ),
-        ),
+          SizedBox(height: 10),
+          Expanded(
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15),
+                child: Column(
+                  children: [
+                    // SizedBox(height: 20),
+                    // Align(
+                    //   alignment: Alignment.topLeft,
+                    //   child: Text(
+                    //     'Welcome, Admin!',
+                    //     style: AppTextStyles.nameHeadingTextStyle(),
+                    //   ),
+                    // ),
+                    // Align(
+                    //   alignment: Alignment.topLeft,
+                    //   child: Text(
+                    //     'Let\'s manage controls and access.',
+                    //     style: AppTextStyles.belowMainHeadingTextStyle(fontSize: 15),
+                    //   ),
+                    // ),
+
+                    SizedBox(height: 10),
+                    for (int i = 0; i < 2; i++)
+                      Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              customInfoContainer(),
+                              customInfoContainer(),
+                            ],
+                          ),
+                          SizedBox(height: 10),
+                        ],
+                      ),
+                    SizedBox(height: 20),
+                    ...options.map((option) {
+                      return customContainer(
+                          ontap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => option['screen']));
+                          },
+                          title: option['title'],
+                          icon: option['icon']);
+                    }).toList(),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -147,7 +221,7 @@ class AdminHomepage extends StatelessWidget {
           child: Container(
             padding: EdgeInsets.symmetric(horizontal: 30, vertical: 20),
             decoration: BoxDecoration(
-              color: AppColors.lightGrey.withOpacity(.2),
+              color: AppColors.lightGreen1,
               // border: Border.all(
               //   color: AppColors.grey,
               // ),
@@ -156,11 +230,15 @@ class AdminHomepage extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(title),
+                Text(
+                  title,
+                  style: AppTextStyles.simpleHeadingTextStyle(
+                      textColor: AppColors.white),
+                ),
                 SizedBox(width: 10),
                 Icon(
                   icon,
-                  color: AppColors.green,
+                  color: AppColors.white,
                 ),
               ],
             ),
@@ -168,6 +246,63 @@ class AdminHomepage extends StatelessWidget {
         ),
         SizedBox(height: 10),
       ],
+    );
+  }
+
+  // Custom Container
+  customInfoContainer() {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+      decoration: BoxDecoration(
+        color: AppColors.black1,
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Text(
+                'Sales',
+                style: AppTextStyles.simpleHeadingTextStyle(
+                  textColor: AppColors.white,
+                  fontSize: 12,
+                ),
+              ),
+              SizedBox(width: 10),
+              Text(
+                '+2.5%',
+                style: AppTextStyles.simpleHeadingTextStyle(
+                  textColor: AppColors.green,
+                  fontSize: 12,
+                ),
+              ),
+            ],
+          ),
+          Text(
+            '\$27632',
+            style: AppTextStyles.simpleHeadingTextStyle(
+              textColor: AppColors.white,
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          Text(
+            'Compared to',
+            style: AppTextStyles.simpleHeadingTextStyle(
+              textColor: AppColors.white,
+              fontSize: 12,
+            ),
+          ),
+          Text(
+            '(\$21340 last year)',
+            style: AppTextStyles.simpleHeadingTextStyle(
+              textColor: AppColors.white,
+              fontSize: 12,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

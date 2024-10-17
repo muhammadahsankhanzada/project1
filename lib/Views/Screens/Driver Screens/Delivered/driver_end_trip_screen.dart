@@ -9,6 +9,16 @@ class DriverEndTripScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          'Checkout List',
+          style: AppTextStyles.simpleHeadingTextStyle(
+            textColor: AppColors.lightGreen1,
+            fontSize: 20,
+          ),
+        ),
+        centerTitle: true,
+      ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
         child: SingleChildScrollView(
@@ -19,11 +29,14 @@ class DriverEndTripScreen extends StatelessWidget {
                 alignment: Alignment.centerLeft,
                 child: Text(
                   'Today\'s Orders',
-                  style: AppTextStyles.nameHeadingTextStyle(),
+                  style: AppTextStyles.simpleHeadingTextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
               ),
               SizedBox(height: 15),
-              for (int i = 0; i < 3; i++)
+              for (int i = 0; i < 6; i++)
                 Column(
                   children: [
                     InkWell(
@@ -41,6 +54,7 @@ class DriverEndTripScreen extends StatelessWidget {
                           border: Border.all(
                             color: AppColors.lightGrey,
                           ),
+                          color: AppColors.lightGreen1.withOpacity(.3),
                           borderRadius: BorderRadius.circular(15),
                         ),
                         child: Row(
@@ -96,7 +110,7 @@ class DriverEndTripScreen extends StatelessWidget {
                     SizedBox(height: 10),
                   ],
                 ),
-              SizedBox(height: 10),
+              SizedBox(height: 50),
               // UniversalButton(
               //     title: 'Submit',
               //     ontap: () {

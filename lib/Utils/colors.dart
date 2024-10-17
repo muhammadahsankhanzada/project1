@@ -17,4 +17,8 @@ class AppColors {
   /////////////
   static const loginBackground = Color(0xff75D2B3);
   static const universalButton = Color(0xff2C2C2C);
+  static const lightGreen1 = Color(0xff75D2B3);
+  static const universalButtonGreen = Color(0xff289989);
+  static const lightWhiteBackground = Color(0xffF5F5F5);
+  static const containerBackground = Color(0xff9ED1CA);
 }

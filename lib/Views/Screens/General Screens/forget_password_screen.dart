@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
 import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/text_styles.dart';
 import 'package:project1/Views/Widgets/custom_snackbar.dart';
@@ -19,35 +18,84 @@ class ForgetPasswordScreen extends StatelessWidget {
           centerTitle: true,
           backgroundColor: AppColors.green),
       body: Center(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Lottie.asset('assets/animations/forgetPassword.json', width: 200),
-              Text(
-                'Request a Password Reset',
-                style: AppTextStyles.nameHeadingTextStyle(),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            SizedBox(height: 50),
+            Icon(
+              Icons.shield,
+              size: 100,
+              color: AppColors.loginBackground.withOpacity(.3),
+            ),
+            SizedBox(height: 10),
+            Text(
+              'Welcome!',
+              style: AppTextStyles.nameHeadingTextStyle(
+                size: 40,
+                color: AppColors.lightGreen1,
               ),
-              SizedBox(height: 30),
-              TextFormField(
-                maxLines: 1,
-                decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                    hintText: 'Enter Email',
-                    prefixIcon: Icon(Icons.email_outlined)),
+            ),
+            SizedBox(height: 20),
+            Expanded(
+              child: Container(
+                padding: EdgeInsets.only(right: 30, left: 30, top: 25),
+                decoration: BoxDecoration(
+                    color: AppColors.loginBackground.withOpacity(.3),
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(60),
+                      topRight: Radius.circular(60),
+                    )),
+                width: double.infinity,
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          'Password Reset',
+                          style: AppTextStyles.simpleHeadingTextStyle(
+                              fontSize: 20),
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                      TextFormField(
+                        maxLines: 1,
+                        decoration: InputDecoration(
+                            filled: true,
+                            fillColor: AppColors.white,
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            hintText: 'Enter Email',
+                            prefixIcon: Icon(Icons.email_outlined)),
+                      ),
+                      SizedBox(height: 40),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          UniversalButton(
+                              title: 'Confirm',
+                              buttonWidth: 150,
+                              buttonColor: AppColors.universalButtonGreen,
+                              ontap: () {
+                                customSnackbar(context,
+                                    'Password reset request submitted.');
+                              }),
+                          UniversalButton(
+                              title: 'Cancel',
+                              buttonWidth: 150,
+                              ontap: () {
+                                Navigator.pop(context);
+                              }),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
               ),
-              SizedBox(height: 30),
-              UniversalButton(
-                  title: 'Reset Password',
-                  ontap: () {
-                    customSnackbar(
-                        context, 'Password reset request submitted.');
-                  })
-            ],
-          ),
+            )
+          ],
         ),
       ),
     );

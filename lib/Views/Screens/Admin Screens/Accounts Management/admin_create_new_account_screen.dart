@@ -50,13 +50,14 @@ class _AdminCreateNewAccountScreenState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.lightWhiteBackground,
       appBar: AppBar(
         title: Text(
           'Create Account',
           style: AppTextStyles.nameHeadingTextStyle(),
         ),
         centerTitle: true,
-        backgroundColor: AppColors.green,
+        backgroundColor: AppColors.lightWhiteBackground,
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -65,7 +66,7 @@ class _AdminCreateNewAccountScreenState
             key: _formKey,
             child: Column(
               children: [
-                SizedBox(height: 20),
+                SizedBox(height: 10),
                 Align(
                   alignment: Alignment.topLeft,
                   child: Text(
@@ -112,7 +113,7 @@ class _AdminCreateNewAccountScreenState
                             child: Icon(
                               Icons.camera_alt,
                               size: 30,
-                              color: AppColors.green,
+                              color: AppColors.black,
                             )),
                       ),
                       SizedBox(height: 20),
@@ -308,7 +309,6 @@ class _AdminCreateNewAccountScreenState
               padding: const EdgeInsets.only(left: 20, right: 10),
               child: Icon(
                 icon,
-                color: AppColors.green,
               ),
             ),
             border: OutlineInputBorder(
@@ -341,7 +341,6 @@ class _AdminCreateNewAccountScreenState
             children: [
               Icon(
                 icon,
-                color: AppColors.green,
               ),
               SizedBox(width: 10),
               Text(
@@ -360,7 +359,6 @@ class _AdminCreateNewAccountScreenState
                   children: [
                     Icon(
                       icon,
-                      color: AppColors.green,
                     ),
                     SizedBox(width: 10),
                     Text(

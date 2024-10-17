@@ -38,13 +38,14 @@ class _ManagerAddProductsScreenState extends State<ManagerAddProductsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.lightWhiteBackground,
       appBar: AppBar(
         title: Text(
           'Add Products',
-          style: AppTextStyles.nameHeadingTextStyle(),
+          style: AppTextStyles.simpleHeadingTextStyle(),
         ),
         centerTitle: true,
-        backgroundColor: AppColors.green,
+        backgroundColor: AppColors.lightWhiteBackground,
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -53,12 +54,13 @@ class _ManagerAddProductsScreenState extends State<ManagerAddProductsScreen> {
             key: _formKey,
             child: Column(
               children: [
-                SizedBox(height: 20),
                 Align(
                   alignment: Alignment.topLeft,
                   child: Text(
                     'Add New Product',
-                    style: AppTextStyles.nameHeadingTextStyle(size: 20),
+                    style: AppTextStyles.simpleHeadingTextStyle(
+                        fontSize: 18,
+                        textColor: AppColors.universalButtonGreen),
                   ),
                 ),
                 Align(
@@ -78,11 +80,10 @@ class _ManagerAddProductsScreenState extends State<ManagerAddProductsScreen> {
                       width: 200,
                       decoration: BoxDecoration(
                           border: Border.all(color: AppColors.grey),
-                          borderRadius: BorderRadius.circular(10)),
+                          borderRadius: BorderRadius.circular(20)),
                       child: Icon(
                         Icons.camera_alt,
-                        size: 30,
-                        color: AppColors.green,
+                        size: 35,
                       )),
                 ),
                 SizedBox(height: 20),
@@ -110,7 +111,7 @@ class _ManagerAddProductsScreenState extends State<ManagerAddProductsScreen> {
                         children: [
                           Icon(
                             Icons.grid_view,
-                            color: AppColors.green,
+                            color: AppColors.black,
                           ),
                           SizedBox(width: 10),
                           Text(
@@ -133,7 +134,7 @@ class _ManagerAddProductsScreenState extends State<ManagerAddProductsScreen> {
                               children: [
                                 Icon(
                                   Icons.grid_view,
-                                  color: AppColors.green,
+                                  color: AppColors.black,
                                 ),
                                 SizedBox(width: 10),
                                 Text(
@@ -173,7 +174,8 @@ class _ManagerAddProductsScreenState extends State<ManagerAddProductsScreen> {
                 SizedBox(height: 10),
                 UniversalButton(
                     buttonWidth: 250,
-                    title: 'Add Product',
+                    borderRadius: 30,
+                    title: 'Add New Product',
                     ontap: () {
                       if (_formKey.currentState!.validate()) {}
                     }),
@@ -206,7 +208,7 @@ class _ManagerAddProductsScreenState extends State<ManagerAddProductsScreen> {
               padding: const EdgeInsets.only(left: 20, right: 10),
               child: Icon(
                 icon,
-                color: AppColors.green,
+                color: AppColors.black,
               ),
             ),
             border: OutlineInputBorder(

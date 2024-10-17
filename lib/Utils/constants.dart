@@ -8,4 +8,5 @@ class Constants {
   static const String deleteProducts = 'assets/images/delete.jpg';
   static const String availableProducts = 'assets/images/available.png';
   static const String driverRecords = 'assets/images/records.jpg';
+  static const String driverBack = 'assets/images/driverBack.jpeg';
 }

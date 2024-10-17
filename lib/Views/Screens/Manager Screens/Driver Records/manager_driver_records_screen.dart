@@ -36,14 +36,18 @@ class _ManagerDriverRecordsScreenState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.lightGreen,
+      backgroundColor: AppColors.lightWhiteBackground,
       appBar: AppBar(
         title: Text(
           'Drivers Records',
-          style: AppTextStyles.nameHeadingTextStyle(),
+          style: AppTextStyles.simpleHeadingTextStyle(
+            fontWeight: FontWeight.bold,
+            textColor: AppColors.universalButtonGreen,
+            fontSize: 18,
+          ),
         ),
         centerTitle: true,
-        backgroundColor: AppColors.green,
+        backgroundColor: AppColors.lightWhiteBackground,
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -62,15 +66,17 @@ class _ManagerDriverRecordsScreenState
               keyboardType: TextInputType.name,
               decoration: InputDecoration(
                 hintText: 'Search driver name...',
-                hintStyle: AppTextStyles.nameHeadingTextStyle(size: 15),
-                prefixIcon: Padding(
+                filled: true,
+                fillColor: AppColors.white,
+                contentPadding: EdgeInsets.symmetric(horizontal: 20),
+                suffixIcon: Padding(
                   padding: const EdgeInsets.only(left: 20, right: 10),
                   child: Icon(
                     Icons.search,
-                    color: AppColors.green,
                   ),
                 ),
                 border: OutlineInputBorder(
+                  borderSide: BorderSide.none,
                   borderRadius: BorderRadius.circular(30),
                 ),
               ),
@@ -103,7 +109,7 @@ class _ManagerDriverRecordsScreenState
                                   horizontal: 30, vertical: 15),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(40),
-                                color: AppColors.white.withOpacity(.7),
+                                color: AppColors.white,
                               ),
                               child: Row(
                                 children: [
@@ -151,9 +157,9 @@ class _ManagerDriverRecordsScreenState
                                             ),
                                           ],
                                         ),
-                                        Icon(
-                                          Icons.assessment,
-                                        )
+                                        // Icon(
+                                        //   Icons.assessment,
+                                        // )
                                       ],
                                     ),
                                   ),

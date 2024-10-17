@@ -3,45 +3,20 @@ import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/constants.dart';
 import 'package:project1/Utils/text_styles.dart';
 import 'package:project1/Views/Screens/Driver%20Screens/Driver%20Cart/Start%20Trip/driver_store_required_and_return_items_screen.dart';
+import 'package:project1/Views/Widgets/universal_button.dart';
 
 class DriverShopsListScreen extends StatelessWidget {
   const DriverShopsListScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // List<String> productNames = [
-    //   'Organic Ketchup',
-    //   'Almond Butter',
-    //   'Coconut Oil',
-    //   'Quinoa',
-    //   'Dark Chocolate',
-    //   'Oat Milk',
-    //   'Avocado Oil',
-    //   'Chia Seeds',
-    //   'Maple Syrup',
-    //   'Brown Rice',
-    // ];
-    // List<int> productQuantities = [
-    //   2, // Organic Ketchup
-    //   1, // Almond Butter
-    //   3, // Coconut Oil
-    //   1, // Quinoa
-    //   5, // Dark Chocolate
-    //   4, // Oat Milk
-    //   2, // Avocado Oil
-    //   6, // Chia Seeds
-    //   1, // Maple Syrup
-    //   3, // Brown Rice
-    // ];
     return Scaffold(
-      backgroundColor: AppColors.lightGreen,
       appBar: AppBar(
           title: Text(
             'Shops List',
-            style: AppTextStyles.nameHeadingTextStyle(),
+            style: AppTextStyles.simpleHeadingTextStyle(fontSize: 18),
           ),
-          centerTitle: true,
-          backgroundColor: AppColors.green),
+          centerTitle: true),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -89,60 +64,66 @@ class DriverShopsListScreen extends StatelessWidget {
               for (int i = 0; i < 5; i++)
                 Container(
                   margin: EdgeInsets.only(bottom: 10),
-                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
                   decoration: BoxDecoration(
-                    border: Border.all(
-                      color: AppColors.green,
-                      width: 2,
-                    ),
-                    borderRadius: BorderRadius.circular(50),
+                    color: AppColors.containerBackground,
+                    borderRadius: BorderRadius.circular(20),
                   ),
                   child: Padding(
                     padding: const EdgeInsets.all(10),
-                    child: InkWell(
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    DriverStoreRequiredAndReturnItemsScreen()));
-                      },
-                      child: Row(
-                        children: [
-                          CircleAvatar(
-                            radius: 30,
-                            backgroundImage: AssetImage(Constants.myImage),
-                          ),
-                          SizedBox(width: 10),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              SizedBox(
-                                width: 250,
-                                child: Text(
-                                  'Ahsan Store',
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 1,
-                                  style: AppTextStyles.nameHeadingTextStyle(),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        CircleAvatar(
+                          radius: 50,
+                          backgroundImage: AssetImage(Constants.myImage),
+                        ),
+                        SizedBox(width: 20),
+                        Column(
+                          children: [
+                            SizedBox(
+                              width: 200,
+                              child: Text(
+                                'Ahsan Store',
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 1,
+                                style: AppTextStyles.simpleHeadingTextStyle(
+                                  fontSize: 18,
+                                  textColor: AppColors.white,
                                 ),
                               ),
-                              SizedBox(
-                                width: 250,
-                                child: Text(
-                                  'Shah Faisal Colony, Shahra e Faisal Karachi',
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 1,
-                                  style:
-                                      AppTextStyles.belowMainHeadingTextStyle(),
+                            ),
+                            SizedBox(
+                              width: 200,
+                              child: Text(
+                                'Shah Faisal Colony, Shahra e Faisal Karachi',
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 2,
+                                style: AppTextStyles.simpleHeadingTextStyle(
+                                  fontSize: 12,
+                                  textColor: AppColors.white,
                                 ),
                               ),
-                            ],
-                          ),
-                        ],
-                      ),
+                            ),
+                            SizedBox(height: 10),
+                            UniversalButton(
+                                title: 'View All',
+                                buttonWidth: 120,
+                                buttonHeight: 45,
+                                ontap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              DriverStoreRequiredAndReturnItemsScreen()));
+                                }),
+                          ],
+                        ),
+                      ],
                     ),
                   ),
-                )
+                ),
+              SizedBox(height: 60),
             ],
           ),
         ),

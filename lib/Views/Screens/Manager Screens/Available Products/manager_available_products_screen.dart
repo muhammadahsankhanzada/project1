@@ -18,14 +18,14 @@ class _ManagerAvailableProductsScreenState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.lightGreen,
+      backgroundColor: AppColors.lightWhiteBackground,
       appBar: AppBar(
         title: Text(
           'Available Products',
           style: AppTextStyles.nameHeadingTextStyle(),
         ),
         centerTitle: true,
-        backgroundColor: AppColors.green,
+        backgroundColor: AppColors.lightWhiteBackground,
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -39,7 +39,9 @@ class _ManagerAvailableProductsScreenState
                   margin: EdgeInsets.only(top: 10),
                   child: Text(
                     'Categories',
-                    style: AppTextStyles.nameHeadingTextStyle(size: 20),
+                    style: AppTextStyles.simpleHeadingTextStyle(
+                        fontSize: 20,
+                        textColor: AppColors.universalButtonGreen),
                   ),
                 ),
               ),
@@ -56,13 +58,12 @@ class _ManagerAvailableProductsScreenState
                           EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20),
-                          border: Border.all(
-                            color: AppColors.green,
-                            width: 2,
-                          )),
-                      child: Text(
-                        ProductCategoriesList.productCategories[index],
-                        style: AppTextStyles.nameHeadingTextStyle(size: 15),
+                          color: AppColors.white),
+                      child: Center(
+                        child: Text(
+                          ProductCategoriesList.productCategories[index],
+                          style: AppTextStyles.nameHeadingTextStyle(size: 15),
+                        ),
                       ),
                     );
                   },

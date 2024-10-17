@@ -10,13 +10,14 @@ class ManagerPendingRequestsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.lightWhiteBackground,
       appBar: AppBar(
         title: Text(
           'Pending Requests',
           style: AppTextStyles.nameHeadingTextStyle(),
         ),
         centerTitle: true,
-        backgroundColor: AppColors.green,
+        backgroundColor: AppColors.lightWhiteBackground,
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
@@ -39,16 +40,14 @@ class ManagerPendingRequestsScreen extends StatelessWidget {
                       padding: EdgeInsets.all(15),
                       // margin: EdgeInsets.only(bottom: 10),
                       decoration: BoxDecoration(
-                        border: Border.all(
-                          color: AppColors.lightGrey,
-                        ),
+                        color: AppColors.containerBackground,
                         borderRadius: BorderRadius.circular(15),
                       ),
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           CircleAvatar(
-                            radius: 20,
+                            radius: 45,
                             backgroundImage: AssetImage(Constants.myImage),
                           ),
                           SizedBox(width: 10),
@@ -56,55 +55,28 @@ class ManagerPendingRequestsScreen extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'Muhammad Ahsan',
-                                style:
-                                    AppTextStyles.belowMainHeadingTextStyle(),
+                                'Ahsan Store',
+                                style: AppTextStyles.belowMainHeadingTextStyle(
+                                    fontSize: 18),
                               ),
-                              Row(
-                                children: [
-                                  Text(
-                                    'Route: ',
-                                    style: AppTextStyles.nameHeadingTextStyle(
-                                        size: 12),
-                                  ),
-                                  Text(
-                                    'Shah Faisal, Karachi',
-                                    style:
-                                        AppTextStyles.belowMainHeadingTextStyle(
-                                            fontSize: 12),
-                                  ),
-                                ],
+                              SizedBox(
+                                width: 200,
+                                child: Text(
+                                  'Route: Shah Faisal, Karachi',
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: AppTextStyles.simpleHeadingTextStyle(
+                                      fontSize: 15, textColor: AppColors.white),
+                                ),
                               ),
                               SizedBox(height: 10),
                               Text(
                                 'Requested Products: 30',
-                                style: AppTextStyles.belowMainHeadingTextStyle(
-                                    fontSize: 12),
+                                style: AppTextStyles.simpleHeadingTextStyle(
+                                    fontSize: 15, textColor: AppColors.white),
                               ),
                             ],
                           ),
-                          Expanded(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.only(top: 20, right: 10),
-                                  child: Icon(
-                                    Icons.arrow_forward,
-                                    color: AppColors.grey,
-                                  ),
-                                ),
-                                // SizedBox(height: 20),
-                                // Text(
-                                //   'Amount recieved: 3000',
-                                //   style: AppTextStyles.belowMainHeadingTextStyle(
-                                //       fontSize: 12),
-                                // ),
-                              ],
-                            ),
-                          )
                         ],
                       ),
                     ),

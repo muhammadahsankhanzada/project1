@@ -10,13 +10,14 @@ class AdminAccountsManagementScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.lightWhiteBackground,
       appBar: AppBar(
           title: Text(
             'Accounts',
             style: AppTextStyles.nameHeadingTextStyle(),
           ),
           centerTitle: true,
-          backgroundColor: AppColors.green),
+          backgroundColor: AppColors.lightWhiteBackground),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -77,19 +78,23 @@ class AdminAccountsManagementScreen extends StatelessWidget {
           child: Container(
             padding: EdgeInsets.symmetric(horizontal: 30, vertical: 20),
             decoration: BoxDecoration(
-              border: Border.all(
-                color: AppColors.grey,
-              ),
+              color: AppColors.lightGreen1,
               borderRadius: BorderRadius.circular(10),
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(title),
+                Text(
+                  title,
+                  style: AppTextStyles.simpleHeadingTextStyle(
+                    fontWeight: FontWeight.bold,
+                    textColor: AppColors.white,
+                  ),
+                ),
                 SizedBox(width: 10),
                 Icon(
                   icon,
-                  color: AppColors.green,
+                  color: AppColors.white,
                 ),
               ],
             ),

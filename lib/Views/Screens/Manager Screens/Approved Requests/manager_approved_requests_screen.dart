@@ -39,16 +39,14 @@ class ManagerApprovedRequestsScreen extends StatelessWidget {
                       padding: EdgeInsets.all(15),
                       // margin: EdgeInsets.only(bottom: 10),
                       decoration: BoxDecoration(
-                        border: Border.all(
-                          color: AppColors.lightGrey,
-                        ),
+                        color: AppColors.containerBackground,
                         borderRadius: BorderRadius.circular(15),
                       ),
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           CircleAvatar(
-                            radius: 20,
+                            radius: 45,
                             backgroundImage: AssetImage(Constants.myImage),
                           ),
                           SizedBox(width: 10),
@@ -56,30 +54,22 @@ class ManagerApprovedRequestsScreen extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'Muhammad Ahsan',
-                                style:
-                                    AppTextStyles.belowMainHeadingTextStyle(),
+                                'Ahsan Store',
+                                style: AppTextStyles.belowMainHeadingTextStyle(
+                                    fontSize: 18),
                               ),
-                              Row(
-                                children: [
-                                  Text(
-                                    'Route: ',
-                                    style: AppTextStyles.nameHeadingTextStyle(
-                                        size: 12),
-                                  ),
-                                  Text(
-                                    'Shah Faisal, Karachi',
-                                    style:
-                                        AppTextStyles.belowMainHeadingTextStyle(
-                                            fontSize: 12),
-                                  ),
-                                ],
+                              Text(
+                                'Route: Shah Faisal, Karachi',
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                                style: AppTextStyles.simpleHeadingTextStyle(
+                                    fontSize: 15, textColor: AppColors.white),
                               ),
                               SizedBox(height: 10),
                               Text(
                                 'Requested Products: 30',
-                                style: AppTextStyles.belowMainHeadingTextStyle(
-                                    fontSize: 12),
+                                style: AppTextStyles.simpleHeadingTextStyle(
+                                    fontSize: 15, textColor: AppColors.white),
                               ),
                             ],
                           ),
@@ -93,7 +83,7 @@ class ManagerApprovedRequestsScreen extends StatelessWidget {
                                       const EdgeInsets.only(top: 20, right: 10),
                                   child: Icon(
                                     Icons.done_all,
-                                    color: AppColors.green,
+                                    size: 30,
                                   ),
                                 ),
                                 // SizedBox(height: 20),

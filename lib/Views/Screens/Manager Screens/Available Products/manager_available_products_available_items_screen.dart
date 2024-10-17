@@ -28,7 +28,7 @@ class _ManagerAvailableProductsAvailableItemsScreenState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.lightGreen,
+      backgroundColor: AppColors.lightWhiteBackground,
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
         child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
@@ -38,7 +38,8 @@ class _ManagerAvailableProductsAvailableItemsScreenState
               margin: EdgeInsets.only(top: 10),
               child: Text(
                 'Categories',
-                style: AppTextStyles.nameHeadingTextStyle(size: 20),
+                style: AppTextStyles.simpleHeadingTextStyle(
+                    fontSize: 20, textColor: AppColors.universalButtonGreen),
               ),
             ),
           ),
@@ -59,17 +60,16 @@ class _ManagerAvailableProductsAvailableItemsScreenState
                     margin: EdgeInsets.only(left: 5, right: 5),
                     padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                     decoration: BoxDecoration(
-                        color: selectedCategoryIndex == index
-                            ? AppColors.green
-                            : AppColors.transparent,
-                        borderRadius: BorderRadius.circular(20),
-                        border: Border.all(
-                          color: AppColors.green,
-                          width: 2,
-                        )),
-                    child: Text(
-                      productCategoriesDummyModelContents[index].name,
-                      style: AppTextStyles.nameHeadingTextStyle(size: 15),
+                      color: selectedCategoryIndex == index
+                          ? AppColors.lightGreen1.withOpacity(.3)
+                          : AppColors.white,
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Center(
+                      child: Text(
+                        productCategoriesDummyModelContents[index].name,
+                        style: AppTextStyles.nameHeadingTextStyle(size: 15),
+                      ),
                     ),
                   ),
                 );

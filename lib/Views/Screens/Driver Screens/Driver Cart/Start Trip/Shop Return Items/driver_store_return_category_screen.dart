@@ -17,16 +17,52 @@ class _DriverStoreReturnCategoryScreenState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.red.shade100,
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            SizedBox(height: 15),
+            Container(
+              height: 40,
+              width: double.infinity,
+              child: ListView.builder(
+                itemCount: productCategoriesDummyModelContents.length,
+                itemBuilder: (context, index) {
+                  return InkWell(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => DriverReturnItemScreen(
+                                  categoryIndex: index)));
+                    },
+                    borderRadius: BorderRadius.circular(20),
+                    child: Container(
+                      margin: EdgeInsets.only(left: 5, right: 5),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: AppColors.lightGreen1.withOpacity(.3),
+                      ),
+                      child: Center(
+                        child: Text(
+                          productCategoriesDummyModelContents[index].name,
+                          style: AppTextStyles.belowMainHeadingTextStyle(
+                              fontSize: 15),
+                        ),
+                      ),
+                    ),
+                  );
+                },
+                scrollDirection: Axis.horizontal,
+              ),
+            ),
             GridView.builder(
                 shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics(),
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
+                  crossAxisCount: 3,
                 ),
                 itemCount: productCategoriesDummyModelContents.length,
                 itemBuilder: (context, index) {
@@ -43,8 +79,8 @@ class _DriverStoreReturnCategoryScreenState
                                       )));
                         },
                         child: Container(
-                          height: 150,
-                          width: 180,
+                          height: 70,
+                          width: 110,
                           decoration: BoxDecoration(
                             image: DecorationImage(
                                 fit: BoxFit.fill,
@@ -59,8 +95,8 @@ class _DriverStoreReturnCategoryScreenState
                       SizedBox(height: 5),
                       Text(
                         productCategoriesDummyModelContents[index].name,
-                        style: AppTextStyles.nameHeadingTextStyle(
-                          size: 16,
+                        style: AppTextStyles.simpleHeadingTextStyle(
+                          fontSize: 14,
                         ),
                       )
                     ],

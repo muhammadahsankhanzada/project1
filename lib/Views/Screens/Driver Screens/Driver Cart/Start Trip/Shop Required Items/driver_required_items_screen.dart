@@ -3,7 +3,6 @@ import 'package:project1/Models/product_categories_dummy_model.dart';
 import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/constants.dart';
 import 'package:project1/Utils/text_styles.dart';
-import 'package:project1/Views/Widgets/custom_snackbar.dart';
 import 'package:project1/Views/Widgets/universal_button.dart';
 
 class DriverRequiredItemsScreen extends StatefulWidget {
@@ -30,19 +29,17 @@ class _DriverRequiredItemsScreenState extends State<DriverRequiredItemsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.lightGreen,
       appBar: AppBar(
-          title: Text(
-            'Required Items',
-            style: AppTextStyles.nameHeadingTextStyle(),
-          ),
-          centerTitle: true,
-          backgroundColor: AppColors.green),
+        title: Text(
+          'Required Items',
+          style: AppTextStyles.nameHeadingTextStyle(),
+        ),
+        centerTitle: true,
+      ),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            SizedBox(height: 20),
             Align(
               alignment: Alignment.centerLeft,
               child: Container(
@@ -71,17 +68,16 @@ class _DriverRequiredItemsScreenState extends State<DriverRequiredItemsScreen> {
                       padding:
                           EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                       decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: selectedCategoryIndex == index
-                              ? AppColors.green
-                              : AppColors.transparent,
-                          border: Border.all(
-                            color: AppColors.green,
-                            width: 2,
-                          )),
-                      child: Text(
-                        productCategoriesDummyModelContents[index].name,
-                        style: AppTextStyles.nameHeadingTextStyle(size: 15),
+                        borderRadius: BorderRadius.circular(20),
+                        color: selectedCategoryIndex == index
+                            ? AppColors.green
+                            : AppColors.lightGreen1.withOpacity(.3),
+                      ),
+                      child: Center(
+                        child: Text(
+                          productCategoriesDummyModelContents[index].name,
+                          style: AppTextStyles.nameHeadingTextStyle(size: 15),
+                        ),
                       ),
                     ),
                   );
@@ -98,60 +94,66 @@ class _DriverRequiredItemsScreenState extends State<DriverRequiredItemsScreen> {
                 margin: EdgeInsets.only(bottom: 10, left: 20, right: 20),
                 padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
                 decoration: BoxDecoration(
-                  color: AppColors.white,
+                  color: AppColors.lightGreen1.withOpacity(.3),
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Image.asset(
-                      Constants.logoImage,
-                      width: 100,
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: Image.asset(
+                        Constants.backgroundImage,
+                        width: 100,
+                      ),
                     ),
-                    SizedBox(width: 10),
+                    SizedBox(width: 20),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Text(
                           productCategoriesDummyModelContents[
                                   selectedCategoryIndex]
                               .products[index]
                               .name,
-                          style: AppTextStyles.nameHeadingTextStyle(size: 15),
+                          style: AppTextStyles.simpleHeadingTextStyle(
+                              fontSize: 14),
                         ),
                         Text(
-                          '${productCategoriesDummyModelContents[selectedCategoryIndex].products[index].quantity} available',
+                          'New',
                           style: AppTextStyles.nameHeadingTextStyle(
                             size: 13,
                           ),
                         ),
                         SizedBox(height: 20),
                         Text(
-                          'Rs. ${(productCategoriesDummyModelContents[selectedCategoryIndex].products[index].price * productCategoriesDummyModelContents[selectedCategoryIndex].products[index].quantity).toStringAsFixed(0)}',
+                          'Rs. ${(productCategoriesDummyModelContents[selectedCategoryIndex].products[index].price * productCategoriesDummyModelContents[selectedCategoryIndex].products[index].quantity).toStringAsFixed(0)}/-',
                           style: AppTextStyles.belowMainHeadingTextStyle(
-                              fontSize: 13, textColor: AppColors.green),
+                              fontSize: 13),
                         ),
                       ],
                     ),
+                    Spacer(),
                     Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
-                        Row(
-                          children: [
-                            Transform.scale(
-                              scale: 1.5,
-                              child: Checkbox(
-                                  activeColor: AppColors.green,
-                                  value: isProductSelected,
-                                  onChanged: (bool? value) {
-                                    setState(() {
-                                      isProductSelected = value!;
-                                    });
-                                  }),
-                            )
-                          ],
-                        ),
+                        // Row(
+                        //   children: [
+                        //     Transform.scale(
+                        //       scale: 1.5,
+                        //       child: Checkbox(
+                        //           activeColor: AppColors.green,
+                        //           value: isProductSelected,
+                        //           onChanged: (bool? value) {
+                        //             setState(() {
+                        //               isProductSelected = value!;
+                        //             });
+                        //           }),
+                        //     )
+                        //   ],
+                        // ),
                         Row(
                           children: [
                             IconButton(
@@ -171,8 +173,6 @@ class _DriverRequiredItemsScreenState extends State<DriverRequiredItemsScreen> {
                                 },
                                 icon: Icon(
                                   Icons.remove_circle,
-                                  // size: 20,
-                                  color: AppColors.green,
                                 )),
                             Text(
                               productCategoriesDummyModelContents[
@@ -194,10 +194,16 @@ class _DriverRequiredItemsScreenState extends State<DriverRequiredItemsScreen> {
                                 padding: EdgeInsets.zero,
                                 icon: Icon(
                                   Icons.add_circle,
-                                  color: AppColors.green,
-                                  // size: 20,
                                 )),
                           ],
+                        ),
+                        UniversalButton(
+                          title: 'Add',
+                          buttonWidth: 100,
+                          buttonHeight: 35,
+                          buttonColor: AppColors.universalButtonGreen,
+                          textSize: 15,
+                          ontap: () {},
                         ),
                       ],
                     ),
@@ -205,16 +211,16 @@ class _DriverRequiredItemsScreenState extends State<DriverRequiredItemsScreen> {
                 ),
               );
             }),
-            SizedBox(height: 20),
-            UniversalButton(
-                title: 'Add items',
-                ontap: () {
-                  customSnackbar(
-                    context,
-                    'Required items added to cart',
-                  );
-                }),
-            SizedBox(height: 20),
+            // SizedBox(height: 20),
+            // UniversalButton(
+            //     title: 'Add items',
+            //     ontap: () {
+            //       customSnackbar(
+            //         context,
+            //         'Required items added to cart',
+            //       );
+            //     }),
+            SizedBox(height: 50),
           ],
         ),
       ),

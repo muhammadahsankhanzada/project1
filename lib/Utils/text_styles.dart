@@ -41,12 +41,25 @@ class AppTextStyles {
     );
   }
 
-  // Main Heading TextStyle
+  // Below Main Heading TextStyle
   static TextStyle belowMainHeadingTextStyle(
       {double fontSize = 15, Color textColor = AppColors.black}) {
     return TextStyle(
       fontWeight: FontWeight.w500,
       fontSize: fontSize,
+      fontFamily: 'Poppins',
+      color: textColor,
+    );
+  }
+
+  // Simple Heading TextStyle
+  static TextStyle simpleHeadingTextStyle(
+      {double fontSize = 15,
+      Color textColor = AppColors.black,
+      FontWeight fontWeight = FontWeight.w400}) {
+    return TextStyle(
+      fontSize: fontSize,
+      fontWeight: fontWeight,
       fontFamily: 'Poppins',
       color: textColor,
     );

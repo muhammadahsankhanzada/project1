@@ -19,6 +19,14 @@ class ManagerAvailableProductsItemsListScreen extends StatefulWidget {
 class _ManagerAvailableProductsItemsListScreenState
     extends State<ManagerAvailableProductsItemsListScreen> {
   int selectedCategoryIndex = 0;
+  int _selectedIndex = 0;
+
+  void _onTabChanged(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
   @override
   void initState() {
     super.initState();
@@ -34,7 +42,7 @@ class _ManagerAvailableProductsItemsListScreenState
             children: [
               Container(
                 padding: EdgeInsets.only(top: 20, left: 20, right: 20),
-                color: AppColors.green,
+                color: AppColors.lightWhiteBackground,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -44,33 +52,72 @@ class _ManagerAvailableProductsItemsListScreenState
                           Navigator.pop(context);
                         },
                         child: Icon(Icons.arrow_back)),
+                    SizedBox(height: 20),
                     TabBar(
+                      labelPadding: EdgeInsets.zero,
+                      onTap: _onTabChanged,
+                      dividerColor: AppColors.transparent,
                       labelColor: AppColors.black,
-                      labelStyle: AppTextStyles.nameHeadingTextStyle(),
+                      unselectedLabelColor: AppColors.white,
+                      labelStyle: AppTextStyles.simpleHeadingTextStyle(),
+                      indicator: BoxDecoration(
+                        // color: AppColors.green,
+                        borderRadius: BorderRadius.circular(30),
+                      ),
                       tabs: [
-                        Tab(
+                        Container(
+                          decoration: BoxDecoration(
+                            color: _selectedIndex == 0
+                                ? AppColors.lightWhiteBackground
+                                : AppColors.black,
+                            border: Border.all(),
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(30),
+                              bottomLeft: Radius.circular(30),
+                            ),
+                          ),
+                          child: Tab(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.done,
+                                  color: AppColors.black,
+                                ),
+                                SizedBox(width: 5),
+                                Text(
+                                  'New Items',
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        Container(
+                          decoration: BoxDecoration(
+                            color: _selectedIndex == 1
+                                ? AppColors.lightWhiteBackground
+                                : AppColors.black,
+                            border: Border.all(),
+                            borderRadius: BorderRadius.only(
+                              topRight: Radius.circular(30),
+                              bottomRight: Radius.circular(30),
+                            ),
+                          ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Icon(Icons.assignment_add),
+                              Icon(
+                                Icons.done,
+                                color: AppColors.black,
+                              ),
                               SizedBox(width: 5),
-                              Text(
-                                'New Items',
+                              Tab(
+                                child: Text(
+                                  'Return Items',
+                                ),
                               ),
                             ],
                           ),
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(Icons.assignment_return_outlined),
-                            SizedBox(width: 5),
-                            Tab(
-                              child: Text(
-                                'Return Items',
-                              ),
-                            ),
-                          ],
                         ),
                       ],
                     ),

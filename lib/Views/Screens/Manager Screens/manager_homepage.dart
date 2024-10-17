@@ -20,6 +20,7 @@ class ManagerHomepage extends StatelessWidget {
     return DefaultTabController(
         length: 2,
         child: Scaffold(
+          backgroundColor: AppColors.lightWhiteBackground,
           appBar: AppBar(
             title: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -56,17 +57,16 @@ class ManagerHomepage extends StatelessWidget {
               ],
             ),
             centerTitle: true,
-            backgroundColor: AppColors.green,
+            backgroundColor: AppColors.lightWhiteBackground,
           ),
           body: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              SizedBox(height: 30),
               Row(
                 children: [
                   SizedBox(width: 20),
                   CircleAvatar(
-                    radius: 25,
+                    radius: 20,
                     backgroundImage: AssetImage(
                       Constants.myImage,
                     ),
@@ -77,74 +77,121 @@ class ManagerHomepage extends StatelessWidget {
                     children: [
                       Text(
                         'Robert Williamson',
-                        style: AppTextStyles.nameHeadingTextStyle(),
+                        style: AppTextStyles.nameHeadingTextStyle(size: 13),
                       ),
                       Text(
                         'Warehouse Manager',
-                        style: AppTextStyles.belowMainHeadingTextStyle(
-                            fontSize: 12),
+                        style:
+                            AppTextStyles.simpleHeadingTextStyle(fontSize: 13),
                       ),
                     ],
                   )
                 ],
               ),
-              SizedBox(height: 20),
+              SizedBox(height: 10),
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 15),
+                child: TextFormField(
+                  // controller: _searchController,
+                  // validator: (value) {
+                  //   if (value == null || value.isEmpty) {
+                  //     return 'Enter driver name here';
+                  //   }
+                  //   return null;
+                  // },
+                  keyboardType: TextInputType.name,
+                  decoration: InputDecoration(
+                    hintText: 'Search',
+                    filled: true,
+                    fillColor: AppColors.white,
+                    contentPadding: EdgeInsets.symmetric(horizontal: 30),
+                    suffixIcon: Icon(
+                      Icons.search,
+                    ),
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide.none,
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(height: 10),
               Expanded(
-                child: GridView.builder(
-                    shrinkWrap: true,
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        childAspectRatio: 1.3,
-                        crossAxisCount: 2,
-                        mainAxisSpacing: 5,
-                        crossAxisSpacing: 5),
-                    itemCount: managerHomepageContents.length,
-                    itemBuilder: (context, index) {
-                      return categoryContainer(() {
-                        if (index % 6 == 0) {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      ManagerPendingRequestsScreen()));
-                        }
-                        if (index % 6 == 1) {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      ManagerApprovedRequestsScreen()));
-                        }
-                        if (index % 6 == 2) {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      ManagerAddProductWarehouseSelectionScreen()));
-                        }
-                        if (index % 6 == 3) {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      ManagerDeleteProductWarehouseSelectionScreen()));
-                        }
-                        if (index % 6 == 4) {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      ManagerAvailableProductsScreen()));
-                        }
-                        if (index % 6 == 5) {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      ManagerDriverRecordsScreen()));
-                        }
-                      }, managerHomepageContents[index].image,
-                          managerHomepageContents[index].title);
-                    }),
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Container(
+                        padding: EdgeInsets.only(left: 10),
+                        width: double.infinity,
+                        height: 150,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                              fit: BoxFit.fill,
+                              image: AssetImage(Constants.driverBack)),
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                      GridView.builder(
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                            childAspectRatio: 1.9,
+                            crossAxisCount: 2,
+                            // mainAxisSpacing: 5,
+                            // crossAxisSpacing: 5,
+                          ),
+                          itemCount: managerHomepageContents.length,
+                          itemBuilder: (context, index) {
+                            return categoryContainer(() {
+                              if (index % 6 == 0) {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            ManagerPendingRequestsScreen()));
+                              }
+                              if (index % 6 == 1) {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            ManagerApprovedRequestsScreen()));
+                              }
+                              if (index % 6 == 2) {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            ManagerAddProductWarehouseSelectionScreen()));
+                              }
+                              if (index % 6 == 3) {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            ManagerDeleteProductWarehouseSelectionScreen()));
+                              }
+                              if (index % 6 == 4) {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            ManagerAvailableProductsScreen()));
+                              }
+                              if (index % 6 == 5) {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            ManagerDriverRecordsScreen()));
+                              }
+                            }, managerHomepageContents[index].image,
+                                managerHomepageContents[index].title);
+                          }),
+                    ],
+                  ),
+                ),
               )
             ],
           ),
@@ -164,19 +211,19 @@ categoryContainer(VoidCallback ontap, String image, String title) {
       child: Container(
         padding: EdgeInsets.all(15),
         decoration: BoxDecoration(
-          border: Border.all(color: AppColors.green),
+          color: AppColors.white,
           borderRadius: BorderRadius.circular(15),
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Image.asset(
-              image,
-              width: 100,
-              height: 60,
-            ),
-            SizedBox(height: 10),
+            // Image.asset(
+            //   image,
+            //   width: 100,
+            //   height: 60,
+            // ),
+            // SizedBox(height: 10),
             Text(
               title,
               style: AppTextStyles.belowMainHeadingTextStyle(fontSize: 14),

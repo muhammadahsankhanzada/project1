@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:project1/Models/products_dummy_data_model.dart';
 import 'package:project1/Utils/colors.dart';
+import 'package:project1/Utils/constants.dart';
 import 'package:project1/Utils/text_styles.dart';
 
 class ManagerDriverRecordsTripDetailsScreen extends StatelessWidget {
@@ -9,117 +9,157 @@ class ManagerDriverRecordsTripDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.lightWhiteBackground,
       appBar: AppBar(
         title: Text(
           '6th Oct 2024',
-          style: AppTextStyles.nameHeadingTextStyle(),
+          style: AppTextStyles.simpleHeadingTextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 18,
+            textColor: AppColors.universalButtonGreen,
+          ),
         ),
         centerTitle: true,
-        backgroundColor: AppColors.green,
+        backgroundColor: AppColors.lightWhiteBackground,
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: SingleChildScrollView(
           child: Column(
             children: [
-              for (int i = 0; i < 3; i++)
-                Column(
+              Align(
+                alignment: Alignment.topLeft,
+                child: Text(
+                  'Ahsan Store',
+                  style: AppTextStyles.simpleHeadingTextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              SizedBox(height: 15),
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: AppColors.lightGreen1.withOpacity(.3)),
+                child: Column(
                   children: [
+                    ListView.builder(
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        itemCount: 3,
+                        itemBuilder: (context, index) {
+                          return Column(
+                            children: [
+                              Row(
+                                children: [
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(10),
+                                    child: Image.asset(
+                                      Constants.backgroundImage,
+                                      width: 100,
+                                    ),
+                                  ),
+                                  SizedBox(width: 20),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        'Iphone 15 pro max',
+                                        style: AppTextStyles
+                                            .simpleHeadingTextStyle(
+                                                fontSize: 14),
+                                      ),
+                                      Text(
+                                        'New',
+                                        style:
+                                            AppTextStyles.nameHeadingTextStyle(
+                                          size: 13,
+                                        ),
+                                      ),
+                                      Text(
+                                        '29Nov, 01:20 pm',
+                                        style: AppTextStyles
+                                            .simpleHeadingTextStyle(
+                                                fontSize: 14),
+                                      ),
+                                      SizedBox(height: 10),
+                                    ],
+                                  ),
+                                  Expanded(
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.end,
+                                      children: [
+                                        Text(
+                                          'Rs. 95000/-',
+                                          style: AppTextStyles
+                                              .belowMainHeadingTextStyle(
+                                                  fontSize: 16),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(height: 5),
+                              Divider(
+                                color: AppColors.lightGreen1,
+                              )
+                            ],
+                          );
+                        }),
                     SizedBox(height: 20),
-                    Align(
-                      alignment: Alignment.topLeft,
-                      child: Text(
-                        'Ahsan Store',
-                        style: AppTextStyles.nameHeadingTextStyle(size: 20),
-                      ),
-                    ),
-                    SizedBox(height: 10),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          'Items',
-                          style: AppTextStyles.nameHeadingTextStyle(),
-                        ),
-                        Text(
-                          'Quantity',
-                          style: AppTextStyles.nameHeadingTextStyle(),
-                        ),
-                        Text(
-                          'Price',
-                          style: AppTextStyles.nameHeadingTextStyle(),
-                        ),
-                      ],
-                    ),
-                    Divider(
-                      color: AppColors.black,
-                    ),
-                    for (int i = 0;
-                        i < productsDummyDataModelContent.length;
-                        i++)
-                      Row(
-                        children: [
-                          Expanded(
-                            flex: 2,
-                            child: Text(
-                              productsDummyDataModelContent[i].name,
-                              style: AppTextStyles.belowMainHeadingTextStyle(),
-                            ),
+                          'Orders',
+                          style: AppTextStyles.simpleHeadingTextStyle(
+                            fontWeight: FontWeight.w500,
                           ),
-                          Expanded(
-                            child: Text(
-                              'x${productsDummyDataModelContent[i].quantity}',
-                              style: AppTextStyles.nameHeadingTextStyle(),
-                            ),
-                          ),
-                          Expanded(
-                            child: Text(
-                              'Rs. ${productsDummyDataModelContent[i].price}',
-                              style: AppTextStyles.belowMainHeadingTextStyle(),
-                            ),
-                          ),
-                        ],
-                      ),
-                    SizedBox(height: 10),
-                    Divider(
-                      color: AppColors.black,
-                    ),
-                    Row(
-                      children: [
-                        Text(
-                          'Delivered Products',
-                          style: AppTextStyles.belowMainHeadingTextStyle(
-                              fontSize: 18),
                         ),
-                        Spacer(),
                         Text(
                           '30',
-                          style: AppTextStyles.nameHeadingTextStyle(size: 18),
+                          style: AppTextStyles.simpleHeadingTextStyle(),
                         ),
                       ],
                     ),
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          'Total Price',
-                          style: AppTextStyles.belowMainHeadingTextStyle(
-                              fontSize: 18),
+                          'Discount',
+                          style: AppTextStyles.simpleHeadingTextStyle(
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
-                        Spacer(),
                         Text(
-                          '5000',
-                          style: AppTextStyles.nameHeadingTextStyle(size: 18),
+                          '5%',
+                          style: AppTextStyles.simpleHeadingTextStyle(),
                         ),
                       ],
                     ),
-                    Icon(
-                      Icons.more_horiz,
-                      color: AppColors.green,
-                      size: 50,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Total Amount',
+                          style: AppTextStyles.nameHeadingTextStyle(),
+                        ),
+                        Text(
+                          'xxxxx',
+                          style: AppTextStyles.simpleHeadingTextStyle(),
+                        ),
+                      ],
                     ),
-                    SizedBox(height: 20),
                   ],
                 ),
+              ),
             ],
           ),
         ),
