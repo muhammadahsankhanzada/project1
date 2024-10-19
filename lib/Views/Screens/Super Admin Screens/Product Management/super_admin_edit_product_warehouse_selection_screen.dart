@@ -33,13 +33,18 @@ class _SuperAdminEditProductWarehouseSelectionScreenState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.lightWhiteBackground,
       appBar: AppBar(
         title: Text(
           'Select Warehouse',
-          style: AppTextStyles.nameHeadingTextStyle(),
+          style: AppTextStyles.simpleHeadingTextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+            textColor: AppColors.universalButtonGreen,
+          ),
         ),
         centerTitle: true,
-        backgroundColor: AppColors.green,
+        backgroundColor: AppColors.lightWhiteBackground,
         actions: [
           InkWell(
             onTap: () {
@@ -54,7 +59,7 @@ class _SuperAdminEditProductWarehouseSelectionScreenState
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
               decoration: BoxDecoration(
-                color: AppColors.white.withOpacity(.8),
+                color: AppColors.lightGreen1,
                 borderRadius: BorderRadius.circular(5),
               ),
               child: Text(
@@ -116,7 +121,7 @@ class _SuperAdminEditProductWarehouseSelectionScreenState
                             decoration: BoxDecoration(
                                 color: selectedWarehouses[index]
                                     ? AppColors.green.withOpacity(.7)
-                                    : AppColors.lightGreen,
+                                    : AppColors.lightGreen1.withOpacity(.7),
                                 borderRadius: BorderRadius.circular(20)),
                             child: Center(
                                 child: Text(

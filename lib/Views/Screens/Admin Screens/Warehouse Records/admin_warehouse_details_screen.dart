@@ -33,14 +33,14 @@ class _AdminWarehouseDetailsScreenState
       'Shipping Hours': '9 AM - 6 PM',
     };
     return Scaffold(
-      backgroundColor: AppColors.lightGreen,
+      backgroundColor: AppColors.lightWhiteBackground,
       appBar: AppBar(
           title: Text(
             'Warehouse Info',
             style: AppTextStyles.nameHeadingTextStyle(),
           ),
           centerTitle: true,
-          backgroundColor: AppColors.green),
+          backgroundColor: AppColors.lightWhiteBackground),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -73,7 +73,7 @@ class _AdminWarehouseDetailsScreenState
             Container(
               height: 100,
               decoration: BoxDecoration(
-                color: AppColors.white,
+                color: AppColors.lightGreen1.withOpacity(.3),
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -150,7 +150,7 @@ class _AdminWarehouseDetailsScreenState
               padding: EdgeInsets.symmetric(horizontal: 10, vertical: 15),
               margin: EdgeInsets.symmetric(horizontal: 15),
               decoration: BoxDecoration(
-                color: AppColors.white.withOpacity(.7),
+                color: AppColors.lightGreen1.withOpacity(.3),
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Row(

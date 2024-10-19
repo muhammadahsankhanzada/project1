@@ -15,8 +15,9 @@ class ManagerPendingRequestDetailsScreen extends StatelessWidget {
         title: Text(
           'Order Details',
           style: AppTextStyles.simpleHeadingTextStyle(
-            textColor: AppColors.green,
+            textColor: AppColors.universalButtonGreen,
             fontSize: 18,
+            fontWeight: FontWeight.bold,
           ),
         ),
         centerTitle: true,
@@ -27,11 +28,6 @@ class ManagerPendingRequestDetailsScreen extends StatelessWidget {
           child: Column(
             children: [
               SizedBox(height: 10),
-              Container(
-                height: 100,
-                decoration: BoxDecoration(
-                    color: AppColors.lightGreen1, shape: BoxShape.circle),
-              ),
               Text(
                 'Request Summary',
                 style: AppTextStyles.simpleHeadingTextStyle(
@@ -220,6 +216,7 @@ class ManagerPendingRequestDetailsScreen extends StatelessWidget {
                   ),
                   UniversalButton(
                     title: 'Disapprove',
+                    buttonColor: AppColors.red,
                     buttonWidth: 150,
                     ontap: () {
                       customSnackbar(context, 'Request Disapproved');

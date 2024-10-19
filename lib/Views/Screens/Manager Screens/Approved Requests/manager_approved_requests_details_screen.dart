@@ -12,7 +12,11 @@ class ManagerApprovedRequestsDetailsScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           'Order Details',
-          style: AppTextStyles.nameHeadingTextStyle(),
+          style: AppTextStyles.simpleHeadingTextStyle(
+            textColor: AppColors.universalButtonGreen,
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+          ),
         ),
         centerTitle: true,
       ),
@@ -25,7 +29,7 @@ class ManagerApprovedRequestsDetailsScreen extends StatelessWidget {
               Align(
                 alignment: Alignment.topLeft,
                 child: Text(
-                  'Ahsan Store',
+                  'Muhammad Ahsan',
                   style: AppTextStyles.simpleHeadingTextStyle(fontSize: 18),
                 ),
               ),

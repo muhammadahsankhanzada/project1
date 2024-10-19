@@ -46,13 +46,18 @@ class _SuperAdminEditProductsScreenState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.lightWhiteBackground,
       appBar: AppBar(
           title: Text(
             'Edit Products',
-            style: AppTextStyles.nameHeadingTextStyle(),
+            style: AppTextStyles.simpleHeadingTextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              textColor: AppColors.universalButtonGreen,
+            ),
           ),
           centerTitle: true,
-          backgroundColor: AppColors.green),
+          backgroundColor: AppColors.lightWhiteBackground),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),

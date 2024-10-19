@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/text_styles.dart';
-import 'package:project1/Views/Screens/General%20Screens/login_screen.dart';
 import 'package:project1/Views/Screens/Super%20Admin%20Screens/Product%20Management/super_admin_product_management_screen.dart';
 import 'package:project1/Views/Screens/Super%20Admin%20Screens/Reports%20and%20Analytics/super_admin_reports_and_analytics_screen.dart';
 import 'package:project1/Views/Screens/Super%20Admin%20Screens/Shop%20Management/super_admin_shop_management_screen.dart';
 import 'package:project1/Views/Screens/Super%20Admin%20Screens/User%20Management/super_admin_user_management_screen.dart';
 import 'package:project1/Views/Screens/Super%20Admin%20Screens/Warehouse%20Management/super_admin_warehouse_management_screen.dart';
-import 'package:project1/Views/Widgets/custom_snackbar.dart';
 
 class SuperAdminHomepage extends StatelessWidget {
   const SuperAdminHomepage({super.key});
@@ -42,41 +40,49 @@ class SuperAdminHomepage extends StatelessWidget {
       },
     ];
     return Scaffold(
+      backgroundColor: AppColors.lightWhiteBackground,
       appBar: AppBar(
           title: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               SizedBox(width: 10),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Icons.admin_panel_settings),
+                  Icon(
+                    Icons.admin_panel_settings,
+                    color: AppColors.universalButtonGreen,
+                  ),
                   SizedBox(width: 10),
                   Text(
                     'Super Admin Dashboard',
-                    style: AppTextStyles.nameHeadingTextStyle(),
+                    style: AppTextStyles.simpleHeadingTextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                      textColor: AppColors.universalButtonGreen,
+                    ),
                   ),
                 ],
               ),
-              Row(
-                children: [
-                  InkWell(
-                      onTap: () {
-                        Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => LoginScreen()));
+              // Row(
+              //   children: [
+              //     InkWell(
+              //         onTap: () {
+              //           Navigator.pushReplacement(
+              //               context,
+              //               MaterialPageRoute(
+              //                   builder: (context) => LoginScreen()));
 
-                        customSnackbar(context, 'Logout');
-                      },
-                      child: Icon(Icons.logout)),
-                  SizedBox(width: 10),
-                ],
-              ),
+              //           customSnackbar(context, 'Logout');
+              //         },
+              //         child: Icon(Icons.logout)),
+              //     SizedBox(width: 10),
+              //   ],
+              // ),
             ],
           ),
           centerTitle: true,
-          backgroundColor: AppColors.green),
+          backgroundColor: AppColors.lightWhiteBackground),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15),

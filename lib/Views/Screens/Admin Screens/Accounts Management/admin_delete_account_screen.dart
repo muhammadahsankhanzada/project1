@@ -57,7 +57,11 @@ class _AdminCreateNewAccountScreenState
       appBar: AppBar(
         title: Text(
           'Delete Account',
-          style: AppTextStyles.nameHeadingTextStyle(),
+          style: AppTextStyles.simpleHeadingTextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 18,
+            textColor: AppColors.universalButtonGreen,
+          ),
         ),
         centerTitle: true,
         backgroundColor: AppColors.lightWhiteBackground,

@@ -14,7 +14,11 @@ class AdminAccountsManagementScreen extends StatelessWidget {
       appBar: AppBar(
           title: Text(
             'Accounts',
-            style: AppTextStyles.nameHeadingTextStyle(),
+            style: AppTextStyles.simpleHeadingTextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 18,
+              textColor: AppColors.universalButtonGreen,
+            ),
           ),
           centerTitle: true,
           backgroundColor: AppColors.lightWhiteBackground),
@@ -28,14 +32,16 @@ class AdminAccountsManagementScreen extends StatelessWidget {
                 alignment: Alignment.topLeft,
                 child: Text(
                   'Accounts Management',
-                  style: AppTextStyles.nameHeadingTextStyle(),
+                  style: AppTextStyles.belowMainHeadingTextStyle(
+                    fontSize: 18,
+                  ),
                 ),
               ),
               Align(
                 alignment: Alignment.topLeft,
                 child: Text(
-                  'Manage user accounts, including creation, modification, and deletion, from a centralized interface.',
-                  style: AppTextStyles.belowMainHeadingTextStyle(fontSize: 13),
+                  'Manage user accounts, including creation, modification, and deletion.',
+                  style: AppTextStyles.simpleHeadingTextStyle(fontSize: 13),
                 ),
               ),
               SizedBox(height: 20),
@@ -75,28 +81,32 @@ class AdminAccountsManagementScreen extends StatelessWidget {
         InkWell(
           onTap: ontap,
           borderRadius: BorderRadius.circular(10),
-          child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 30, vertical: 20),
-            decoration: BoxDecoration(
-              color: AppColors.lightGreen1,
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  title,
-                  style: AppTextStyles.simpleHeadingTextStyle(
-                    fontWeight: FontWeight.bold,
-                    textColor: AppColors.white,
+          child: Material(
+            elevation: 4,
+            borderRadius: BorderRadius.circular(10),
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 30, vertical: 20),
+              decoration: BoxDecoration(
+                color: AppColors.universalButtonGreen,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    title,
+                    style: AppTextStyles.simpleHeadingTextStyle(
+                      fontWeight: FontWeight.bold,
+                      textColor: AppColors.white,
+                    ),
                   ),
-                ),
-                SizedBox(width: 10),
-                Icon(
-                  icon,
-                  color: AppColors.white,
-                ),
-              ],
+                  SizedBox(width: 10),
+                  Icon(
+                    icon,
+                    color: AppColors.white,
+                  ),
+                ],
+              ),
             ),
           ),
         ),

@@ -39,7 +39,11 @@ class _ManagerDeleteProductsScreenState
       appBar: AppBar(
         title: Text(
           'Delete Products',
-          style: AppTextStyles.nameHeadingTextStyle(size: 15),
+          style: AppTextStyles.simpleHeadingTextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+            textColor: AppColors.universalButtonGreen,
+          ),
         ),
         centerTitle: true,
         backgroundColor: AppColors.lightWhiteBackground,
@@ -61,14 +65,7 @@ class _ManagerDeleteProductsScreenState
                         textColor: AppColors.universalButtonGreen),
                   ),
                 ),
-                Align(
-                  alignment: Alignment.topLeft,
-                  child: Text(
-                    'Are you sure you want to delete this product?\nThis action cannot be undone..',
-                    style: AppTextStyles.belowMainHeadingTextStyle(
-                        fontSize: 15, textColor: AppColors.red.shade400),
-                  ),
-                ),
+
                 SizedBox(height: 20),
                 //Category DropDown
                 productDropDownButton(

@@ -27,20 +27,24 @@ class AdminManagerRecordsDetailsScreen extends StatelessWidget {
       'Requests Rejected': '10',
     };
     return Scaffold(
-      backgroundColor: AppColors.lightGreen,
+      backgroundColor: AppColors.lightWhiteBackground,
       appBar: AppBar(
           title: Text(
             'Manager Info',
-            style: AppTextStyles.nameHeadingTextStyle(),
+            style: AppTextStyles.simpleHeadingTextStyle(
+              textColor: AppColors.universalButtonGreen,
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+            ),
           ),
           centerTitle: true,
-          backgroundColor: AppColors.green),
+          backgroundColor: AppColors.lightWhiteBackground),
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 15),
           child: Column(
             children: [
-              SizedBox(height: 30),
+              SizedBox(height: 20),
               CircleAvatar(
                 radius: 50,
                 backgroundImage: AssetImage(Constants.myImage),
@@ -63,7 +67,7 @@ class AdminManagerRecordsDetailsScreen extends StatelessWidget {
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 10, vertical: 13),
                 decoration: BoxDecoration(
-                  color: AppColors.white.withOpacity(.7),
+                  color: AppColors.lightGreen1.withOpacity(.3),
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Row(
@@ -115,7 +119,7 @@ class AdminManagerRecordsDetailsScreen extends StatelessWidget {
                   decoration: BoxDecoration(
                     border: Border.all(
                       width: 2,
-                      color: AppColors.green,
+                      // color: AppColors.green,
                     ),
                     borderRadius: BorderRadius.circular(30),
                   ),
@@ -142,7 +146,7 @@ class AdminManagerRecordsDetailsScreen extends StatelessWidget {
                   decoration: BoxDecoration(
                     border: Border.all(
                       width: 2,
-                      color: AppColors.grey,
+                      // color: AppColors.grey,
                     ),
                     borderRadius: BorderRadius.circular(30),
                   ),
@@ -169,7 +173,7 @@ class AdminManagerRecordsDetailsScreen extends StatelessWidget {
                   decoration: BoxDecoration(
                     border: Border.all(
                       width: 2,
-                      color: AppColors.red,
+                      // color: AppColors.red,
                     ),
                     borderRadius: BorderRadius.circular(30),
                   ),

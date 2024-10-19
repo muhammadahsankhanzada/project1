@@ -54,7 +54,11 @@ class _AdminCreateNewAccountScreenState
       appBar: AppBar(
         title: Text(
           'Create Account',
-          style: AppTextStyles.nameHeadingTextStyle(),
+          style: AppTextStyles.simpleHeadingTextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 18,
+            textColor: AppColors.universalButtonGreen,
+          ),
         ),
         centerTitle: true,
         backgroundColor: AppColors.lightWhiteBackground,
@@ -104,11 +108,11 @@ class _AdminCreateNewAccountScreenState
                         onTap: () {},
                         borderRadius: BorderRadius.circular(10),
                         child: Container(
-                            height: 150,
-                            width: 200,
+                            height: 200,
+                            width: double.infinity,
                             decoration: BoxDecoration(
                               border: Border.all(color: AppColors.grey),
-                              borderRadius: BorderRadius.circular(10),
+                              borderRadius: BorderRadius.circular(30),
                             ),
                             child: Icon(
                               Icons.camera_alt,

@@ -42,7 +42,11 @@ class _ManagerAddProductsScreenState extends State<ManagerAddProductsScreen> {
       appBar: AppBar(
         title: Text(
           'Add Products',
-          style: AppTextStyles.simpleHeadingTextStyle(),
+          style: AppTextStyles.simpleHeadingTextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+            textColor: AppColors.universalButtonGreen,
+          ),
         ),
         centerTitle: true,
         backgroundColor: AppColors.lightWhiteBackground,

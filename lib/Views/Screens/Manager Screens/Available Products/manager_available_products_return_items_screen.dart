@@ -67,7 +67,7 @@ class _ManagerAvailableProductsReturnItemsScreenState
                     ),
                     child: Center(
                       child: Text(
-                        productCategoriesDummyModelContents[index].name,
+                        '${productCategoriesDummyModelContents[index].name} (30)',
                         style: AppTextStyles.nameHeadingTextStyle(size: 15),
                       ),
                     ),
@@ -94,18 +94,42 @@ class _ManagerAvailableProductsReturnItemsScreenState
                   itemBuilder: (context, index) {
                     return Center(
                       child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Container(
-                            height: 100,
-                            width: 120,
-                            decoration: BoxDecoration(
-                              image: DecorationImage(
-                                  fit: BoxFit.fill,
-                                  image: AssetImage(Constants.backgroundImage)),
-                              color: AppColors.white.withOpacity(.9),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
+                          Stack(
+                            children: [
+                              Container(
+                                height: 100,
+                                width: 120,
+                                decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                      fit: BoxFit.fill,
+                                      image: AssetImage(
+                                          Constants.backgroundImage)),
+                                  color: AppColors.white.withOpacity(.9),
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                              ),
+                              Align(
+                                alignment: Alignment.topRight,
+                                child: Container(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 10, vertical: 5),
+                                  margin: EdgeInsets.only(right: 10, top: 10),
+                                  decoration: BoxDecoration(
+                                    color: AppColors.white,
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: Text(
+                                    '2 available',
+                                    style: AppTextStyles.simpleHeadingTextStyle(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                           SizedBox(height: 2),
                           Text(

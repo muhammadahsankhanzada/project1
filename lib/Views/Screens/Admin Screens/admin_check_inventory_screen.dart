@@ -16,14 +16,14 @@ class _AdminCheckInventoryScreenState extends State<AdminCheckInventoryScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.lightGreen,
+      backgroundColor: AppColors.lightWhiteBackground,
       appBar: AppBar(
           title: Text(
             'Inventory',
             style: AppTextStyles.nameHeadingTextStyle(),
           ),
           centerTitle: true,
-          backgroundColor: AppColors.green),
+          backgroundColor: AppColors.lightWhiteBackground),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
@@ -36,7 +36,11 @@ class _AdminCheckInventoryScreenState extends State<AdminCheckInventoryScreen> {
                   margin: EdgeInsets.only(top: 10),
                   child: Text(
                     'Categories',
-                    style: AppTextStyles.nameHeadingTextStyle(size: 20),
+                    style: AppTextStyles.simpleHeadingTextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      textColor: AppColors.universalButtonGreen,
+                    ),
                   ),
                 ),
               ),
@@ -63,15 +67,17 @@ class _AdminCheckInventoryScreenState extends State<AdminCheckInventoryScreen> {
                         padding:
                             EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                         decoration: BoxDecoration(
-                            color: AppColors.green,
+                            color: AppColors.white,
                             borderRadius: BorderRadius.circular(20),
                             border: Border.all(
-                              color: AppColors.green,
+                              color: AppColors.white,
                               width: 2,
                             )),
-                        child: Text(
-                          productCategoriesDummyModelContents[index].name,
-                          style: AppTextStyles.nameHeadingTextStyle(size: 15),
+                        child: Center(
+                          child: Text(
+                            productCategoriesDummyModelContents[index].name,
+                            style: AppTextStyles.nameHeadingTextStyle(size: 15),
+                          ),
                         ),
                       ),
                     );
@@ -102,18 +108,41 @@ class _AdminCheckInventoryScreenState extends State<AdminCheckInventoryScreen> {
                                           categoryIndex: index,
                                         )));
                           },
-                          child: Container(
-                            height: 150,
-                            width: 180,
-                            decoration: BoxDecoration(
-                              image: DecorationImage(
-                                  fit: BoxFit.fill,
-                                  image: NetworkImage(
-                                      productCategoriesDummyModelContents[index]
-                                          .imageUrl)),
-                              color: AppColors.white.withOpacity(.7),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
+                          child: Stack(
+                            children: [
+                              Container(
+                                height: 150,
+                                width: 180,
+                                decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                      fit: BoxFit.fill,
+                                      image: NetworkImage(
+                                          productCategoriesDummyModelContents[
+                                                  index]
+                                              .imageUrl)),
+                                  color: AppColors.white.withOpacity(.7),
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                              ),
+                              Align(
+                                alignment: Alignment.topRight,
+                                child: Container(
+                                  margin: EdgeInsets.only(right: 20, top: 20),
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 10, vertical: 5),
+                                  decoration: BoxDecoration(
+                                    color: AppColors.white,
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: Text(
+                                    '30 Products',
+                                    style: AppTextStyles.simpleHeadingTextStyle(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                         SizedBox(height: 5),

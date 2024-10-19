@@ -9,6 +9,7 @@ import 'package:project1/Views/Screens/Admin%20Screens/Accounts%20Management/adm
 import 'package:project1/Views/Screens/Admin%20Screens/Accounts%20Management/admin_delete_account_screen.dart';
 import 'package:project1/Views/Screens/Admin%20Screens/Manager%20Records/admin_manager_records_details_screen.dart';
 import 'package:project1/Views/Screens/Manager%20Screens/Driver%20Records/manager_driver_records_details_screen.dart';
+import 'package:project1/Views/Widgets/custom_appbar.dart';
 
 class SuperAdminUserManagementScreen extends StatefulWidget {
   const SuperAdminUserManagementScreen({super.key});
@@ -27,13 +28,9 @@ class _SuperAdminUserManagementScreenState
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.lightGreen,
-      appBar: AppBar(
-          title: Text(
-            'User Management',
-            style: AppTextStyles.nameHeadingTextStyle(),
-          ),
-          centerTitle: true,
-          backgroundColor: AppColors.green),
+      appBar: CustomAppbar(
+        title: 'User Management',
+      ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10),
         child: Column(

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:project1/Utils/colors.dart';
 import 'package:project1/Views/Screens/Driver%20Screens/Delivered/driver_end_trip_screen.dart';
+import 'package:project1/Views/Screens/Driver%20Screens/Driver%20Cart/Start%20Trip/driver_shops_list_screen.dart';
 import 'package:project1/Views/Screens/Driver%20Screens/Driver%20Cart/driver_warehouse_cart_screen.dart';
 import 'package:project1/Views/Screens/Driver%20Screens/Driver%20Category/driver_category_screen.dart';
 
@@ -41,6 +42,10 @@ class _DriverHomepageScreenState extends State<DriverHomepageScreen> {
               label: 'My Cart',
             ),
             BottomNavigationBarItem(
+              icon: Icon(Icons.store_outlined),
+              label: 'Shops',
+            ),
+            BottomNavigationBarItem(
               icon: Icon(Icons.directions_car_outlined),
               label: 'Delivered',
             ),
@@ -62,6 +67,12 @@ class _DriverHomepageScreenState extends State<DriverHomepageScreen> {
                 },
               );
             case 2:
+              return CupertinoTabView(
+                builder: (context) {
+                  return CupertinoPageScaffold(child: DriverShopsListScreen());
+                },
+              );
+            case 3:
               return CupertinoTabView(
                 builder: (context) {
                   return CupertinoPageScaffold(child: DriverEndTripScreen());

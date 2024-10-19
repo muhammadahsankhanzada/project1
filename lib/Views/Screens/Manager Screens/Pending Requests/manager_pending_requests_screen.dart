@@ -14,7 +14,11 @@ class ManagerPendingRequestsScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           'Pending Requests',
-          style: AppTextStyles.nameHeadingTextStyle(),
+          style: AppTextStyles.simpleHeadingTextStyle(
+            textColor: AppColors.universalButtonGreen,
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+          ),
         ),
         centerTitle: true,
         backgroundColor: AppColors.lightWhiteBackground,
@@ -36,48 +40,55 @@ class ManagerPendingRequestsScreen extends StatelessWidget {
                                   ManagerPendingRequestDetailsScreen()));
                     },
                     borderRadius: BorderRadius.circular(15),
-                    child: Container(
-                      padding: EdgeInsets.all(15),
-                      // margin: EdgeInsets.only(bottom: 10),
-                      decoration: BoxDecoration(
-                        color: AppColors.containerBackground,
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          CircleAvatar(
-                            radius: 45,
-                            backgroundImage: AssetImage(Constants.myImage),
-                          ),
-                          SizedBox(width: 10),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Ahsan Store',
-                                style: AppTextStyles.belowMainHeadingTextStyle(
-                                    fontSize: 18),
-                              ),
-                              SizedBox(
-                                width: 200,
-                                child: Text(
-                                  'Route: Shah Faisal, Karachi',
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: AppTextStyles.simpleHeadingTextStyle(
-                                      fontSize: 15, textColor: AppColors.white),
+                    child: Material(
+                      elevation: 3,
+                      borderRadius: BorderRadius.circular(15),
+                      child: Container(
+                        padding: EdgeInsets.all(15),
+                        // margin: EdgeInsets.only(bottom: 10),
+                        decoration: BoxDecoration(
+                          color: AppColors.white,
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            CircleAvatar(
+                              radius: 35,
+                              backgroundImage: AssetImage(Constants.myImage),
+                            ),
+                            SizedBox(width: 10),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Muhammad Ahsan',
+                                  style:
+                                      AppTextStyles.belowMainHeadingTextStyle(
+                                          fontSize: 18),
                                 ),
-                              ),
-                              SizedBox(height: 10),
-                              Text(
-                                'Requested Products: 30',
-                                style: AppTextStyles.simpleHeadingTextStyle(
-                                    fontSize: 15, textColor: AppColors.white),
-                              ),
-                            ],
-                          ),
-                        ],
+                                SizedBox(
+                                  width: 200,
+                                  child: Text(
+                                    'Route: Shah Faisal, Karachi',
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: AppTextStyles.simpleHeadingTextStyle(
+                                      fontSize: 15,
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(height: 10),
+                                Text(
+                                  'Requested Products: 30',
+                                  style: AppTextStyles.simpleHeadingTextStyle(
+                                    fontSize: 15,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),

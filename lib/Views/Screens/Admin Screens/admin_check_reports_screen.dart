@@ -45,19 +45,21 @@ class AdminCheckReportsScreen extends StatelessWidget {
     ];
 
     return Scaffold(
-      backgroundColor: AppColors.lightGreen,
+      backgroundColor: AppColors.lightWhiteBackground,
       appBar: AppBar(
           title: Text(
             'Reports',
             style: AppTextStyles.nameHeadingTextStyle(),
           ),
           centerTitle: true,
-          backgroundColor: AppColors.green),
+          backgroundColor: AppColors.lightWhiteBackground),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15),
           child: Column(
             children: [
+              // SizedBox(height: 20),
+
               SizedBox(height: 20),
               customPieChart('Delivery Reports', deliveryReportsDataMap,
                   deliveryReportsColorList),

@@ -151,7 +151,7 @@ class _DriverCategoryScreenState extends State<DriverCategoryScreen> {
                         return Container(
                           child: Center(
                             child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 InkWell(
                                   borderRadius: BorderRadius.circular(10),
@@ -186,13 +186,16 @@ class _DriverCategoryScreenState extends State<DriverCategoryScreen> {
                                 SizedBox(height: 5),
                                 SizedBox(
                                   width: 100,
-                                  child: Text(
-                                    maxLines: 2,
-                                    overflow: TextOverflow.ellipsis,
-                                    productCategoriesDummyModelContents[index]
-                                        .name,
-                                    style: AppTextStyles.nameHeadingTextStyle(
-                                      size: 12,
+                                  child: Align(
+                                    alignment: Alignment.center,
+                                    child: Text(
+                                      maxLines: 2,
+                                      overflow: TextOverflow.ellipsis,
+                                      productCategoriesDummyModelContents[index]
+                                          .name,
+                                      style: AppTextStyles.nameHeadingTextStyle(
+                                        size: 12,
+                                      ),
                                     ),
                                   ),
                                 )

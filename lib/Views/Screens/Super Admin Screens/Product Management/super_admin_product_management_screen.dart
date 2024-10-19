@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/text_styles.dart';
-import 'package:project1/Views/Screens/Admin%20Screens/admin_check_inventory_screen.dart';
 import 'package:project1/Views/Screens/Manager%20Screens/Add%20Products/manager_add_product_warehouse_selection_screen.dart';
 import 'package:project1/Views/Screens/Manager%20Screens/Delete%20Products/manager_delete_product_warehouse_selection_screen.dart';
 import 'package:project1/Views/Screens/Super%20Admin%20Screens/Product%20Management/super_admin_edit_product_warehouse_selection_screen.dart';
@@ -12,117 +11,121 @@ class SuperAdminProductManagementScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.lightWhiteBackground,
       appBar: AppBar(
           title: Text(
-            'Product Management',
-            style: AppTextStyles.nameHeadingTextStyle(),
+            'Products',
+            style: AppTextStyles.simpleHeadingTextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              textColor: AppColors.universalButtonGreen,
+            ),
           ),
           centerTitle: true,
-          backgroundColor: AppColors.green),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          // customContainer(
-          //     icon: Icons.visibility,
-          //     ontap: () {
-          //       Navigator.push(
-          //           context,
-          //           MaterialPageRoute(
-          //               builder: (context) => AdminCheckInventoryScreen()));
-          //     },
-          //     title: 'View All Products'),
-          customContainer(
-              icon: Icons.add_card,
-              ontap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            ManagerAddProductWarehouseSelectionScreen()));
-              },
-              title: 'Add Products'),
-          customContainer(
-              icon: Icons.edit,
-              ontap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            SuperAdminEditProductWarehouseSelectionScreen()));
-              },
-              title: 'Edit Products'),
-          customContainer(
-              icon: Icons.delete,
-              ontap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            ManagerDeleteProductWarehouseSelectionScreen()));
-              },
-              title: 'Delete Products'),
-          customContainer(
-              icon: Icons.inventory,
-              ontap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => AdminCheckInventoryScreen()));
-              },
-              title: 'Inventory'),
-        ],
+          backgroundColor: AppColors.lightWhiteBackground),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 15),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(height: 20),
+              Align(
+                alignment: Alignment.topLeft,
+                child: Text(
+                  'Products Management',
+                  style: AppTextStyles.nameHeadingTextStyle(),
+                ),
+              ),
+              Align(
+                alignment: Alignment.topLeft,
+                child: Text(
+                  'Add, Edit, and Delete Products.',
+                  style: AppTextStyles.simpleHeadingTextStyle(fontSize: 13),
+                ),
+              ),
+              SizedBox(height: 20),
+              customContainer(
+                ontap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              ManagerAddProductWarehouseSelectionScreen()));
+                },
+                title: 'Add Products',
+                icon: Icons.add_card,
+              ),
+              customContainer(
+                ontap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              SuperAdminEditProductWarehouseSelectionScreen()));
+                },
+                title: 'Edit Products',
+                icon: Icons.edit,
+              ),
+              customContainer(
+                ontap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              ManagerDeleteProductWarehouseSelectionScreen()));
+                },
+                title: 'Delete Products',
+                icon: Icons.delete,
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
 
   //
-  customContainer({
-    required VoidCallback ontap,
-    required String title,
-    required IconData icon,
-    Color borderColor = AppColors.green,
-  }) {
+
+  customContainer(
+      {required VoidCallback ontap,
+      required String title,
+      required IconData icon}) {
     return Column(
-      // crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Row(
-          children: [
-            SizedBox(width: 50),
-            Container(
-              padding: EdgeInsets.all(20),
+        InkWell(
+          onTap: ontap,
+          borderRadius: BorderRadius.circular(10),
+          child: Material(
+            elevation: 4,
+            borderRadius: BorderRadius.circular(10),
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 30, vertical: 20),
               decoration: BoxDecoration(
-                border: Border.all(
-                  color: borderColor,
-                  width: 2,
-                ),
+                color: AppColors.universalButtonGreen,
                 borderRadius: BorderRadius.circular(10),
               ),
-              child: Icon(icon),
-            ),
-            SizedBox(width: 10),
-            InkWell(
-              onTap: ontap,
-              borderRadius: BorderRadius.circular(50),
-              child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 50, vertical: 20),
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: borderColor,
-                    width: 2,
-                  ),
-                  borderRadius: BorderRadius.circular(50),
-                ),
-                child: Center(
-                  child: Text(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
                     title,
-                    style: AppTextStyles.nameHeadingTextStyle(size: 15),
+                    style: AppTextStyles.simpleHeadingTextStyle(
+                      fontWeight: FontWeight.bold,
+                      textColor: AppColors.white,
+                    ),
                   ),
-                ),
+                  SizedBox(width: 10),
+                  Icon(
+                    icon,
+                    color: AppColors.white,
+                  ),
+                ],
               ),
             ),
-          ],
+          ),
         ),
-        SizedBox(height: 20),
+        SizedBox(height: 10),
       ],
     );
   }
