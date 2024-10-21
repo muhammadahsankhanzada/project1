@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/text_styles.dart';
+import 'package:project1/Views/Widgets/custom_appbar.dart';
 
 class AdminDeliveredScreen extends StatelessWidget {
   const AdminDeliveredScreen({super.key});
@@ -9,18 +10,7 @@ class AdminDeliveredScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.lightWhiteBackground,
-      appBar: AppBar(
-        title: Text(
-          'Delivered Products',
-          style: AppTextStyles.simpleHeadingTextStyle(
-            textColor: AppColors.universalButtonGreen,
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        centerTitle: true,
-        backgroundColor: AppColors.lightWhiteBackground,
-      ),
+      appBar: CustomAppbar(title: 'Delivered Products'),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15),
         child: Column(
@@ -37,7 +27,7 @@ class AdminDeliveredScreen extends StatelessWidget {
               // },
               keyboardType: TextInputType.name,
               decoration: InputDecoration(
-                hintText: 'Search delivery code...',
+                hintText: 'Search delivery number...',
                 filled: true,
                 fillColor: AppColors.white,
                 contentPadding: EdgeInsets.symmetric(horizontal: 20),
@@ -96,7 +86,7 @@ class AdminDeliveredScreen extends StatelessWidget {
                                               CrossAxisAlignment.start,
                                           children: [
                                             Text(
-                                              'Delivered Product $index',
+                                              'Delivery Number $index',
                                               style: AppTextStyles
                                                   .nameHeadingTextStyle(
                                                       size: 15),

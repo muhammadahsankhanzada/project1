@@ -4,6 +4,7 @@ import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/extra/product_categories_list.dart';
 import 'package:project1/Utils/text_styles.dart';
 import 'package:project1/Views/Screens/Manager%20Screens/Available%20Products/manager_available_products_items_list_screen.dart';
+import 'package:project1/Views/Widgets/custom_appbar.dart';
 
 class ManagerAvailableProductsScreen extends StatefulWidget {
   const ManagerAvailableProductsScreen({super.key});
@@ -19,14 +20,7 @@ class _ManagerAvailableProductsScreenState
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.lightWhiteBackground,
-      appBar: AppBar(
-        title: Text(
-          'Available Products',
-          style: AppTextStyles.nameHeadingTextStyle(),
-        ),
-        centerTitle: true,
-        backgroundColor: AppColors.lightWhiteBackground,
-      ),
+      appBar: CustomAppbar(title: 'Available Products'),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
@@ -41,6 +35,7 @@ class _ManagerAvailableProductsScreenState
                     'Categories',
                     style: AppTextStyles.simpleHeadingTextStyle(
                         fontSize: 20,
+                        fontWeight: FontWeight.bold,
                         textColor: AppColors.universalButtonGreen),
                   ),
                 ),
@@ -52,17 +47,29 @@ class _ManagerAvailableProductsScreenState
                 child: ListView.builder(
                   itemCount: ProductCategoriesList.productCategories.length,
                   itemBuilder: (context, index) {
-                    return Container(
-                      margin: EdgeInsets.only(left: 5, right: 5),
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: AppColors.white),
-                      child: Center(
-                        child: Text(
-                          ProductCategoriesList.productCategories[index],
-                          style: AppTextStyles.nameHeadingTextStyle(size: 15),
+                    return InkWell(
+                      borderRadius: BorderRadius.circular(20),
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    ManagerAvailableProductsItemsListScreen(
+                                      categoryIndex: index,
+                                    )));
+                      },
+                      child: Container(
+                        margin: EdgeInsets.only(left: 5, right: 5),
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: AppColors.white),
+                        child: Center(
+                          child: Text(
+                            '${ProductCategoriesList.productCategories[index]} (30)',
+                            style: AppTextStyles.nameHeadingTextStyle(size: 15),
+                          ),
                         ),
                       ),
                     );
@@ -92,18 +99,41 @@ class _ManagerAvailableProductsScreenState
                                           categoryIndex: index,
                                         )));
                           },
-                          child: Container(
-                            height: 150,
-                            width: 180,
-                            decoration: BoxDecoration(
-                              image: DecorationImage(
-                                  fit: BoxFit.fill,
-                                  image: NetworkImage(
-                                      productCategoriesDummyModelContents[index]
-                                          .imageUrl)),
-                              color: AppColors.white.withOpacity(.9),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
+                          child: Stack(
+                            children: [
+                              Container(
+                                height: 150,
+                                width: 180,
+                                decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                      fit: BoxFit.fill,
+                                      image: NetworkImage(
+                                          productCategoriesDummyModelContents[
+                                                  index]
+                                              .imageUrl)),
+                                  color: AppColors.white.withOpacity(.9),
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                              ),
+                              Align(
+                                alignment: Alignment.topRight,
+                                child: Container(
+                                  margin: EdgeInsets.only(right: 20, top: 20),
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 10, vertical: 5),
+                                  decoration: BoxDecoration(
+                                    color: AppColors.white,
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: Text(
+                                    '30 Products',
+                                    style: AppTextStyles.simpleHeadingTextStyle(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                         SizedBox(height: 5),

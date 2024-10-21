@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/text_styles.dart';
+import 'package:project1/Views/Widgets/custom_appbar.dart';
 import 'package:project1/Views/Widgets/custom_snackbar.dart';
 import 'package:project1/Views/Widgets/universal_button.dart';
 
@@ -54,18 +55,7 @@ class _AdminCreateNewAccountScreenState
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.lightWhiteBackground,
-      appBar: AppBar(
-        title: Text(
-          'Delete Account',
-          style: AppTextStyles.simpleHeadingTextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 18,
-            textColor: AppColors.universalButtonGreen,
-          ),
-        ),
-        centerTitle: true,
-        backgroundColor: AppColors.lightWhiteBackground,
-      ),
+      appBar: CustomAppbar(title: 'Delete Account'),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -90,18 +80,32 @@ class _AdminCreateNewAccountScreenState
                   ),
                 ),
                 SizedBox(height: 30),
-                textField(
-                    hint: 'Search Username...',
-                    icon: Icons.person,
-                    controller: _searchUserController,
-                    keyboardType: TextInputType.name,
-                    onChanged: _filterUsernames,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Select a user.';
-                      }
-                      return null;
-                    }),
+                TextFormField(
+                  controller: _searchUserController,
+                  onChanged: _filterUsernames,
+                  // validator: (value) {
+                  //   if (value == null || value.isEmpty) {
+                  //     return 'Select a user';
+                  //   }
+                  //   return null;
+                  // },
+                  keyboardType: TextInputType.name,
+
+                  decoration: InputDecoration(
+                    hintText: 'Enter Email / Phone Number',
+                    filled: true,
+                    fillColor: AppColors.white,
+                    contentPadding: EdgeInsets.symmetric(horizontal: 30),
+                    suffixIcon: Icon(
+                      Icons.search,
+                    ),
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide.none,
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                  ),
+                ),
+
                 SizedBox(height: 10),
                 // Show filtered usernames in a dropdown-like manner
                 if (filteredUsernames.isNotEmpty &&
@@ -167,25 +171,23 @@ class _AdminCreateNewAccountScreenState
                                             MainAxisAlignment.spaceEvenly,
                                         children: [
                                           UniversalButton(
+                                              title: 'Cancel',
+                                              buttonHeight: 40,
+                                              buttonWidth: 110,
+                                              buttonColor: AppColors.black,
+                                              ontap: () {
+                                                Navigator.pop(context);
+                                              }),
+                                          UniversalButton(
                                               title: 'Delete',
                                               buttonHeight: 40,
                                               buttonWidth: 110,
-                                              buttonColor: AppColors.green
-                                                  .withOpacity(.7),
+                                              buttonColor: AppColors.green,
                                               ontap: () {
                                                 Navigator.pop(context);
 
                                                 customSnackbar(context,
                                                     'Account deleted.');
-                                              }),
-                                          UniversalButton(
-                                              title: 'Cancel',
-                                              buttonHeight: 40,
-                                              buttonWidth: 110,
-                                              buttonColor:
-                                                  AppColors.red.shade300,
-                                              ontap: () {
-                                                Navigator.pop(context);
                                               }),
                                         ],
                                       ),
@@ -202,40 +204,6 @@ class _AdminCreateNewAccountScreenState
           ),
         ),
       ),
-    );
-  }
-
-  textField({
-    required String hint,
-    required IconData icon,
-    required TextEditingController controller,
-    required FormFieldValidator validator,
-    required TextInputType keyboardType,
-    required ValueChanged<String> onChanged,
-  }) {
-    return Column(
-      children: [
-        TextFormField(
-          controller: controller,
-          validator: validator,
-          keyboardType: keyboardType,
-          onChanged: onChanged,
-          decoration: InputDecoration(
-            hintText: hint,
-            hintStyle: AppTextStyles.nameHeadingTextStyle(size: 15),
-            prefixIcon: Padding(
-              padding: const EdgeInsets.only(left: 20, right: 10),
-              child: Icon(
-                icon,
-              ),
-            ),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(30),
-            ),
-          ),
-        ),
-        SizedBox(height: 20),
-      ],
     );
   }
 }

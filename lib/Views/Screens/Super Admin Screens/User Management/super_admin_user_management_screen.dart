@@ -27,50 +27,56 @@ class _SuperAdminUserManagementScreenState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.lightGreen,
+      backgroundColor: AppColors.lightWhiteBackground,
       appBar: CustomAppbar(
         title: 'User Management',
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 15),
         child: Column(
           children: [
-            SizedBox(height: 50),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                customContainer(
-                  ontap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                AdminCreateNewAccountScreen()));
-                  },
-                  title: 'Create Account',
-                ),
-                SizedBox(width: 15),
-                customContainer(
-                  ontap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => AdminDeleteAccountScreen()));
-                  },
-                  borderColor: AppColors.red,
-                  title: 'Delete Account',
-                ),
-              ],
-            ),
             SizedBox(height: 20),
+            SizedBox(
+              // width: 200,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  customContainer(
+                    ontap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  AdminCreateNewAccountScreen()));
+                    },
+                    title: 'Create Account',
+                  ),
+                  SizedBox(width: 15),
+                  customContainer(
+                    ontap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  AdminDeleteAccountScreen()));
+                    },
+                    borderColor: AppColors.red,
+                    buttonColor: AppColors.black,
+                    title: 'Delete Account',
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: 10),
             Container(
-              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+              padding: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
               decoration: BoxDecoration(
-                color: AppColors.lightGrey.withOpacity(.5),
+                // color: AppColors.lightGrey.withOpacity(.5),
                 borderRadius: BorderRadius.circular(15),
               ),
               child: Row(
-                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                // mainAxisSize: MainAxisSize.min,
                 children: [
                   InkWell(
                     onTap: () {
@@ -81,17 +87,26 @@ class _SuperAdminUserManagementScreenState
                       });
                     },
                     borderRadius: BorderRadius.circular(10),
-                    child: Container(
-                      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-                      decoration: BoxDecoration(
-                        color:
-                            AppColors.white.withOpacity(isUserDriver ? .7 : .5),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Text(
-                        'Drivers',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
+                    child: Material(
+                      elevation: isUserDriver ? 4 : 0,
+                      borderRadius: BorderRadius.circular(10),
+                      child: Container(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 18, vertical: 8),
+                        decoration: BoxDecoration(
+                          color: isUserDriver
+                              ? AppColors.lightGreen1
+                              : AppColors.white,
+                          // color:
+                          //     AppColors.white.withOpacity(isUserDriver ? .9 : .5),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Text(
+                          'Drivers',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w400,
+                            fontSize: 15,
+                          ),
                         ),
                       ),
                     ),
@@ -106,14 +121,28 @@ class _SuperAdminUserManagementScreenState
                       });
                     },
                     borderRadius: BorderRadius.circular(10),
-                    child: Container(
-                      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-                      decoration: BoxDecoration(
-                        color: AppColors.white
-                            .withOpacity(isUserManager ? .7 : .5),
-                        borderRadius: BorderRadius.circular(10),
+                    child: Material(
+                      elevation: isUserManager ? 4 : 0,
+                      borderRadius: BorderRadius.circular(10),
+                      child: Container(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 18, vertical: 8),
+                        decoration: BoxDecoration(
+                          color: isUserManager
+                              ? AppColors.lightGreen1
+                              : AppColors.white,
+                          // color: AppColors.white
+                          //     .withOpacity(isUserManager ? .9 : .5),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Text(
+                          'Managers',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w400,
+                            fontSize: 15,
+                          ),
+                        ),
                       ),
-                      child: Text('Managers'),
                     ),
                   ),
                   SizedBox(width: 10),
@@ -126,20 +155,34 @@ class _SuperAdminUserManagementScreenState
                       });
                     },
                     borderRadius: BorderRadius.circular(10),
-                    child: Container(
-                      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-                      decoration: BoxDecoration(
-                        color:
-                            AppColors.white.withOpacity(isUserAdmin ? .7 : .5),
-                        borderRadius: BorderRadius.circular(10),
+                    child: Material(
+                      elevation: isUserAdmin ? 4 : 0,
+                      borderRadius: BorderRadius.circular(10),
+                      child: Container(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 18, vertical: 8),
+                        decoration: BoxDecoration(
+                          color: isUserAdmin
+                              ? AppColors.lightGreen1
+                              : AppColors.white,
+                          // color:
+                          //     AppColors.white.withOpacity(isUserAdmin ? .9 : .5),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Text(
+                          'Admins',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w400,
+                            fontSize: 15,
+                          ),
+                        ),
                       ),
-                      child: Text('Admins'),
                     ),
                   ),
                 ],
               ),
             ),
-            SizedBox(height: 20),
+            SizedBox(height: 10),
             Expanded(
                 child: ListView.builder(
                     shrinkWrap: true,
@@ -181,66 +224,72 @@ class _SuperAdminUserManagementScreenState
                                                   driverRoute: address)));
                             },
                             borderRadius: BorderRadius.circular(40),
-                            child: Container(
-                              width: double.infinity,
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 30, vertical: 15),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(40),
-                                color: AppColors.white.withOpacity(.7),
-                              ),
-                              child: Row(
-                                children: [
-                                  CircleAvatar(
-                                    backgroundImage:
-                                        AssetImage(Constants.myImage),
-                                  ),
-                                  SizedBox(width: 15),
-                                  Expanded(
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            SizedBox(
-                                              width: 200,
-                                              child: Text(
-                                                overflow: TextOverflow.ellipsis,
-                                                name,
-                                                style: AppTextStyles
-                                                    .nameHeadingTextStyle(
-                                                        size: 15),
-                                              ),
-                                            ),
-                                            Row(
-                                              children: [
-                                                Text(
-                                                  'Address: ',
-                                                  style: TextStyle(
-                                                    fontWeight: FontWeight.w500,
-                                                  ),
-                                                ),
-                                                SizedBox(
-                                                  width: 150,
-                                                  child: Text(
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
-                                                      address),
-                                                ),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                        Icon(
-                                          Icons.assessment,
-                                        )
-                                      ],
+                            child: Material(
+                              elevation: 4,
+                              borderRadius: BorderRadius.circular(40),
+                              child: Container(
+                                width: double.infinity,
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 30, vertical: 15),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(40),
+                                  color: AppColors.white,
+                                ),
+                                child: Row(
+                                  children: [
+                                    CircleAvatar(
+                                      backgroundImage:
+                                          AssetImage(Constants.myImage),
                                     ),
-                                  ),
-                                ],
+                                    SizedBox(width: 15),
+                                    Expanded(
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              SizedBox(
+                                                width: 200,
+                                                child: Text(
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  name,
+                                                  style: AppTextStyles
+                                                      .nameHeadingTextStyle(
+                                                          size: 15),
+                                                ),
+                                              ),
+                                              Row(
+                                                children: [
+                                                  Text(
+                                                    'Address: ',
+                                                    style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                    ),
+                                                  ),
+                                                  SizedBox(
+                                                    width: 150,
+                                                    child: Text(
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                        address),
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                          Icon(
+                                            Icons.assessment,
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           ),
@@ -258,6 +307,7 @@ class _SuperAdminUserManagementScreenState
   customContainer({
     required VoidCallback ontap,
     required String title,
+    Color buttonColor = AppColors.green,
     Color borderColor = AppColors.green,
   }) {
     return Column(
@@ -266,18 +316,23 @@ class _SuperAdminUserManagementScreenState
           onTap: ontap,
           borderRadius: BorderRadius.circular(10),
           child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 25, vertical: 10),
+            padding: EdgeInsets.symmetric(horizontal: 25, vertical: 15),
             decoration: BoxDecoration(
-              border: Border.all(
-                color: borderColor,
-                width: 2,
-              ),
-              borderRadius: BorderRadius.circular(50),
+              color: buttonColor,
+              // border: Border.all(
+              //   color: borderColor,
+              //   width: 2,
+              // ),
+              borderRadius: BorderRadius.circular(10),
             ),
             child: Center(
               child: Text(
                 title,
-                style: AppTextStyles.nameHeadingTextStyle(size: 15),
+                style: AppTextStyles.simpleHeadingTextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold,
+                  textColor: AppColors.white,
+                ),
               ),
             ),
           ),

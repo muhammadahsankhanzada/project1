@@ -1,33 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:project1/Models/warehouses_list_dummy_model.dart';
+import 'package:project1/Models/shops_list_dummy_model.dart';
 import 'package:project1/Utils/colors.dart';
-import 'package:project1/Utils/constants.dart';
 import 'package:project1/Utils/text_styles.dart';
-import 'package:project1/Views/Screens/Admin%20Screens/Warehouse%20Records/admin_warehouse_details_screen.dart';
+import 'package:project1/Views/Screens/Admin%20Screens/Shop%20Records/admin_shop_records_details_screen.dart';
 import 'package:project1/Views/Widgets/custom_appbar.dart';
 
-class AdminWarehouseListScreen extends StatefulWidget {
-  const AdminWarehouseListScreen({super.key});
+class SuperAdminRegisteredShopsScreen extends StatelessWidget {
+  const SuperAdminRegisteredShopsScreen({super.key});
 
-  @override
-  State<AdminWarehouseListScreen> createState() =>
-      _AdminWarehouseListScreenState();
-}
-
-class _AdminWarehouseListScreenState extends State<AdminWarehouseListScreen> {
-  var _searchController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.lightWhiteBackground,
-      appBar: CustomAppbar(title: 'Warehouses'),
+      appBar: CustomAppbar(title: 'Registered Shops'),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15),
         child: Column(
           children: [
-            SizedBox(height: 20),
+            SizedBox(height: 10),
             TextFormField(
-              controller: _searchController,
+              // controller: _searchController,
               // validator: (value) {
               //   if (value == null || value.isEmpty) {
               //     return 'Enter driver name here';
@@ -36,15 +28,12 @@ class _AdminWarehouseListScreenState extends State<AdminWarehouseListScreen> {
               // },
               keyboardType: TextInputType.name,
               decoration: InputDecoration(
-                hintText: 'Search warehouse name...',
+                hintText: 'Search',
                 filled: true,
                 fillColor: AppColors.white,
-                contentPadding: EdgeInsets.symmetric(horizontal: 20),
-                suffixIcon: Padding(
-                  padding: const EdgeInsets.only(left: 20, right: 10),
-                  child: Icon(
-                    Icons.search,
-                  ),
+                contentPadding: EdgeInsets.symmetric(horizontal: 30),
+                suffixIcon: Icon(
+                  Icons.search,
                 ),
                 border: OutlineInputBorder(
                   borderSide: BorderSide.none,
@@ -55,7 +44,8 @@ class _AdminWarehouseListScreenState extends State<AdminWarehouseListScreen> {
             SizedBox(height: 20),
             Expanded(
                 child: ListView.builder(
-                    itemCount: warehousesDummyListContents.length,
+                    shrinkWrap: true,
+                    itemCount: shopsListContents.length,
                     itemBuilder: (context, index) {
                       return Column(
                         children: [
@@ -65,11 +55,12 @@ class _AdminWarehouseListScreenState extends State<AdminWarehouseListScreen> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          AdminWarehouseDetailsScreen(
-                                            warehouseName:
-                                                warehousesDummyListContents[
-                                                        index]
-                                                    .name,
+                                          AdminShopRecordsDetailsScreen(
+                                            shopName:
+                                                shopsListContents[index].name,
+                                            shopAddress:
+                                                shopsListContents[index]
+                                                    .address,
                                           )));
                             },
                             borderRadius: BorderRadius.circular(40),
@@ -84,8 +75,8 @@ class _AdminWarehouseListScreenState extends State<AdminWarehouseListScreen> {
                               child: Row(
                                 children: [
                                   CircleAvatar(
-                                    backgroundImage:
-                                        AssetImage(Constants.backgroundImage),
+                                    backgroundImage: AssetImage(
+                                        shopsListContents[index].imageUrl),
                                   ),
                                   SizedBox(width: 15),
                                   Expanded(
@@ -98,12 +89,10 @@ class _AdminWarehouseListScreenState extends State<AdminWarehouseListScreen> {
                                               CrossAxisAlignment.start,
                                           children: [
                                             SizedBox(
-                                              width: 150,
+                                              width: 200,
                                               child: Text(
                                                 overflow: TextOverflow.ellipsis,
-                                                warehousesDummyListContents[
-                                                        index]
-                                                    .name,
+                                                shopsListContents[index].name,
                                                 style: AppTextStyles
                                                     .nameHeadingTextStyle(
                                                         size: 15),
@@ -122,8 +111,7 @@ class _AdminWarehouseListScreenState extends State<AdminWarehouseListScreen> {
                                                   child: Text(
                                                       overflow:
                                                           TextOverflow.ellipsis,
-                                                      warehousesDummyListContents[
-                                                              index]
+                                                      shopsListContents[index]
                                                           .address),
                                                 ),
                                               ],
@@ -131,7 +119,7 @@ class _AdminWarehouseListScreenState extends State<AdminWarehouseListScreen> {
                                           ],
                                         ),
                                         Icon(
-                                          Icons.store,
+                                          Icons.assessment,
                                         )
                                       ],
                                     ),
@@ -143,7 +131,7 @@ class _AdminWarehouseListScreenState extends State<AdminWarehouseListScreen> {
                           SizedBox(height: 10),
                         ],
                       );
-                    })),
+                    }))
           ],
         ),
       ),

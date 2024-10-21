@@ -23,37 +23,44 @@ class ManagerHomepage extends StatelessWidget {
           backgroundColor: AppColors.lightWhiteBackground,
           appBar: AppBar(
             title: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SizedBox(
-                  width: 10,
-                ),
+                // SizedBox(
+                //   width: 10,
+                // ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(Icons.people),
+                    Icon(
+                      Icons.people,
+                      color: AppColors.universalButtonGreen,
+                    ),
                     SizedBox(width: 10),
                     Text(
                       'Manager',
-                      style: AppTextStyles.nameHeadingTextStyle(),
+                      style: AppTextStyles.simpleHeadingTextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        textColor: AppColors.universalButtonGreen,
+                      ),
                     ),
                   ],
                 ),
-                Row(
-                  children: [
-                    InkWell(
-                        onTap: () {
-                          Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => LoginScreen()));
+                // Row(
+                //   children: [
+                //     InkWell(
+                //         onTap: () {
+                //           Navigator.pushReplacement(
+                //               context,
+                //               MaterialPageRoute(
+                //                   builder: (context) => LoginScreen()));
 
-                          customSnackbar(context, 'Logout');
-                        },
-                        child: Icon(Icons.logout)),
-                    SizedBox(width: 10),
-                  ],
-                ),
+                //           customSnackbar(context, 'Logout');
+                //         },
+                //         child: Icon(Icons.logout)),
+                //     SizedBox(width: 10),
+                //   ],
+                // ),
               ],
             ),
             centerTitle: true,
@@ -123,11 +130,11 @@ class ManagerHomepage extends StatelessWidget {
                       Container(
                         padding: EdgeInsets.only(left: 10),
                         width: double.infinity,
-                        height: 150,
+                        height: 200,
                         decoration: BoxDecoration(
                           image: DecorationImage(
                               fit: BoxFit.fill,
-                              image: AssetImage(Constants.driverBack)),
+                              image: AssetImage(Constants.managerBack)),
                         ),
                       ),
                       SizedBox(height: 10),

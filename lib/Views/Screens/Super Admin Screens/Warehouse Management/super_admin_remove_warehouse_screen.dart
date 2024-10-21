@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/text_styles.dart';
+import 'package:project1/Views/Widgets/custom_appbar.dart';
 import 'package:project1/Views/Widgets/custom_snackbar.dart';
 import 'package:project1/Views/Widgets/universal_button.dart';
 
@@ -19,14 +20,8 @@ class _SuperAdminRemoveWarehouseScreenState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.lightGreen,
-      appBar: AppBar(
-          title: Text(
-            'Remove Warehouse',
-            style: AppTextStyles.nameHeadingTextStyle(),
-          ),
-          centerTitle: true,
-          backgroundColor: AppColors.green),
+      backgroundColor: AppColors.lightWhiteBackground,
+      appBar: CustomAppbar(title: 'Delete Warehouse'),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -38,31 +33,42 @@ class _SuperAdminRemoveWarehouseScreenState
                 Align(
                   alignment: Alignment.topLeft,
                   child: Text(
-                    'Warehouse Deletion Confirmation',
+                    'Delete Warehouse',
                     style: AppTextStyles.nameHeadingTextStyle(size: 20),
                   ),
                 ),
-                Align(
-                  alignment: Alignment.topLeft,
-                  child: Text(
-                    'Are you sure you want to permanently remove this warehouse and all its associated data?',
-                    style: AppTextStyles.belowMainHeadingTextStyle(
-                      fontSize: 15,
+                // Align(
+                //   alignment: Alignment.topLeft,
+                //   child: Text(
+                //     'Are you sure you want to permanently remove this warehouse and all its associated data?',
+                //     style: AppTextStyles.belowMainHeadingTextStyle(
+                //       fontSize: 15,
+                //     ),
+                //   ),
+                // ),
+                SizedBox(height: 20),
+                TextFormField(
+                  // controller: _searchController,
+                  // validator: (value) {
+                  //   if (value == null || value.isEmpty) {
+                  //     return 'Enter driver name here';
+                  //   }
+                  //   return null;
+                  // },
+                  keyboardType: TextInputType.name,
+                  decoration: InputDecoration(
+                    hintText: 'Search warehouse',
+                    filled: true,
+                    fillColor: AppColors.white,
+                    contentPadding: EdgeInsets.symmetric(horizontal: 30),
+                    suffixIcon: Icon(
+                      Icons.search,
+                    ),
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide.none,
+                      borderRadius: BorderRadius.circular(30),
                     ),
                   ),
-                ),
-                SizedBox(height: 20),
-                textField(
-                  hint: 'Search warehouse...',
-                  icon: Icons.search,
-                  controller: _searchController,
-                  keyboardType: TextInputType.name,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Select a warehouse from the list';
-                    }
-                    return null;
-                  },
                 ),
                 SizedBox(height: 20),
                 UniversalButton(
@@ -104,23 +110,23 @@ class _SuperAdminRemoveWarehouseScreenState
                                           MainAxisAlignment.spaceEvenly,
                                       children: [
                                         UniversalButton(
+                                            title: 'Cancel',
+                                            buttonHeight: 40,
+                                            buttonWidth: 110,
+                                            // buttonColor: AppColors.red.shade300,
+                                            ontap: () {
+                                              Navigator.pop(context);
+                                            }),
+                                        UniversalButton(
                                             title: 'Delete',
                                             buttonHeight: 40,
                                             buttonWidth: 110,
                                             buttonColor:
-                                                AppColors.green.withOpacity(.7),
+                                                AppColors.universalButtonGreen,
                                             ontap: () {
                                               Navigator.pop(context);
                                               customSnackbar(context,
                                                   'Warehouse perminently deleted.');
-                                            }),
-                                        UniversalButton(
-                                            title: 'Cancel',
-                                            buttonHeight: 40,
-                                            buttonWidth: 110,
-                                            buttonColor: AppColors.red.shade300,
-                                            ontap: () {
-                                              Navigator.pop(context);
                                             }),
                                       ],
                                     ),

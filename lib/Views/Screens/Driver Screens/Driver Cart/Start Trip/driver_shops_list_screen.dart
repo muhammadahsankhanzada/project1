@@ -3,6 +3,7 @@ import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/constants.dart';
 import 'package:project1/Utils/text_styles.dart';
 import 'package:project1/Views/Screens/Driver%20Screens/Driver%20Cart/Start%20Trip/driver_store_required_and_return_items_screen.dart';
+import 'package:project1/Views/Widgets/custom_appbar.dart';
 import 'package:project1/Views/Widgets/universal_button.dart';
 
 class DriverShopsListScreen extends StatelessWidget {
@@ -11,12 +12,8 @@ class DriverShopsListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-          title: Text(
-            'Shops List',
-            style: AppTextStyles.simpleHeadingTextStyle(fontSize: 18),
-          ),
-          centerTitle: true),
+      backgroundColor: AppColors.lightWhiteBackground,
+      appBar: CustomAppbar(title: 'Shops List'),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),

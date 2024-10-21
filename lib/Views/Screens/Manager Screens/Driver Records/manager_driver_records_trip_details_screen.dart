@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/constants.dart';
 import 'package:project1/Utils/text_styles.dart';
+import 'package:project1/Views/Widgets/custom_appbar.dart';
 
 class ManagerDriverRecordsTripDetailsScreen extends StatelessWidget {
   const ManagerDriverRecordsTripDetailsScreen({super.key});
@@ -10,18 +11,7 @@ class ManagerDriverRecordsTripDetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.lightWhiteBackground,
-      appBar: AppBar(
-        title: Text(
-          '6th Oct 2024',
-          style: AppTextStyles.simpleHeadingTextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 18,
-            textColor: AppColors.universalButtonGreen,
-          ),
-        ),
-        centerTitle: true,
-        backgroundColor: AppColors.lightWhiteBackground,
-      ),
+      appBar: CustomAppbar(title: '6th Oct 2024'),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: SingleChildScrollView(

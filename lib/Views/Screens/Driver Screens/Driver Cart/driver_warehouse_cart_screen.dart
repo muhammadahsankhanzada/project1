@@ -22,7 +22,7 @@ class _DriverWarehouseCartScreenState extends State<DriverWarehouseCartScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.white,
+      backgroundColor: AppColors.lightWhiteBackground,
       body: Center(
         child: Column(
           children: [
@@ -30,8 +30,9 @@ class _DriverWarehouseCartScreenState extends State<DriverWarehouseCartScreen> {
             Text(
               'Your Orders',
               style: AppTextStyles.simpleHeadingTextStyle(
-                fontSize: 20,
-                textColor: AppColors.green,
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                textColor: AppColors.universalButtonGreen,
               ),
             ),
             SizedBox(),

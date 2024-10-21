@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pie_chart/pie_chart.dart';
 import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/text_styles.dart';
+import 'package:project1/Views/Widgets/custom_appbar.dart';
 
 class AdminCheckReportsScreen extends StatelessWidget {
   const AdminCheckReportsScreen({super.key});
@@ -46,13 +47,7 @@ class AdminCheckReportsScreen extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: AppColors.lightWhiteBackground,
-      appBar: AppBar(
-          title: Text(
-            'Reports',
-            style: AppTextStyles.nameHeadingTextStyle(),
-          ),
-          centerTitle: true,
-          backgroundColor: AppColors.lightWhiteBackground),
+      appBar: CustomAppbar(title: 'Reports'),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15),

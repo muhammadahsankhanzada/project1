@@ -3,6 +3,7 @@ import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/constants.dart';
 import 'package:project1/Utils/text_styles.dart';
 import 'package:project1/Views/Screens/Manager%20Screens/Approved%20Requests/manager_approved_requests_details_screen.dart';
+import 'package:project1/Views/Widgets/custom_appbar.dart';
 
 class ManagerApprovedRequestsScreen extends StatelessWidget {
   const ManagerApprovedRequestsScreen({super.key});
@@ -11,18 +12,7 @@ class ManagerApprovedRequestsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.lightWhiteBackground,
-      appBar: AppBar(
-        title: Text(
-          'Approved Requests',
-          style: AppTextStyles.simpleHeadingTextStyle(
-            textColor: AppColors.universalButtonGreen,
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        centerTitle: true,
-        backgroundColor: AppColors.lightWhiteBackground,
-      ),
+      appBar: CustomAppbar(title: 'Approved Requests'),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
         child: Column(

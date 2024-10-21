@@ -131,10 +131,12 @@ class _DriverCategoryScreenState extends State<DriverCategoryScreen> {
                   Align(
                     alignment: Alignment.topLeft,
                     child: Padding(
-                      padding: const EdgeInsets.only(left: 20, top: 10),
+                      padding: const EdgeInsets.only(left: 20, top: 20),
                       child: Text(
                         'Categories',
-                        style: AppTextStyles.simpleHeadingTextStyle(),
+                        style: AppTextStyles.simpleHeadingTextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   ),

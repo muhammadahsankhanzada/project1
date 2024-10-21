@@ -9,4 +9,5 @@ class Constants {
   static const String availableProducts = 'assets/images/available.png';
   static const String driverRecords = 'assets/images/records.jpg';
   static const String driverBack = 'assets/images/driverBack.jpeg';
+  static const String managerBack = 'assets/images/managerBack.png';
 }

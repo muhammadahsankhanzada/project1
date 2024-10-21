@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/text_styles.dart';
+import 'package:project1/Views/Widgets/custom_appbar.dart';
 import 'package:project1/Views/Widgets/universal_button.dart';
 
 class ManagerAddProductsScreen extends StatefulWidget {
@@ -39,18 +40,7 @@ class _ManagerAddProductsScreenState extends State<ManagerAddProductsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.lightWhiteBackground,
-      appBar: AppBar(
-        title: Text(
-          'Add Products',
-          style: AppTextStyles.simpleHeadingTextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-            textColor: AppColors.universalButtonGreen,
-          ),
-        ),
-        centerTitle: true,
-        backgroundColor: AppColors.lightWhiteBackground,
-      ),
+      appBar: CustomAppbar(title: 'Add Products'),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),

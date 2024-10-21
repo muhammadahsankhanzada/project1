@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/text_styles.dart';
+import 'package:project1/Views/Widgets/custom_appbar.dart';
 import 'package:project1/Views/Widgets/universal_button.dart';
 
 class SuperAdminAddWarehouseScreen extends StatefulWidget {
@@ -27,14 +28,8 @@ class _SuperAdminAddWarehouseScreenState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.lightGreen,
-      appBar: AppBar(
-          title: Text(
-            'Add Warehouse',
-            style: AppTextStyles.nameHeadingTextStyle(),
-          ),
-          centerTitle: true,
-          backgroundColor: AppColors.green),
+      backgroundColor: AppColors.lightWhiteBackground,
+      appBar: CustomAppbar(title: 'Add Warehouse'),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -46,14 +41,14 @@ class _SuperAdminAddWarehouseScreenState
                 Align(
                   alignment: Alignment.topLeft,
                   child: Text(
-                    'Opened a new Warehouse',
+                    'Add New Warehouse',
                     style: AppTextStyles.nameHeadingTextStyle(size: 20),
                   ),
                 ),
                 Align(
                   alignment: Alignment.topLeft,
                   child: Text(
-                    'Enter the warehouse details to add.',
+                    'Enter the warehouse details.',
                     style:
                         AppTextStyles.belowMainHeadingTextStyle(fontSize: 15),
                   ),
@@ -63,14 +58,14 @@ class _SuperAdminAddWarehouseScreenState
                   onTap: () {},
                   borderRadius: BorderRadius.circular(10),
                   child: Container(
-                      height: 150,
-                      width: 200,
+                      height: 200,
+                      width: double.infinity,
                       decoration: BoxDecoration(
                           border: Border.all(color: AppColors.grey),
-                          borderRadius: BorderRadius.circular(10)),
+                          borderRadius: BorderRadius.circular(20)),
                       child: Icon(
                         Icons.camera_alt,
-                        size: 30,
+                        size: 40,
                         color: AppColors.black,
                       )),
                 ),

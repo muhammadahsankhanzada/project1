@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/text_styles.dart';
+import 'package:project1/Views/Widgets/custom_appbar.dart';
 
 class AdminShopRecordsDetailsScreen extends StatefulWidget {
   final String shopName;
@@ -35,18 +36,7 @@ class _AdminShopRecordsDetailsScreenState
     //////////////////////////
     return Scaffold(
       backgroundColor: AppColors.lightWhiteBackground,
-      appBar: AppBar(
-        title: Text(
-          widget.shopName,
-          style: AppTextStyles.simpleHeadingTextStyle(
-            textColor: AppColors.universalButtonGreen,
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        centerTitle: true,
-        backgroundColor: AppColors.lightWhiteBackground,
-      ),
+      appBar: CustomAppbar(title: widget.shopName),
       body: SingleChildScrollView(
         child: Column(
           children: [

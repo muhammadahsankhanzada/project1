@@ -5,6 +5,7 @@ import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/text_styles.dart';
 import 'package:project1/Views/Screens/Driver%20Screens/Driver%20Cart/Start%20Trip/driver_shops_list_screen.dart';
 import 'package:project1/Views/Screens/Driver%20Screens/driver_homepage_screen.dart';
+import 'package:project1/Views/Widgets/custom_appbar.dart';
 import 'package:project1/Views/Widgets/universal_button.dart';
 
 class DriverCartDetailsScreen extends StatefulWidget {
@@ -23,16 +24,8 @@ class _DriverCartDetailsScreenState extends State<DriverCartDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Your Order Details',
-          style: AppTextStyles.simpleHeadingTextStyle(
-            textColor: AppColors.green,
-            fontSize: 18,
-          ),
-        ),
-        centerTitle: true,
-      ),
+      backgroundColor: AppColors.lightWhiteBackground,
+      appBar: CustomAppbar(title: 'Your Order Details'),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -65,102 +58,93 @@ class _DriverCartDetailsScreenState extends State<DriverCartDetailsScreen> {
               ),
               SizedBox(height: 20),
               Container(
-                padding: EdgeInsets.symmetric(horizontal: 10),
+                padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
                 decoration: BoxDecoration(
                   color: AppColors.lightGreen1.withOpacity(.3),
                   borderRadius: BorderRadius.circular(20),
                 ),
-                child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                  decoration: BoxDecoration(
-                    color: AppColors.lightWhiteBackground,
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(height: 10),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Items',
-                            style: AppTextStyles.nameHeadingTextStyle(),
-                          ),
-                          Text(
-                            'Quantity',
-                            style: AppTextStyles.nameHeadingTextStyle(),
-                          ),
-                          Text(
-                            'Price',
-                            style: AppTextStyles.nameHeadingTextStyle(),
-                          ),
-                        ],
-                      ),
-                      Divider(
-                        color: AppColors.black,
-                      ),
-                      for (int i = 0; i < driverCartContents.length; i++)
-                        Row(
-                          children: [
-                            Expanded(
-                              flex: 2,
-                              child: Text(
-                                driverCartContents[i].name,
-                                style:
-                                    AppTextStyles.belowMainHeadingTextStyle(),
-                              ),
-                            ),
-                            Expanded(
-                              child: Text(
-                                'x${driverCartContents[i].quantity}',
-                                style: AppTextStyles.nameHeadingTextStyle(),
-                              ),
-                            ),
-                            Expanded(
-                              child: Text(
-                                'Rs. ${(driverCartContents[i].price * driverCartContents[i].quantity).toStringAsFixed(0)}',
-                                style:
-                                    AppTextStyles.belowMainHeadingTextStyle(),
-                              ),
-                            ),
-                          ],
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(height: 10),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Items',
+                          style: AppTextStyles.nameHeadingTextStyle(),
                         ),
-                      SizedBox(height: 30),
-                      Divider(
-                        color: AppColors.black,
-                      ),
+                        Text(
+                          'Quantity',
+                          style: AppTextStyles.nameHeadingTextStyle(),
+                        ),
+                        Text(
+                          'Price',
+                          style: AppTextStyles.nameHeadingTextStyle(),
+                        ),
+                      ],
+                    ),
+                    Divider(
+                      color: AppColors.black,
+                    ),
+                    for (int i = 0; i < driverCartContents.length; i++)
                       Row(
                         children: [
-                          Text(
-                            'Total Quantity',
-                            style: AppTextStyles.belowMainHeadingTextStyle(
-                                fontSize: 18),
+                          Expanded(
+                            flex: 2,
+                            child: Text(
+                              driverCartContents[i].name,
+                              style: AppTextStyles.belowMainHeadingTextStyle(),
+                            ),
                           ),
-                          Spacer(),
-                          Text(
-                            'x26',
-                            style: AppTextStyles.nameHeadingTextStyle(size: 18),
+                          Expanded(
+                            child: Text(
+                              'x${driverCartContents[i].quantity}',
+                              style: AppTextStyles.nameHeadingTextStyle(),
+                            ),
+                          ),
+                          Expanded(
+                            child: Text(
+                              'Rs. ${(driverCartContents[i].price * driverCartContents[i].quantity).toStringAsFixed(0)}',
+                              style: AppTextStyles.belowMainHeadingTextStyle(),
+                            ),
                           ),
                         ],
                       ),
-                      Row(
-                        children: [
-                          Text(
-                            'Total Amount',
-                            style: AppTextStyles.belowMainHeadingTextStyle(
-                                fontSize: 18),
-                          ),
-                          Spacer(),
-                          Text(
-                            '5000',
-                            style: AppTextStyles.nameHeadingTextStyle(size: 18),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 10),
-                    ],
-                  ),
+                    SizedBox(height: 30),
+                    Divider(
+                      color: AppColors.black,
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                          'Total Quantity',
+                          style: AppTextStyles.belowMainHeadingTextStyle(
+                              fontSize: 18),
+                        ),
+                        Spacer(),
+                        Text(
+                          'x26',
+                          style: AppTextStyles.nameHeadingTextStyle(size: 18),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                          'Total Amount',
+                          style: AppTextStyles.belowMainHeadingTextStyle(
+                              fontSize: 18),
+                        ),
+                        Spacer(),
+                        Text(
+                          '5000',
+                          style: AppTextStyles.nameHeadingTextStyle(size: 18),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 10),
+                  ],
                 ),
               ),
               SizedBox(height: 40),

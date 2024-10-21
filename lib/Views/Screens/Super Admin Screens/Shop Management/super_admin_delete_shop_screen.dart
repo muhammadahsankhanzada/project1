@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/text_styles.dart';
+import 'package:project1/Views/Widgets/custom_appbar.dart';
 import 'package:project1/Views/Widgets/custom_snackbar.dart';
 import 'package:project1/Views/Widgets/universal_button.dart';
 
@@ -19,14 +20,8 @@ class _SuperAdminDeleteShopScreenState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.lightGreen,
-      appBar: AppBar(
-          title: Text(
-            'Delete Shop',
-            style: AppTextStyles.nameHeadingTextStyle(),
-          ),
-          centerTitle: true,
-          backgroundColor: AppColors.green),
+      backgroundColor: AppColors.lightWhiteBackground,
+      appBar: CustomAppbar(title: 'Delete Shop'),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -38,31 +33,43 @@ class _SuperAdminDeleteShopScreenState
                 Align(
                   alignment: Alignment.topLeft,
                   child: Text(
-                    'Delete a Shop',
+                    'Delete Shop',
                     style: AppTextStyles.nameHeadingTextStyle(size: 20),
                   ),
                 ),
-                Align(
-                  alignment: Alignment.topLeft,
-                  child: Text(
-                    'Are you sure you want to delete this shop?\nThis action cannot be undone..',
-                    style: AppTextStyles.belowMainHeadingTextStyle(
-                      fontSize: 15,
+                // Align(
+                //   alignment: Alignment.topLeft,
+                //   child: Text(
+                //     'Are you sure you want to delete this shop?\nThis action cannot be undone..',
+                //     style: AppTextStyles.belowMainHeadingTextStyle(
+                //       fontSize: 15,
+                //     ),
+                //   ),
+                // ),
+                SizedBox(height: 20),
+                TextFormField(
+                  // controller: _searchController,
+                  // validator: (value) {
+                  //   if (value == null || value.isEmpty) {
+                  //     return 'Enter driver name here';
+                  //   }
+                  //   return null;
+                  // },
+                  keyboardType: TextInputType.name,
+                  decoration: InputDecoration(
+                    hintText: 'Search',
+                    filled: true,
+                    fillColor: AppColors.white,
+                    contentPadding: EdgeInsets.symmetric(horizontal: 30),
+                    suffixIcon: Icon(
+                      Icons.search,
+                    ),
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide.none,
+                      borderRadius: BorderRadius.circular(30),
                     ),
                   ),
                 ),
-                SizedBox(height: 20),
-                textField(
-                    hint: 'Search shop...',
-                    icon: Icons.search,
-                    controller: _searchController,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Select a shop from the list';
-                      }
-                      return null;
-                    },
-                    keyboardType: TextInputType.name),
                 SizedBox(height: 20),
                 UniversalButton(
                     buttonWidth: 250,
@@ -102,23 +109,23 @@ class _SuperAdminDeleteShopScreenState
                                           MainAxisAlignment.spaceEvenly,
                                       children: [
                                         UniversalButton(
+                                            title: 'Cancel',
+                                            buttonHeight: 40,
+                                            buttonWidth: 110,
+                                            // buttonColor: AppColors.red.shade300,
+                                            ontap: () {
+                                              Navigator.pop(context);
+                                            }),
+                                        UniversalButton(
                                             title: 'Delete',
                                             buttonHeight: 40,
                                             buttonWidth: 110,
                                             buttonColor:
-                                                AppColors.green.withOpacity(.7),
+                                                AppColors.universalButtonGreen,
                                             ontap: () {
                                               Navigator.pop(context);
                                               customSnackbar(
                                                   context, 'Shop deleted.');
-                                            }),
-                                        UniversalButton(
-                                            title: 'Cancel',
-                                            buttonHeight: 40,
-                                            buttonWidth: 110,
-                                            buttonColor: AppColors.red.shade300,
-                                            ontap: () {
-                                              Navigator.pop(context);
                                             }),
                                       ],
                                     ),

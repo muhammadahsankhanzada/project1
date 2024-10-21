@@ -3,6 +3,7 @@ import 'package:project1/Models/product_categories_dummy_model.dart';
 import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/constants.dart';
 import 'package:project1/Utils/text_styles.dart';
+import 'package:project1/Views/Widgets/custom_appbar.dart';
 import 'package:project1/Views/Widgets/universal_button.dart';
 
 class DriverRequiredItemsScreen extends StatefulWidget {
@@ -29,13 +30,8 @@ class _DriverRequiredItemsScreenState extends State<DriverRequiredItemsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Required Items',
-          style: AppTextStyles.nameHeadingTextStyle(),
-        ),
-        centerTitle: true,
-      ),
+      backgroundColor: AppColors.lightWhiteBackground,
+      appBar: CustomAppbar(title: 'Required Items'),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,

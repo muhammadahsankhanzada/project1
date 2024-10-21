@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:project1/Models/warehouses_list_dummy_model.dart';
 import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/text_styles.dart';
+import 'package:project1/Views/Widgets/custom_appbar.dart';
 import 'package:project1/Views/Widgets/custom_snackbar.dart';
 import 'package:project1/Views/Widgets/universal_button.dart';
 
@@ -51,17 +52,8 @@ class _AdminCreateNewAccountScreenState
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.lightWhiteBackground,
-      appBar: AppBar(
-        title: Text(
-          'Create Account',
-          style: AppTextStyles.simpleHeadingTextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 18,
-            textColor: AppColors.universalButtonGreen,
-          ),
-        ),
-        centerTitle: true,
-        backgroundColor: AppColors.lightWhiteBackground,
+      appBar: CustomAppbar(
+        title: 'Create Account',
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -122,7 +114,7 @@ class _AdminCreateNewAccountScreenState
                       ),
                       SizedBox(height: 20),
                       textField(
-                          hint: 'Name...',
+                          hint: 'Name',
                           icon: Icons.person_outline,
                           controller: _nameController,
                           keyboardType: TextInputType.name,
@@ -138,7 +130,7 @@ class _AdminCreateNewAccountScreenState
                             children: [
                               customDropDownButton(
                                 icon: Icons.car_rental,
-                                hint: 'Vehicle...',
+                                hint: 'Vehicle',
                                 currentSelectedValue: selectedVehicleValue,
                                 dropDownValuesList: vehicleValuesList,
                                 onChanged: (String? newSelectedValue) {
@@ -156,7 +148,7 @@ class _AdminCreateNewAccountScreenState
                             children: [
                               customDropDownButton(
                                 icon: Icons.store,
-                                hint: 'Warehouse...',
+                                hint: 'Warehouse',
                                 currentSelectedValue: selectedWarehouseValue,
                                 dropDownValuesList: warehouseValuesList,
                                 onChanged: (String? newSelectedValue) {
@@ -171,7 +163,7 @@ class _AdminCreateNewAccountScreenState
                       Visibility(
                         visible: selectedRoleValue != 'Driver',
                         child: textField(
-                            hint: 'Email...',
+                            hint: 'Email',
                             icon: Icons.email_outlined,
                             controller: _emailController,
                             keyboardType: TextInputType.emailAddress,
@@ -183,7 +175,7 @@ class _AdminCreateNewAccountScreenState
                             }),
                       ),
                       textField(
-                          hint: 'Phone number...',
+                          hint: 'Phone number',
                           icon: Icons.phone_outlined,
                           controller: _phoneNumberController,
                           keyboardType: TextInputType.number,
@@ -194,7 +186,7 @@ class _AdminCreateNewAccountScreenState
                             return null;
                           }),
                       textField(
-                          hint: 'Password...',
+                          hint: 'Password',
                           icon: Icons.lock_outline,
                           controller: _passwordController,
                           keyboardType: TextInputType.visiblePassword,
@@ -205,7 +197,7 @@ class _AdminCreateNewAccountScreenState
                             return null;
                           }),
                       textField(
-                          hint: 'Confirm password...',
+                          hint: 'Confirm password',
                           icon: Icons.lock_outline,
                           controller: _confirmPasswordController,
                           keyboardType: TextInputType.visiblePassword,
@@ -218,7 +210,7 @@ class _AdminCreateNewAccountScreenState
                       Visibility(
                         visible: selectedRoleValue == 'Driver',
                         child: textField(
-                            hint: 'Route...',
+                            hint: 'Route',
                             icon: Icons.route,
                             controller: _routeController,
                             keyboardType: TextInputType.name,
@@ -230,7 +222,7 @@ class _AdminCreateNewAccountScreenState
                             }),
                       ),
                       textField(
-                          hint: 'Age (in years)...',
+                          hint: 'Age (in years)',
                           icon: Icons.cake,
                           controller: _ageController,
                           keyboardType: TextInputType.number,
@@ -241,7 +233,7 @@ class _AdminCreateNewAccountScreenState
                             return null;
                           }),
                       textField(
-                          hint: 'CNIC...',
+                          hint: 'CNIC',
                           icon: Icons.info,
                           controller: _cnicController,
                           keyboardType: TextInputType.number,
@@ -252,7 +244,7 @@ class _AdminCreateNewAccountScreenState
                             return null;
                           }),
                       textField(
-                          hint: 'Address...',
+                          hint: 'Address',
                           icon: Icons.location_on,
                           controller: _addressController,
                           keyboardType: TextInputType.name,

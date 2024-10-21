@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/text_styles.dart';
+import 'package:project1/Views/Widgets/custom_appbar.dart';
 import 'package:project1/Views/Widgets/custom_snackbar.dart';
 import 'package:project1/Views/Widgets/universal_button.dart';
 
@@ -35,19 +36,8 @@ class _ManagerDeleteProductsScreenState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.lightWhiteBackground,
-      appBar: AppBar(
-        title: Text(
-          'Delete Products',
-          style: AppTextStyles.simpleHeadingTextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-            textColor: AppColors.universalButtonGreen,
-          ),
-        ),
-        centerTitle: true,
-        backgroundColor: AppColors.lightWhiteBackground,
-      ),
+      backgroundColor: const Color.fromRGBO(245, 245, 245, 1),
+      appBar: CustomAppbar(title: 'Delete Products'),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),

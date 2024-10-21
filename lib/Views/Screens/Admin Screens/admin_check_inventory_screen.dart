@@ -3,6 +3,7 @@ import 'package:project1/Models/product_categories_dummy_model.dart';
 import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/text_styles.dart';
 import 'package:project1/Views/Screens/Manager%20Screens/Available%20Products/manager_available_products_items_list_screen.dart';
+import 'package:project1/Views/Widgets/custom_appbar.dart';
 
 class AdminCheckInventoryScreen extends StatefulWidget {
   const AdminCheckInventoryScreen({super.key});
@@ -17,13 +18,7 @@ class _AdminCheckInventoryScreenState extends State<AdminCheckInventoryScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.lightWhiteBackground,
-      appBar: AppBar(
-          title: Text(
-            'Inventory',
-            style: AppTextStyles.nameHeadingTextStyle(),
-          ),
-          centerTitle: true,
-          backgroundColor: AppColors.lightWhiteBackground),
+      appBar: CustomAppbar(title: 'Inventory'),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),

@@ -3,6 +3,7 @@ import 'package:project1/Models/product_categories_dummy_model.dart';
 import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/constants.dart';
 import 'package:project1/Utils/text_styles.dart';
+import 'package:project1/Views/Widgets/custom_appbar.dart';
 import 'package:project1/Views/Widgets/universal_button.dart';
 
 class DriverItemsListScreen extends StatefulWidget {
@@ -35,13 +36,9 @@ class _DriverItemsListScreenState extends State<DriverItemsListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.lightWhiteBackground,
-      appBar: AppBar(
-          title: Text(
-            productCategoriesDummyModelContents[selectedCategoryIndex].name,
-            style: AppTextStyles.nameHeadingTextStyle(),
-          ),
-          centerTitle: true,
-          backgroundColor: AppColors.lightWhiteBackground),
+      appBar: CustomAppbar(
+        title: productCategoriesDummyModelContents[selectedCategoryIndex].name,
+      ),
       body: Column(
         children: [
           // Align(

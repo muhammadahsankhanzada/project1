@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/text_styles.dart';
+import 'package:project1/Views/Widgets/custom_appbar.dart';
 
 class AdminWarehouseDetailsScreen extends StatefulWidget {
   final String warehouseName;
@@ -34,13 +35,7 @@ class _AdminWarehouseDetailsScreenState
     };
     return Scaffold(
       backgroundColor: AppColors.lightWhiteBackground,
-      appBar: AppBar(
-          title: Text(
-            'Warehouse Info',
-            style: AppTextStyles.nameHeadingTextStyle(),
-          ),
-          centerTitle: true,
-          backgroundColor: AppColors.lightWhiteBackground),
+      appBar: CustomAppbar(title: 'Warehouse Info'),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -180,7 +175,8 @@ class _AdminWarehouseDetailsScreenState
                   ),
                 ],
               ),
-            )
+            ),
+            SizedBox(height: 10),
           ],
         ),
       ),

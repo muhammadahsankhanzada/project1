@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/text_styles.dart';
+import 'package:project1/Views/Widgets/custom_appbar.dart';
 import 'package:project1/Views/Widgets/universal_button.dart';
 
 class SuperAdminAddShopScreen extends StatefulWidget {
@@ -23,14 +24,8 @@ class _SuperAdminAddShopScreenState extends State<SuperAdminAddShopScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.lightGreen,
-      appBar: AppBar(
-          title: Text(
-            'Add Shop',
-            style: AppTextStyles.nameHeadingTextStyle(),
-          ),
-          centerTitle: true,
-          backgroundColor: AppColors.green),
+      backgroundColor: AppColors.lightWhiteBackground,
+      appBar: CustomAppbar(title: 'Add Shop'),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -49,7 +44,7 @@ class _SuperAdminAddShopScreenState extends State<SuperAdminAddShopScreen> {
                 Align(
                   alignment: Alignment.topLeft,
                   child: Text(
-                    'Enter the shop details to add.',
+                    'Enter the shop details.',
                     style:
                         AppTextStyles.belowMainHeadingTextStyle(fontSize: 15),
                   ),
@@ -59,14 +54,14 @@ class _SuperAdminAddShopScreenState extends State<SuperAdminAddShopScreen> {
                   onTap: () {},
                   borderRadius: BorderRadius.circular(10),
                   child: Container(
-                      height: 150,
-                      width: 200,
+                      height: 200,
+                      width: double.infinity,
                       decoration: BoxDecoration(
                           border: Border.all(color: AppColors.grey),
-                          borderRadius: BorderRadius.circular(10)),
+                          borderRadius: BorderRadius.circular(20)),
                       child: Icon(
                         Icons.camera_alt,
-                        size: 30,
+                        size: 40,
                         color: AppColors.black,
                       )),
                 ),

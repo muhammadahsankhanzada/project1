@@ -4,6 +4,7 @@ import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/constants.dart';
 import 'package:project1/Utils/text_styles.dart';
 import 'package:project1/Views/Screens/Manager%20Screens/Driver%20Records/manager_driver_records_details_screen.dart';
+import 'package:project1/Views/Widgets/custom_appbar.dart';
 
 class ManagerDriverRecordsScreen extends StatefulWidget {
   const ManagerDriverRecordsScreen({super.key});
@@ -37,18 +38,7 @@ class _ManagerDriverRecordsScreenState
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.lightWhiteBackground,
-      appBar: AppBar(
-        title: Text(
-          'Drivers Records',
-          style: AppTextStyles.simpleHeadingTextStyle(
-            fontWeight: FontWeight.bold,
-            textColor: AppColors.universalButtonGreen,
-            fontSize: 18,
-          ),
-        ),
-        centerTitle: true,
-        backgroundColor: AppColors.lightWhiteBackground,
-      ),
+      appBar: CustomAppbar(title: 'Driver Records'),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15),
         child: Column(

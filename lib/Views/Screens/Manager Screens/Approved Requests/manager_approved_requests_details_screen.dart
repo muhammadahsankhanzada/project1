@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/constants.dart';
 import 'package:project1/Utils/text_styles.dart';
+import 'package:project1/Views/Widgets/custom_appbar.dart';
 
 class ManagerApprovedRequestsDetailsScreen extends StatelessWidget {
   const ManagerApprovedRequestsDetailsScreen({super.key});
@@ -9,17 +10,8 @@ class ManagerApprovedRequestsDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Order Details',
-          style: AppTextStyles.simpleHeadingTextStyle(
-            textColor: AppColors.universalButtonGreen,
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        centerTitle: true,
-      ),
+      backgroundColor: AppColors.lightWhiteBackground,
+      appBar: CustomAppbar(title: 'Order Details'),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: SingleChildScrollView(

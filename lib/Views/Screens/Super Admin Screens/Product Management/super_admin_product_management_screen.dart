@@ -4,6 +4,7 @@ import 'package:project1/Utils/text_styles.dart';
 import 'package:project1/Views/Screens/Manager%20Screens/Add%20Products/manager_add_product_warehouse_selection_screen.dart';
 import 'package:project1/Views/Screens/Manager%20Screens/Delete%20Products/manager_delete_product_warehouse_selection_screen.dart';
 import 'package:project1/Views/Screens/Super%20Admin%20Screens/Product%20Management/super_admin_edit_product_warehouse_selection_screen.dart';
+import 'package:project1/Views/Widgets/custom_appbar.dart';
 
 class SuperAdminProductManagementScreen extends StatelessWidget {
   const SuperAdminProductManagementScreen({super.key});
@@ -12,17 +13,7 @@ class SuperAdminProductManagementScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.lightWhiteBackground,
-      appBar: AppBar(
-          title: Text(
-            'Products',
-            style: AppTextStyles.simpleHeadingTextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-              textColor: AppColors.universalButtonGreen,
-            ),
-          ),
-          centerTitle: true,
-          backgroundColor: AppColors.lightWhiteBackground),
+      appBar: CustomAppbar(title: 'Products'),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -102,7 +93,7 @@ class SuperAdminProductManagementScreen extends StatelessWidget {
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: 30, vertical: 20),
               decoration: BoxDecoration(
-                color: AppColors.universalButtonGreen,
+                color: AppColors.green,
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Row(

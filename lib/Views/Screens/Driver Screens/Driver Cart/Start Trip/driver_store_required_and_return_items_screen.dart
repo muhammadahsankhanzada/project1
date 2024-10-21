@@ -29,6 +29,7 @@ class _DriverStoreRequiredAndReturnItemsScreenState
     return DefaultTabController(
       length: 2,
       child: Scaffold(
+        backgroundColor: AppColors.lightWhiteBackground,
         // appBar: AppBar(
         //   title: Text(
         //     'Items and Cart',
@@ -66,7 +67,11 @@ class _DriverStoreRequiredAndReturnItemsScreenState
                           )),
                       Text(
                         'Ahsan Store',
-                        style: AppTextStyles.nameHeadingTextStyle(),
+                        style: AppTextStyles.simpleHeadingTextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          textColor: AppColors.universalButtonGreen,
+                        ),
                       ),
                       UniversalButton(
                         title: 'Deliver',

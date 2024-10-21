@@ -3,6 +3,7 @@ import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/constants.dart';
 import 'package:project1/Utils/text_styles.dart';
 import 'package:project1/Views/Screens/Manager%20Screens/Driver%20Records/manager_driver_records_trip_details_screen.dart';
+import 'package:project1/Views/Widgets/custom_appbar.dart';
 
 class ManagerDriverRecordsDetailsScreen extends StatefulWidget {
   final String driverName;
@@ -32,18 +33,7 @@ class _ManagerDriverRecordsDetailsScreenState
     };
     return Scaffold(
       backgroundColor: AppColors.lightWhiteBackground,
-      appBar: AppBar(
-        title: Text(
-          'Driver Info',
-          style: AppTextStyles.simpleHeadingTextStyle(
-            fontWeight: FontWeight.bold,
-            textColor: AppColors.universalButtonGreen,
-            fontSize: 18,
-          ),
-        ),
-        centerTitle: true,
-        backgroundColor: AppColors.lightWhiteBackground,
-      ),
+      appBar: CustomAppbar(title: 'Driver Info'),
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 15),

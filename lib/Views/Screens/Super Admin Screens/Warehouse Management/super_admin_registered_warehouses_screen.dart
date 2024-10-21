@@ -6,28 +6,21 @@ import 'package:project1/Utils/text_styles.dart';
 import 'package:project1/Views/Screens/Admin%20Screens/Warehouse%20Records/admin_warehouse_details_screen.dart';
 import 'package:project1/Views/Widgets/custom_appbar.dart';
 
-class AdminWarehouseListScreen extends StatefulWidget {
-  const AdminWarehouseListScreen({super.key});
+class SuperAdminRegisteredWarehousesScreen extends StatelessWidget {
+  const SuperAdminRegisteredWarehousesScreen({super.key});
 
-  @override
-  State<AdminWarehouseListScreen> createState() =>
-      _AdminWarehouseListScreenState();
-}
-
-class _AdminWarehouseListScreenState extends State<AdminWarehouseListScreen> {
-  var _searchController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.lightWhiteBackground,
-      appBar: CustomAppbar(title: 'Warehouses'),
+      appBar: CustomAppbar(title: 'Registered Warehouses'),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15),
         child: Column(
           children: [
-            SizedBox(height: 20),
+            SizedBox(height: 10),
             TextFormField(
-              controller: _searchController,
+              // controller: _searchController,
               // validator: (value) {
               //   if (value == null || value.isEmpty) {
               //     return 'Enter driver name here';
@@ -36,15 +29,12 @@ class _AdminWarehouseListScreenState extends State<AdminWarehouseListScreen> {
               // },
               keyboardType: TextInputType.name,
               decoration: InputDecoration(
-                hintText: 'Search warehouse name...',
+                hintText: 'Search',
                 filled: true,
                 fillColor: AppColors.white,
-                contentPadding: EdgeInsets.symmetric(horizontal: 20),
-                suffixIcon: Padding(
-                  padding: const EdgeInsets.only(left: 20, right: 10),
-                  child: Icon(
-                    Icons.search,
-                  ),
+                contentPadding: EdgeInsets.symmetric(horizontal: 30),
+                suffixIcon: Icon(
+                  Icons.search,
                 ),
                 border: OutlineInputBorder(
                   borderSide: BorderSide.none,
@@ -55,6 +45,8 @@ class _AdminWarehouseListScreenState extends State<AdminWarehouseListScreen> {
             SizedBox(height: 20),
             Expanded(
                 child: ListView.builder(
+                    shrinkWrap: true,
+                    // physics: NeverScrollableScrollPhysics(),
                     itemCount: warehousesDummyListContents.length,
                     itemBuilder: (context, index) {
                       return Column(
@@ -98,7 +90,7 @@ class _AdminWarehouseListScreenState extends State<AdminWarehouseListScreen> {
                                               CrossAxisAlignment.start,
                                           children: [
                                             SizedBox(
-                                              width: 150,
+                                              width: 200,
                                               child: Text(
                                                 overflow: TextOverflow.ellipsis,
                                                 warehousesDummyListContents[
@@ -112,7 +104,7 @@ class _AdminWarehouseListScreenState extends State<AdminWarehouseListScreen> {
                                             Row(
                                               children: [
                                                 Text(
-                                                  'Address: ',
+                                                  'Location: ',
                                                   style: TextStyle(
                                                     fontWeight: FontWeight.w500,
                                                   ),
@@ -143,7 +135,7 @@ class _AdminWarehouseListScreenState extends State<AdminWarehouseListScreen> {
                           SizedBox(height: 10),
                         ],
                       );
-                    })),
+                    }))
           ],
         ),
       ),

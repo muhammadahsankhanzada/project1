@@ -3,6 +3,7 @@ import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/text_styles.dart';
 import 'package:project1/Views/Screens/Admin%20Screens/Accounts%20Management/admin_create_new_account_screen.dart';
 import 'package:project1/Views/Screens/Admin%20Screens/Accounts%20Management/admin_delete_account_screen.dart';
+import 'package:project1/Views/Widgets/custom_appbar.dart';
 
 class AdminAccountsManagementScreen extends StatelessWidget {
   const AdminAccountsManagementScreen({super.key});
@@ -11,17 +12,7 @@ class AdminAccountsManagementScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.lightWhiteBackground,
-      appBar: AppBar(
-          title: Text(
-            'Accounts',
-            style: AppTextStyles.simpleHeadingTextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 18,
-              textColor: AppColors.universalButtonGreen,
-            ),
-          ),
-          centerTitle: true,
-          backgroundColor: AppColors.lightWhiteBackground),
+      appBar: CustomAppbar(title: 'Accounts'),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -87,7 +78,7 @@ class AdminAccountsManagementScreen extends StatelessWidget {
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: 30, vertical: 20),
               decoration: BoxDecoration(
-                color: AppColors.universalButtonGreen,
+                color: AppColors.green,
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Row(
