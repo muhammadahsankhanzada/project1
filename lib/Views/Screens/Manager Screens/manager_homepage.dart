@@ -3,14 +3,12 @@ import 'package:project1/Models/manager_homepage_items.dart';
 import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/constants.dart';
 import 'package:project1/Utils/text_styles.dart';
-import 'package:project1/Views/Screens/General%20Screens/login_screen.dart';
 import 'package:project1/Views/Screens/Manager%20Screens/Add%20Products/manager_add_product_warehouse_selection_screen.dart';
 import 'package:project1/Views/Screens/Manager%20Screens/Approved%20Requests/manager_approved_requests_screen.dart';
 import 'package:project1/Views/Screens/Manager%20Screens/Available%20Products/manager_available_products_screen.dart';
 import 'package:project1/Views/Screens/Manager%20Screens/Delete%20Products/manager_delete_product_warehouse_selection_screen.dart';
 import 'package:project1/Views/Screens/Manager%20Screens/Driver%20Records/manager_driver_records_screen.dart';
 import 'package:project1/Views/Screens/Manager%20Screens/Pending%20Requests/manager_pending_requests_screen.dart';
-import 'package:project1/Views/Widgets/custom_snackbar.dart';
 
 class ManagerHomepage extends StatelessWidget {
   const ManagerHomepage({super.key});

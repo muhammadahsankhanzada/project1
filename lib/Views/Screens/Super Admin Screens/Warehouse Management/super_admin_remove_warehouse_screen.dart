@@ -16,7 +16,7 @@ class SuperAdminRemoveWarehouseScreen extends StatefulWidget {
 class _SuperAdminRemoveWarehouseScreenState
     extends State<SuperAdminRemoveWarehouseScreen> {
   var _formKey = GlobalKey<FormState>();
-  var _searchController = TextEditingController();
+  // var _searchController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(

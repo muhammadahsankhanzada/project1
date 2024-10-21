@@ -3,6 +3,7 @@ import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/text_styles.dart';
 import 'package:project1/Views/Screens/Admin%20Screens/Accounts%20Management/admin_create_new_account_screen.dart';
 import 'package:project1/Views/Screens/Admin%20Screens/Accounts%20Management/admin_delete_account_screen.dart';
+import 'package:project1/Views/Screens/Admin%20Screens/Accounts%20Management/admin_password_reset_requests_screen.dart';
 import 'package:project1/Views/Widgets/custom_appbar.dart';
 
 class AdminAccountsManagementScreen extends StatelessWidget {
@@ -55,6 +56,17 @@ class AdminAccountsManagementScreen extends StatelessWidget {
                 },
                 title: 'Delete an Account',
                 icon: Icons.delete,
+              ),
+              customContainer(
+                ontap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              AdminPasswordResetRequestsScreen()));
+                },
+                title: 'Password Reset Requests',
+                icon: Icons.lock,
               ),
             ],
           ),

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:project1/Models/shops_list_dummy_model.dart';
 import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/text_styles.dart';
-import 'package:project1/Views/Screens/Admin%20Screens/Shop%20Records/admin_shop_records_details_screen.dart';
 import 'package:project1/Views/Screens/Super%20Admin%20Screens/Shop%20Management/super_admin_add_shop_screen.dart';
 import 'package:project1/Views/Screens/Super%20Admin%20Screens/Shop%20Management/super_admin_delete_shop_screen.dart';
 import 'package:project1/Views/Screens/Super%20Admin%20Screens/Shop%20Management/super_admin_registered_shops_screen.dart';
