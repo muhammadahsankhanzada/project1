@@ -1,4 +1,7 @@
+import 'dart:io';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/text_styles.dart';
 import 'package:project1/Views/Widgets/custom_appbar.dart';
@@ -21,6 +24,9 @@ class _SuperAdminAddShopScreenState extends State<SuperAdminAddShopScreen> {
   var _contactController = TextEditingController();
   var _emailController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  File? _pickedImage;
+  String? _imageUrl;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,7 +57,15 @@ class _SuperAdminAddShopScreenState extends State<SuperAdminAddShopScreen> {
                 ),
                 SizedBox(height: 30),
                 InkWell(
-                  onTap: () {},
+                  onTap: () async {
+                    final ImagePicker picker = ImagePicker();
+                    final pickedFile =
+                        await picker.pickImage(source: ImageSource.gallery);
+                    if (pickedFile != null) {
+                      _pickedImage = File(pickedFile.path);
+                      setState(() {});
+                    }
+                  },
                   borderRadius: BorderRadius.circular(10),
                   child: Container(
                       height: 200,
@@ -59,11 +73,19 @@ class _SuperAdminAddShopScreenState extends State<SuperAdminAddShopScreen> {
                       decoration: BoxDecoration(
                           border: Border.all(color: AppColors.grey),
                           borderRadius: BorderRadius.circular(20)),
-                      child: Icon(
-                        Icons.camera_alt,
-                        size: 40,
-                        color: AppColors.black,
-                      )),
+                      child: _pickedImage != null
+                          ? ClipRRect(
+                              borderRadius: BorderRadius.circular(20),
+                              child: Image.file(
+                                fit: BoxFit.fill,
+                                _pickedImage!,
+                              ),
+                            )
+                          : Icon(
+                              Icons.camera_alt,
+                              size: 40,
+                              color: AppColors.black,
+                            )),
                 ),
                 SizedBox(height: 20),
                 textField(
@@ -192,4 +214,71 @@ class _SuperAdminAddShopScreenState extends State<SuperAdminAddShopScreen> {
       ],
     );
   }
+
+  // Upload image to firebase storage and get imageUrl
+  Future<void> uploadImage() async {
+    if (_pickedImage == null) return;
+
+    try {
+      final ref = FirebaseStorage.instance
+          .ref()
+          .child('shops_images/${DateTime.now().millisecondsSinceEpoch}.jpg');
+
+      // Upload the file to Firebase Storage
+      await ref.putFile(_pickedImage!);
+      print('Picimage: $_pickedImage');
+      // Get the download URL
+      _imageUrl = await ref.getDownloadURL();
+      print(_imageUrl);
+    } catch (e) {
+      print('Error uploading image: $e');
+    }
+  }
+
+  // addShop(){
+
+  //                       String? categoryName;
+  //                       await uploadImage();
+  //                       print(_pickedImage);
+  //                       print(_imageUrl);
+  //                       if (_productNameController.text.isNotEmpty &&
+  //                           categoryName != '' &&
+  //                           _productPriceController.text.isNotEmpty &&
+  //                           _productQuantityController.text.isNotEmpty &&
+  //                           _imageUrl != null &&
+  //                           selectedCategoryValue != null) {
+  //                         widget.warehouseList.forEach((warehouse) {
+  //                           String warehouseName = warehouse;
+  //                           categoryName = selectedCategoryValue == 'Other'
+  //                               ? _productNewCategoryNameController.text
+  //                               : selectedCategoryValue;
+  //                           Product newProduct = Product(
+  //                             id: _productNameController.text.toString(),
+  //                             // id: '',
+  //                             name: _productNameController.text.toString(),
+  //                             imageUrl: _imageUrl!,
+  //                             price: double.parse(_productPriceController.text),
+  //                             quantity:
+  //                                 int.parse(_productQuantityController.text),
+  //                           );
+  //                           FirebaseFirestore firestore =
+  //                               FirebaseFirestore.instance;
+  //                           firestore
+  //                               .collection('Warehouses')
+  //                               .doc(warehouseName)
+  //                               .collection('Categories')
+  //                               .doc(categoryName)
+  //                               .collection('Products')
+  //                               .doc(newProduct.id)
+  //                               .set(newProduct.toMap())
+  //                               .then((_) {
+  //                             print('Document added with id: ${newProduct.id}');
+  //                           }).catchError((error) {
+  //                             print('Error adding: $error');
+  //                           });
+  //                         });
+  //                       } else {
+  //                         customSnackbar(context, 'Please fill all fields');
+  //                       }
+  // }
 }

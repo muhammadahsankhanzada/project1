@@ -75,7 +75,7 @@ class DriverShopsListScreen extends StatelessWidget {
                           radius: 50,
                           backgroundImage: AssetImage(Constants.myImage),
                         ),
-                        SizedBox(width: 20),
+                        SizedBox(width: 10),
                         Column(
                           children: [
                             SizedBox(
@@ -85,8 +85,8 @@ class DriverShopsListScreen extends StatelessWidget {
                                 overflow: TextOverflow.ellipsis,
                                 maxLines: 1,
                                 style: AppTextStyles.simpleHeadingTextStyle(
-                                  fontSize: 18,
-                                  textColor: AppColors.white,
+                                  fontSize: 18, fontWeight: FontWeight.bold,
+                                  // textColor: AppColors.black,
                                 ),
                               ),
                             ),
@@ -98,7 +98,7 @@ class DriverShopsListScreen extends StatelessWidget {
                                 maxLines: 2,
                                 style: AppTextStyles.simpleHeadingTextStyle(
                                   fontSize: 12,
-                                  textColor: AppColors.white,
+                                  // textColor: AppColors.white,
                                 ),
                               ),
                             ),

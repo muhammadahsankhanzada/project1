@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/text_styles.dart';
@@ -21,18 +22,42 @@ class _ManagerDeleteProductsScreenState
     extends State<ManagerDeleteProductsScreen> {
   final _formKey = GlobalKey<FormState>();
   String? selectedCategoryValue;
-  final List<String> categoryValuesList = [
-    'Electronics',
-    'Home Appliances',
-    'Fashion'
-  ];
+
+  List<String> categoryValuesList = [];
+
+  // final List<String> categoryValuesList = [
+  //   'Electronics',
+  //   'Home Appliances',
+  //   'Fashion'
+  // ];
   String? selectedProductValue;
-  final List<String> productValuesList = [
-    'Laptop',
-    'Smart Phone',
-    'Camera',
-    'Tablet',
-  ];
+
+  List<String> productValuesList = [];
+  // final List<String> productValuesList = [
+  //   'Laptop',
+  //   'Smart Phone',
+  //   'Camera',
+  //   'Tablet',
+  // ];
+
+  @override
+  void initState() {
+    super.initState();
+    for (var warehouse in widget.warehouseList) {
+      print(warehouse);
+    }
+
+    // Categories List
+    fetchCategories().then((categories) {
+      categoryValuesList = categories;
+    });
+
+    // Products List
+    fetchProducts().then((products) {
+      productValuesList = products;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -65,8 +90,14 @@ class _ManagerDeleteProductsScreenState
                   dropDownValuesList: categoryValuesList,
                   onChanged: (String? newSelectedValue) {
                     selectedCategoryValue = newSelectedValue;
+                    selectedProductValue = null;
                     setState(() {});
+
                     print(selectedCategoryValue);
+                    // Products List
+                    fetchProducts().then((products) {
+                      productValuesList = products;
+                    });
                   },
                 ),
                 SizedBox(height: 20),
@@ -137,6 +168,8 @@ class _ManagerDeleteProductsScreenState
                                             buttonColor:
                                                 AppColors.green.withOpacity(.7),
                                             ontap: () {
+                                              deleteProduct(
+                                                  selectedProductValue!);
                                               Navigator.pop(context);
                                               customSnackbar(
                                                   context, 'Product deleted.');
@@ -218,5 +251,64 @@ class _ManagerDeleteProductsScreenState
         ),
       ),
     );
+  }
+
+  // Method to fetch categories list
+  Future<List<String>> fetchCategories() async {
+    List<String> categories = [];
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    await firestore
+        .collection('Warehouses')
+        .doc('Alpha Warehouse')
+        .collection('Categories')
+        .get()
+        .then((QuerySnapshot categorySnapshot) {
+      categories = categorySnapshot.docs.map((doc) => doc.id).toList();
+      setState(() {
+        // print(categories);
+      });
+    }).catchError((error) {
+      print('Error getting data: $error');
+    });
+    return categories;
+  }
+
+  // Method to fetch products list
+  Future<List<String>> fetchProducts() async {
+    List<String> products = [];
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    await firestore
+        .collection('Warehouses')
+        .doc('Alpha Warehouse')
+        .collection('Categories')
+        .doc(selectedCategoryValue)
+        .collection('Products')
+        .get()
+        .then((QuerySnapshot productSnapshot) {
+      products = productSnapshot.docs.map((doc) => doc.id).toList();
+      setState(() {
+        // print(products);
+      });
+    }).catchError((error) {
+      print('Error getting data: $error');
+    });
+    return products;
+  }
+
+  // Method to delete a product
+  Future<void> deleteProduct(String productId) async {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    try {
+      await firestore
+          .collection('Warehouses')
+          .doc('Alpha Warehouse')
+          .collection('Categories')
+          .doc(selectedCategoryValue)
+          .collection('Products')
+          .doc(productId)
+          .delete();
+    } catch (error) {
+      print('Error deleting document: $error');
+    }
   }
 }

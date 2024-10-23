@@ -183,7 +183,7 @@ class _SuperAdminAddWarehouseScreenState
                 SizedBox(height: 10),
                 UniversalButton(
                     buttonWidth: 250,
-                    title: 'Add Shop',
+                    title: 'Add Warehouse',
                     ontap: () {
                       if (_formKey.currentState!.validate()) {}
                     }),

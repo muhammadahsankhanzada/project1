@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:project1/Models/shops_list_dummy_model.dart';
+import 'package:project1/Models/Dummy%20Models/shops_list_dummy_model.dart';
 import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/text_styles.dart';
 import 'package:project1/Views/Screens/Admin%20Screens/Shop%20Records/admin_shop_records_details_screen.dart';

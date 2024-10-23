@@ -1,5 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:project1/Models/warehouses_list_dummy_model.dart';
 import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/text_styles.dart';
 import 'package:project1/Views/Screens/Manager%20Screens/Delete%20Products/manager_delete_products_screen.dart';
@@ -18,12 +18,15 @@ class _ManagerDeleteProductWarehouseSelectionScreenState
     extends State<ManagerDeleteProductWarehouseSelectionScreen> {
   List<bool> selectedWarehouses = [];
   bool isSelectionModeOn = false;
+  List<String> warehouseValuesList = [];
+
   // Color containerBackgroundColor = AppColors.lightGreen;
   @override
   void initState() {
     super.initState();
-    selectedWarehouses =
-        List<bool>.filled(warehousesDummyListContents.length, false);
+
+    // Warehouses List
+    fetchWarehouses();
   }
 
   void _updateSelectionMode() {
@@ -72,101 +75,120 @@ class _ManagerDeleteProductWarehouseSelectionScreenState
           SizedBox(width: 10),
         ],
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-          child: Column(
-            children: [
-              SizedBox(height: 10),
-              ListView.builder(
-                  itemCount: warehousesDummyListContents.length,
-                  shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
-                  itemBuilder: (context, index) {
-                    return Column(
-                      children: [
-                        InkWell(
-                          onLongPress: () {
-                            print('longtap');
-                            isSelectionModeOn = true;
-                            selectedWarehouses[index] =
-                                !selectedWarehouses[index];
-                            _updateSelectionMode();
-                            setState(() {});
-                          },
-                          onTap: () {
-                            print('ontap');
-                            if (isSelectionModeOn) {
-                              selectedWarehouses[index] =
-                                  !selectedWarehouses[index];
-                              _updateSelectionMode();
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+        child: warehouseValuesList == []
+            ? Center(child: CircularProgressIndicator())
+            : Column(
+                children: [
+                  SizedBox(height: 10),
+                  Expanded(
+                    child: ListView.builder(
+                        itemCount: warehouseValuesList.length,
+                        shrinkWrap: true,
+                        // physics: NeverScrollableScrollPhysics(),
+                        itemBuilder: (context, index) {
+                          return Column(
+                            children: [
+                              InkWell(
+                                onLongPress: () {
+                                  print('longtap');
+                                  isSelectionModeOn = true;
+                                  selectedWarehouses[index] =
+                                      !selectedWarehouses[index];
+                                  _updateSelectionMode();
+                                  setState(() {});
+                                },
+                                onTap: () {
+                                  print('ontap');
+                                  if (isSelectionModeOn) {
+                                    selectedWarehouses[index] =
+                                        !selectedWarehouses[index];
+                                    _updateSelectionMode();
 
-                              setState(() {});
-                            } else {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          ManagerDeleteProductsScreen(
-                                            warehouseList: [
-                                              warehousesDummyListContents[index]
-                                                  .name
-                                            ],
-                                          )));
+                                    setState(() {});
+                                  } else {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                ManagerDeleteProductsScreen(
+                                                  warehouseList: [
+                                                    warehouseValuesList[index]
+                                                  ],
+                                                )));
+                                  }
+                                },
+                                borderRadius: BorderRadius.circular(20),
+                                child: Container(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 20, vertical: 40),
+                                  decoration: BoxDecoration(
+                                      color: selectedWarehouses[index]
+                                          ? AppColors.green.withOpacity(.7)
+                                          : AppColors.lightGreen1
+                                              .withOpacity(.7),
+                                      borderRadius: BorderRadius.circular(20)),
+                                  child: Center(
+                                      child: Text(
+                                    warehouseValuesList[index],
+                                    style: AppTextStyles.nameHeadingTextStyle(
+                                        size: 15),
+                                  )),
+                                ),
+                              ),
+                              SizedBox(height: 10),
+                            ],
+                          );
+                        }),
+                  ),
+                  SizedBox(height: 10),
+                  Visibility(
+                    visible: isSelectionModeOn,
+                    child: UniversalButton(
+                        title: 'Continue',
+                        textSize: 15,
+                        ontap: () {
+                          List<String> selectedWarehouseNames = [];
+                          for (int i = 0; i < selectedWarehouses.length; i++) {
+                            if (selectedWarehouses[i]) {
+                              selectedWarehouseNames
+                                  .add(warehouseValuesList[i]);
                             }
-                          },
-                          borderRadius: BorderRadius.circular(20),
-                          child: Container(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 20, vertical: 40),
-                            decoration: BoxDecoration(
-                                color: selectedWarehouses[index]
-                                    ? AppColors.green.withOpacity(.7)
-                                    : AppColors.lightGreen1.withOpacity(.7),
-                                borderRadius: BorderRadius.circular(20)),
-                            child: Center(
-                                child: Text(
-                              warehousesDummyListContents[index].name,
-                              style:
-                                  AppTextStyles.nameHeadingTextStyle(size: 15),
-                            )),
-                          ),
-                        ),
-                        SizedBox(height: 10),
-                      ],
-                    );
-                  }),
-              SizedBox(height: 10),
-              Visibility(
-                visible: isSelectionModeOn,
-                child: UniversalButton(
-                    title: 'Continue',
-                    ontap: () {
-                      List<String> selectedWarehouseNames = [];
-                      for (int i = 0; i < selectedWarehouses.length; i++) {
-                        if (selectedWarehouses[i]) {
-                          selectedWarehouseNames
-                              .add(warehousesDummyListContents[i].name);
-                        }
-                      }
-                      if (selectedWarehouseNames.isNotEmpty) {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    ManagerDeleteProductsScreen(
-                                        warehouseList:
-                                            selectedWarehouseNames)));
-                      } else {
-                        customSnackbar(
-                            context, 'Select a Warehouse to continue');
-                      }
-                    }),
+                          }
+                          if (selectedWarehouseNames.isNotEmpty) {
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        ManagerDeleteProductsScreen(
+                                            warehouseList:
+                                                selectedWarehouseNames)));
+                          } else {
+                            customSnackbar(
+                                context, 'Select a Warehouse to continue');
+                          }
+                        }),
+                  ),
+                ],
               ),
-            ],
-          ),
-        ),
       ),
     );
+  }
+
+  // Method to fetch warehouses list
+  fetchWarehouses() async {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+    try {
+      QuerySnapshot warehouseSnapshot =
+          await firestore.collection('Warehouses').get();
+      warehouseValuesList =
+          warehouseSnapshot.docs.map((doc) => doc.id).toList();
+      selectedWarehouses = List<bool>.filled(warehouseValuesList.length, false);
+      setState(() {});
+    } catch (error) {
+      print('Error getting data: $error');
+    }
   }
 }

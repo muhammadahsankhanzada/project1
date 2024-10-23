@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/text_styles.dart';
@@ -23,18 +24,23 @@ class _SuperAdminEditProductsScreenState
   var _productPriceController = TextEditingController();
   var _productQuantityController = TextEditingController();
   String? selectedCategoryValue;
-  final List<String> categoryValuesList = [
-    'Electronics',
-    'Home Appliances',
-    'Fashion'
-  ];
+
+  List<String> categoryValuesList = [];
+
+  // final List<String> categoryValuesList = [
+  //   'Electronics',
+  //   'Home Appliances',
+  //   'Fashion'
+  // ];
   String? selectedProductValue;
-  final List<String> productValuesList = [
-    'Laptop',
-    'Smart Phone',
-    'Camera',
-    'Tablet',
-  ];
+
+  List<String> productValuesList = [];
+  // final List<String> productValuesList = [
+  //   'Laptop',
+  //   'Smart Phone',
+  //   'Camera',
+  //   'Tablet',
+  // ];
 
   @override
   void initState() {
@@ -42,6 +48,15 @@ class _SuperAdminEditProductsScreenState
     for (var warehouse in widget.warehouseList) {
       print(warehouse);
     }
+    // Categories List
+    fetchCategories().then((categories) {
+      categoryValuesList = categories;
+    });
+
+    // Products List
+    fetchProducts().then((products) {
+      productValuesList = products;
+    });
   }
 
   @override
@@ -74,6 +89,7 @@ class _SuperAdminEditProductsScreenState
                 ),
                 SizedBox(height: 30),
                 //Category DropDown
+
                 productDropDownButton(
                   icon: Icons.grid_view,
                   hint: 'Select a Category',
@@ -81,8 +97,13 @@ class _SuperAdminEditProductsScreenState
                   dropDownValuesList: categoryValuesList,
                   onChanged: (String? newSelectedValue) {
                     selectedCategoryValue = newSelectedValue;
+                    selectedProductValue = null;
                     setState(() {});
                     print(selectedCategoryValue);
+                    // Products List
+                    fetchProducts().then((products) {
+                      productValuesList = products;
+                    });
                   },
                 ),
                 SizedBox(height: 20),
@@ -160,8 +181,12 @@ class _SuperAdminEditProductsScreenState
                 UniversalButton(
                     buttonWidth: 250,
                     title: 'Save',
-                    ontap: () {
-                      if (_formKey.currentState!.validate()) {}
+                    ontap: () async {
+                      // if (_formKey.currentState!.validate()) {}
+                      // List<String> cat = await fetchCategories();
+                      // print('${cat}44');
+                      // updateProduct(selectedProductValue!);
+                      updateProduct(selectedProductValue!);
                     }),
                 SizedBox(height: 20),
               ],
@@ -258,5 +283,186 @@ class _SuperAdminEditProductsScreenState
         ),
       ),
     );
+  }
+
+  // Method to fetch categories list
+  Future<List<String>> fetchCategories() async {
+    List<String> categories = [];
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    await firestore
+        .collection('Warehouses')
+        .doc('Alpha Warehouse')
+        .collection('Categories')
+        .get()
+        .then((QuerySnapshot categorySnapshot) {
+      categories = categorySnapshot.docs.map((doc) => doc.id).toList();
+      setState(() {
+        // print(categories);
+      });
+    }).catchError((error) {
+      print('Error getting data: $error');
+    });
+    return categories;
+  }
+
+  // Method to fetch products list
+  Future<List<String>> fetchProducts() async {
+    List<String> products = [];
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    await firestore
+        .collection('Warehouses')
+        .doc('Alpha Warehouse')
+        .collection('Categories')
+        .doc(selectedCategoryValue)
+        .collection('Products')
+        .get()
+        .then((QuerySnapshot productSnapshot) {
+      products = productSnapshot.docs.map((doc) => doc.id).toList();
+      setState(() {
+        // print(products);
+      });
+    }).catchError((error) {
+      print('Error getting data: $error');
+    });
+    return products;
+  }
+
+  // Update product details
+  // Future<void> updateProduct(String productId) async {
+  //   FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+  //   // Fetch the current product details
+  //   DocumentSnapshot productSnapshot = await firestore
+  //       .collection('Warehouses')
+  //       .doc('Alpha Warehouse')
+  //       .collection('Categories')
+  //       .doc(selectedCategoryValue)
+  //       .collection('Products')
+  //       .doc(productId)
+  //       .get();
+
+  //   if (productSnapshot.exists) {
+  //     var currentData = productSnapshot.data() as Map<String, dynamic>;
+
+  //     Map<String, dynamic> updateData = {};
+
+  //     // Only add fields to update if they have changed
+  //     if (_productNameController.text.isNotEmpty &&
+  //         _productNameController.text != currentData['name']) {
+  //       updateData['name'] = _productNameController.text;
+  //     }
+  //     if (_productPriceController.text.isNotEmpty &&
+  //         double.tryParse(_productPriceController.text) !=
+  //             currentData['price']) {
+  //       updateData['price'] = double.tryParse(_productPriceController.text);
+  //     }
+  //     if (_productQuantityController.text.isNotEmpty &&
+  //         int.tryParse(_productQuantityController.text) !=
+  //             currentData['quantity']) {
+  //       updateData['quantity'] = int.tryParse(_productQuantityController.text);
+  //     }
+
+  //     // Update only if there's something to update
+  //     if (updateData.isNotEmpty) {
+  //       await firestore
+  //           .collection('Warehouses')
+  //           .doc('Alpha Warehouse')
+  //           .collection('Categories')
+  //           .doc(selectedCategoryValue)
+  //           .collection('Products')
+  //           .doc(productId)
+  //           .update(updateData)
+  //           .then((_) {
+  //         print('Product updated successfully');
+  //       }).catchError((error) {
+  //         print('Failed to update product: $error');
+  //       });
+  //     } else {
+  //       print('No changes detected, nothing to update.');
+  //     }
+  //   }
+  // }
+
+  // Update product method 2
+  Future<void> updateProduct(String productId) async {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+    // Fetch the current product details
+    DocumentSnapshot productSnapshot = await firestore
+        .collection('Warehouses')
+        .doc('Alpha Warehouse')
+        .collection('Categories')
+        .doc(selectedCategoryValue)
+        .collection('Products')
+        .doc(productId)
+        .get();
+
+    if (productSnapshot.exists) {
+      var currentData = productSnapshot.data() as Map<String, dynamic>;
+
+      // Prepare the new product name
+      String newProductName = _productNameController.text.isNotEmpty
+          ? _productNameController.text
+          : currentData['name']; // Keep the current name if the field is empty
+
+      // Create a new document with the new name as ID
+      Map<String, dynamic> updateData = {
+        'name': newProductName,
+        'imageUrl': currentData['imageUrl'],
+        'price': double.tryParse(_productPriceController.text) ??
+            currentData['price'],
+        'quantity': int.tryParse(_productQuantityController.text) ??
+            currentData['quantity'],
+        // Add other fields as necessary
+      };
+
+      // Check if the new name is different from the current ID
+      if (newProductName != productId) {
+        // Set the new document with the updated name
+        await firestore
+            .collection('Warehouses')
+            .doc('Alpha Warehouse')
+            .collection('Categories')
+            .doc(selectedCategoryValue)
+            .collection('Products')
+            .doc(newProductName)
+            .set(updateData)
+            .then((_) {
+          print('Product updated successfully');
+
+          // Delete the old document
+          firestore
+              .collection('Warehouses')
+              .doc('Alpha Warehouse')
+              .collection('Categories')
+              .doc(selectedCategoryValue)
+              .collection('Products')
+              .doc(productId)
+              .delete()
+              .then((_) {
+            print('Old product deleted successfully');
+          }).catchError((error) {
+            print('Failed to delete old product: $error');
+          });
+        }).catchError((error) {
+          print('Failed to update product: $error');
+        });
+      } else {
+        // If the name didn't change, just update the existing document
+        await firestore
+            .collection('Warehouses')
+            .doc('Alpha Warehouse')
+            .collection('Categories')
+            .doc(selectedCategoryValue)
+            .collection('Products')
+            .doc(productId)
+            .update(updateData)
+            .then((_) {
+          print('Product updated successfully without changing the ID');
+        }).catchError((error) {
+          print('Failed to update product: $error');
+        });
+      }
+    }
   }
 }

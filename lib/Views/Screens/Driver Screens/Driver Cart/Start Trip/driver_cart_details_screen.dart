@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:project1/Models/cart_dummy_model.dart';
+import 'package:project1/Models/Dummy%20Models/cart_dummy_model.dart';
 import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/text_styles.dart';
 import 'package:project1/Views/Screens/Driver%20Screens/Driver%20Cart/Start%20Trip/driver_shops_list_screen.dart';

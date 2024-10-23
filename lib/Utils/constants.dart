@@ -1,4 +1,5 @@
 class Constants {
+  // Images
   static const String logoImage = 'assets/images/R.png';
   static const String backgroundImage = 'assets/images/back.jpeg';
   static const String myImage = 'assets/images/ahsan.png';
@@ -10,4 +11,7 @@ class Constants {
   static const String driverRecords = 'assets/images/records.jpg';
   static const String driverBack = 'assets/images/driverBack.jpeg';
   static const String managerBack = 'assets/images/managerBack.png';
+
+  // Names
+  static const String mainWarehouse = 'Alpha Warehouse';
 }

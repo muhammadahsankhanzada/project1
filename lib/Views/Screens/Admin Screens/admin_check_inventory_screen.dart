@@ -1,9 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:project1/Models/product_categories_dummy_model.dart';
+import 'package:project1/Models/Dummy%20Models/product_categories_dummy_model.dart';
 import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/text_styles.dart';
 import 'package:project1/Views/Screens/Manager%20Screens/Available%20Products/manager_available_products_items_list_screen.dart';
 import 'package:project1/Views/Widgets/custom_appbar.dart';
+import 'package:project1/Models/products_model.dart' as Product;
 
 class AdminCheckInventoryScreen extends StatefulWidget {
   const AdminCheckInventoryScreen({super.key});
@@ -14,6 +16,12 @@ class AdminCheckInventoryScreen extends StatefulWidget {
 }
 
 class _AdminCheckInventoryScreenState extends State<AdminCheckInventoryScreen> {
+  @override
+  void initState() {
+    super.initState();
+    showProducts();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -156,5 +164,30 @@ class _AdminCheckInventoryScreenState extends State<AdminCheckInventoryScreen> {
         ),
       ),
     );
+  }
+
+  // Method to show Products data
+  showProducts() {
+    List<Product.Product> products = [];
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    firestore
+        .collection('Warehouses')
+        .doc('Alpha Warehouse')
+        .collection('Categories')
+        .doc('Fashion')
+        .collection('Products')
+        .get()
+        .then((QuerySnapshot querySnapshot) {
+      products = querySnapshot.docs
+          .map((doc) => Product.Product.fromFirestore(doc))
+          .toList();
+      setState(() {
+        for (int i = 0; i < products.length; i++) {
+          print(products[i].name);
+        }
+      });
+    }).catchError((error) {
+      print('Error getting data: $error');
+    });
   }
 }
