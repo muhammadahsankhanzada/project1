@@ -88,6 +88,12 @@ class _AdminShopRecordsScreenState extends State<AdminShopRecordsScreen> {
                                             shopAddress:
                                                 filteredShopsList[index]
                                                     .address,
+                                            shopImage: '',
+                                            shopIntro: '',
+                                            shopType: '',
+                                            shopTimings: '',
+                                            shopContact: '',
+                                            shopEmail: '',
                                           )));
                             },
                             borderRadius: BorderRadius.circular(40),

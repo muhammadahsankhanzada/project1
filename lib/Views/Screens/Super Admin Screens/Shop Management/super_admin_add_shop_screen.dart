@@ -1,10 +1,13 @@
 import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:project1/Models/shops_model.dart';
 import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/text_styles.dart';
 import 'package:project1/Views/Widgets/custom_appbar.dart';
+import 'package:project1/Views/Widgets/custom_snackbar.dart';
 import 'package:project1/Views/Widgets/universal_button.dart';
 
 class SuperAdminAddShopScreen extends StatefulWidget {
@@ -170,7 +173,18 @@ class _SuperAdminAddShopScreenState extends State<SuperAdminAddShopScreen> {
                     buttonWidth: 250,
                     title: 'Add Shop',
                     ontap: () {
-                      if (_formKey.currentState!.validate()) {}
+                      if (_formKey.currentState!.validate()) {
+                        addShop(
+                          id: _nameController.text,
+                          nameController: _nameController.text,
+                          introController: _introController.text,
+                          typeController: _typeController.text,
+                          addressController: _addressController.text,
+                          timingsController: _timingsController.text,
+                          contactController: _contactController.text,
+                          emailController: _emailController.text,
+                        );
+                      }
                     }),
                 SizedBox(height: 20),
               ],
@@ -235,50 +249,51 @@ class _SuperAdminAddShopScreenState extends State<SuperAdminAddShopScreen> {
     }
   }
 
-  // addShop(){
+  addShop({
+    required String id,
+    required String nameController,
+    required String introController,
+    required String typeController,
+    required String addressController,
+    required String timingsController,
+    required String contactController,
+    required String emailController,
+  }) async {
+    await uploadImage();
+    print(_pickedImage);
+    print(_imageUrl);
+    if (nameController.isNotEmpty &&
+        introController.isNotEmpty &&
+        typeController.isNotEmpty &&
+        addressController.isNotEmpty &&
+        timingsController.isNotEmpty &&
+        contactController.isNotEmpty &&
+        emailController.isNotEmpty &&
+        _imageUrl != null) {
+      Shop newShop = Shop(
+        id: id,
+        name: nameController,
+        imageUrl: _imageUrl!,
+        intro: introController,
+        type: typeController,
+        address: addressController,
+        timings: timingsController,
+        contact: contactController,
+        email: emailController,
+      );
 
-  //                       String? categoryName;
-  //                       await uploadImage();
-  //                       print(_pickedImage);
-  //                       print(_imageUrl);
-  //                       if (_productNameController.text.isNotEmpty &&
-  //                           categoryName != '' &&
-  //                           _productPriceController.text.isNotEmpty &&
-  //                           _productQuantityController.text.isNotEmpty &&
-  //                           _imageUrl != null &&
-  //                           selectedCategoryValue != null) {
-  //                         widget.warehouseList.forEach((warehouse) {
-  //                           String warehouseName = warehouse;
-  //                           categoryName = selectedCategoryValue == 'Other'
-  //                               ? _productNewCategoryNameController.text
-  //                               : selectedCategoryValue;
-  //                           Product newProduct = Product(
-  //                             id: _productNameController.text.toString(),
-  //                             // id: '',
-  //                             name: _productNameController.text.toString(),
-  //                             imageUrl: _imageUrl!,
-  //                             price: double.parse(_productPriceController.text),
-  //                             quantity:
-  //                                 int.parse(_productQuantityController.text),
-  //                           );
-  //                           FirebaseFirestore firestore =
-  //                               FirebaseFirestore.instance;
-  //                           firestore
-  //                               .collection('Warehouses')
-  //                               .doc(warehouseName)
-  //                               .collection('Categories')
-  //                               .doc(categoryName)
-  //                               .collection('Products')
-  //                               .doc(newProduct.id)
-  //                               .set(newProduct.toMap())
-  //                               .then((_) {
-  //                             print('Document added with id: ${newProduct.id}');
-  //                           }).catchError((error) {
-  //                             print('Error adding: $error');
-  //                           });
-  //                         });
-  //                       } else {
-  //                         customSnackbar(context, 'Please fill all fields');
-  //                       }
-  // }
+      FirebaseFirestore firestore = FirebaseFirestore.instance;
+      firestore
+          .collection('Shops')
+          .doc(newShop.id)
+          .set(newShop.toMap())
+          .then((_) {
+        print('Shop added with id: ${newShop.id}');
+      }).catchError((error) {
+        print('Error adding: $error');
+      });
+    } else {
+      customSnackbar(context, 'Please fill all fields');
+    }
+  }
 }

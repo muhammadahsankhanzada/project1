@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class Shops {
+class Shop {
   String id, name, imageUrl, intro, type, address, timings, contact, email;
-  Shops({
+  Shop({
     required this.id,
     required this.name,
     required this.imageUrl,
@@ -15,9 +15,9 @@ class Shops {
   });
 
   // Factory constructor to get and convert data recieved from Firestore document
-  factory Shops.fromFirestore(DocumentSnapshot doc) {
+  factory Shop.fromFirestore(DocumentSnapshot doc) {
     Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
-    return Shops(
+    return Shop(
       id: doc.id,
       name: data['name'] ?? '',
       imageUrl: data['imageUrl'] ?? '',
@@ -30,7 +30,7 @@ class Shops {
     );
   }
 
-  // Method to convert product data into json and sent to Firestore document
+  // Method to convert shop data into json and sent to Firestore document
   Map<String, dynamic> toMap() {
     return {
       'name': name,

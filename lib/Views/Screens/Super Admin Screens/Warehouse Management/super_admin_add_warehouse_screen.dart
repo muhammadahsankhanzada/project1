@@ -1,8 +1,14 @@
+import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/text_styles.dart';
 import 'package:project1/Views/Widgets/custom_appbar.dart';
+import 'package:project1/Views/Widgets/custom_snackbar.dart';
 import 'package:project1/Views/Widgets/universal_button.dart';
+import 'package:project1/Models/warehouse_model.dart';
 
 class SuperAdminAddWarehouseScreen extends StatefulWidget {
   const SuperAdminAddWarehouseScreen({super.key});
@@ -25,6 +31,9 @@ class _SuperAdminAddWarehouseScreenState
   var _entriesController = TextEditingController();
   var _spaceAvailableController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  File? _pickedImage;
+  String? _imageUrl;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,7 +64,15 @@ class _SuperAdminAddWarehouseScreenState
                 ),
                 SizedBox(height: 30),
                 InkWell(
-                  onTap: () {},
+                  onTap: () async {
+                    final ImagePicker picker = ImagePicker();
+                    final pickedFile =
+                        await picker.pickImage(source: ImageSource.gallery);
+                    if (pickedFile != null) {
+                      _pickedImage = File(pickedFile.path);
+                      setState(() {});
+                    }
+                  },
                   borderRadius: BorderRadius.circular(10),
                   child: Container(
                       height: 200,
@@ -63,11 +80,19 @@ class _SuperAdminAddWarehouseScreenState
                       decoration: BoxDecoration(
                           border: Border.all(color: AppColors.grey),
                           borderRadius: BorderRadius.circular(20)),
-                      child: Icon(
-                        Icons.camera_alt,
-                        size: 40,
-                        color: AppColors.black,
-                      )),
+                      child: _pickedImage != null
+                          ? ClipRRect(
+                              borderRadius: BorderRadius.circular(20),
+                              child: Image.file(
+                                fit: BoxFit.fill,
+                                _pickedImage!,
+                              ),
+                            )
+                          : Icon(
+                              Icons.camera_alt,
+                              size: 40,
+                              color: AppColors.black,
+                            )),
                 ),
                 SizedBox(height: 20),
                 textField(
@@ -185,7 +210,25 @@ class _SuperAdminAddWarehouseScreenState
                     buttonWidth: 250,
                     title: 'Add Warehouse',
                     ontap: () {
-                      if (_formKey.currentState!.validate()) {}
+                      if (_formKey.currentState!.validate()) {
+                        addWarehouse(
+                          id: _nameController.text,
+                          nameController: _nameController.text,
+                          addressController: _addressController.text,
+                          managerNameController: _managerNameController.text,
+                          contactController: _contactController.text.toString(),
+                          emailController: _emailController.text,
+                          totalEmployeesController:
+                              _totalEmployeesController.text.toString(),
+                          storageCapacityController:
+                              _storageCapacityController.text,
+                          loadingDocksController:
+                              _loadingDocksController.text.toString(),
+                          entriesController: _entriesController.text.toString(),
+                          spaceAvailableController:
+                              _spaceAvailableController.text,
+                        );
+                      }
                     }),
                 SizedBox(height: 20),
               ],
@@ -228,5 +271,81 @@ class _SuperAdminAddWarehouseScreenState
         SizedBox(height: 20),
       ],
     );
+  }
+
+  // Method to upload image to firebase storage and get imageUrl
+  Future<void> uploadImage() async {
+    if (_pickedImage == null) return;
+    try {
+      final ref = FirebaseStorage.instance
+          .ref()
+          .child('shops_images/${DateTime.now().millisecondsSinceEpoch}.jpg');
+
+      // Upload the file to Firebase Storage
+      await ref.putFile(_pickedImage!);
+      print('Picked image: $_pickedImage');
+      // Get the download URL
+      _imageUrl = await ref.getDownloadURL();
+      print(_imageUrl);
+    } catch (e) {
+      print('Error uploading image: $e');
+    }
+  }
+
+  addWarehouse({
+    required String id,
+    required String nameController,
+    required String addressController,
+    required String managerNameController,
+    required String contactController,
+    required String emailController,
+    required String totalEmployeesController,
+    required String storageCapacityController,
+    required String loadingDocksController,
+    required String entriesController,
+    required String spaceAvailableController,
+  }) async {
+    await uploadImage();
+    print(_pickedImage);
+    print(_imageUrl);
+    if (nameController.isNotEmpty &&
+        addressController.isNotEmpty &&
+        managerNameController.isNotEmpty &&
+        contactController.isNotEmpty &&
+        emailController.isNotEmpty &&
+        totalEmployeesController.isNotEmpty &&
+        storageCapacityController.isNotEmpty &&
+        loadingDocksController.isNotEmpty &&
+        entriesController.isNotEmpty &&
+        spaceAvailableController.isNotEmpty &&
+        _imageUrl != null) {
+      Warehouse newWarehouse = Warehouse(
+        id: id,
+        name: nameController,
+        imageUrl: _imageUrl!,
+        address: addressController,
+        managerName: managerNameController,
+        contact: contactController,
+        email: emailController,
+        totalEmployees: totalEmployeesController,
+        storageCapacity: storageCapacityController,
+        loadingDocks: loadingDocksController,
+        entries: entriesController,
+        spaceAvailable: spaceAvailableController,
+      );
+
+      FirebaseFirestore firestore = FirebaseFirestore.instance;
+      firestore
+          .collection('Warehouses')
+          .doc(newWarehouse.id)
+          .set(newWarehouse.toMap())
+          .then((_) {
+        print('Warehouse added with id: ${newWarehouse.id}');
+      }).catchError((error) {
+        print('Error adding: $error');
+      });
+    } else {
+      customSnackbar(context, 'Please fill all fields');
+    }
   }
 }
