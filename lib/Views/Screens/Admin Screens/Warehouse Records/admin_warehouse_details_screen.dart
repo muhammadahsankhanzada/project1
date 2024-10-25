@@ -5,8 +5,29 @@ import 'package:project1/Views/Widgets/custom_appbar.dart';
 
 class AdminWarehouseDetailsScreen extends StatefulWidget {
   final String warehouseName;
+  final String warehouseImageUrl;
+  final String warehouseAddress;
+  final String warehouseSpaceAvailable;
+  final String warehouseLoadingDocks;
+  final String warehouseStorageCapacity;
+  final String warehouseEntries;
+  final String warehouseManagerName;
+  final String warehouseContact;
+  final String warehouseEmail;
 
-  const AdminWarehouseDetailsScreen({super.key, required this.warehouseName});
+  const AdminWarehouseDetailsScreen({
+    super.key,
+    required this.warehouseName,
+    required this.warehouseImageUrl,
+    required this.warehouseAddress,
+    required this.warehouseSpaceAvailable,
+    required this.warehouseLoadingDocks,
+    required this.warehouseStorageCapacity,
+    required this.warehouseEntries,
+    required this.warehouseManagerName,
+    required this.warehouseContact,
+    required this.warehouseEmail,
+  });
 
   @override
   State<AdminWarehouseDetailsScreen> createState() =>
@@ -18,16 +39,14 @@ class _AdminWarehouseDetailsScreenState
   @override
   Widget build(BuildContext context) {
     Map<String, dynamic> warehouseDummyDetails = {
-      'Name': 'Central Logistics Hub',
-      'Location': '123 Industrial Park, Cityville',
-      'Total Area': '75,000 sq ft',
-      'Manager': 'John Doe',
-      'Phone': '123-456-7890',
-      'Email': 'johndoe@warehouse.com',
+      'Total Area': widget.warehouseSpaceAvailable,
+      'Manager': widget.warehouseManagerName,
+      'Phone': widget.warehouseContact,
+      'Email': widget.warehouseEmail,
       'Ceiling Height': '25 ft',
-      'Loading Docks': 6,
-      'Entry Doors': 3,
-      'Storage Capacity': '3000 pallets',
+      'Loading Docks': widget.warehouseLoadingDocks,
+      'Entry Doors': widget.warehouseEntries,
+      'Storage Capacity': widget.warehouseStorageCapacity,
       'Total Employees': 50,
       'Daily Shipments': 200,
       'Receiving Hours': '8 AM - 5 PM',
@@ -45,8 +64,7 @@ class _AdminWarehouseDetailsScreenState
               children: [
                 CircleAvatar(
                   radius: 30,
-                  backgroundImage: NetworkImage(
-                      'https://th.bing.com/th?id=OIP.lhdnUBYMUdKNOVNO7YXMTgHaEK&w=333&h=187&c=8&rs=1&qlt=90&r=0&o=6&dpr=1.3&pid=3.1&rm=2'),
+                  backgroundImage: NetworkImage(widget.warehouseImageUrl),
                 ),
                 SizedBox(width: 10),
                 Column(
@@ -57,7 +75,7 @@ class _AdminWarehouseDetailsScreenState
                       style: AppTextStyles.nameHeadingTextStyle(),
                     ),
                     Text(
-                      'Shah Faisal Colony, Karachi',
+                      widget.warehouseAddress,
                       style: AppTextStyles.belowMainHeadingTextStyle(),
                     ),
                   ],
@@ -84,7 +102,7 @@ class _AdminWarehouseDetailsScreenState
                           ),
                           SizedBox(width: 10),
                           Text(
-                            'Space: 3000 ft',
+                            widget.warehouseSpaceAvailable,
                             style: AppTextStyles.belowMainHeadingTextStyle(),
                           ),
                         ],
@@ -98,7 +116,7 @@ class _AdminWarehouseDetailsScreenState
                           ),
                           SizedBox(width: 10),
                           Text(
-                            'Storage Capacity: 500',
+                            widget.warehouseStorageCapacity,
                             style: AppTextStyles.belowMainHeadingTextStyle(),
                           ),
                         ],
@@ -116,7 +134,7 @@ class _AdminWarehouseDetailsScreenState
                           ),
                           SizedBox(width: 10),
                           Text(
-                            'Loading Docks: 03',
+                            widget.warehouseLoadingDocks,
                             style: AppTextStyles.belowMainHeadingTextStyle(),
                           ),
                         ],
@@ -130,7 +148,7 @@ class _AdminWarehouseDetailsScreenState
                           ),
                           SizedBox(width: 10),
                           Text(
-                            'Entries: 02',
+                            widget.warehouseEntries,
                             style: AppTextStyles.belowMainHeadingTextStyle(),
                           ),
                         ],

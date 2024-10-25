@@ -70,6 +70,15 @@ class _AdminWarehouseListScreenState extends State<AdminWarehouseListScreen> {
                                                 warehousesDummyListContents[
                                                         index]
                                                     .name,
+                                            warehouseImageUrl: '',
+                                            warehouseAddress: '',
+                                            warehouseSpaceAvailable: '',
+                                            warehouseLoadingDocks: '',
+                                            warehouseStorageCapacity: '',
+                                            warehouseEntries: '',
+                                            warehouseManagerName: '',
+                                            warehouseContact: '',
+                                            warehouseEmail: '',
                                           )));
                             },
                             borderRadius: BorderRadius.circular(40),

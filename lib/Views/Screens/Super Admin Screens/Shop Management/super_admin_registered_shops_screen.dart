@@ -45,7 +45,7 @@ class _SuperAdminRegisteredShopsScreenState
               // },
               keyboardType: TextInputType.name,
               decoration: InputDecoration(
-                hintText: 'Search shop name',
+                hintText: 'Search shop name...',
                 filled: true,
                 fillColor: AppColors.white,
                 contentPadding: EdgeInsets.symmetric(horizontal: 30),
