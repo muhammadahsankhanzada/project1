@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:project1/Utils/colors.dart';
+import 'package:project1/Utils/constants.dart';
 import 'package:project1/Utils/text_styles.dart';
 import 'package:project1/Views/Screens/Admin%20Screens/Accounts%20Management/admin_accounts_management_screen.dart';
 import 'package:project1/Views/Screens/Admin%20Screens/admin_check_inventory_screen.dart';
 import 'package:project1/Views/Screens/Admin%20Screens/Manager%20Records/admin_managers_list_screen.dart';
-import 'package:project1/Views/Screens/Admin%20Screens/Warehouse%20Records/admin_warehouse_list_screen.dart';
 import 'package:project1/Views/Screens/Manager%20Screens/Driver%20Records/manager_driver_records_screen.dart';
 import 'package:project1/Views/Screens/Super%20Admin%20Screens/Product%20Management/super_admin_product_management_screen.dart';
 import 'package:project1/Views/Screens/Super%20Admin%20Screens/Shop%20Management/super_admin_registered_shops_screen.dart';
+import 'package:project1/Views/Screens/Super%20Admin%20Screens/Warehouse%20Management/super_admin_registered_warehouses_screen.dart';
 
 class AdminHomepage extends StatelessWidget {
   const AdminHomepage({super.key});
@@ -57,7 +58,7 @@ class AdminHomepage extends StatelessWidget {
         'screen': AdminCheckInventoryScreen(),
       },
       {
-        'title': 'Driver Records',
+        'title': 'Salesman Records',
         'icon': Icons.directions_car,
         'screen': ManagerDriverRecordsScreen(),
       },
@@ -74,7 +75,7 @@ class AdminHomepage extends StatelessWidget {
       {
         'title': 'Warehouse Details',
         'icon': Icons.store,
-        'screen': AdminWarehouseListScreen(),
+        'screen': SuperAdminRegisteredWarehousesScreen(),
       },
     ];
 
@@ -82,54 +83,48 @@ class AdminHomepage extends StatelessWidget {
       backgroundColor: AppColors.lightWhiteBackground,
       appBar: AppBar(
         title: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Container(
-              padding: EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                // color: AppColors.lightWhiteBackground,
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                    Icons.grid_view_outlined,
-                    color: AppColors.universalButtonGreen,
+            Row(
+              children: [
+                CircleAvatar(
+                  radius: 18,
+                  backgroundImage: AssetImage(
+                    Constants.myImage,
                   ),
-                  SizedBox(width: 10),
-                  Text(
-                    'Admin Dashboard',
-                    style: AppTextStyles.simpleHeadingTextStyle(
-                      fontWeight: FontWeight.bold,
-                    ),
+                ),
+                SizedBox(width: 5),
+                Text(
+                  'Admin',
+                  style: AppTextStyles.simpleHeadingTextStyle(
+                    fontWeight: FontWeight.bold,
                   ),
-                  SizedBox(width: 10),
-                  Text(
-                    'Welcome!',
-                    style: AppTextStyles.simpleHeadingTextStyle(
-                      fontWeight: FontWeight.bold,
-                      textColor: AppColors.red,
-                    ),
-                  ),
-                ],
+                )
+              ],
+            ),
+            Text(
+              'Welcome!',
+              style: AppTextStyles.simpleHeadingTextStyle(
+                fontWeight: FontWeight.bold,
+                textColor: AppColors.red,
               ),
             ),
-            // Row(
-            //   children: [
-            //     InkWell(
-            //         onTap: () {
-            //           Navigator.pushReplacement(
-            //               context,
-            //               MaterialPageRoute(
-            //                   builder: (context) => LoginScreen()));
-
-            //           customSnackbar(context, 'Logout');
-            //         },
-            //         child: Icon(Icons.logout)),
-            //     SizedBox(width: 10),
-            //   ],
-            // ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  Icons.grid_view_outlined,
+                  color: AppColors.universalButtonGreen,
+                ),
+                SizedBox(width: 5),
+                Text(
+                  'Dashboard',
+                  style: AppTextStyles.simpleHeadingTextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
           ],
         ),
         centerTitle: true,
@@ -141,7 +136,7 @@ class AdminHomepage extends StatelessWidget {
           Container(
             padding: EdgeInsets.symmetric(horizontal: 15),
             child: Material(
-              elevation: 3,
+              elevation: 1,
               borderRadius: BorderRadius.circular(30),
               child: TextFormField(
                 // controller: _searchController,
@@ -263,9 +258,9 @@ class AdminHomepage extends StatelessWidget {
             elevation: 3,
             borderRadius: BorderRadius.circular(10),
             child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 30, vertical: 20),
+              padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
               decoration: BoxDecoration(
-                color: AppColors.green,
+                color: AppColors.loginBackground,
                 // border: Border.all(
                 //   color: AppColors.grey,
                 // ),

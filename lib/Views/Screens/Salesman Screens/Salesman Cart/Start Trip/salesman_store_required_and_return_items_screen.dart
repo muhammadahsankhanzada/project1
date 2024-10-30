@@ -1,21 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/text_styles.dart';
-import 'package:project1/Views/Screens/Driver%20Screens/Driver%20Cart/Start%20Trip/Shop%20Final%20Order%20Summary/driver_store_cart_screen.dart';
-import 'package:project1/Views/Screens/Driver%20Screens/Driver%20Cart/Start%20Trip/Shop%20Return%20Items/driver_store_return_category_screen.dart';
-import 'package:project1/Views/Screens/Driver%20Screens/Driver%20Cart/Start%20Trip/Shop%20Required%20Items/driver_store_required_category_screen.dart';
-import 'package:project1/Views/Widgets/universal_button.dart';
+import 'package:project1/Views/Screens/Salesman%20Screens/Salesman%20Cart/Start%20Trip/Shop%20Return%20Items/salesman_store_return_category_screen.dart';
+import 'package:project1/Views/Screens/Salesman%20Screens/Salesman%20Cart/Start%20Trip/Shop%20Required%20Items/salesman_store_required_category_screen.dart';
 
-class DriverStoreRequiredAndReturnItemsScreen extends StatefulWidget {
-  const DriverStoreRequiredAndReturnItemsScreen({super.key});
+class SalesmanStoreRequiredAndReturnItemsScreen extends StatefulWidget {
+  const SalesmanStoreRequiredAndReturnItemsScreen({super.key});
 
   @override
-  State<DriverStoreRequiredAndReturnItemsScreen> createState() =>
-      _DriverStoreRequiredAndReturnItemsScreenState();
+  State<SalesmanStoreRequiredAndReturnItemsScreen> createState() =>
+      _SalesmanStoreRequiredAndReturnItemsScreenState();
 }
 
-class _DriverStoreRequiredAndReturnItemsScreenState
-    extends State<DriverStoreRequiredAndReturnItemsScreen> {
+class _SalesmanStoreRequiredAndReturnItemsScreenState
+    extends State<SalesmanStoreRequiredAndReturnItemsScreen> {
   int _selectedIndex = 0;
 
   void _onTabChanged(int index) {
@@ -73,20 +71,21 @@ class _DriverStoreRequiredAndReturnItemsScreenState
                           textColor: AppColors.universalButtonGreen,
                         ),
                       ),
-                      UniversalButton(
-                        title: 'Deliver',
-                        buttonWidth: 80,
-                        buttonHeight: 35,
-                        buttonColor: AppColors.universalButtonGreen,
-                        textSize: 15,
-                        ontap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      DriverStoreCartScreen()));
-                        },
-                      ),
+                      // UniversalButton(
+                      //   title: 'Deliver',
+                      //   buttonWidth: 80,
+                      //   buttonHeight: 35,
+                      //   buttonColor: AppColors.universalButtonGreen,
+                      //   textSize: 15,
+                      //   ontap: () {
+                      //     Navigator.push(
+                      //         context,
+                      //         MaterialPageRoute(
+                      //             builder: (context) =>
+                      //                 DriverStoreCartScreen()));
+                      //   },
+                      // ),
+                      SizedBox(width: 40),
                     ],
                   ),
                   SizedBox(height: 20),
@@ -170,8 +169,8 @@ class _DriverStoreRequiredAndReturnItemsScreenState
             ),
             Expanded(
               child: TabBarView(children: [
-                DriverRequiredCategoryScreen(),
-                DriverStoreReturnCategoryScreen(),
+                SalesmanRequiredCategoryScreen(),
+                SalesmanStoreReturnCategoryScreen(),
               ]),
             ),
           ],

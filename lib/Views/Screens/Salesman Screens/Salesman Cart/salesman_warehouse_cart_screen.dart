@@ -3,18 +3,21 @@ import 'package:project1/Models/Dummy%20Models/cart_dummy_model.dart';
 import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/constants.dart';
 import 'package:project1/Utils/text_styles.dart';
-import 'package:project1/Views/Screens/Driver%20Screens/Driver%20Cart/Start%20Trip/driver_cart_details_screen.dart';
+import 'package:project1/Views/Screens/Salesman%20Screens/Salesman%20Cart/Start%20Trip/salesman_cart_details_screen.dart';
 import 'package:project1/Views/Widgets/universal_button.dart';
 
-class DriverWarehouseCartScreen extends StatefulWidget {
-  const DriverWarehouseCartScreen({super.key});
+class SalesmanWarehouseCartScreen extends StatefulWidget {
+  final VoidCallback startTripButtonTapped;
+  const SalesmanWarehouseCartScreen(
+      {super.key, required this.startTripButtonTapped});
 
   @override
-  State<DriverWarehouseCartScreen> createState() =>
-      _DriverWarehouseCartScreenState();
+  State<SalesmanWarehouseCartScreen> createState() =>
+      _SalesmanWarehouseCartScreenState();
 }
 
-class _DriverWarehouseCartScreenState extends State<DriverWarehouseCartScreen> {
+class _SalesmanWarehouseCartScreenState
+    extends State<SalesmanWarehouseCartScreen> {
   bool isRequestButtonClicked = false;
   bool isRequestApproved = false;
 
@@ -67,6 +70,9 @@ class _DriverWarehouseCartScreenState extends State<DriverWarehouseCartScreen> {
                       ),
                       SizedBox(height: 10),
                       Divider(
+                        thickness: 2,
+                        indent: 20,
+                        endIndent: 20,
                         color: AppColors.lightGreen1,
                       ),
                       SizedBox(height: 10),
@@ -80,9 +86,12 @@ class _DriverWarehouseCartScreenState extends State<DriverWarehouseCartScreen> {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Image.asset(
-                                    Constants.backgroundImage,
-                                    height: 80,
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(10),
+                                    child: Image.asset(
+                                      Constants.backgroundImage,
+                                      height: 80,
+                                    ),
                                   ),
                                   SizedBox(width: 10),
                                   Expanded(
@@ -208,6 +217,7 @@ class _DriverWarehouseCartScreenState extends State<DriverWarehouseCartScreen> {
                               ),
                               SizedBox(height: 10),
                               Divider(
+                                thickness: 2,
                                 color: AppColors.lightGreen1,
                               )
                             ],
@@ -223,9 +233,12 @@ class _DriverWarehouseCartScreenState extends State<DriverWarehouseCartScreen> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
-                                        DriverCartDetailsScreen()));
+                                        SalesmanCartDetailsScreen(
+                                          startTripButtonTapped:
+                                              widget.startTripButtonTapped,
+                                        )));
                           }),
-                      SizedBox(height: 80),
+                      SizedBox(height: 10),
                     ],
                   ),
                 ),

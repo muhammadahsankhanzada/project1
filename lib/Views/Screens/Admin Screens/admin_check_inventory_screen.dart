@@ -52,7 +52,7 @@ class _AdminCheckInventoryScreenState extends State<AdminCheckInventoryScreen> {
                 height: 40,
                 margin: EdgeInsets.symmetric(vertical: 15),
                 width: double.infinity,
-                child: FutureBuilder<List<Categories>>(
+                child: FutureBuilder<List<CategoriesModel>>(
                     future: fetchCategories(),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
@@ -77,27 +77,42 @@ class _AdminCheckInventoryScreenState extends State<AdminCheckInventoryScreen> {
                                   MaterialPageRoute(
                                       builder: (context) =>
                                           ManagerAvailableProductsItemsListScreen(
+                                              categoryName: category.name,
                                               categoryIndex: index)));
                             },
                             borderRadius: BorderRadius.circular(20),
-                            child: Container(
-                              margin: EdgeInsets.only(left: 5, right: 5),
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 12, vertical: 6),
-                              decoration: BoxDecoration(
-                                  color: AppColors.white,
-                                  borderRadius: BorderRadius.circular(20),
-                                  border: Border.all(
-                                    color: AppColors.white,
-                                    width: 2,
-                                  )),
-                              child: Center(
-                                child: Text(
-                                  '${category.name} (${category.productsCount})',
-                                  style: AppTextStyles.nameHeadingTextStyle(
-                                      size: 15),
+                            child: Column(
+                              children: [
+                                Row(
+                                  children: [
+                                    Material(
+                                      elevation: 4,
+                                      borderRadius: BorderRadius.circular(20),
+                                      child: Container(
+                                        // margin: EdgeInsets.only(left: 5, right: 5),
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 12, vertical: 6),
+                                        decoration: BoxDecoration(
+                                            color: AppColors.white,
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            border: Border.all(
+                                              color: AppColors.white,
+                                              width: 2,
+                                            )),
+                                        child: Center(
+                                          child: Text(
+                                            '${category.name} (${category.productsCount})',
+                                            style: AppTextStyles
+                                                .nameHeadingTextStyle(size: 15),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(width: 10),
+                                  ],
                                 ),
-                              ),
+                              ],
                             ),
                           );
                         },
@@ -106,7 +121,7 @@ class _AdminCheckInventoryScreenState extends State<AdminCheckInventoryScreen> {
                     }),
               ),
               SizedBox(height: 10),
-              FutureBuilder<List<Categories>>(
+              FutureBuilder<List<CategoriesModel>>(
                   future: fetchCategories(),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
@@ -139,35 +154,43 @@ class _AdminCheckInventoryScreenState extends State<AdminCheckInventoryScreen> {
                                       MaterialPageRoute(
                                           builder: (context) =>
                                               ManagerAvailableProductsItemsListScreen(
+                                                categoryName: category.name,
                                                 categoryIndex: index,
                                               )));
                                 },
                                 child: Stack(
                                   children: [
-                                    Container(
-                                      height: 150,
-                                      width: 180,
-                                      decoration: BoxDecoration(
-                                        image: DecorationImage(
-                                            fit: BoxFit.fill,
-                                            image: NetworkImage(
-                                              category.imageUrl,
-                                            )),
-                                        color: AppColors.white.withOpacity(.7),
-                                        borderRadius: BorderRadius.circular(10),
+                                    Material(
+                                      elevation: 4,
+                                      borderRadius: BorderRadius.circular(10),
+                                      child: Container(
+                                        height: 150,
+                                        width: 180,
+                                        decoration: BoxDecoration(
+                                          image: DecorationImage(
+                                              fit: BoxFit.fill,
+                                              image: NetworkImage(
+                                                category.imageUrl,
+                                              )),
+                                          color:
+                                              AppColors.white.withOpacity(.7),
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          // border: Border.all(),
+                                        ),
                                       ),
                                     ),
                                     Align(
                                       alignment: Alignment.topRight,
                                       child: Container(
                                         margin:
-                                            EdgeInsets.only(right: 20, top: 20),
+                                            EdgeInsets.only(right: 20, top: 10),
                                         padding: EdgeInsets.symmetric(
                                             horizontal: 10, vertical: 5),
                                         decoration: BoxDecoration(
-                                          color: AppColors.white,
+                                          color: AppColors.loginBackground,
                                           borderRadius:
-                                              BorderRadius.circular(10),
+                                              BorderRadius.circular(30),
                                         ),
                                         child: Text(
                                           '${category.productsCount} Products',
@@ -202,7 +225,7 @@ class _AdminCheckInventoryScreenState extends State<AdminCheckInventoryScreen> {
 
   // Method to show Products data
   showProducts() {
-    List<Product.Product> products = [];
+    List<Product.ProductModel> products = [];
     FirebaseFirestore firestore = FirebaseFirestore.instance;
     firestore
         .collection('Warehouses')
@@ -213,7 +236,7 @@ class _AdminCheckInventoryScreenState extends State<AdminCheckInventoryScreen> {
         .get()
         .then((QuerySnapshot querySnapshot) {
       products = querySnapshot.docs
-          .map((doc) => Product.Product.fromFirestore(doc))
+          .map((doc) => Product.ProductModel.fromFirestore(doc))
           .toList();
       setState(() {
         for (int i = 0; i < products.length; i++) {
@@ -225,8 +248,8 @@ class _AdminCheckInventoryScreenState extends State<AdminCheckInventoryScreen> {
     });
   }
 
-  Future<List<Categories>> fetchCategories() async {
-    List<Categories> categories = [];
+  Future<List<CategoriesModel>> fetchCategories() async {
+    List<CategoriesModel> categories = [];
     FirebaseFirestore firestore = FirebaseFirestore.instance;
 
     try {
@@ -255,7 +278,7 @@ class _AdminCheckInventoryScreenState extends State<AdminCheckInventoryScreen> {
         String name = data?['name'] ?? categoryId;
         String imageUrl = data?['imageUrl'] ?? '';
 
-        categories.add(Categories(
+        categories.add(CategoriesModel(
             name: name, imageUrl: imageUrl, productsCount: productsCount));
       }
     } catch (error) {

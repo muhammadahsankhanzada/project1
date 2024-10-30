@@ -46,7 +46,7 @@ class _SuperAdminAddShopScreenState extends State<SuperAdminAddShopScreen> {
                 Align(
                   alignment: Alignment.topLeft,
                   child: Text(
-                    'Add a new Shop',
+                    'Add New Shop',
                     style: AppTextStyles.nameHeadingTextStyle(size: 20),
                   ),
                 ),
@@ -220,7 +220,7 @@ class _SuperAdminAddShopScreenState extends State<SuperAdminAddShopScreen> {
               ),
             ),
             border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(30),
+              borderRadius: BorderRadius.circular(10),
             ),
           ),
         ),
@@ -270,7 +270,7 @@ class _SuperAdminAddShopScreenState extends State<SuperAdminAddShopScreen> {
         contactController.isNotEmpty &&
         emailController.isNotEmpty &&
         _imageUrl != null) {
-      Shop newShop = Shop(
+      ShopsModel newShop = ShopsModel(
         id: id,
         name: nameController,
         imageUrl: _imageUrl!,

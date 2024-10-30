@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project1/Models/Dummy%20Models/driver_list_dummy_model.dart';
 import 'package:project1/Utils/colors.dart';
-import 'package:project1/Utils/constants.dart';
 import 'package:project1/Utils/text_styles.dart';
 import 'package:project1/Views/Screens/Manager%20Screens/Driver%20Records/manager_driver_records_details_screen.dart';
 import 'package:project1/Views/Widgets/custom_appbar.dart';
@@ -38,7 +37,7 @@ class _ManagerDriverRecordsScreenState
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.lightWhiteBackground,
-      appBar: CustomAppbar(title: 'Driver Records'),
+      appBar: CustomAppbar(title: 'Salesman Records'),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15),
         child: Column(
@@ -55,7 +54,7 @@ class _ManagerDriverRecordsScreenState
               // },
               keyboardType: TextInputType.name,
               decoration: InputDecoration(
-                hintText: 'Search driver name...',
+                hintText: 'Search salesman name...',
                 filled: true,
                 fillColor: AppColors.white,
                 contentPadding: EdgeInsets.symmetric(horizontal: 20),
@@ -105,7 +104,7 @@ class _ManagerDriverRecordsScreenState
                                 children: [
                                   CircleAvatar(
                                     backgroundImage:
-                                        AssetImage(Constants.myImage),
+                                        AssetImage('assets/images/p1.jpeg'),
                                   ),
                                   SizedBox(width: 15),
                                   Expanded(

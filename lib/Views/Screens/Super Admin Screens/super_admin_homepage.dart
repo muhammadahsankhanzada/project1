@@ -86,19 +86,29 @@ class SuperAdminHomepage extends StatelessWidget {
                       'Super Admin',
                       style: AppTextStyles.simpleHeadingTextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize: 18,
-                        textColor: AppColors.universalButtonGreen,
+                        fontSize: 15,
+                        // textColor: AppColors.universalButtonGreen,
                       ),
                     ),
                   ],
                 ),
-                Text(
-                  'Dashboard',
-                  style: AppTextStyles.simpleHeadingTextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18,
-                    textColor: AppColors.universalButtonGreen,
-                  ),
+                Row(
+                  children: [
+                    Icon(
+                      Icons.grid_view,
+                      size: 18,
+                      color: AppColors.universalButtonGreen,
+                    ),
+                    SizedBox(width: 5),
+                    Text(
+                      'Dashboard',
+                      style: AppTextStyles.simpleHeadingTextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 15,
+                        // textColor: AppColors.universalButtonGreen,
+                      ),
+                    ),
+                  ],
                 ),
                 // Row(
                 //   children: [
@@ -170,12 +180,18 @@ class SuperAdminHomepage extends StatelessWidget {
                           ),
                           Container(
                               padding: EdgeInsets.symmetric(
-                                  horizontal: 10, vertical: 5),
+                                  horizontal: 8, vertical: 3),
                               decoration: BoxDecoration(
                                 color: AppColors.white,
                                 borderRadius: BorderRadius.circular(10),
+                                border: Border.all(),
                               ),
-                              child: Text('Monthly')),
+                              child: Row(
+                                children: [
+                                  Text('Monthly'),
+                                  Icon(Icons.arrow_drop_down)
+                                ],
+                              )),
                         ],
                       ),
                     ),
@@ -235,7 +251,7 @@ class SuperAdminHomepage extends StatelessWidget {
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
               decoration: BoxDecoration(
-                color: AppColors.green,
+                color: AppColors.loginBackground,
                 borderRadius: BorderRadius.circular(15),
               ),
               child: Row(

@@ -6,9 +6,11 @@ import 'package:project1/Views/Screens/Manager%20Screens/Available%20Products/ma
 
 class ManagerAvailableProductsItemsListScreen extends StatefulWidget {
   final int categoryIndex;
+  final String categoryName;
   const ManagerAvailableProductsItemsListScreen({
     super.key,
     required this.categoryIndex,
+    required this.categoryName,
   });
 
   @override
@@ -127,9 +129,11 @@ class _ManagerAvailableProductsItemsListScreenState
               Expanded(
                 child: TabBarView(children: [
                   ManagerAvailableProductsAvailableItemsScreen(
+                    categoryName: widget.categoryName,
                     categoryindex: selectedCategoryIndex,
                   ),
                   ManagerAvailableProductsReturnItemsScreen(
+                    categoryName: widget.categoryName,
                     categoryIndex: widget.categoryIndex,
                   ),
                 ]),

@@ -15,7 +15,7 @@ class SuperAdminWarehouseManagementScreen extends StatelessWidget {
       backgroundColor: AppColors.lightWhiteBackground,
       appBar: CustomAppbar(title: 'Warehouse Management'),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 15),
+        padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -33,6 +33,7 @@ class SuperAdminWarehouseManagementScreen extends StatelessWidget {
                   title: 'Add Warehouse',
                 ),
                 customContainer(
+                  backgroundColor: AppColors.black,
                   ontap: () {
                     Navigator.push(
                         context,
@@ -40,9 +41,11 @@ class SuperAdminWarehouseManagementScreen extends StatelessWidget {
                             builder: (context) =>
                                 SuperAdminRemoveWarehouseScreen()));
                   },
-                  title: 'Remove Warehouse',
+                  title: 'Delete Warehouse',
                 ),
                 customContainer(
+                  backgroundColor: AppColors.white,
+                  textColor: AppColors.black,
                   ontap: () {
                     Navigator.push(
                         context,
@@ -175,8 +178,9 @@ class SuperAdminWarehouseManagementScreen extends StatelessWidget {
   customContainer({
     required VoidCallback ontap,
     required String title,
-    Color borderColor = AppColors.green,
-    Color backgroundColor = AppColors.green,
+    // Color borderColor = AppColors.green,
+    Color textColor = AppColors.white,
+    Color backgroundColor = AppColors.loginBackground,
   }) {
     return Column(
       children: [
@@ -203,7 +207,7 @@ class SuperAdminWarehouseManagementScreen extends StatelessWidget {
                   style: AppTextStyles.simpleHeadingTextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.bold,
-                    textColor: AppColors.white,
+                    textColor: textColor,
                   ),
                 ),
               ),

@@ -6,11 +6,15 @@ import 'package:project1/Views/Widgets/custom_appbar.dart';
 import 'package:project1/Views/Widgets/custom_snackbar.dart';
 import 'package:project1/Views/Widgets/universal_button.dart';
 
-class DriverStoreCartScreen extends StatelessWidget {
-  const DriverStoreCartScreen({super.key});
+class SalesmanStoreCartScreen extends StatelessWidget {
+  const SalesmanStoreCartScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    List<String> itemInfoNames = [
+      'Required Items',
+      'Return Items',
+    ];
     return Scaffold(
       backgroundColor: AppColors.lightWhiteBackground,
       appBar: CustomAppbar(title: 'Complete Summary'),
@@ -21,19 +25,180 @@ class DriverStoreCartScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Container(
-                padding: EdgeInsets.all(15),
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: AppColors.green,
+              // Container(
+              //   padding: EdgeInsets.all(15),
+              //   decoration: BoxDecoration(
+              //     shape: BoxShape.circle,
+              //     color: AppColors.green,
+              //   ),
+              //   child: Icon(
+              //     Icons.done,
+              //     color: AppColors.white,
+              //     size: 30,
+              //   ),
+              // ),
+              SizedBox(height: 20),
+              for (int i = 0; i < itemInfoNames.length; i++)
+                Column(
+                  children: [
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        itemInfoNames[i],
+                        style: AppTextStyles.simpleHeadingTextStyle(
+                          fontSize: 16,
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 10),
+                    Container(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: AppColors.lightGreen1.withOpacity(.3)),
+                      child: Column(
+                        children: [
+                          ListView.builder(
+                              shrinkWrap: true,
+                              physics: NeverScrollableScrollPhysics(),
+                              itemCount: 3,
+                              itemBuilder: (context, index) {
+                                return Column(
+                                  children: [
+                                    Row(
+                                      children: [
+                                        ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          child: Image.asset(
+                                            Constants.backgroundImage,
+                                            width: 100,
+                                          ),
+                                        ),
+                                        SizedBox(width: 20),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              'Iphone 15 pro max',
+                                              style: AppTextStyles
+                                                  .simpleHeadingTextStyle(
+                                                      fontSize: 14),
+                                            ),
+                                            Text(
+                                              'New',
+                                              style: AppTextStyles
+                                                  .nameHeadingTextStyle(
+                                                size: 13,
+                                              ),
+                                            ),
+                                            SizedBox(height: 20),
+                                            Text(
+                                              'Rs. 95000/-',
+                                              style: AppTextStyles
+                                                  .belowMainHeadingTextStyle(
+                                                      fontSize: 16),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(height: 5),
+                                    Divider(
+                                      color: AppColors.lightGreen1,
+                                    )
+                                  ],
+                                );
+                              }),
+                          SizedBox(height: 20),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'Orders',
+                                style: AppTextStyles.simpleHeadingTextStyle(
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                              Text(
+                                '30',
+                                style: AppTextStyles.simpleHeadingTextStyle(),
+                              ),
+                            ],
+                          ),
+                          // Row(
+                          //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          //   children: [
+                          //     Text(
+                          //       'Discount',
+                          //       style: AppTextStyles.simpleHeadingTextStyle(
+                          //         fontWeight: FontWeight.w500,
+                          //       ),
+                          //     ),
+                          //     Text(
+                          //       'xxxxx',
+                          //       style: AppTextStyles.simpleHeadingTextStyle(),
+                          //     ),
+                          //   ],
+                          // ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'Total',
+                                style: AppTextStyles.nameHeadingTextStyle(),
+                              ),
+                              Text(
+                                'xxxxx',
+                                style: AppTextStyles.simpleHeadingTextStyle(),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: 20),
+                  ],
                 ),
-                child: Icon(
-                  Icons.done,
-                  color: AppColors.white,
-                  size: 30,
+              // SizedBox(height: 10),
+              Material(
+                elevation: 4,
+                borderRadius: BorderRadius.circular(10),
+                child: SizedBox(
+                  height: 40,
+                  width: 150,
+                  child: TextFormField(
+                    textAlign: TextAlign.center,
+                    // controller: _searchController,
+                    // validator: (value) {
+                    //   if (value == null || value.isEmpty) {
+                    //     return 'Enter driver name here';
+                    //   }
+                    //   return null;
+                    // },
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                      hintText: 'Enter Discount',
+                      hintStyle: AppTextStyles.simpleHeadingTextStyle(
+                        fontSize: 12,
+                      ),
+                      filled: true,
+                      fillColor: AppColors.white,
+                      // contentPadding:
+                      //     EdgeInsets.symmetric(horizontal: 30),
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide.none,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                  ),
                 ),
               ),
-              SizedBox(height: 30),
+              SizedBox(height: 20),
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
                 decoration: BoxDecoration(
@@ -41,71 +206,32 @@ class DriverStoreCartScreen extends StatelessWidget {
                     color: AppColors.lightGreen1.withOpacity(.3)),
                 child: Column(
                   children: [
-                    ListView.builder(
-                        shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
-                        itemCount: 3,
-                        itemBuilder: (context, index) {
-                          return Column(
-                            children: [
-                              Row(
-                                children: [
-                                  ClipRRect(
-                                    borderRadius: BorderRadius.circular(10),
-                                    child: Image.asset(
-                                      Constants.backgroundImage,
-                                      width: 100,
-                                    ),
-                                  ),
-                                  SizedBox(width: 20),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        'Iphone 15 pro max',
-                                        style: AppTextStyles
-                                            .simpleHeadingTextStyle(
-                                                fontSize: 14),
-                                      ),
-                                      Text(
-                                        'New',
-                                        style:
-                                            AppTextStyles.nameHeadingTextStyle(
-                                          size: 13,
-                                        ),
-                                      ),
-                                      SizedBox(height: 20),
-                                      Text(
-                                        'Rs. 95000/-',
-                                        style: AppTextStyles
-                                            .belowMainHeadingTextStyle(
-                                                fontSize: 16),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                              SizedBox(height: 5),
-                              Divider(
-                                color: AppColors.lightGreen1,
-                              )
-                            ],
-                          );
-                        }),
-                    SizedBox(height: 20),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          'Orders',
+                          'Required Items Amount',
                           style: AppTextStyles.simpleHeadingTextStyle(
-                            fontWeight: FontWeight.w500,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
                         Text(
-                          '30',
+                          'xxxxx',
+                          style: AppTextStyles.simpleHeadingTextStyle(),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Return Items Amount',
+                          style: AppTextStyles.simpleHeadingTextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Text(
+                          'xxxxx',
                           style: AppTextStyles.simpleHeadingTextStyle(),
                         ),
                       ],
@@ -116,36 +242,12 @@ class DriverStoreCartScreen extends StatelessWidget {
                         Text(
                           'Discount',
                           style: AppTextStyles.simpleHeadingTextStyle(
-                            fontWeight: FontWeight.w500,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
-                        SizedBox(
-                          height: 30,
-                          width: 40,
-                          child: TextFormField(
-                            // controller: _searchController,
-                            // validator: (value) {
-                            //   if (value == null || value.isEmpty) {
-                            //     return 'Enter driver name here';
-                            //   }
-                            //   return null;
-                            // },
-                            keyboardType: TextInputType.number,
-                            decoration: InputDecoration(
-                              hintText: '5%',
-                              hintStyle: AppTextStyles.simpleHeadingTextStyle(
-                                fontSize: 12,
-                              ),
-                              filled: true,
-                              fillColor: AppColors.lightGreen1.withOpacity(.3),
-                              // contentPadding:
-                              //     EdgeInsets.symmetric(horizontal: 30),
-                              border: OutlineInputBorder(
-                                // borderSide: BorderSide.none,
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                            ),
-                          ),
+                        Text(
+                          '5%',
+                          style: AppTextStyles.simpleHeadingTextStyle(),
                         ),
                       ],
                     ),
@@ -154,7 +256,9 @@ class DriverStoreCartScreen extends StatelessWidget {
                       children: [
                         Text(
                           'Total Amount',
-                          style: AppTextStyles.nameHeadingTextStyle(),
+                          style: AppTextStyles.simpleHeadingTextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                         Text(
                           'xxxxx',
@@ -394,13 +498,13 @@ class DriverStoreCartScreen extends StatelessWidget {
                                 return AlertDialog(
                                   contentPadding: EdgeInsets.zero,
                                   content: Container(
-                                    height: 220,
+                                    height: 210,
                                     width: 300,
                                     padding:
                                         EdgeInsets.symmetric(horizontal: 20),
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(30),
-                                      color: AppColors.lightGreen,
+                                      color: AppColors.popupBackground,
                                     ),
                                     child: Column(
                                       children: [
@@ -408,39 +512,54 @@ class DriverStoreCartScreen extends StatelessWidget {
                                         Text(
                                           'Confirm Order',
                                           style: AppTextStyles
-                                              .nameHeadingTextStyle(),
+                                              .simpleHeadingTextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold,
+                                            textColor: AppColors.white,
+                                          ),
                                         ),
                                         SizedBox(height: 20),
                                         Text(
-                                          'Selected items will be delivered and retuned.\nAre you sure to confirm.',
+                                          'Selected items will be delivered and retuned. Are you sure to confirm.',
+                                          textAlign: TextAlign.center,
                                           style: AppTextStyles
-                                              .belowMainHeadingTextStyle(),
+                                              .simpleHeadingTextStyle(
+                                            fontSize: 15,
+                                            textColor: AppColors.white,
+                                          ),
                                         ),
                                         SizedBox(height: 30),
                                         Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceEvenly,
                                           children: [
-                                            UniversalButton(
-                                                title: 'Confirm',
-                                                buttonHeight: 40,
-                                                buttonWidth: 110,
-                                                buttonColor: AppColors.green
-                                                    .withOpacity(.7),
-                                                ontap: () {
-                                                  Navigator.pop(context);
-                                                  customSnackbar(context,
-                                                      'Order delivered successfully');
-                                                }),
-                                            UniversalButton(
-                                                title: 'Cancel',
-                                                buttonHeight: 40,
-                                                buttonWidth: 110,
-                                                buttonColor:
-                                                    AppColors.red.shade300,
-                                                ontap: () {
-                                                  Navigator.pop(context);
-                                                }),
+                                            Material(
+                                              elevation: 4,
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              child: UniversalButton(
+                                                  title: 'Confirm',
+                                                  buttonHeight: 40,
+                                                  buttonWidth: 110,
+                                                  buttonColor: AppColors.green,
+                                                  ontap: () {
+                                                    Navigator.pop(context);
+                                                    customSnackbar(context,
+                                                        'Order delivered successfully');
+                                                  }),
+                                            ),
+                                            Material(
+                                              elevation: 4,
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              child: UniversalButton(
+                                                  title: 'Cancel',
+                                                  buttonHeight: 40,
+                                                  buttonWidth: 110,
+                                                  ontap: () {
+                                                    Navigator.pop(context);
+                                                  }),
+                                            ),
                                           ],
                                         ),
                                       ],
@@ -452,7 +571,7 @@ class DriverStoreCartScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(height: 60),
+              SizedBox(height: 10),
             ],
           ),
         ),

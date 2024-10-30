@@ -13,18 +13,12 @@ class ManagerPendingRequestDetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.lightWhiteBackground,
-      appBar: CustomAppbar(title: 'Order Details'),
+      appBar: CustomAppbar(title: 'Request Summary'),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: SingleChildScrollView(
           child: Column(
             children: [
-              SizedBox(height: 10),
-              Text(
-                'Request Summary',
-                style: AppTextStyles.simpleHeadingTextStyle(
-                    fontWeight: FontWeight.bold, fontSize: 18),
-              ),
               SizedBox(height: 15),
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
@@ -143,45 +137,6 @@ class ManagerPendingRequestDetailsScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          'Discount',
-                          style: AppTextStyles.simpleHeadingTextStyle(
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                        SizedBox(
-                          height: 30,
-                          width: 40,
-                          child: TextFormField(
-                            // controller: _searchController,
-                            // validator: (value) {
-                            //   if (value == null || value.isEmpty) {
-                            //     return 'Enter driver name here';
-                            //   }
-                            //   return null;
-                            // },
-                            keyboardType: TextInputType.number,
-                            decoration: InputDecoration(
-                              hintText: '5%',
-                              hintStyle: AppTextStyles.simpleHeadingTextStyle(
-                                fontSize: 12,
-                              ),
-                              filled: true,
-                              fillColor: AppColors.lightGreen1.withOpacity(.3),
-                              // contentPadding:
-                              //     EdgeInsets.symmetric(horizontal: 30),
-                              border: OutlineInputBorder(
-                                // borderSide: BorderSide.none,
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
                           'Total Amount',
                           style: AppTextStyles.nameHeadingTextStyle(),
                         ),
@@ -208,7 +163,6 @@ class ManagerPendingRequestDetailsScreen extends StatelessWidget {
                   ),
                   UniversalButton(
                     title: 'Disapprove',
-                    buttonColor: AppColors.red,
                     buttonWidth: 150,
                     ontap: () {
                       customSnackbar(context, 'Request Disapproved');
@@ -216,7 +170,7 @@ class ManagerPendingRequestDetailsScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(height: 60),
+              SizedBox(height: 10),
             ],
           ),
         ),

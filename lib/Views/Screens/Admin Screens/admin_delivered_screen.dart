@@ -10,7 +10,7 @@ class AdminDeliveredScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.lightWhiteBackground,
-      appBar: CustomAppbar(title: 'Delivered Products'),
+      appBar: CustomAppbar(title: 'Delivery Overall'),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15),
         child: Column(
@@ -65,41 +65,48 @@ class AdminDeliveredScreen extends StatelessWidget {
                               //             )));
                             },
                             borderRadius: BorderRadius.circular(40),
-                            child: Container(
-                              width: double.infinity,
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 30, vertical: 15),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(40),
-                                color: AppColors.white,
-                              ),
-                              child: Row(
-                                children: [
-                                  SizedBox(width: 15),
-                                  Expanded(
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              'Delivery Number $index',
-                                              style: AppTextStyles
-                                                  .nameHeadingTextStyle(
-                                                      size: 15),
-                                            ),
-                                          ],
-                                        ),
-                                        // Icon(
-                                        //   Icons.assessment,
-                                        // )
-                                      ],
+                            child: Material(
+                              elevation: 4,
+                              borderRadius: BorderRadius.circular(10),
+                              child: Container(
+                                width: double.infinity,
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 30, vertical: 15),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  color: AppColors.loginBackground,
+                                ),
+                                child: Row(
+                                  children: [
+                                    // SizedBox(width: 15),
+                                    Expanded(
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                'Delivery Number $index',
+                                                style: AppTextStyles
+                                                    .simpleHeadingTextStyle(
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.bold,
+                                                  textColor: AppColors.white,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          // Icon(
+                                          //   Icons.assessment,
+                                          // )
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ),
                           ),

@@ -37,7 +37,7 @@ class AdminManagerRejectedRequestsScreen extends StatelessWidget {
                         padding: EdgeInsets.all(15),
                         // margin: EdgeInsets.only(bottom: 10),
                         decoration: BoxDecoration(
-                          color: AppColors.white,
+                          color: AppColors.containerBackground,
                           borderRadius: BorderRadius.circular(15),
                         ),
                         child: Row(

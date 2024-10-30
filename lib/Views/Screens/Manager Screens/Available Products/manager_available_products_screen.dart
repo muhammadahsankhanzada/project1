@@ -55,6 +55,7 @@ class _ManagerAvailableProductsScreenState
                             MaterialPageRoute(
                                 builder: (context) =>
                                     ManagerAvailableProductsItemsListScreen(
+                                      categoryName: '',
                                       categoryIndex: index,
                                     )));
                       },
@@ -96,6 +97,7 @@ class _ManagerAvailableProductsScreenState
                                 MaterialPageRoute(
                                     builder: (context) =>
                                         ManagerAvailableProductsItemsListScreen(
+                                          categoryName: '',
                                           categoryIndex: index,
                                         )));
                           },

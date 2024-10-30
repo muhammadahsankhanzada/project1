@@ -1,13 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class Product {
+class ProductModel {
   String id;
   String name;
   String imageUrl;
   // String category;
   double price;
   int quantity;
-  Product({
+  ProductModel({
     required this.id,
     required this.name,
     required this.imageUrl,
@@ -16,9 +16,9 @@ class Product {
   });
 
   // Factory constructor to get and convert data recieved from Firestore document
-  factory Product.fromFirestore(DocumentSnapshot doc) {
+  factory ProductModel.fromFirestore(DocumentSnapshot doc) {
     Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
-    return Product(
+    return ProductModel(
       id: doc.id,
       name: data['name'] ?? '',
       imageUrl: data['imageUrl'] ?? '',

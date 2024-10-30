@@ -24,8 +24,9 @@ class AdminAccountsManagementScreen extends StatelessWidget {
                 alignment: Alignment.topLeft,
                 child: Text(
                   'Accounts Management',
-                  style: AppTextStyles.belowMainHeadingTextStyle(
+                  style: AppTextStyles.simpleHeadingTextStyle(
                     fontSize: 18,
+                    fontWeight: FontWeight.w500,
                   ),
                 ),
               ),
@@ -88,9 +89,9 @@ class AdminAccountsManagementScreen extends StatelessWidget {
             elevation: 4,
             borderRadius: BorderRadius.circular(10),
             child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 30, vertical: 20),
+              padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
               decoration: BoxDecoration(
-                color: AppColors.green,
+                color: AppColors.loginBackground,
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Row(

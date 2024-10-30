@@ -23,4 +23,7 @@ class AppColors {
   static const universalButtonGreen = Color(0xff289989);
   static const lightWhiteBackground = Color(0xffF5F5F5);
   static const containerBackground = Color(0xff9ED1CA);
+  static const searchBox = Color(0xffFFFFFF);
+  static const cartButton = Color(0xff147755);
+  static const popupBackground = Color(0xff78BFB5);
 }

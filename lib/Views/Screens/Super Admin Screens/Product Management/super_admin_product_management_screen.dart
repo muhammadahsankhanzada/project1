@@ -25,7 +25,10 @@ class SuperAdminProductManagementScreen extends StatelessWidget {
                 alignment: Alignment.topLeft,
                 child: Text(
                   'Products Management',
-                  style: AppTextStyles.nameHeadingTextStyle(),
+                  style: AppTextStyles.simpleHeadingTextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
               ),
               Align(
@@ -93,7 +96,7 @@ class SuperAdminProductManagementScreen extends StatelessWidget {
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: 30, vertical: 20),
               decoration: BoxDecoration(
-                color: AppColors.green,
+                color: AppColors.loginBackground,
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Row(

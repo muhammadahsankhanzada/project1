@@ -6,18 +6,19 @@ import 'package:project1/Utils/text_styles.dart';
 import 'package:project1/Views/Widgets/custom_appbar.dart';
 import 'package:project1/Views/Widgets/universal_button.dart';
 
-class DriverReturnItemScreen extends StatefulWidget {
+class SalesmanReturnItemScreen extends StatefulWidget {
   final categoryIndex;
-  const DriverReturnItemScreen({
+  const SalesmanReturnItemScreen({
     super.key,
     required this.categoryIndex,
   });
 
   @override
-  State<DriverReturnItemScreen> createState() => _DriverReturnItemScreenState();
+  State<SalesmanReturnItemScreen> createState() =>
+      _SalesmanReturnItemScreenState();
 }
 
-class _DriverReturnItemScreenState extends State<DriverReturnItemScreen> {
+class _SalesmanReturnItemScreenState extends State<SalesmanReturnItemScreen> {
   bool isProductSelected = false;
   int selectedCategoryIndex = 0;
   @override
@@ -60,29 +61,44 @@ class _DriverReturnItemScreenState extends State<DriverReturnItemScreen> {
               child: ListView.builder(
                 itemCount: productCategoriesDummyModelContents.length,
                 itemBuilder: (context, index) {
-                  return InkWell(
-                    onTap: () {
-                      selectedCategoryIndex = index;
-                      setState(() {});
-                    },
-                    borderRadius: BorderRadius.circular(20),
-                    child: Container(
-                      margin: EdgeInsets.only(left: 5, right: 5),
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                      decoration: BoxDecoration(
-                        color: selectedCategoryIndex == index
-                            ? AppColors.green
-                            : AppColors.lightGreen1.withOpacity(.3),
-                        borderRadius: BorderRadius.circular(20),
+                  return Column(
+                    children: [
+                      Row(
+                        children: [
+                          SizedBox(width: 10),
+                          InkWell(
+                            onTap: () {
+                              selectedCategoryIndex = index;
+                              setState(() {});
+                            },
+                            borderRadius: BorderRadius.circular(20),
+                            child: Material(
+                              elevation: 4,
+                              borderRadius: BorderRadius.circular(30),
+                              child: Container(
+                                // margin: EdgeInsets.only(left: 5, right: 5),
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 12, vertical: 6),
+                                decoration: BoxDecoration(
+                                  color: selectedCategoryIndex == index
+                                      ? AppColors.loginBackground
+                                      : AppColors.white,
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    productCategoriesDummyModelContents[index]
+                                        .name,
+                                    style: AppTextStyles.nameHeadingTextStyle(
+                                        size: 15),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                      child: Center(
-                        child: Text(
-                          productCategoriesDummyModelContents[index].name,
-                          style: AppTextStyles.nameHeadingTextStyle(size: 15),
-                        ),
-                      ),
-                    ),
+                    ],
                   );
                 },
                 scrollDirection: Axis.horizontal,
@@ -199,7 +215,7 @@ class _DriverReturnItemScreenState extends State<DriverReturnItemScreen> {
               );
             }),
 
-            SizedBox(height: 20),
+            SizedBox(height: 10),
             // UniversalButton(
             //     title: 'Return items',
             //     ontap: () {
@@ -208,7 +224,7 @@ class _DriverReturnItemScreenState extends State<DriverReturnItemScreen> {
             //         'Return items added to cart',
             //       );
             //     }),
-            SizedBox(height: 20),
+            // SizedBox(height: 20),
           ],
         ),
       ),

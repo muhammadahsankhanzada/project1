@@ -37,7 +37,7 @@ class _AdminNewPasswordScreenState extends State<AdminNewPasswordScreen> {
             children: [
               SizedBox(height: 10),
               CircleAvatar(
-                radius: 50,
+                radius: 40,
                 backgroundImage: AssetImage(Constants.myImage),
               ),
               SizedBox(height: 10),
@@ -56,7 +56,7 @@ class _AdminNewPasswordScreenState extends State<AdminNewPasswordScreen> {
               ),
               SizedBox(height: 20),
               Container(
-                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 13),
+                padding: EdgeInsets.symmetric(horizontal: 15, vertical: 13),
                 decoration: BoxDecoration(
                   color: AppColors.lightGreen1.withOpacity(.3),
                   borderRadius: BorderRadius.circular(10),
@@ -86,7 +86,7 @@ class _AdminNewPasswordScreenState extends State<AdminNewPasswordScreen> {
                             alignment: Alignment.topLeft,
                             child: Text(
                               value.toString(),
-                              style: AppTextStyles.belowMainHeadingTextStyle(
+                              style: AppTextStyles.simpleHeadingTextStyle(
                                   fontSize: 15),
                             ),
                           ),
@@ -100,7 +100,7 @@ class _AdminNewPasswordScreenState extends State<AdminNewPasswordScreen> {
                 padding: EdgeInsets.symmetric(horizontal: 15),
                 child: Material(
                   elevation: 3,
-                  borderRadius: BorderRadius.circular(30),
+                  borderRadius: BorderRadius.circular(10),
                   child: TextFormField(
                     // controller: _searchController,
                     // validator: (value) {
@@ -120,7 +120,7 @@ class _AdminNewPasswordScreenState extends State<AdminNewPasswordScreen> {
                       // ),
                       border: OutlineInputBorder(
                         borderSide: BorderSide.none,
-                        borderRadius: BorderRadius.circular(30),
+                        borderRadius: BorderRadius.circular(10),
                       ),
                     ),
                   ),

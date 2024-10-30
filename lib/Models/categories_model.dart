@@ -1,8 +1,8 @@
-class Categories {
+class CategoriesModel {
   final name;
   final imageUrl;
   final productsCount;
-  Categories({
+  CategoriesModel({
     required this.name,
     required this.imageUrl,
     required this.productsCount,

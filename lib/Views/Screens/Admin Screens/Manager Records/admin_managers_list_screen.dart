@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project1/Models/Dummy%20Models/manager_list_dummy_model.dart';
 import 'package:project1/Utils/colors.dart';
-import 'package:project1/Utils/constants.dart';
 import 'package:project1/Utils/text_styles.dart';
 import 'package:project1/Views/Screens/Admin%20Screens/Manager%20Records/admin_manager_records_details_screen.dart';
 import 'package:project1/Views/Widgets/custom_appbar.dart';
@@ -102,7 +101,7 @@ class _AdminManagersListScreenState extends State<AdminManagersListScreen> {
                                 children: [
                                   CircleAvatar(
                                     backgroundImage:
-                                        AssetImage(Constants.myImage),
+                                        AssetImage('assets/images/p3.jpeg'),
                                   ),
                                   SizedBox(width: 15),
                                   Expanded(

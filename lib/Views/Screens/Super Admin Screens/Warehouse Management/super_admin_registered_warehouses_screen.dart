@@ -1,10 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:project1/Models/Dummy%20Models/warehouses_list_dummy_model.dart';
 import 'package:project1/Utils/colors.dart';
-import 'package:project1/Utils/constants.dart';
 import 'package:project1/Utils/text_styles.dart';
-import 'package:project1/Views/Screens/Admin%20Screens/Shop%20Records/admin_shop_records_details_screen.dart';
 import 'package:project1/Views/Screens/Admin%20Screens/Warehouse%20Records/admin_warehouse_details_screen.dart';
 import 'package:project1/Views/Widgets/custom_appbar.dart';
 
@@ -223,11 +220,12 @@ class _SuperAdminRegisteredWarehousesScreenState
                                           warehouseAddress: warehouseAddress,
                                           warehouseContact: warehouseContact,
                                           warehouseEmail: warehouseEmail,
-                                          warehouseSpaceAvailable: '',
-                                          warehouseLoadingDocks: '',
-                                          warehouseStorageCapacity: '',
-                                          warehouseEntries: '',
-                                          warehouseManagerName: '',
+                                          warehouseSpaceAvailable: '3000 ft',
+                                          warehouseLoadingDocks: '03',
+                                          warehouseStorageCapacity:
+                                              '5000 pounds',
+                                          warehouseEntries: '02',
+                                          warehouseManagerName: 'Shumail Khan',
                                         )));
                           },
                           borderRadius: BorderRadius.circular(40),

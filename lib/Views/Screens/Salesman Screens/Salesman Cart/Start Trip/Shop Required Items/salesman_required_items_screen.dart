@@ -6,19 +6,20 @@ import 'package:project1/Utils/text_styles.dart';
 import 'package:project1/Views/Widgets/custom_appbar.dart';
 import 'package:project1/Views/Widgets/universal_button.dart';
 
-class DriverRequiredItemsScreen extends StatefulWidget {
+class SalesmanRequiredItemsScreen extends StatefulWidget {
   final categoryIndex;
-  const DriverRequiredItemsScreen({
+  const SalesmanRequiredItemsScreen({
     super.key,
     required this.categoryIndex,
   });
 
   @override
-  State<DriverRequiredItemsScreen> createState() =>
-      _DriverRequiredItemsScreenState();
+  State<SalesmanRequiredItemsScreen> createState() =>
+      _SalesmanRequiredItemsScreenState();
 }
 
-class _DriverRequiredItemsScreenState extends State<DriverRequiredItemsScreen> {
+class _SalesmanRequiredItemsScreenState
+    extends State<SalesmanRequiredItemsScreen> {
   int selectedCategoryIndex = 0;
   bool isProductSelected = false;
   @override
@@ -53,29 +54,44 @@ class _DriverRequiredItemsScreenState extends State<DriverRequiredItemsScreen> {
               child: ListView.builder(
                 itemCount: productCategoriesDummyModelContents.length,
                 itemBuilder: (context, index) {
-                  return InkWell(
-                    onTap: () {
-                      selectedCategoryIndex = index;
-                      setState(() {});
-                    },
-                    borderRadius: BorderRadius.circular(20),
-                    child: Container(
-                      margin: EdgeInsets.only(left: 5, right: 5),
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: selectedCategoryIndex == index
-                            ? AppColors.green
-                            : AppColors.lightGreen1.withOpacity(.3),
+                  return Column(
+                    children: [
+                      Row(
+                        children: [
+                          SizedBox(width: 10),
+                          InkWell(
+                            onTap: () {
+                              selectedCategoryIndex = index;
+                              setState(() {});
+                            },
+                            borderRadius: BorderRadius.circular(20),
+                            child: Material(
+                              elevation: 4,
+                              borderRadius: BorderRadius.circular(30),
+                              child: Container(
+                                // margin: EdgeInsets.only(left: 5, right: 5),
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 12, vertical: 6),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                  color: selectedCategoryIndex == index
+                                      ? AppColors.loginBackground
+                                      : AppColors.white,
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    productCategoriesDummyModelContents[index]
+                                        .name,
+                                    style: AppTextStyles.nameHeadingTextStyle(
+                                        size: 15),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                      child: Center(
-                        child: Text(
-                          productCategoriesDummyModelContents[index].name,
-                          style: AppTextStyles.nameHeadingTextStyle(size: 15),
-                        ),
-                      ),
-                    ),
+                    ],
                   );
                 },
                 scrollDirection: Axis.horizontal,
@@ -216,7 +232,7 @@ class _DriverRequiredItemsScreenState extends State<DriverRequiredItemsScreen> {
             //         'Required items added to cart',
             //       );
             //     }),
-            SizedBox(height: 50),
+            SizedBox(height: 10),
           ],
         ),
       ),

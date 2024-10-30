@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
 import 'package:project1/Utils/colors.dart';
+import 'package:project1/Utils/constants.dart';
 import 'package:project1/Utils/text_styles.dart';
 import 'package:project1/Views/Screens/General%20Screens/forget_password_screen.dart';
-import 'package:project1/Views/Screens/Driver%20Screens/driver_homepage_screen.dart';
+import 'package:project1/Views/Screens/Salesman%20Screens/salesman_bottom_nav_bar_screen.dart';
 import 'package:project1/Views/Widgets/universal_button.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -47,27 +47,21 @@ class _LoginScreenState extends State<LoginScreen> {
             Container(
               width: 150,
               height: 150,
-              padding: EdgeInsets.all(10),
+              padding: EdgeInsets.all(20),
               decoration: BoxDecoration(
                 color: AppColors.loginBackground.withOpacity(.3),
                 shape: BoxShape.circle,
               ),
-              child: Container(
-                padding: EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                  color: AppColors.white,
-                  shape: BoxShape.circle,
-                ),
-                child: Lottie.asset(
-                  'assets/animations/login.json',
-                  fit: BoxFit.fill,
-                ),
-              ),
+              child: Image.asset(Constants.logoImage),
             ),
             SizedBox(height: 10),
             Text(
-              'Welcome Back',
-              style: AppTextStyles.nameHeadingTextStyle(size: 18),
+              'Welcome Back!',
+              style: AppTextStyles.simpleHeadingTextStyle(
+                fontSize: 25,
+                fontWeight: FontWeight.bold,
+                textColor: AppColors.loginBackground,
+              ),
             ),
             SizedBox(height: 30),
             Expanded(
@@ -85,12 +79,16 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Text(
-                        "Login to your Account",
-                        style: AppTextStyles.belowMainHeadingTextStyle(
-                            fontSize: 20),
+                      SizedBox(height: 20),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          "Login to your Account",
+                          style: AppTextStyles.belowMainHeadingTextStyle(
+                              fontSize: 20),
+                        ),
                       ),
-                      SizedBox(height: 30),
+                      SizedBox(height: 10),
                       TextFormField(
                         controller: emailController,
                         keyboardType: TextInputType.emailAddress,
@@ -101,7 +99,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           return null;
                         },
                         decoration: InputDecoration(
-                          hintText: 'Enter your Email / Phone Number',
+                          hintText: 'Enter / Phone Number',
                           filled: true,
                           fillColor: AppColors.white,
                           prefixIcon: Icon(
@@ -124,7 +122,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         },
                         obscureText: true,
                         decoration: InputDecoration(
-                          hintText: 'Enter your Password',
+                          hintText: 'Password',
                           filled: true,
                           fillColor: AppColors.white,
                           prefixIcon: Icon(
@@ -197,7 +195,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
-                                        DriverHomepageScreen()));
+                                        SalesmanBottomNavBarScreen()));
                           },
                           title: 'Login'),
                     ],

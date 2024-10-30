@@ -62,7 +62,7 @@ class _ManagerDeleteProductsScreenState
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color.fromRGBO(245, 245, 245, 1),
-      appBar: CustomAppbar(title: 'Delete Products'),
+      appBar: CustomAppbar(title: 'Delete Product'),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -85,7 +85,7 @@ class _ManagerDeleteProductsScreenState
                 //Category DropDown
                 productDropDownButton(
                   icon: Icons.grid_view,
-                  hint: 'Select a Category',
+                  hint: 'Select Category',
                   currentSelectedValue: selectedCategoryValue,
                   dropDownValuesList: categoryValuesList,
                   onChanged: (String? newSelectedValue) {
@@ -108,7 +108,7 @@ class _ManagerDeleteProductsScreenState
                     children: [
                       productDropDownButton(
                         icon: Icons.fastfood,
-                        hint: 'Select a Product',
+                        hint: 'Select Product',
                         currentSelectedValue: selectedProductValue,
                         dropDownValuesList: productValuesList,
                         onChanged: (String? newSelectedValue) {
@@ -125,7 +125,6 @@ class _ManagerDeleteProductsScreenState
                 UniversalButton(
                     buttonWidth: 250,
                     title: 'Delete Product',
-                    borderRadius: 30,
                     ontap: () {
                       if (_formKey.currentState!.validate()) {}
 
@@ -152,7 +151,7 @@ class _ManagerDeleteProductsScreenState
                                     ),
                                     SizedBox(height: 20),
                                     Text(
-                                      'Are you sure you want to delete this product.',
+                                      'Are you sure you want to delete this product?',
                                       style: AppTextStyles
                                           .belowMainHeadingTextStyle(),
                                     ),
@@ -166,7 +165,7 @@ class _ManagerDeleteProductsScreenState
                                             buttonHeight: 40,
                                             buttonWidth: 110,
                                             buttonColor:
-                                                AppColors.green.withOpacity(.7),
+                                                AppColors.universalButtonGreen,
                                             ontap: () {
                                               deleteProduct(
                                                   selectedProductValue!);
@@ -178,7 +177,6 @@ class _ManagerDeleteProductsScreenState
                                             title: 'Cancel',
                                             buttonHeight: 40,
                                             buttonWidth: 110,
-                                            buttonColor: AppColors.red.shade300,
                                             ontap: () {
                                               Navigator.pop(context);
                                             }),
@@ -211,7 +209,7 @@ class _ManagerDeleteProductsScreenState
       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 3),
       decoration: BoxDecoration(
         border: Border.all(color: AppColors.grey),
-        borderRadius: BorderRadius.circular(30),
+        borderRadius: BorderRadius.circular(10),
       ),
       child: DropdownButtonHideUnderline(
         child: DropdownButton<String>(

@@ -68,7 +68,10 @@ class _ManagerDeleteProductWarehouseSelectionScreenState
               ),
               child: Text(
                 isSelectionModeOn ? 'Deselect all' : 'Select all',
-                style: AppTextStyles.belowMainHeadingTextStyle(fontSize: 12),
+                style: AppTextStyles.simpleHeadingTextStyle(
+                  fontSize: 12,
+                  textColor: AppColors.white,
+                ),
               ),
             ),
           ),
@@ -119,21 +122,24 @@ class _ManagerDeleteProductWarehouseSelectionScreenState
                                                 )));
                                   }
                                 },
-                                borderRadius: BorderRadius.circular(20),
+                                borderRadius: BorderRadius.circular(10),
                                 child: Container(
                                   padding: EdgeInsets.symmetric(
-                                      horizontal: 20, vertical: 40),
+                                      horizontal: 20, vertical: 15),
                                   decoration: BoxDecoration(
                                       color: selectedWarehouses[index]
                                           ? AppColors.green.withOpacity(.7)
                                           : AppColors.lightGreen1
                                               .withOpacity(.7),
-                                      borderRadius: BorderRadius.circular(20)),
+                                      borderRadius: BorderRadius.circular(10)),
                                   child: Center(
                                       child: Text(
                                     warehouseValuesList[index],
-                                    style: AppTextStyles.nameHeadingTextStyle(
-                                        size: 15),
+                                    style: AppTextStyles.simpleHeadingTextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold,
+                                      textColor: AppColors.white,
+                                    ),
                                   )),
                                 ),
                               ),

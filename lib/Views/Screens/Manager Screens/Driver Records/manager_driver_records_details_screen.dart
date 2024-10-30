@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:project1/Utils/colors.dart';
-import 'package:project1/Utils/constants.dart';
 import 'package:project1/Utils/text_styles.dart';
 import 'package:project1/Views/Screens/Manager%20Screens/Driver%20Records/manager_driver_records_trip_details_screen.dart';
 import 'package:project1/Views/Widgets/custom_appbar.dart';
@@ -33,7 +32,7 @@ class _ManagerDriverRecordsDetailsScreenState
     };
     return Scaffold(
       backgroundColor: AppColors.lightWhiteBackground,
-      appBar: CustomAppbar(title: 'Driver Info'),
+      appBar: CustomAppbar(title: 'Salesman Info'),
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 15),
@@ -43,7 +42,7 @@ class _ManagerDriverRecordsDetailsScreenState
               Row(
                 children: [
                   CircleAvatar(
-                    backgroundImage: AssetImage(Constants.myImage),
+                    backgroundImage: AssetImage('assets/images/p1.jpeg'),
                   ),
                   SizedBox(width: 10),
                   Column(

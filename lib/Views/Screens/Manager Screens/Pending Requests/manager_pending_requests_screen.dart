@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:project1/Utils/colors.dart';
-import 'package:project1/Utils/constants.dart';
 import 'package:project1/Utils/text_styles.dart';
 import 'package:project1/Views/Screens/Manager%20Screens/Pending%20Requests/manager_pending_request_details_screen.dart';
 import 'package:project1/Views/Widgets/custom_appbar.dart';
@@ -29,23 +28,24 @@ class ManagerPendingRequestsScreen extends StatelessWidget {
                               builder: (context) =>
                                   ManagerPendingRequestDetailsScreen()));
                     },
-                    borderRadius: BorderRadius.circular(15),
+                    borderRadius: BorderRadius.circular(10),
                     child: Material(
                       elevation: 3,
-                      borderRadius: BorderRadius.circular(15),
+                      borderRadius: BorderRadius.circular(10),
                       child: Container(
                         padding: EdgeInsets.all(15),
                         // margin: EdgeInsets.only(bottom: 10),
                         decoration: BoxDecoration(
-                          color: AppColors.white,
-                          borderRadius: BorderRadius.circular(15),
+                          color: AppColors.containerBackground,
+                          borderRadius: BorderRadius.circular(10),
                         ),
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             CircleAvatar(
                               radius: 35,
-                              backgroundImage: AssetImage(Constants.myImage),
+                              backgroundImage:
+                                  AssetImage('assets/images/p2.jpeg'),
                             ),
                             SizedBox(width: 10),
                             Column(

@@ -3,9 +3,9 @@ import 'package:project1/Models/Dummy%20Models/manager_homepage_items.dart';
 import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/constants.dart';
 import 'package:project1/Utils/text_styles.dart';
+import 'package:project1/Views/Screens/Admin%20Screens/admin_check_inventory_screen.dart';
 import 'package:project1/Views/Screens/Manager%20Screens/Add%20Products/manager_add_product_warehouse_selection_screen.dart';
 import 'package:project1/Views/Screens/Manager%20Screens/Approved%20Requests/manager_approved_requests_screen.dart';
-import 'package:project1/Views/Screens/Manager%20Screens/Available%20Products/manager_available_products_screen.dart';
 import 'package:project1/Views/Screens/Manager%20Screens/Delete%20Products/manager_delete_product_warehouse_selection_screen.dart';
 import 'package:project1/Views/Screens/Manager%20Screens/Driver%20Records/manager_driver_records_screen.dart';
 import 'package:project1/Views/Screens/Manager%20Screens/Pending%20Requests/manager_pending_requests_screen.dart';
@@ -182,7 +182,7 @@ class ManagerHomepage extends StatelessWidget {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                            ManagerAvailableProductsScreen()));
+                                            AdminCheckInventoryScreen()));
                               }
                               if (index % 6 == 5) {
                                 Navigator.push(
@@ -213,27 +213,31 @@ categoryContainer(VoidCallback ontap, String image, String title) {
     child: InkWell(
       borderRadius: BorderRadius.circular(15),
       onTap: ontap,
-      child: Container(
-        padding: EdgeInsets.all(15),
-        decoration: BoxDecoration(
-          color: AppColors.white,
-          borderRadius: BorderRadius.circular(15),
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            // Image.asset(
-            //   image,
-            //   width: 100,
-            //   height: 60,
-            // ),
-            // SizedBox(height: 10),
-            Text(
-              title,
-              style: AppTextStyles.belowMainHeadingTextStyle(fontSize: 14),
-            ),
-          ],
+      child: Material(
+        elevation: 5,
+        borderRadius: BorderRadius.circular(15),
+        child: Container(
+          padding: EdgeInsets.all(15),
+          decoration: BoxDecoration(
+            color: AppColors.white,
+            borderRadius: BorderRadius.circular(15),
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              // Image.asset(
+              //   image,
+              //   width: 100,
+              //   height: 60,
+              // ),
+              // SizedBox(height: 10),
+              Text(
+                title,
+                style: AppTextStyles.belowMainHeadingTextStyle(fontSize: 14),
+              ),
+            ],
+          ),
         ),
       ),
     ),

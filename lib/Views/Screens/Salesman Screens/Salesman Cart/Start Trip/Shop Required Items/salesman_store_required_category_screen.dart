@@ -2,18 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:project1/Models/Dummy%20Models/product_categories_dummy_model.dart';
 import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/text_styles.dart';
-import 'package:project1/Views/Screens/Driver%20Screens/Driver%20Cart/Start%20Trip/Shop%20Required%20Items/driver_required_items_screen.dart';
+import 'package:project1/Views/Screens/Salesman%20Screens/Salesman%20Cart/Start%20Trip/Shop%20Required%20Items/salesman_required_items_screen.dart';
 
-class DriverRequiredCategoryScreen extends StatefulWidget {
-  const DriverRequiredCategoryScreen({super.key});
+class SalesmanRequiredCategoryScreen extends StatefulWidget {
+  const SalesmanRequiredCategoryScreen({super.key});
 
   @override
-  State<DriverRequiredCategoryScreen> createState() =>
-      _DriverRequiredCategoryScreenState();
+  State<SalesmanRequiredCategoryScreen> createState() =>
+      _SalesmanRequiredCategoryScreenState();
 }
 
-class _DriverRequiredCategoryScreenState
-    extends State<DriverRequiredCategoryScreen> {
+class _SalesmanRequiredCategoryScreenState
+    extends State<SalesmanRequiredCategoryScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,31 +29,47 @@ class _DriverRequiredCategoryScreenState
               child: ListView.builder(
                 itemCount: productCategoriesDummyModelContents.length,
                 itemBuilder: (context, index) {
-                  return InkWell(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => DriverRequiredItemsScreen(
-                                  categoryIndex: index)));
-                    },
-                    borderRadius: BorderRadius.circular(20),
-                    child: Container(
-                      margin: EdgeInsets.only(left: 5, right: 5),
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: AppColors.lightGreen1.withOpacity(.3),
+                  return Column(
+                    children: [
+                      Row(
+                        children: [
+                          SizedBox(width: 10),
+                          InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          SalesmanRequiredItemsScreen(
+                                              categoryIndex: index)));
+                            },
+                            borderRadius: BorderRadius.circular(20),
+                            child: Material(
+                              elevation: 4,
+                              borderRadius: BorderRadius.circular(30),
+                              child: Container(
+                                // margin: EdgeInsets.only(left: 5, right: 5),
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 12, vertical: 6),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                  color: AppColors.lightGreen1.withOpacity(.3),
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    productCategoriesDummyModelContents[index]
+                                        .name,
+                                    style:
+                                        AppTextStyles.belowMainHeadingTextStyle(
+                                            fontSize: 15),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                      child: Center(
-                        child: Text(
-                          productCategoriesDummyModelContents[index].name,
-                          style: AppTextStyles.belowMainHeadingTextStyle(
-                              fontSize: 15),
-                        ),
-                      ),
-                    ),
+                    ],
                   );
                 },
                 scrollDirection: Axis.horizontal,
@@ -77,7 +93,7 @@ class _DriverRequiredCategoryScreenState
                               context,
                               MaterialPageRoute(
                                   builder: (context) =>
-                                      DriverRequiredItemsScreen(
+                                      SalesmanRequiredItemsScreen(
                                         categoryIndex: index,
                                       )));
                         },
@@ -105,7 +121,7 @@ class _DriverRequiredCategoryScreenState
                     ],
                   );
                 }),
-            SizedBox(height: 20),
+            // SizedBox(height: 20),
           ],
         ),
       ),

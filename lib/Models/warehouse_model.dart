@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class Warehouse {
+class WarehouseModel {
   String id,
       name,
       imageUrl,
@@ -13,7 +13,7 @@ class Warehouse {
       loadingDocks,
       entries,
       spaceAvailable;
-  Warehouse({
+  WarehouseModel({
     required this.id,
     required this.name,
     required this.imageUrl,
@@ -29,9 +29,9 @@ class Warehouse {
   });
 
   // Factory constructor to get and convert data recieved from Firestore document
-  factory Warehouse.fromFirestore(DocumentSnapshot doc) {
+  factory WarehouseModel.fromFirestore(DocumentSnapshot doc) {
     Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
-    return Warehouse(
+    return WarehouseModel(
       id: doc.id,
       name: data['name'] ?? '',
       imageUrl: data['imageUrl'] ?? '',

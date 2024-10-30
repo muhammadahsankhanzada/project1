@@ -1,34 +1,33 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:project1/Utils/colors.dart';
-import 'package:project1/Views/Screens/Driver%20Screens/Delivered/driver_end_trip_screen.dart';
-import 'package:project1/Views/Screens/Driver%20Screens/Driver%20Cart/Start%20Trip/driver_shops_list_screen.dart';
-import 'package:project1/Views/Screens/Driver%20Screens/Driver%20Cart/driver_warehouse_cart_screen.dart';
-import 'package:project1/Views/Screens/Driver%20Screens/Driver%20Category/driver_category_screen.dart';
+import 'package:project1/Views/Screens/Salesman%20Screens/Delivered/salesman_end_trip_screen.dart';
+import 'package:project1/Views/Screens/Salesman%20Screens/Salesman%20Cart/Start%20Trip/salesman_shops_list_screen.dart';
+import 'package:project1/Views/Screens/Salesman%20Screens/Salesman%20Cart/salesman_warehouse_cart_screen.dart';
+import 'package:project1/Views/Screens/Salesman%20Screens/Salesman%20Category/salesman_homepage_screen.dart';
 
-class DriverHomepageScreen extends StatefulWidget {
-  const DriverHomepageScreen({super.key});
+class SalesmanBottomNavBarScreen extends StatefulWidget {
+  const SalesmanBottomNavBarScreen({super.key});
 
   @override
-  State<DriverHomepageScreen> createState() => _DriverHomepageScreenState();
+  State<SalesmanBottomNavBarScreen> createState() =>
+      _SalesmanBottomNavBarScreenState();
 }
 
-class _DriverHomepageScreenState extends State<DriverHomepageScreen> {
-  // int _selectedIndex = 0;
-  // final List<Widget> _pages = [
-  //   DriverCategoryScreen(),
-  //   DriverWarehouseCartScreen(),
-  //   DriverEndTripScreen(),
-  // ];
-  // void _onItemTapped(int index) {
-  //   setState(() {
-  //     _selectedIndex = index;
-  //   });
-  // }
+class _SalesmanBottomNavBarScreenState
+    extends State<SalesmanBottomNavBarScreen> {
+  ///
+  final CupertinoTabController _tabController = CupertinoTabController();
+  void goToShopsTab() {
+    _tabController.index = 2;
+    // Navigator.push(context,
+    //     CupertinoPageRoute(builder: (context) => DriverStoreCartScreen()));
+  }
 
   @override
   Widget build(BuildContext context) {
     return CupertinoTabScaffold(
+        controller: _tabController,
         tabBar: CupertinoTabBar(
           backgroundColor: AppColors.white,
           activeColor: AppColors.black,
@@ -56,26 +55,31 @@ class _DriverHomepageScreenState extends State<DriverHomepageScreen> {
             case 0:
               return CupertinoTabView(
                 builder: (context) {
-                  return CupertinoPageScaffold(child: DriverCategoryScreen());
+                  return CupertinoPageScaffold(child: SalesmanHomepageScreen());
                 },
               );
             case 1:
               return CupertinoTabView(
                 builder: (context) {
                   return CupertinoPageScaffold(
-                      child: DriverWarehouseCartScreen());
+                      child: SalesmanWarehouseCartScreen(
+                    startTripButtonTapped: goToShopsTab,
+                  ));
                 },
               );
             case 2:
               return CupertinoTabView(
                 builder: (context) {
-                  return CupertinoPageScaffold(child: DriverShopsListScreen());
+                  return CupertinoPageScaffold(
+                      child: SalesmanShopsListScreen(
+                    isTripStarted: true,
+                  ));
                 },
               );
             case 3:
               return CupertinoTabView(
                 builder: (context) {
-                  return CupertinoPageScaffold(child: DriverEndTripScreen());
+                  return CupertinoPageScaffold(child: SalesmanEndTripScreen());
                 },
               );
           }

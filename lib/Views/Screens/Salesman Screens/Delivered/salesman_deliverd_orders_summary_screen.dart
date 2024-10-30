@@ -4,8 +4,8 @@ import 'package:project1/Utils/constants.dart';
 import 'package:project1/Utils/text_styles.dart';
 import 'package:project1/Views/Widgets/custom_appbar.dart';
 
-class DriverDeliverdOrdersSummaryScreen extends StatelessWidget {
-  const DriverDeliverdOrdersSummaryScreen({super.key});
+class SalesmanDeliverdOrdersSummaryScreen extends StatelessWidget {
+  const SalesmanDeliverdOrdersSummaryScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -125,7 +125,7 @@ class DriverDeliverdOrdersSummaryScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              SizedBox(height: 50),
+              SizedBox(height: 10),
             ],
           ),
         ),

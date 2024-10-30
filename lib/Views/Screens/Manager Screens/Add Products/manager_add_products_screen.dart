@@ -57,7 +57,7 @@ class _ManagerAddProductsScreenState extends State<ManagerAddProductsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.lightWhiteBackground,
-      appBar: CustomAppbar(title: 'Add Products'),
+      appBar: CustomAppbar(title: 'Add Product'),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -77,7 +77,7 @@ class _ManagerAddProductsScreenState extends State<ManagerAddProductsScreen> {
                 Align(
                   alignment: Alignment.topLeft,
                   child: Text(
-                    'Enter the product details to add to your inventory.',
+                    'Enter the product details.',
                     style:
                         AppTextStyles.belowMainHeadingTextStyle(fontSize: 15),
                   ),
@@ -93,10 +93,10 @@ class _ManagerAddProductsScreenState extends State<ManagerAddProductsScreen> {
                       setState(() {});
                     }
                   },
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(20),
                   child: Container(
-                      height: 150,
-                      width: 200,
+                      height: 200,
+                      width: double.infinity,
                       decoration: BoxDecoration(
                           border: Border.all(color: AppColors.grey),
                           borderRadius: BorderRadius.circular(20)),
@@ -130,7 +130,7 @@ class _ManagerAddProductsScreenState extends State<ManagerAddProductsScreen> {
                   padding: EdgeInsets.symmetric(horizontal: 20, vertical: 3),
                   decoration: BoxDecoration(
                     border: Border.all(color: AppColors.grey),
-                    borderRadius: BorderRadius.circular(30),
+                    borderRadius: BorderRadius.circular(10),
                   ),
                   child: DropdownButtonHideUnderline(
                     child: DropdownButton<String>(
@@ -233,7 +233,6 @@ class _ManagerAddProductsScreenState extends State<ManagerAddProductsScreen> {
                 SizedBox(height: 10),
                 UniversalButton(
                     buttonWidth: 250,
-                    borderRadius: 30,
                     title: 'Add New Product',
                     ontap: () async {
                       if (_formKey.currentState!.validate() &&
@@ -253,7 +252,7 @@ class _ManagerAddProductsScreenState extends State<ManagerAddProductsScreen> {
                             categoryName = selectedCategoryValue == 'Other'
                                 ? _productNewCategoryNameController.text
                                 : selectedCategoryValue;
-                            Product newProduct = Product(
+                            ProductModel newProduct = ProductModel(
                               id: _productNameController.text.toString(),
                               // id: '',
                               name: _productNameController.text.toString(),
@@ -318,7 +317,7 @@ class _ManagerAddProductsScreenState extends State<ManagerAddProductsScreen> {
               ),
             ),
             border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(30),
+              borderRadius: BorderRadius.circular(10),
             ),
           ),
         ),

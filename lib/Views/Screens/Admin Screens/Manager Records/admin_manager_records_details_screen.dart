@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:project1/Utils/colors.dart';
-import 'package:project1/Utils/constants.dart';
 import 'package:project1/Utils/text_styles.dart';
 import 'package:project1/Views/Screens/Admin%20Screens/Manager%20Records/Rejected%20Requests/admin_manager_rejected_requests_screen.dart';
 import 'package:project1/Views/Screens/Manager%20Screens/Approved%20Requests/manager_approved_requests_screen.dart';
@@ -38,7 +37,7 @@ class AdminManagerRecordsDetailsScreen extends StatelessWidget {
               SizedBox(height: 20),
               CircleAvatar(
                 radius: 50,
-                backgroundImage: AssetImage(Constants.myImage),
+                backgroundImage: AssetImage('assets/images/p3.jpeg'),
               ),
               SizedBox(height: 10),
               Column(

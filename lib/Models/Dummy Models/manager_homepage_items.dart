@@ -19,5 +19,6 @@ List<ManagerHomepageItems> managerHomepageContents = [
       title: 'Delete Products', image: Constants.deleteProducts),
   ManagerHomepageItems(
       title: 'Available Products', image: Constants.availableProducts),
-  ManagerHomepageItems(title: 'Driver Records', image: Constants.driverRecords),
+  ManagerHomepageItems(
+      title: 'Salesman Records', image: Constants.driverRecords),
 ];

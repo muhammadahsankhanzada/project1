@@ -6,21 +6,22 @@ import 'package:project1/Utils/text_styles.dart';
 import 'package:project1/Views/Widgets/custom_appbar.dart';
 import 'package:project1/Views/Widgets/universal_button.dart';
 
-class DriverItemsListScreen extends StatefulWidget {
+class SalesmanItemsListScreen extends StatefulWidget {
   final String categoryName;
   final int categoryIndex;
 
-  const DriverItemsListScreen({
+  const SalesmanItemsListScreen({
     super.key,
     required this.categoryName,
     required this.categoryIndex,
   });
 
   @override
-  State<DriverItemsListScreen> createState() => _DriverItemsListScreenState();
+  State<SalesmanItemsListScreen> createState() =>
+      _SalesmanItemsListScreenState();
 }
 
-class _DriverItemsListScreenState extends State<DriverItemsListScreen> {
+class _SalesmanItemsListScreenState extends State<SalesmanItemsListScreen> {
   var _searchController = TextEditingController();
   int quantity = 0;
   int selectedCategoryIndex = 0;
@@ -37,7 +38,8 @@ class _DriverItemsListScreenState extends State<DriverItemsListScreen> {
     return Scaffold(
       backgroundColor: AppColors.lightWhiteBackground,
       appBar: CustomAppbar(
-        title: productCategoriesDummyModelContents[selectedCategoryIndex].name,
+        title: '',
+        // title: productCategoriesDummyModelContents[selectedCategoryIndex].name,
       ),
       body: Column(
         children: [
@@ -51,39 +53,60 @@ class _DriverItemsListScreenState extends State<DriverItemsListScreen> {
           //     ),
           //   ),
           // ),
-          SizedBox(height: 10),
-          Container(
-            height: 35,
-            margin: EdgeInsets.symmetric(vertical: 15),
-            width: double.infinity,
-            child: ListView.builder(
-              itemCount: productCategoriesDummyModelContents.length,
-              itemBuilder: (context, index) {
-                return InkWell(
-                  onTap: () {
-                    setState(() {
-                      selectedCategoryIndex = index;
-                    });
+          // SizedBox(height: 10),
+          Padding(
+            padding: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
+            child: Container(
+              height: 35,
+              // margin: EdgeInsets.symmetric(vertical: 15),
+              width: double.infinity,
+              child: ListView.builder(
+                itemCount: productCategoriesDummyModelContents.length,
+                itemBuilder: (context, index) {
+                  return Column(
+                    children: [
+                      Row(
+                        children: [
+                          InkWell(
+                            borderRadius: BorderRadius.circular(30),
+                            onTap: () {
+                              setState(() {
+                                selectedCategoryIndex = index;
+                              });
 
-                    // categoryBackgroundColor = AppColors.green;
-                  },
-                  child: Container(
-                    margin: EdgeInsets.only(left: 5, right: 5),
-                    padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                    decoration: BoxDecoration(
-                      color: selectedCategoryIndex == index
-                          ? AppColors.green
-                          : Colors.white,
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Text(
-                      productCategoriesDummyModelContents[index].name,
-                      style: AppTextStyles.nameHeadingTextStyle(size: 15),
-                    ),
-                  ),
-                );
-              },
-              scrollDirection: Axis.horizontal,
+                              // categoryBackgroundColor = AppColors.green;
+                            },
+                            child: Material(
+                              elevation: 4,
+                              borderRadius: BorderRadius.circular(30),
+                              child: Container(
+                                // margin: EdgeInsets.only(left: 5, right: 5),
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 12, vertical: 6),
+                                decoration: BoxDecoration(
+                                  color: selectedCategoryIndex == index
+                                      ? AppColors.lightGreen1
+                                      : Colors.white,
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
+                                child: Text(
+                                  productCategoriesDummyModelContents[index]
+                                      .name,
+                                  style: AppTextStyles.nameHeadingTextStyle(
+                                      size: 15),
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(width: 10),
+                        ],
+                      ),
+                      SizedBox(width: 10),
+                    ],
+                  );
+                },
+                scrollDirection: Axis.horizontal,
+              ),
             ),
           ),
           SizedBox(height: 10),
@@ -252,8 +275,7 @@ class _DriverItemsListScreenState extends State<DriverItemsListScreen> {
                                         title: 'Add to Cart',
                                         buttonWidth: 120,
                                         buttonHeight: 35,
-                                        buttonColor:
-                                            AppColors.universalButtonGreen,
+                                        buttonColor: AppColors.cartButton,
                                         textSize: 12,
                                         ontap: () {}),
                                   ],

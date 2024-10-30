@@ -34,7 +34,7 @@ class _AdminCreateNewAccountScreenState
   ];
   String? selectedRoleValue;
   final List<String> roleValuesList = [
-    'Driver',
+    'Salesman',
     'Manager',
     'Admin',
   ];
@@ -67,7 +67,10 @@ class _AdminCreateNewAccountScreenState
                   alignment: Alignment.topLeft,
                   child: Text(
                     'Add New User',
-                    style: AppTextStyles.nameHeadingTextStyle(size: 20),
+                    style: AppTextStyles.simpleHeadingTextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
                 ),
                 Align(
@@ -308,7 +311,7 @@ class _AdminCreateNewAccountScreenState
               ),
             ),
             border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(30),
+              borderRadius: BorderRadius.circular(10),
             ),
           ),
         ),
@@ -329,7 +332,7 @@ class _AdminCreateNewAccountScreenState
       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 3),
       decoration: BoxDecoration(
         border: Border.all(color: AppColors.grey),
-        borderRadius: BorderRadius.circular(30),
+        borderRadius: BorderRadius.circular(10),
       ),
       child: DropdownButtonHideUnderline(
         child: DropdownButton<String>(

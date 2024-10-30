@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/text_styles.dart';
-import 'package:project1/Views/Screens/Driver%20Screens/Delivered/driver_deliverd_orders_summary_screen.dart';
+import 'package:project1/Views/Screens/Salesman%20Screens/Delivered/salesman_deliverd_orders_summary_screen.dart';
 import 'package:project1/Views/Widgets/custom_appbar.dart';
 
-class DriverEndTripScreen extends StatelessWidget {
-  const DriverEndTripScreen({super.key});
+class SalesmanEndTripScreen extends StatelessWidget {
+  const SalesmanEndTripScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,7 @@ class DriverEndTripScreen extends StatelessWidget {
                   'Today\'s Orders',
                   style: AppTextStyles.simpleHeadingTextStyle(
                     fontSize: 18,
-                    fontWeight: FontWeight.w500,
+                    // fontWeight: FontWeight.w500,
                   ),
                 ),
               ),
@@ -38,7 +38,7 @@ class DriverEndTripScreen extends StatelessWidget {
                             context,
                             MaterialPageRoute(
                                 builder: (context) =>
-                                    DriverDeliverdOrdersSummaryScreen()));
+                                    SalesmanDeliverdOrdersSummaryScreen()));
                       },
                       borderRadius: BorderRadius.circular(15),
                       child: Container(
@@ -103,7 +103,7 @@ class DriverEndTripScreen extends StatelessWidget {
                     SizedBox(height: 10),
                   ],
                 ),
-              SizedBox(height: 50),
+              // SizedBox(height: 50),
               // UniversalButton(
               //     title: 'Submit',
               //     ontap: () {

@@ -2,18 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:project1/Models/Dummy%20Models/product_categories_dummy_model.dart';
 import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/text_styles.dart';
-import 'package:project1/Views/Screens/Driver%20Screens/Driver%20Cart/Start%20Trip/Shop%20Return%20Items/driver_return_item_screen.dart';
+import 'package:project1/Views/Screens/Salesman%20Screens/Salesman%20Cart/Start%20Trip/Shop%20Return%20Items/salesman_return_item_screen.dart';
 
-class DriverStoreReturnCategoryScreen extends StatefulWidget {
-  const DriverStoreReturnCategoryScreen({super.key});
+class SalesmanStoreReturnCategoryScreen extends StatefulWidget {
+  const SalesmanStoreReturnCategoryScreen({super.key});
 
   @override
-  State<DriverStoreReturnCategoryScreen> createState() =>
-      _DriverStoreReturnCategoryScreenState();
+  State<SalesmanStoreReturnCategoryScreen> createState() =>
+      _SalesmanStoreReturnCategoryScreenState();
 }
 
-class _DriverStoreReturnCategoryScreenState
-    extends State<DriverStoreReturnCategoryScreen> {
+class _SalesmanStoreReturnCategoryScreenState
+    extends State<SalesmanStoreReturnCategoryScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,31 +29,47 @@ class _DriverStoreReturnCategoryScreenState
               child: ListView.builder(
                 itemCount: productCategoriesDummyModelContents.length,
                 itemBuilder: (context, index) {
-                  return InkWell(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => DriverReturnItemScreen(
-                                  categoryIndex: index)));
-                    },
-                    borderRadius: BorderRadius.circular(20),
-                    child: Container(
-                      margin: EdgeInsets.only(left: 5, right: 5),
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: AppColors.lightGreen1.withOpacity(.3),
+                  return Column(
+                    children: [
+                      Row(
+                        children: [
+                          SizedBox(width: 10),
+                          InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          SalesmanReturnItemScreen(
+                                              categoryIndex: index)));
+                            },
+                            borderRadius: BorderRadius.circular(20),
+                            child: Material(
+                              elevation: 4,
+                              borderRadius: BorderRadius.circular(30),
+                              child: Container(
+                                // margin: EdgeInsets.only(left: 5, right: 5),
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 12, vertical: 6),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                  color: AppColors.lightGreen1.withOpacity(.3),
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    productCategoriesDummyModelContents[index]
+                                        .name,
+                                    style:
+                                        AppTextStyles.belowMainHeadingTextStyle(
+                                            fontSize: 15),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                      child: Center(
-                        child: Text(
-                          productCategoriesDummyModelContents[index].name,
-                          style: AppTextStyles.belowMainHeadingTextStyle(
-                              fontSize: 15),
-                        ),
-                      ),
-                    ),
+                    ],
                   );
                 },
                 scrollDirection: Axis.horizontal,
@@ -75,7 +91,8 @@ class _DriverStoreReturnCategoryScreenState
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => DriverReturnItemScreen(
+                                  builder: (context) =>
+                                      SalesmanReturnItemScreen(
                                         categoryIndex: index,
                                       )));
                         },
@@ -103,7 +120,7 @@ class _DriverStoreReturnCategoryScreenState
                     ],
                   );
                 }),
-            SizedBox(height: 20),
+            // SizedBox(height: 20),
           ],
         ),
       ),

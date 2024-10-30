@@ -3,16 +3,17 @@ import 'package:project1/Models/Dummy%20Models/product_categories_dummy_model.da
 import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/constants.dart';
 import 'package:project1/Utils/text_styles.dart';
-import 'package:project1/Views/Screens/Driver%20Screens/Driver%20Category/driver_items_list_screen.dart';
+import 'package:project1/Views/Screens/Salesman%20Screens/Salesman%20Category/salesman_items_list_screen.dart';
+import 'package:project1/Views/Screens/Salesman%20Screens/salesman_profile_screen.dart';
 
-class DriverCategoryScreen extends StatefulWidget {
-  const DriverCategoryScreen({super.key});
+class SalesmanHomepageScreen extends StatefulWidget {
+  const SalesmanHomepageScreen({super.key});
 
   @override
-  State<DriverCategoryScreen> createState() => _DriverCategoryScreenState();
+  State<SalesmanHomepageScreen> createState() => _SalesmanHomepageScreenState();
 }
 
-class _DriverCategoryScreenState extends State<DriverCategoryScreen> {
+class _SalesmanHomepageScreenState extends State<SalesmanHomepageScreen> {
   var _searchController = TextEditingController();
   @override
   Widget build(BuildContext context) {
@@ -33,9 +34,22 @@ class _DriverCategoryScreenState extends State<DriverCategoryScreen> {
                     Row(
                       children: [
                         InkWell(
-                          onTap: () {},
-                          child: CircleAvatar(
-                            backgroundImage: AssetImage(Constants.myImage),
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (contex) =>
+                                        SalesmanProfileScreen()));
+                          },
+                          child: Container(
+                            padding: EdgeInsets.all(7),
+                            decoration: BoxDecoration(
+                              color: AppColors.loginBackground.withOpacity(.3),
+                              shape: BoxShape.circle,
+                            ),
+                            child: CircleAvatar(
+                              backgroundImage: AssetImage(Constants.myImage),
+                            ),
                           ),
                         ),
                         SizedBox(width: 10),
@@ -49,7 +63,7 @@ class _DriverCategoryScreenState extends State<DriverCategoryScreen> {
                                   fontSize: 15),
                             ),
                             Text(
-                              'Driver',
+                              'Salesman',
                               style: AppTextStyles.belowMainHeadingTextStyle(
                                   fontSize: 12),
                             ),
@@ -72,7 +86,7 @@ class _DriverCategoryScreenState extends State<DriverCategoryScreen> {
                   decoration: InputDecoration(
                     hintText: 'Search',
                     filled: true,
-                    fillColor: AppColors.white,
+                    fillColor: AppColors.grey.withOpacity(.2),
                     contentPadding: EdgeInsets.symmetric(horizontal: 30),
                     suffixIcon: Icon(
                       Icons.search,
@@ -99,32 +113,32 @@ class _DriverCategoryScreenState extends State<DriverCategoryScreen> {
                     decoration: BoxDecoration(
                       image: DecorationImage(
                           fit: BoxFit.fill,
-                          image: AssetImage(Constants.driverBack)),
+                          image: AssetImage(Constants.salesmanBannerImage)),
                     ),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        SizedBox(
-                          width: 200,
-                          child: Text(
-                            'Celebrate the season with us',
-                            style: AppTextStyles.simpleHeadingTextStyle(
-                              fontSize: 25,
-                              textColor: AppColors.white,
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          width: 200,
-                          child: Text(
-                            'Get discount up to 50% for every product',
-                            style: AppTextStyles.simpleHeadingTextStyle(
-                              fontSize: 12,
-                              textColor: AppColors.white,
-                            ),
-                          ),
-                        ),
+                        // SizedBox(
+                        //   width: 200,
+                        //   child: Text(
+                        //     'Celebrate the season with us',
+                        //     style: AppTextStyles.simpleHeadingTextStyle(
+                        //       fontSize: 25,
+                        //       textColor: AppColors.white,
+                        //     ),
+                        //   ),
+                        // ),
+                        // SizedBox(
+                        //   width: 200,
+                        //   child: Text(
+                        //     'Get discount up to 50% for every product',
+                        //     style: AppTextStyles.simpleHeadingTextStyle(
+                        //       fontSize: 12,
+                        //       textColor: AppColors.white,
+                        //     ),
+                        //   ),
+                        // ),
                       ],
                     ),
                   ),
@@ -162,7 +176,7 @@ class _DriverCategoryScreenState extends State<DriverCategoryScreen> {
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                DriverItemsListScreen(
+                                                SalesmanItemsListScreen(
                                                   categoryName:
                                                       productCategoriesDummyModelContents[
                                                               index]

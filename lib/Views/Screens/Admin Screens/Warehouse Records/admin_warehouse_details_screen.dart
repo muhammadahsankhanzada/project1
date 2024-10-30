@@ -58,109 +58,95 @@ class _AdminWarehouseDetailsScreenState
       body: SingleChildScrollView(
         child: Column(
           children: [
-            SizedBox(height: 30),
-            Row(
+            SizedBox(height: 15),
+            Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 CircleAvatar(
                   radius: 30,
                   backgroundImage: NetworkImage(widget.warehouseImageUrl),
                 ),
-                SizedBox(width: 10),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      widget.warehouseName,
-                      style: AppTextStyles.nameHeadingTextStyle(),
-                    ),
-                    Text(
-                      widget.warehouseAddress,
-                      style: AppTextStyles.belowMainHeadingTextStyle(),
-                    ),
-                  ],
+                SizedBox(height: 10),
+                Text(
+                  widget.warehouseName,
+                  style: AppTextStyles.simpleHeadingTextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text(
+                  widget.warehouseAddress,
+                  style: AppTextStyles.simpleHeadingTextStyle(
+                    fontSize: 13,
+                  ),
                 )
               ],
             ),
-            SizedBox(height: 30),
+            SizedBox(height: 20),
             Container(
-              height: 100,
+              // height: 100,
+              padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+              margin: EdgeInsets.symmetric(horizontal: 15),
               decoration: BoxDecoration(
-                color: AppColors.lightGreen1.withOpacity(.3),
-              ),
+                  color: AppColors.lightGreen1.withOpacity(.3),
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(10),
+                    // topRight: Radius.circular(10),
+                    bottomLeft: Radius.circular(10),
+                    bottomRight: Radius.circular(30),
+                  )),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
+                  SizedBox(width: 20),
                   Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Row(
-                        children: [
-                          Icon(
-                            Icons.store_outlined,
-                            color: AppColors.green,
-                          ),
-                          SizedBox(width: 10),
-                          Text(
-                            widget.warehouseSpaceAvailable,
-                            style: AppTextStyles.belowMainHeadingTextStyle(),
-                          ),
-                        ],
+                      Text(
+                        'Space',
+                        style: AppTextStyles.belowMainHeadingTextStyle(),
                       ),
-                      SizedBox(height: 10),
-                      Row(
-                        children: [
-                          Icon(
-                            Icons.apartment_outlined,
-                            color: AppColors.green,
-                          ),
-                          SizedBox(width: 10),
-                          Text(
-                            widget.warehouseStorageCapacity,
-                            style: AppTextStyles.belowMainHeadingTextStyle(),
-                          ),
-                        ],
+                      Text(
+                        'Storage Capacity',
+                        style: AppTextStyles.belowMainHeadingTextStyle(),
+                      ),
+                      Text(
+                        'Loading Docks',
+                        style: AppTextStyles.belowMainHeadingTextStyle(),
+                      ),
+                      Text(
+                        'Entries',
+                        style: AppTextStyles.belowMainHeadingTextStyle(),
                       ),
                     ],
                   ),
+                  SizedBox(width: 30),
                   Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Row(
-                        children: [
-                          Icon(
-                            Icons.local_shipping_outlined,
-                            color: AppColors.green,
-                          ),
-                          SizedBox(width: 10),
-                          Text(
-                            widget.warehouseLoadingDocks,
-                            style: AppTextStyles.belowMainHeadingTextStyle(),
-                          ),
-                        ],
+                      Text(
+                        widget.warehouseSpaceAvailable,
+                        style: AppTextStyles.simpleHeadingTextStyle(),
                       ),
-                      SizedBox(height: 10),
-                      Row(
-                        children: [
-                          Icon(
-                            Icons.door_front_door_outlined,
-                            color: AppColors.green,
-                          ),
-                          SizedBox(width: 10),
-                          Text(
-                            widget.warehouseEntries,
-                            style: AppTextStyles.belowMainHeadingTextStyle(),
-                          ),
-                        ],
+                      Text(
+                        widget.warehouseStorageCapacity,
+                        style: AppTextStyles.simpleHeadingTextStyle(),
+                      ),
+                      Text(
+                        widget.warehouseLoadingDocks,
+                        style: AppTextStyles.simpleHeadingTextStyle(),
+                      ),
+                      Text(
+                        widget.warehouseEntries,
+                        style: AppTextStyles.simpleHeadingTextStyle(),
                       ),
                     ],
                   ),
                 ],
               ),
             ),
-            SizedBox(height: 30),
+            SizedBox(height: 10),
             Container(
-              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+              padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
               margin: EdgeInsets.symmetric(horizontal: 15),
               decoration: BoxDecoration(
                 color: AppColors.lightGreen1.withOpacity(.3),
@@ -179,14 +165,14 @@ class _AdminWarehouseDetailsScreenState
                       SizedBox(height: 5),
                     ],
                   ),
-                  SizedBox(width: 10),
+                  SizedBox(width: 20),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       for (var value in warehouseDummyDetails.values)
                         Text(
                           value.toString(),
-                          style: AppTextStyles.belowMainHeadingTextStyle(),
+                          style: AppTextStyles.simpleHeadingTextStyle(),
                         ),
                       SizedBox(height: 5),
                     ],

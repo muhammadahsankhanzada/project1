@@ -15,7 +15,7 @@ class SuperAdminShopManagementScreen extends StatelessWidget {
       backgroundColor: AppColors.lightWhiteBackground,
       appBar: CustomAppbar(title: 'Shop Management'),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 15),
+        padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -30,9 +30,10 @@ class SuperAdminShopManagementScreen extends StatelessWidget {
                           MaterialPageRoute(
                               builder: (context) => SuperAdminAddShopScreen()));
                     },
-                    title: 'Add New Shop',
+                    title: 'Add Shop',
                   ),
                   customContainer(
+                    backgroundColor: AppColors.black,
                     ontap: () {
                       Navigator.push(
                           context,
@@ -40,9 +41,11 @@ class SuperAdminShopManagementScreen extends StatelessWidget {
                               builder: (context) =>
                                   SuperAdminDeleteShopScreen()));
                     },
-                    title: 'Delete a Shop',
+                    title: 'Delete Shop',
                   ),
                   customContainer(
+                    backgroundColor: AppColors.white,
+                    textColor: AppColors.black,
                     ontap: () {
                       Navigator.push(
                           context,
@@ -174,8 +177,9 @@ class SuperAdminShopManagementScreen extends StatelessWidget {
   customContainer({
     required VoidCallback ontap,
     required String title,
-    Color borderColor = AppColors.green,
-    Color backgroundColor = AppColors.green,
+    Color textColor = AppColors.white,
+    // Color borderColor = AppColors.green,
+    Color backgroundColor = AppColors.loginBackground,
   }) {
     return Column(
       children: [
@@ -197,7 +201,7 @@ class SuperAdminShopManagementScreen extends StatelessWidget {
                   style: AppTextStyles.simpleHeadingTextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.bold,
-                    textColor: AppColors.white,
+                    textColor: textColor,
                   ),
                 ),
               ),

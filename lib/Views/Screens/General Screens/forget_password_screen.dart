@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/text_styles.dart';
+import 'package:project1/Views/Widgets/custom_appbar.dart';
 import 'package:project1/Views/Widgets/custom_snackbar.dart';
 import 'package:project1/Views/Widgets/universal_button.dart';
 
@@ -10,18 +11,20 @@ class ForgetPasswordScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-          title: Text(
-            'Reset Password',
-            style: AppTextStyles.nameHeadingTextStyle(),
-          ),
-          centerTitle: true,
-          backgroundColor: AppColors.green),
+      backgroundColor: AppColors.lightWhiteBackground,
+      // appBar: AppBar(
+      //     title: Text(
+      //       'Reset Password',
+      //       style: AppTextStyles.nameHeadingTextStyle(),
+      //     ),
+      //     centerTitle: true,
+      //     backgroundColor: AppColors.green),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            SizedBox(height: 50),
+            CustomAppbar(title: ''),
+            // SizedBox(height: 50),
             Icon(
               Icons.shield,
               size: 100,
@@ -29,13 +32,13 @@ class ForgetPasswordScreen extends StatelessWidget {
             ),
             SizedBox(height: 10),
             Text(
-              'Welcome!',
+              'Password Reset',
               style: AppTextStyles.nameHeadingTextStyle(
-                size: 40,
-                color: AppColors.lightGreen1,
+                size: 20,
+                color: AppColors.loginBackground,
               ),
             ),
-            SizedBox(height: 20),
+            SizedBox(height: 40),
             Expanded(
               child: Container(
                 padding: EdgeInsets.only(right: 30, left: 30, top: 25),
@@ -53,7 +56,7 @@ class ForgetPasswordScreen extends StatelessWidget {
                       Align(
                         alignment: Alignment.centerLeft,
                         child: Text(
-                          'Password Reset',
+                          'Password Change',
                           style: AppTextStyles.simpleHeadingTextStyle(
                               fontSize: 20),
                         ),
@@ -67,7 +70,7 @@ class ForgetPasswordScreen extends StatelessWidget {
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10),
                             ),
-                            hintText: 'Enter Email',
+                            hintText: 'Email / Phone Number',
                             prefixIcon: Icon(Icons.email_outlined)),
                       ),
                       SizedBox(height: 40),
@@ -77,7 +80,7 @@ class ForgetPasswordScreen extends StatelessWidget {
                           UniversalButton(
                               title: 'Confirm',
                               buttonWidth: 150,
-                              buttonColor: AppColors.universalButtonGreen,
+                              buttonColor: AppColors.loginBackground,
                               ontap: () {
                                 customSnackbar(context,
                                     'Password reset request submitted.');

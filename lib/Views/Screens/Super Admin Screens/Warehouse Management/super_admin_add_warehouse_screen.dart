@@ -264,7 +264,7 @@ class _SuperAdminAddWarehouseScreenState
               ),
             ),
             border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(30),
+              borderRadius: BorderRadius.circular(10),
             ),
           ),
         ),
@@ -319,7 +319,7 @@ class _SuperAdminAddWarehouseScreenState
         entriesController.isNotEmpty &&
         spaceAvailableController.isNotEmpty &&
         _imageUrl != null) {
-      Warehouse newWarehouse = Warehouse(
+      WarehouseModel newWarehouse = WarehouseModel(
         id: id,
         name: nameController,
         imageUrl: _imageUrl!,
