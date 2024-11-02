@@ -16,6 +16,11 @@ class SalesmanBottomNavBarScreen extends StatefulWidget {
 
 class _SalesmanBottomNavBarScreenState
     extends State<SalesmanBottomNavBarScreen> {
+  //     @override
+  // void initState() {
+  //   super.initState();
+  //   checkStartTrip();
+  // }
   ///
   final CupertinoTabController _tabController = CupertinoTabController();
   void goToShopsTab() {
@@ -23,6 +28,11 @@ class _SalesmanBottomNavBarScreenState
     // Navigator.push(context,
     //     CupertinoPageRoute(builder: (context) => DriverStoreCartScreen()));
   }
+
+  // Future<bool?> checkStartTrip()async{
+  //     var sp = await SharedPreferences.getInstance();
+  //                        return   sp.getBool('tripStarted');
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -82,8 +92,10 @@ class _SalesmanBottomNavBarScreenState
                   return CupertinoPageScaffold(child: SalesmanEndTripScreen());
                 },
               );
+            default:
+              return Container();
           }
-          return Container();
+          // return Container();
         });
 
     /////////////////////////////

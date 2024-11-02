@@ -3,8 +3,8 @@ import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/text_styles.dart';
 
 customSnackbar(BuildContext context, String message,
-    [Duration duration = const Duration(seconds: 5),
-    Color backgroundColor = AppColors.grey5]) {
+    {Duration duration = const Duration(seconds: 5),
+    Color backgroundColor = AppColors.grey5}) {
   return ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(
       content: Text(

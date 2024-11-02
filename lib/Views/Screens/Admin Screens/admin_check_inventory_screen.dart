@@ -224,29 +224,29 @@ class _AdminCheckInventoryScreenState extends State<AdminCheckInventoryScreen> {
   }
 
   // Method to show Products data
-  showProducts() {
-    List<Product.ProductModel> products = [];
-    FirebaseFirestore firestore = FirebaseFirestore.instance;
-    firestore
-        .collection('Warehouses')
-        .doc('Alpha Warehouse')
-        .collection('Categories')
-        .doc('Fashion')
-        .collection('Products')
-        .get()
-        .then((QuerySnapshot querySnapshot) {
-      products = querySnapshot.docs
-          .map((doc) => Product.ProductModel.fromFirestore(doc))
-          .toList();
-      setState(() {
-        for (int i = 0; i < products.length; i++) {
-          print(products[i].name);
-        }
-      });
-    }).catchError((error) {
-      print('Error getting data: $error');
-    });
-  }
+  // showProducts() {
+  //   List<Product.ProductModel> products = [];
+  //   FirebaseFirestore firestore = FirebaseFirestore.instance;
+  //   firestore
+  //       .collection('Warehouses')
+  //       .doc('Alpha Warehouse')
+  //       .collection('Categories')
+  //       .doc('Fashion')
+  //       .collection('Products')
+  //       .get()
+  //       .then((QuerySnapshot querySnapshot) {
+  //     products = querySnapshot.docs
+  //         .map((doc) => Product.ProductModel.fromFirestore(doc))
+  //         .toList();
+  //     setState(() {
+  //       for (int i = 0; i < products.length; i++) {
+  //         print(products[i].name);
+  //       }
+  //     });
+  //   }).catchError((error) {
+  //     print('Error getting data: $error');
+  //   });
+  // }
 
   Future<List<CategoriesModel>> fetchCategories() async {
     List<CategoriesModel> categories = [];

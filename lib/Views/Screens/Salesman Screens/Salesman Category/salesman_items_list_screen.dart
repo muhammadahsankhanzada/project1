@@ -1,9 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:project1/Models/Dummy%20Models/product_categories_dummy_model.dart';
 import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/constants.dart';
 import 'package:project1/Utils/text_styles.dart';
 import 'package:project1/Views/Widgets/custom_appbar.dart';
+import 'package:project1/Views/Widgets/custom_snackbar.dart';
 import 'package:project1/Views/Widgets/universal_button.dart';
 
 class SalesmanItemsListScreen extends StatefulWidget {
@@ -23,14 +25,23 @@ class SalesmanItemsListScreen extends StatefulWidget {
 
 class _SalesmanItemsListScreenState extends State<SalesmanItemsListScreen> {
   var _searchController = TextEditingController();
-  int quantity = 0;
+  int quantity = 1;
+  String selectedCategoryName = '';
   int selectedCategoryIndex = 0;
+  String searchedText = '';
+
+  void _onChanged(String value) {
+    setState(() {
+      searchedText = value.toLowerCase();
+    });
+  }
 
   // Initial Index of Category
   @override
   void initState() {
     super.initState();
     selectedCategoryIndex = widget.categoryIndex;
+    selectedCategoryName = widget.categoryName;
   }
 
   @override
@@ -60,53 +71,81 @@ class _SalesmanItemsListScreenState extends State<SalesmanItemsListScreen> {
               height: 35,
               // margin: EdgeInsets.symmetric(vertical: 15),
               width: double.infinity,
-              child: ListView.builder(
-                itemCount: productCategoriesDummyModelContents.length,
-                itemBuilder: (context, index) {
-                  return Column(
-                    children: [
-                      Row(
-                        children: [
-                          InkWell(
-                            borderRadius: BorderRadius.circular(30),
-                            onTap: () {
-                              setState(() {
-                                selectedCategoryIndex = index;
-                              });
+              child: StreamBuilder(
+                  stream: fetchCategories(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    } else if (snapshot.hasError) {
+                      return Center(
+                        child: Text('Error: ${snapshot.error}'),
+                      );
+                    } else if (!snapshot.hasData) {
+                      return Center(
+                        child: Text('No Categories Found'),
+                      );
+                    } else if (snapshot.hasData) {
+                      final categories = snapshot.data?.docs ?? [];
 
-                              // categoryBackgroundColor = AppColors.green;
-                            },
-                            child: Material(
-                              elevation: 4,
-                              borderRadius: BorderRadius.circular(30),
-                              child: Container(
-                                // margin: EdgeInsets.only(left: 5, right: 5),
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 12, vertical: 6),
-                                decoration: BoxDecoration(
-                                  color: selectedCategoryIndex == index
-                                      ? AppColors.lightGreen1
-                                      : Colors.white,
-                                  borderRadius: BorderRadius.circular(30),
-                                ),
-                                child: Text(
-                                  productCategoriesDummyModelContents[index]
-                                      .name,
-                                  style: AppTextStyles.nameHeadingTextStyle(
-                                      size: 15),
-                                ),
+                      return ListView.builder(
+                        itemCount: categories.length,
+                        itemBuilder: (context, index) {
+                          return Column(
+                            children: [
+                              Row(
+                                children: [
+                                  InkWell(
+                                    borderRadius: BorderRadius.circular(30),
+                                    onTap: () {
+                                      setState(() {
+                                        selectedCategoryIndex = index;
+                                        selectedCategoryName =
+                                            categories[index]['name'];
+                                        searchedText = '';
+                                        _searchController.text = '';
+                                      });
+
+                                      // categoryBackgroundColor = AppColors.green;
+                                    },
+                                    child: Material(
+                                      elevation: 4,
+                                      borderRadius: BorderRadius.circular(30),
+                                      child: Container(
+                                        // margin: EdgeInsets.only(left: 5, right: 5),
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 12, vertical: 6),
+                                        decoration: BoxDecoration(
+                                          color: selectedCategoryIndex == index
+                                              ? AppColors.lightGreen1
+                                              : Colors.white,
+                                          borderRadius:
+                                              BorderRadius.circular(30),
+                                        ),
+                                        child: Text(
+                                          categories[index]['name'],
+                                          style: AppTextStyles
+                                              .nameHeadingTextStyle(size: 15),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(width: 10),
+                                ],
                               ),
-                            ),
-                          ),
-                          SizedBox(width: 10),
-                        ],
-                      ),
-                      SizedBox(width: 10),
-                    ],
-                  );
-                },
-                scrollDirection: Axis.horizontal,
-              ),
+                              SizedBox(width: 10),
+                            ],
+                          );
+                        },
+                        scrollDirection: Axis.horizontal,
+                      );
+                    } else {
+                      return Center(
+                        child: Text('Loading...'),
+                      );
+                    }
+                  }),
             ),
           ),
           SizedBox(height: 10),
@@ -114,12 +153,7 @@ class _SalesmanItemsListScreenState extends State<SalesmanItemsListScreen> {
             padding: EdgeInsets.symmetric(horizontal: 15),
             child: TextFormField(
               controller: _searchController,
-              // validator: (value) {
-              //   if (value == null || value.isEmpty) {
-              //     return 'Enter driver name here';
-              //   }
-              //   return null;
-              // },
+              onChanged: _onChanged,
               keyboardType: TextInputType.name,
               decoration: InputDecoration(
                 hintText: 'Search',
@@ -148,139 +182,218 @@ class _SalesmanItemsListScreenState extends State<SalesmanItemsListScreen> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        GridView.builder(
-                            shrinkWrap: true,
-                            physics: NeverScrollableScrollPhysics(),
-                            gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisCount: 2,
-                                    mainAxisSpacing: 15,
-                                    crossAxisSpacing: 15),
-                            itemCount: productCategoriesDummyModelContents[
-                                    selectedCategoryIndex]
-                                .products
-                                .length,
-                            itemBuilder: (context, index) {
-                              return Container(
-                                width: 180,
-                                padding: EdgeInsets.only(
-                                    left: 10, right: 5, top: 10, bottom: 10),
-                                decoration: BoxDecoration(
-                                  color: AppColors.white,
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                child: Column(
-                                  children: [
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        ClipRRect(
+                        StreamBuilder(
+                            stream: fetchProducts(),
+                            builder: (context, snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.waiting) {
+                                return Center(
+                                  child: CircularProgressIndicator(),
+                                );
+                              } else if (snapshot.hasError) {
+                                return Center(
+                                  child: Text('Error: ${snapshot.error}'),
+                                );
+                              } else if (!snapshot.hasData) {
+                                return Center(
+                                  child: Text('No Products Found'),
+                                );
+                              } else if (snapshot.hasData) {
+                                final products = snapshot.data?.docs ?? [];
+                                // print(products.length);
+                                // Filter shops based on the searchedText
+                                final filteredProducts =
+                                    products.where((product) {
+                                  final productName =
+                                      (product['name'] ?? '').toLowerCase();
+                                  return productName.contains(searchedText);
+                                }).toList();
+                                return GridView.builder(
+                                    shrinkWrap: true,
+                                    physics: NeverScrollableScrollPhysics(),
+                                    gridDelegate:
+                                        SliverGridDelegateWithFixedCrossAxisCount(
+                                            crossAxisCount: 2,
+                                            mainAxisSpacing: 15,
+                                            crossAxisSpacing: 15),
+                                    itemCount: filteredProducts.length,
+                                    itemBuilder: (context, index) {
+                                      return Container(
+                                        width: 180,
+                                        padding: EdgeInsets.only(
+                                            left: 10,
+                                            right: 5,
+                                            top: 10,
+                                            bottom: 10),
+                                        decoration: BoxDecoration(
+                                          color: AppColors.white,
                                           borderRadius:
                                               BorderRadius.circular(10),
-                                          child: Image.asset(
-                                            fit: BoxFit.fill,
-                                            Constants.backgroundImage,
-                                            width: 80,
-                                            height: 120,
-                                          ),
                                         ),
-                                        SizedBox(width: 10),
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
+                                        child: Column(
                                           children: [
-                                            SizedBox(
-                                              width: 60,
-                                              child: Text(
-                                                'Iphone 15 pro max',
-                                                maxLines: 2,
-                                                overflow: TextOverflow.ellipsis,
-                                                style: AppTextStyles
-                                                    .simpleHeadingTextStyle(
-                                                        fontSize: 10),
-                                              ),
-                                            ),
-                                            Text(
-                                              'New',
-                                              style: AppTextStyles
-                                                  .simpleHeadingTextStyle(
-                                                      fontSize: 10,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                            ),
-                                            Container(
-                                              width: 60,
-                                              margin: EdgeInsets.symmetric(
-                                                  vertical: 5),
-                                              padding: EdgeInsets.symmetric(
-                                                  horizontal: 5),
-                                              decoration: BoxDecoration(
-                                                border: Border.all(),
-                                                borderRadius:
-                                                    BorderRadius.circular(30),
-                                              ),
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceEvenly,
-                                                children: [
-                                                  Icon(
-                                                    Icons.remove_circle,
-                                                    size: 15,
-                                                  ),
-                                                  Text('0'),
-                                                  Icon(
-                                                    Icons.add_circle,
-                                                    size: 15,
-                                                  )
-                                                ],
-                                              ),
-                                            ),
-                                            Text(
-                                              'Rs. 95000/-',
-                                              style: AppTextStyles
-                                                  .simpleHeadingTextStyle(
-                                                      fontSize: 12,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                            ),
-                                            Text(
-                                              'Rate',
-                                              style: AppTextStyles
-                                                  .simpleHeadingTextStyle(
-                                                      textColor: AppColors.red,
-                                                      fontSize: 11,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                            ),
                                             Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              mainAxisSize: MainAxisSize.min,
                                               children: [
-                                                for (int i = 0; i < 4; i++)
-                                                  Icon(
-                                                    Icons.star,
-                                                    size: 13,
+                                                ClipRRect(
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                  child: Image.network(
+                                                    filteredProducts[index]
+                                                        ['imageUrl'],
+                                                    fit: BoxFit.fill,
+                                                    width: 80,
+                                                    height: 120,
+                                                    errorBuilder: (context,
+                                                        error, stackTrace) {
+                                                      return Image.asset(
+                                                        fit: BoxFit.fill,
+                                                        Constants.errorImage,
+                                                        width: 80,
+                                                        height: 120,
+                                                      );
+                                                    },
                                                   ),
+                                                ),
+                                                SizedBox(width: 10),
+                                                Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    SizedBox(
+                                                      width: 60,
+                                                      child: Text(
+                                                        filteredProducts[index]
+                                                            ['name'],
+                                                        maxLines: 2,
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                        style: AppTextStyles
+                                                            .simpleHeadingTextStyle(
+                                                                fontSize: 10),
+                                                      ),
+                                                    ),
+                                                    Text(
+                                                      'New',
+                                                      style: AppTextStyles
+                                                          .simpleHeadingTextStyle(
+                                                              fontSize: 10,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold),
+                                                    ),
+                                                    Container(
+                                                      width: 60,
+                                                      margin:
+                                                          EdgeInsets.symmetric(
+                                                              vertical: 5),
+                                                      padding:
+                                                          EdgeInsets.symmetric(
+                                                              horizontal: 5),
+                                                      decoration: BoxDecoration(
+                                                        border: Border.all(),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(30),
+                                                      ),
+                                                      child: Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceEvenly,
+                                                        children: [
+                                                          InkWell(
+                                                            onTap: () {
+                                                              if (quantity >
+                                                                  1) {
+                                                                quantity--;
+                                                                setState(() {});
+                                                              }
+                                                            },
+                                                            child: Icon(
+                                                              Icons
+                                                                  .remove_circle,
+                                                              size: 15,
+                                                            ),
+                                                          ),
+                                                          Text(quantity
+                                                              .toString()),
+                                                          InkWell(
+                                                            onTap: () {
+                                                              quantity++;
+                                                              setState(() {});
+                                                            },
+                                                            child: Icon(
+                                                              Icons.add_circle,
+                                                              size: 15,
+                                                            ),
+                                                          )
+                                                        ],
+                                                      ),
+                                                    ),
+                                                    Text(
+                                                      'Rs. ${((filteredProducts[index]['price'] as double) * quantity).toStringAsFixed(0)}/-',
+                                                      style: AppTextStyles
+                                                          .simpleHeadingTextStyle(
+                                                              fontSize: 12,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold),
+                                                    ),
+                                                    Text(
+                                                      'Rate',
+                                                      style: AppTextStyles
+                                                          .simpleHeadingTextStyle(
+                                                              textColor:
+                                                                  AppColors.red,
+                                                              fontSize: 11,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold),
+                                                    ),
+                                                    Row(
+                                                      children: [
+                                                        for (int i = 0;
+                                                            i < 4;
+                                                            i++)
+                                                          Icon(
+                                                            Icons.star,
+                                                            size: 13,
+                                                          ),
+                                                      ],
+                                                    )
+                                                  ],
+                                                ),
                                               ],
-                                            )
+                                            ),
+                                            SizedBox(height: 10),
+                                            UniversalButton(
+                                                title: 'Add to Cart',
+                                                buttonWidth: 120,
+                                                buttonHeight: 35,
+                                                buttonColor:
+                                                    AppColors.cartButton,
+                                                textSize: 12,
+                                                ontap: () {
+                                                  customSnackbar(
+                                                    context,
+                                                    duration:
+                                                        Duration(seconds: 1),
+                                                    'Item added to cart',
+                                                  );
+                                                }),
                                           ],
                                         ),
-                                      ],
-                                    ),
-                                    SizedBox(height: 10),
-                                    UniversalButton(
-                                        title: 'Add to Cart',
-                                        buttonWidth: 120,
-                                        buttonHeight: 35,
-                                        buttonColor: AppColors.cartButton,
-                                        textSize: 12,
-                                        ontap: () {}),
-                                  ],
-                                ),
-                              );
+                                      );
+                                    });
+                              } else {
+                                return Center(
+                                  child: Text('Loading...'),
+                                );
+                              }
                             }),
                         SizedBox(height: 30),
                       ],
@@ -304,5 +417,29 @@ class _SalesmanItemsListScreenState extends State<SalesmanItemsListScreen> {
         ],
       ),
     );
+  }
+
+  // Method to fetch categories
+  Stream<QuerySnapshot> fetchCategories() {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    final data = firestore
+        .collection('Warehouses')
+        .doc('Alpha Warehouse')
+        .collection('Categories')
+        .snapshots();
+    return data;
+  }
+
+  // Method to fetch products
+  Stream<QuerySnapshot> fetchProducts() {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    final data = firestore
+        .collection('Warehouses')
+        .doc('Alpha Warehouse')
+        .collection('Categories')
+        .doc(selectedCategoryName)
+        .collection('Products')
+        .snapshots();
+    return data;
   }
 }

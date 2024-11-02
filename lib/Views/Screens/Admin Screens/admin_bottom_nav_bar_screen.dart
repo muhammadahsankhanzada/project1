@@ -50,8 +50,11 @@ class AdminBottomNavBarScreen extends StatelessWidget {
                   return CupertinoPageScaffold(child: AdminDeliveredScreen());
                 },
               );
+
+            default:
+              return Container();
           }
-          return Container();
+          // return Container();
         });
   }
 }

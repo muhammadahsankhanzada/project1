@@ -11,6 +11,7 @@ class Constants {
   static const String driverRecords = 'assets/images/records.jpg';
   static const String salesmanBannerImage = 'assets/images/driverBack.png';
   static const String managerBack = 'assets/images/managerBack.png';
+  static const String errorImage = 'assets/images/errorImage.png';
 
   // Names
   static const String mainWarehouse = 'Alpha Warehouse';

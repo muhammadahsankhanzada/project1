@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/constants.dart';
@@ -8,65 +9,47 @@ import 'package:project1/Views/Screens/Super%20Admin%20Screens/Shop%20Management
 import 'package:project1/Views/Screens/Super%20Admin%20Screens/User%20Management/super_admin_user_management_screen.dart';
 import 'package:project1/Views/Screens/Super%20Admin%20Screens/Warehouse%20Management/super_admin_warehouse_management_screen.dart';
 
-class SuperAdminHomepage extends StatelessWidget {
+class SuperAdminHomepage extends StatefulWidget {
   const SuperAdminHomepage({super.key});
 
   @override
+  State<SuperAdminHomepage> createState() => _SuperAdminHomepageState();
+}
+
+class _SuperAdminHomepageState extends State<SuperAdminHomepage> {
+  String? selectedReportsValue = 'Monthly';
+  final List<String> reportValuesList = ['Weekly', 'Monthly', 'Yearly'];
+
+  final List<Map<String, dynamic>> options = [
+    {
+      'title': 'User Management',
+      'icon': Icons.people,
+      'screen': SuperAdminUserManagementScreen(),
+    },
+    {
+      'title': 'Product Management',
+      'icon': Icons.inventory,
+      'screen': SuperAdminProductManagementScreen(),
+    },
+    {
+      'title': 'Shop Management',
+      'icon': Icons.shop,
+      'screen': SuperAdminShopManagementScreen(),
+    },
+    {
+      'title': 'Warehouse Management',
+      'icon': Icons.store,
+      'screen': SuperAdminWarehouseManagementScreen(),
+    },
+    {
+      'title': 'Inventory',
+      'icon': Icons.store,
+      'screen': AdminCheckInventoryScreen(),
+    },
+  ];
+
+  @override
   Widget build(BuildContext context) {
-    final List<Map<String, dynamic>> reportsInfoContainerData = [
-      {
-        'title': 'Total Sales',
-        'value': 234500,
-        'percentage': 2.5,
-      },
-      {
-        'title': 'Total Orders',
-        'value': 5300,
-        'percentage': 1.5,
-      },
-      {
-        'title': 'Available Stock',
-        'value': 4000,
-        'percentage': 0.5,
-      },
-      {
-        'title': 'Pending Orders',
-        'value': 2000,
-        'percentage': 3.5,
-      },
-    ];
-    final List<Map<String, dynamic>> options = [
-      {
-        'title': 'User Management',
-        'icon': Icons.people,
-        'screen': SuperAdminUserManagementScreen(),
-      },
-      {
-        'title': 'Product Management',
-        'icon': Icons.inventory,
-        'screen': SuperAdminProductManagementScreen(),
-      },
-      {
-        'title': 'Shop Management',
-        'icon': Icons.shop,
-        'screen': SuperAdminShopManagementScreen(),
-      },
-      // {
-      //   'title': 'Reports and Analytics',
-      //   'icon': Icons.assessment,
-      //   'screen': SuperAdminReportsAndAnalyticsScreen(),
-      // },
-      {
-        'title': 'Warehouse Management',
-        'icon': Icons.store,
-        'screen': SuperAdminWarehouseManagementScreen(),
-      },
-      {
-        'title': 'Inventory',
-        'icon': Icons.store,
-        'screen': AdminCheckInventoryScreen(),
-      },
-    ];
     return Scaffold(
       backgroundColor: AppColors.lightWhiteBackground,
       appBar: AppBar(
@@ -178,41 +161,91 @@ class SuperAdminHomepage extends StatelessWidget {
                               fontWeight: FontWeight.w500,
                             ),
                           ),
-                          Container(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 8, vertical: 3),
-                              decoration: BoxDecoration(
-                                color: AppColors.white,
-                                borderRadius: BorderRadius.circular(10),
-                                border: Border.all(),
-                              ),
-                              child: Row(
-                                children: [
-                                  Text('Monthly'),
-                                  Icon(Icons.arrow_drop_down)
-                                ],
-                              )),
+                          // Reports DropDown
+                          reportsDropDownButton(
+                            currentSelectedValue: selectedReportsValue,
+                            dropDownValuesList: reportValuesList,
+                            onChanged: (String? newSelectedValue) {
+                              selectedReportsValue = newSelectedValue;
+                              setState(() {});
+                              print(selectedReportsValue);
+                            },
+                          ),
                         ],
                       ),
                     ),
                     SizedBox(height: 10),
-                    GridView.builder(
-                        shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          mainAxisSpacing: 8,
-                          crossAxisSpacing: 10,
-                          childAspectRatio: 2.2,
-                        ),
-                        itemCount: reportsInfoContainerData.length,
-                        itemBuilder: (context, index) {
-                          final data = reportsInfoContainerData[index];
-                          return reportsInfoContainer(
-                            data['title'],
-                            data['value'],
-                            '+${data['percentage']}%',
-                          );
+                    StreamBuilder(
+                        stream: fetchDashboardReports(),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          } else if (snapshot.hasError) {
+                            return Center(
+                              child: Text('Error: ${snapshot.error}'),
+                            );
+                          } else if (!snapshot.hasData ||
+                              snapshot.data!.data() == null) {
+                            return Center(
+                              child: Text('No Reports Found'),
+                            );
+                          } else if (snapshot.data!.data()!.isEmpty) {
+                            return Center(
+                              child: Text('No Data'),
+                            );
+                          } else if (snapshot.hasData) {
+                            var data = snapshot.data!.data();
+                            print(data!);
+                            return GridView.builder(
+                                shrinkWrap: true,
+                                physics: NeverScrollableScrollPhysics(),
+                                gridDelegate:
+                                    SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 2,
+                                  mainAxisSpacing: 8,
+                                  crossAxisSpacing: 10,
+                                  childAspectRatio: 2.2,
+                                ),
+                                itemCount: (data.length ~/ 2).toInt(),
+                                itemBuilder: (context, index) {
+                                  final List<Map<String, dynamic>>
+                                      reportsInfoContainerData = [
+                                    {
+                                      'title': 'Total Sales',
+                                      'value': data['sales'],
+                                      'percentage': data['salesPercentage'],
+                                    },
+                                    {
+                                      'title': 'Total Orders',
+                                      'value': data['orders'],
+                                      'percentage': data['ordersPercentage'],
+                                    },
+                                    {
+                                      'title': 'Available Stock',
+                                      'value': data['stock'],
+                                      'percentage': data['stockPercentage'],
+                                    },
+                                    {
+                                      'title': 'Pending Orders',
+                                      'value': data['pendingOrders'],
+                                      'percentage':
+                                          data['pendingOrdersPercentage'],
+                                    },
+                                  ];
+                                  return reportsInfoContainer(
+                                    reportsInfoContainerData[index]['title'],
+                                    reportsInfoContainerData[index]['value'],
+                                    '+${reportsInfoContainerData[index]['percentage']}%',
+                                  );
+                                });
+                          } else {
+                            return Center(
+                              child: Text('Loading...'),
+                            );
+                          }
                         }),
                     SizedBox(height: 10),
                     ...options.map((option) {
@@ -322,6 +355,57 @@ class SuperAdminHomepage extends StatelessWidget {
             ],
           ),
         ],
+      ),
+    );
+  }
+
+  // Method to fetch dashboard reports
+  Stream<DocumentSnapshot<Map<String, dynamic>>> fetchDashboardReports() {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    final data = firestore
+        .collection('Users')
+        .doc('Management')
+        .collection('Super Admins')
+        .doc('Zeeshan')
+        .collection('Dashboard Reports')
+        .doc(selectedReportsValue)
+        .snapshots();
+    return data;
+  }
+
+  reportsDropDownButton({
+    required String? currentSelectedValue,
+    required List<String> dropDownValuesList,
+    required ValueChanged<String?> onChanged,
+  }) {
+    return Container(
+      height: 35,
+      width: 110,
+      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+      decoration: BoxDecoration(
+        color: AppColors.white,
+        border: Border.all(color: AppColors.grey),
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: DropdownButtonHideUnderline(
+        child: DropdownButton<String>(
+          value: currentSelectedValue,
+          onChanged: onChanged,
+          items:
+              dropDownValuesList.map<DropdownMenuItem<String>>((String value) {
+            return DropdownMenuItem<String>(
+                value: value,
+                child: Row(
+                  children: [
+                    SizedBox(width: 10),
+                    Text(
+                      value,
+                      style: AppTextStyles.simpleHeadingTextStyle(fontSize: 15),
+                    ),
+                  ],
+                ));
+          }).toList(),
+        ),
       ),
     );
   }

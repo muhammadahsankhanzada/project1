@@ -1,6 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:project1/Models/Dummy%20Models/manager_list_dummy_model.dart';
 import 'package:project1/Utils/colors.dart';
+import 'package:project1/Utils/constants.dart';
 import 'package:project1/Utils/text_styles.dart';
 import 'package:project1/Views/Screens/Admin%20Screens/Manager%20Records/admin_manager_records_details_screen.dart';
 import 'package:project1/Views/Widgets/custom_appbar.dart';
@@ -15,22 +17,29 @@ class AdminManagersListScreen extends StatefulWidget {
 
 class _AdminManagersListScreenState extends State<AdminManagersListScreen> {
   var _searchController = TextEditingController();
-  List<ManagerListDummyModel> filteredManagersList = managersListContents;
-  List<ManagerListDummyModel> allManagersList = managersListContents;
-  void _filterManagers(String query) {
-    if (query.isEmpty) {
-      setState(() {
-        filteredManagersList = allManagersList;
-      });
-    } else {
-      setState(() {
-        filteredManagersList = allManagersList
-            .where((manager) =>
-                manager.name.toLowerCase().contains(query.toLowerCase()))
-            .toList();
-      });
-    }
+  String searchedText = '';
+
+  void _onChanged(String value) {
+    setState(() {
+      searchedText = value.toLowerCase();
+    });
   }
+  // List<ManagerListDummyModel> filteredManagersList = managersListContents;
+  // List<ManagerListDummyModel> allManagersList = managersListContents;
+  // void _filterManagers(String query) {
+  //   if (query.isEmpty) {
+  //     setState(() {
+  //       filteredManagersList = allManagersList;
+  //     });
+  //   } else {
+  //     setState(() {
+  //       filteredManagersList = allManagersList
+  //           .where((manager) =>
+  //               manager.name.toLowerCase().contains(query.toLowerCase()))
+  //           .toList();
+  //     });
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -44,13 +53,7 @@ class _AdminManagersListScreenState extends State<AdminManagersListScreen> {
             SizedBox(height: 20),
             TextFormField(
               controller: _searchController,
-              onChanged: _filterManagers,
-              // validator: (value) {
-              //   if (value == null || value.isEmpty) {
-              //     return 'Enter driver name here';
-              //   }
-              //   return null;
-              // },
+              onChanged: _onChanged,
               keyboardType: TextInputType.name,
               decoration: InputDecoration(
                 hintText: 'Search manager name...',
@@ -71,97 +74,151 @@ class _AdminManagersListScreenState extends State<AdminManagersListScreen> {
             ),
             SizedBox(height: 20),
             Expanded(
-                child: ListView.builder(
-                    itemCount: filteredManagersList.length,
-                    itemBuilder: (context, index) {
-                      return Column(
-                        children: [
-                          InkWell(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          AdminManagerRecordsDetailsScreen(
-                                            managerName:
-                                                filteredManagersList[index]
-                                                    .name,
-                                          )));
-                            },
-                            borderRadius: BorderRadius.circular(40),
-                            child: Container(
-                              width: double.infinity,
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 30, vertical: 15),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(40),
-                                color: AppColors.white,
-                              ),
-                              child: Row(
+                child: StreamBuilder(
+                    stream: fetchManagersList(),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      } else if (snapshot.hasError) {
+                        return Center(
+                          child: Text('Error: ${snapshot.error}'),
+                        );
+                      } else if (!snapshot.hasData) {
+                        return Center(
+                          child: Text('No Records Found'),
+                        );
+                      } else if (snapshot.hasData) {
+                        var managers = snapshot.data?.docs ?? [];
+                        final filteredManagers = managers.where((manager) {
+                          final managerName =
+                              (manager['name'] ?? '').toLowerCase();
+                          return managerName.contains(searchedText);
+                        }).toList();
+                        return ListView.builder(
+                            itemCount: filteredManagers.length,
+                            itemBuilder: (context, index) {
+                              return Column(
                                 children: [
-                                  CircleAvatar(
-                                    backgroundImage:
-                                        AssetImage('assets/images/p3.jpeg'),
-                                  ),
-                                  SizedBox(width: 15),
-                                  Expanded(
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            SizedBox(
-                                              width: 150,
-                                              child: Text(
-                                                overflow: TextOverflow.ellipsis,
-                                                filteredManagersList[index]
-                                                    .name,
-                                                style: AppTextStyles
-                                                    .nameHeadingTextStyle(
-                                                        size: 15),
+                                  InkWell(
+                                    onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  AdminManagerRecordsDetailsScreen(
+                                                    managerName:
+                                                        filteredManagers[index]
+                                                            ['name'],
+                                                  )));
+                                    },
+                                    borderRadius: BorderRadius.circular(40),
+                                    child: Container(
+                                      width: double.infinity,
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 30, vertical: 15),
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(40),
+                                        color: AppColors.white,
+                                      ),
+                                      child: Row(
+                                        children: [
+                                          CircleAvatar(
+                                            // backgroundImage: AssetImage(
+                                            //     'assets/images/p3.jpeg'),
+                                            child: ClipOval(
+                                              child: Image.network(
+                                                filteredManagers[index]
+                                                    ['imageUrl'],
+                                                errorBuilder: (context, error,
+                                                    stackTrace) {
+                                                  return Image.asset(
+                                                      Constants.errorImage);
+                                                },
                                               ),
                                             ),
-                                            Row(
+                                          ),
+                                          SizedBox(width: 15),
+                                          Expanded(
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
                                               children: [
-                                                Text(
-                                                  'Address: ',
-                                                  style: TextStyle(
-                                                    fontWeight: FontWeight.w500,
-                                                  ),
+                                                Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    SizedBox(
+                                                      width: 150,
+                                                      child: Text(
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                        filteredManagers[index]
+                                                            ['name'],
+                                                        style: AppTextStyles
+                                                            .nameHeadingTextStyle(
+                                                                size: 15),
+                                                      ),
+                                                    ),
+                                                    Row(
+                                                      children: [
+                                                        Text(
+                                                          'Address: ',
+                                                          style: TextStyle(
+                                                            fontWeight:
+                                                                FontWeight.w500,
+                                                          ),
+                                                        ),
+                                                        SizedBox(
+                                                          width: 150,
+                                                          child: Text(
+                                                              overflow:
+                                                                  TextOverflow
+                                                                      .ellipsis,
+                                                              filteredManagers[
+                                                                      index]
+                                                                  ['address']),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ],
                                                 ),
-                                                SizedBox(
-                                                  width: 150,
-                                                  child: Text(
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
-                                                      filteredManagersList[
-                                                              index]
-                                                          .address),
+                                                Icon(
+                                                  Icons.assessment,
                                                 ),
                                               ],
                                             ),
-                                          ],
-                                        ),
-                                        // Icon(
-                                        //   Icons.assessment,
-                                        // )
-                                      ],
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ),
+                                  SizedBox(height: 10),
                                 ],
-                              ),
-                            ),
-                          ),
-                          SizedBox(height: 10),
-                        ],
-                      );
+                              );
+                            });
+                      } else {
+                        return Center(
+                          child: Text('Loading...'),
+                        );
+                      }
                     })),
           ],
         ),
       ),
     );
+  }
+
+  // Method to fetch salesmen list
+  Stream<QuerySnapshot> fetchManagersList() {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    final data = firestore
+        .collection('Users')
+        .doc('Staff')
+        .collection('Managers')
+        .snapshots();
+    return data;
   }
 }

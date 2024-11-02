@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:project1/Models/Dummy%20Models/manager_homepage_items.dart';
 import 'package:project1/Utils/colors.dart';
@@ -67,32 +68,70 @@ class ManagerHomepage extends StatelessWidget {
           body: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Row(
-                children: [
-                  SizedBox(width: 20),
-                  CircleAvatar(
-                    radius: 20,
-                    backgroundImage: AssetImage(
-                      Constants.myImage,
-                    ),
-                  ),
-                  SizedBox(width: 10),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Robert Williamson',
-                        style: AppTextStyles.nameHeadingTextStyle(size: 13),
-                      ),
-                      Text(
-                        'Warehouse Manager',
-                        style:
-                            AppTextStyles.simpleHeadingTextStyle(fontSize: 13),
-                      ),
-                    ],
-                  )
-                ],
-              ),
+              StreamBuilder(
+                  stream: fetchManagerDetails(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    } else if (snapshot.hasError) {
+                      return Center(
+                        child: Text('Error: ${snapshot.error}'),
+                      );
+                    } else if (!snapshot.hasData) {
+                      return Center(
+                        child: Text('Record not Found'),
+                      );
+                    } else if (snapshot.hasData) {
+                      final manager =
+                          snapshot.data?.data() as Map<String, dynamic>?;
+                      return Row(
+                        children: [
+                          SizedBox(width: 20),
+                          CircleAvatar(
+                            radius: 20,
+                            child: ClipOval(
+                              child: Image.network(
+                                fit: BoxFit.cover,
+                                width: 40,
+                                height: 40,
+                                manager!['imageUrl'],
+                                errorBuilder: (context, error, stackTrace) {
+                                  return Image.asset(
+                                    Constants.errorImage,
+                                    fit: BoxFit.cover,
+                                    width: 40,
+                                    height: 40,
+                                  );
+                                },
+                              ),
+                            ),
+                          ),
+                          SizedBox(width: 10),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                manager['name'],
+                                style: AppTextStyles.nameHeadingTextStyle(
+                                    size: 13),
+                              ),
+                              Text(
+                                'Warehouse Manager',
+                                style: AppTextStyles.simpleHeadingTextStyle(
+                                    fontSize: 13),
+                              ),
+                            ],
+                          )
+                        ],
+                      );
+                    } else {
+                      return Center(
+                        child: Text('Loading...'),
+                      );
+                    }
+                  }),
               SizedBox(height: 10),
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 15),
@@ -201,6 +240,18 @@ class ManagerHomepage extends StatelessWidget {
             ],
           ),
         ));
+  }
+
+  // Method to get manager details
+  Stream<DocumentSnapshot> fetchManagerDetails() {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    final data = firestore
+        .collection('Users')
+        .doc('Staff')
+        .collection('Managers')
+        .doc('Ahsan')
+        .snapshots();
+    return data;
   }
 }
 

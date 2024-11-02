@@ -1,8 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:project1/Models/Dummy%20Models/admins_list_dummy_model.dart';
 import 'package:project1/Models/Dummy%20Models/driver_list_dummy_model.dart';
 import 'package:project1/Models/Dummy%20Models/manager_list_dummy_model.dart';
 import 'package:project1/Utils/colors.dart';
+import 'package:project1/Utils/constants.dart';
 import 'package:project1/Utils/text_styles.dart';
 import 'package:project1/Views/Screens/Admin%20Screens/Accounts%20Management/admin_create_new_account_screen.dart';
 import 'package:project1/Views/Screens/Admin%20Screens/Accounts%20Management/admin_delete_account_screen.dart';
@@ -184,121 +186,143 @@ class _SuperAdminUserManagementScreenState
             ),
             SizedBox(height: 10),
             Expanded(
-                child: ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: isUserDriver
-                        ? driversListContents.length
-                        : isUserManager
-                            ? managersListContents.length
-                            : adminsListContents.length,
-                    itemBuilder: (context, index) {
-                      String name;
-                      String address;
-                      if (isUserDriver) {
-                        name = driversListContents[index].name;
-                        address = driversListContents[index].address;
-                      } else if (isUserManager) {
-                        name = managersListContents[index].name;
-                        address = managersListContents[index].address;
-                      } else {
-                        name = adminsListContents[index].name;
-                        address = adminsListContents[index].address;
-                      }
-                      return Column(
-                        children: [
-                          InkWell(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => isUserDriver
-                                          ? ManagerDriverRecordsDetailsScreen(
-                                              driverName: name,
-                                              driverRoute: address,
-                                            )
-                                          : isUserManager
-                                              ? AdminManagerRecordsDetailsScreen(
-                                                  managerName: name)
-                                              : SuperAdminAdminRecordsScreen(
-                                                  adminName: name,
-                                                )));
-                            },
-                            borderRadius: BorderRadius.circular(40),
-                            child: Material(
-                              elevation: 4,
-                              borderRadius: BorderRadius.circular(40),
-                              child: Container(
-                                width: double.infinity,
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 30, vertical: 15),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(40),
-                                  color: AppColors.white,
-                                ),
-                                child: Row(
-                                  children: [
-                                    CircleAvatar(
-                                      backgroundImage: AssetImage(isUserDriver
-                                          ? 'assets/images/p1.jpeg'
-                                          : isUserAdmin
-                                              ? 'assets/images/p2.jpeg'
-                                              : 'assets/images/p3.jpeg'),
-                                    ),
-                                    SizedBox(width: 15),
-                                    Expanded(
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              SizedBox(
-                                                width: 200,
-                                                child: Text(
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  name,
-                                                  style: AppTextStyles
-                                                      .nameHeadingTextStyle(
-                                                          size: 15),
+                child: StreamBuilder(
+                    stream: fetchUserRecords(),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      } else if (snapshot.hasError) {
+                        return Center(
+                          child: Text('Error: ${snapshot.error}'),
+                        );
+                      } else if (!snapshot.hasData) {
+                        return Center(
+                          child: Text('No Records Found'),
+                        );
+                      } else if (snapshot.hasData) {
+                        var data = snapshot.data?.docs ?? [];
+                        return ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: data.length,
+                            itemBuilder: (context, index) {
+                              return Column(
+                                children: [
+                                  InkWell(
+                                    onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) => isUserDriver
+                                                  ? ManagerDriverRecordsDetailsScreen(
+                                                      salesmanName: data[index]
+                                                          ['name'],
+                                                      salesmanRoute: data[index]
+                                                          ['address'],
+                                                    )
+                                                  : isUserManager
+                                                      ? AdminManagerRecordsDetailsScreen(
+                                                          managerName:
+                                                              data[index]
+                                                                  ['name'])
+                                                      : SuperAdminAdminRecordsScreen(
+                                                          adminName: data[index]
+                                                              ['name'],
+                                                        )));
+                                    },
+                                    borderRadius: BorderRadius.circular(40),
+                                    child: Material(
+                                      elevation: 4,
+                                      borderRadius: BorderRadius.circular(40),
+                                      child: Container(
+                                        width: double.infinity,
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 30, vertical: 15),
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(40),
+                                          color: AppColors.white,
+                                        ),
+                                        child: Row(
+                                          children: [
+                                            CircleAvatar(
+                                              child: ClipOval(
+                                                child: Image.network(
+                                                  data[index]['imageUrl'],
+                                                  errorBuilder: (context, error,
+                                                      stackTrace) {
+                                                    return Image.asset(
+                                                      Constants.errorImage,
+                                                    );
+                                                  },
                                                 ),
                                               ),
-                                              Row(
+                                            ),
+                                            SizedBox(width: 15),
+                                            Expanded(
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
                                                 children: [
-                                                  Text(
-                                                    'Address: ',
-                                                    style: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                    ),
+                                                  Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      SizedBox(
+                                                        width: 200,
+                                                        child: Text(
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                          data[index]['name'],
+                                                          style: AppTextStyles
+                                                              .nameHeadingTextStyle(
+                                                                  size: 15),
+                                                        ),
+                                                      ),
+                                                      Row(
+                                                        children: [
+                                                          Text(
+                                                            'Address: ',
+                                                            style: TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500,
+                                                            ),
+                                                          ),
+                                                          SizedBox(
+                                                            width: 150,
+                                                            child: Text(
+                                                                overflow:
+                                                                    TextOverflow
+                                                                        .ellipsis,
+                                                                data[index][
+                                                                    'address']),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ],
                                                   ),
-                                                  SizedBox(
-                                                    width: 150,
-                                                    child: Text(
-                                                        overflow: TextOverflow
-                                                            .ellipsis,
-                                                        address),
-                                                  ),
+                                                  Icon(
+                                                    Icons.assessment,
+                                                  )
                                                 ],
                                               ),
-                                            ],
-                                          ),
-                                          Icon(
-                                            Icons.assessment,
-                                          )
-                                        ],
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                     ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                          SizedBox(height: 10),
-                        ],
-                      );
+                                  ),
+                                  SizedBox(height: 10),
+                                ],
+                              );
+                            });
+                      } else {
+                        return Text('Loading...');
+                      }
                     })),
           ],
         ),
@@ -346,165 +370,18 @@ class _SuperAdminUserManagementScreenState
     );
   }
 
-// Future<List<String>> fetchCollectionsFromDocument(String warehouseId) async {
-//   List<String> collectionNames = [];
-//   FirebaseFirestore firestore = FirebaseFirestore.instance;
-
-//   try {
-//     // Fetch collections from the specified document
-//     DocumentReference warehouseRef = firestore.collection('Users').doc('Salesmen');
-//     List<CollectionReference> collections = await warehouseRef.getCollections();
-
-//     // Extract collection names
-//     for (var collection in collections) {
-//       collectionNames.add(collection.id);
-//     }
-//   } catch (error) {
-//     print('Error fetching collections: $error');
-//   }
-
-//   return collectionNames;
-// }
-
   // Method to fetch salsesmen records
-  fetchSalesmenRecords() {
-    // FirebaseFirestore firestore = FirebaseFirestore.instance;
-    // final data = firestore.collection('Users').doc('Salesmen').get();
-
-    // return StreamBuilder<QuerySnapshot>(
-    //   stream: firestore.snapshots(),
-    //   builder: (context, snapshot) {
-    //     if (snapshot.connectionState == ConnectionState.waiting) {
-    //       return Center(child: CircularProgressIndicator());
-    //     }
-
-    //     if (snapshot.hasError) {
-    //       return Center(child: Text('Error: ${snapshot.error}'));
-    //     }
-
-    //     if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-    //       return Center(child: Text('No warehouses found.'));
-    //     }
-
-    //     final warehouses = snapshot.data!.docs;
-
-    //     // Filter warehouses based on the searchedText
-    //     final filteredWarehouses = warehouses.where((warehouse) {
-    //       final warehouseName = (warehouse['name'] ?? '').toLowerCase();
-    //       return warehouseName.contains(searchedText);
-    //     }).toList();
-
-    //     return Expanded(
-    //       child: filteredWarehouses.isEmpty
-    //           ? Center(
-    //               child: Text(
-    //               'No Warehouses found',
-    //               style: AppTextStyles.simpleHeadingTextStyle(
-    //                 fontWeight: FontWeight.bold,
-    //               ),
-    //             ))
-    //           : ListView.builder(
-    //               shrinkWrap: true,
-    //               itemCount: filteredWarehouses.length,
-    //               itemBuilder: (context, index) {
-    //                 final warehouse = filteredWarehouses[index];
-    //                 final warehouseImage = warehouse['imageUrl'];
-    //                 final warehouseName = warehouse['name'] ?? 'N/A';
-    //                 final warehouseAddress = warehouse['address'] ?? 'N/A';
-    //                 final warehouseContact = warehouse['contact'] ?? 'N/A';
-    //                 final warehouseEmail = warehouse['email'] ?? 'N/A';
-
-    //                 return Column(
-    //                   children: [
-    //                     InkWell(
-    //                       onTap: () {
-    //                         Navigator.push(
-    //                             context,
-    //                             MaterialPageRoute(
-    //                                 builder: (context) =>
-    //                                     AdminWarehouseDetailsScreen(
-    //                                       warehouseName: warehouseName,
-    //                                       warehouseImageUrl: warehouseImage,
-    //                                       warehouseAddress: warehouseAddress,
-    //                                       warehouseContact: warehouseContact,
-    //                                       warehouseEmail: warehouseEmail,
-    //                                       warehouseSpaceAvailable: '',
-    //                                       warehouseLoadingDocks: '',
-    //                                       warehouseStorageCapacity: '',
-    //                                       warehouseEntries: '',
-    //                                       warehouseManagerName: '',
-    //                                     )));
-    //                       },
-    //                       borderRadius: BorderRadius.circular(40),
-    //                       child: Container(
-    //                         width: double.infinity,
-    //                         padding: EdgeInsets.symmetric(
-    //                             horizontal: 30, vertical: 15),
-    //                         decoration: BoxDecoration(
-    //                           borderRadius: BorderRadius.circular(40),
-    //                           color: AppColors.white,
-    //                         ),
-    //                         child: Row(
-    //                           children: [
-    //                             CircleAvatar(
-    //                               backgroundImage: NetworkImage(warehouseImage),
-    //                             ),
-    //                             SizedBox(width: 15),
-    //                             Expanded(
-    //                               child: Row(
-    //                                 mainAxisAlignment:
-    //                                     MainAxisAlignment.spaceBetween,
-    //                                 children: [
-    //                                   Column(
-    //                                     crossAxisAlignment:
-    //                                         CrossAxisAlignment.start,
-    //                                     children: [
-    //                                       SizedBox(
-    //                                         width: 200,
-    //                                         child: Text(
-    //                                           overflow: TextOverflow.ellipsis,
-    //                                           warehouseName,
-    //                                           style: AppTextStyles
-    //                                               .nameHeadingTextStyle(
-    //                                                   size: 15),
-    //                                         ),
-    //                                       ),
-    //                                       Row(
-    //                                         children: [
-    //                                           Text(
-    //                                             'Location: ',
-    //                                             style: TextStyle(
-    //                                               fontWeight: FontWeight.w500,
-    //                                             ),
-    //                                           ),
-    //                                           SizedBox(
-    //                                             width: 150,
-    //                                             child: Text(
-    //                                                 overflow:
-    //                                                     TextOverflow.ellipsis,
-    //                                                 warehouseAddress),
-    //                                           ),
-    //                                         ],
-    //                                       ),
-    //                                     ],
-    //                                   ),
-    //                                   Icon(
-    //                                     Icons.assessment,
-    //                                   )
-    //                                 ],
-    //                               ),
-    //                             ),
-    //                           ],
-    //                         ),
-    //                       ),
-    //                     ),
-    //                     SizedBox(height: 10),
-    //                   ],
-    //                 );
-    //               },
-    //             ),
-    //     );
-    //   },
-    // );
+  Stream<QuerySnapshot<Map<String, dynamic>>> fetchUserRecords() {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    final data = firestore
+        .collection('Users')
+        .doc(isUserAdmin ? 'Management' : 'Staff')
+        .collection(isUserDriver
+            ? 'Salesmen'
+            : isUserManager
+                ? 'Managers'
+                : 'Admins')
+        .snapshots();
+    return data;
   }
 }

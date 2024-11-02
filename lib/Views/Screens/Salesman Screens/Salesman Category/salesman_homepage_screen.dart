@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:project1/Models/Dummy%20Models/product_categories_dummy_model.dart';
 import 'package:project1/Utils/colors.dart';
@@ -31,46 +32,93 @@ class _SalesmanHomepageScreenState extends State<SalesmanHomepageScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Row(
-                      children: [
-                        InkWell(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (contex) =>
-                                        SalesmanProfileScreen()));
-                          },
-                          child: Container(
-                            padding: EdgeInsets.all(7),
-                            decoration: BoxDecoration(
-                              color: AppColors.loginBackground.withOpacity(.3),
-                              shape: BoxShape.circle,
-                            ),
-                            child: CircleAvatar(
-                              backgroundImage: AssetImage(Constants.myImage),
-                            ),
-                          ),
-                        ),
-                        SizedBox(width: 10),
-                        Column(
-                          mainAxisSize: MainAxisSize.min,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'John Wick',
-                              style: AppTextStyles.belowMainHeadingTextStyle(
-                                  fontSize: 15),
-                            ),
-                            Text(
-                              'Salesman',
-                              style: AppTextStyles.belowMainHeadingTextStyle(
-                                  fontSize: 12),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
+                    StreamBuilder(
+                        stream: fetchSalesmanDetails(),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          } else if (snapshot.hasError) {
+                            return Center(
+                              child: Text('Error: ${snapshot.error}'),
+                            );
+                          } else if (!snapshot.hasData) {
+                            return Center(
+                              child: Text('Record not Found'),
+                            );
+                          } else if (snapshot.hasData) {
+                            final salesman =
+                                snapshot.data?.data() as Map<String, dynamic>?;
+                            return Row(
+                              children: [
+                                InkWell(
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (contex) =>
+                                                SalesmanProfileScreen(
+                                                  salesmanName:
+                                                      salesman?['name'],
+                                                )));
+                                  },
+                                  child: Container(
+                                    padding: EdgeInsets.all(7),
+                                    decoration: BoxDecoration(
+                                      color: AppColors.loginBackground
+                                          .withOpacity(.3),
+                                      shape: BoxShape.circle,
+                                    ),
+                                    child: CircleAvatar(
+                                      child: ClipOval(
+                                        child: Image.network(
+                                          fit: BoxFit.cover,
+                                          // width: 40,
+                                          // height: 40,
+                                          salesman?['imageUrl'],
+                                          errorBuilder:
+                                              (context, error, stackTrace) {
+                                            return Image.asset(
+                                              Constants.errorImage,
+                                              fit: BoxFit.cover,
+                                              // width: 40,
+                                              // height: 40,
+                                            );
+                                          },
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(width: 10),
+                                Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      salesman?['name'],
+                                      style: AppTextStyles
+                                          .belowMainHeadingTextStyle(
+                                              fontSize: 15),
+                                    ),
+                                    Text(
+                                      'Salesman',
+                                      style: AppTextStyles
+                                          .belowMainHeadingTextStyle(
+                                              fontSize: 12),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            );
+                          } else {
+                            return Center(
+                              child: Text('Loading...'),
+                            );
+                          }
+                        }),
                   ],
                 ),
                 SizedBox(height: 15),
@@ -154,71 +202,129 @@ class _SalesmanHomepageScreenState extends State<SalesmanHomepageScreen> {
                       ),
                     ),
                   ),
-                  GridView.builder(
-                      shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 3,
-                        // mainAxisSpacing: 20,
-                        // crossAxisSpacing: 20,
-                      ),
-                      itemCount: productCategoriesDummyModelContents.length,
-                      itemBuilder: (context, index) {
-                        return Container(
-                          child: Center(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                InkWell(
-                                  borderRadius: BorderRadius.circular(10),
-                                  onTap: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                SalesmanItemsListScreen(
-                                                  categoryName:
-                                                      productCategoriesDummyModelContents[
-                                                              index]
-                                                          .name,
-                                                  categoryIndex: index,
-                                                )));
-                                  },
-                                  child: Container(
-                                    height: 70,
-                                    width: 100,
-                                    decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                          fit: BoxFit.fill,
-                                          image: NetworkImage(
-                                              productCategoriesDummyModelContents[
-                                                      index]
-                                                  .imageUrl)),
-                                      color: AppColors.white.withOpacity(.9),
-                                      borderRadius: BorderRadius.circular(10),
+                  StreamBuilder(
+                      stream: fetchCategories(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        } else if (snapshot.hasError) {
+                          return Center(
+                            child: Text('Error: ${snapshot.error}'),
+                          );
+                        } else if (!snapshot.hasData) {
+                          return Center(
+                            child: Text('No Categories Found'),
+                          );
+                        } else if (snapshot.hasData) {
+                          final categories = snapshot.data?.docs ?? [];
+                          return GridView.builder(
+                              shrinkWrap: true,
+                              physics: NeverScrollableScrollPhysics(),
+                              gridDelegate:
+                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 3,
+                                // mainAxisSpacing: 20,
+                                // crossAxisSpacing: 20,
+                              ),
+                              itemCount: categories.length,
+                              // productCategoriesDummyModelContents.length,
+                              itemBuilder: (context, index) {
+                                // print(categories?[index]['imageUrl']);
+                                return Container(
+                                  child: Center(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        InkWell(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          onTap: () {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        SalesmanItemsListScreen(
+                                                          categoryName:
+                                                              categories[index]
+                                                                  ['name'],
+                                                          // productCategoriesDummyModelContents[
+                                                          //         index]
+                                                          //     .name,
+                                                          categoryIndex: index,
+                                                        )));
+                                          },
+                                          child: Container(
+                                            height: 70,
+                                            width: 100,
+                                            decoration: BoxDecoration(
+                                              // image: DecorationImage(
+                                              //   fit: BoxFit.fill,
+                                              //   image: NetworkImage(
+                                              //     // productCategoriesDummyModelContents[
+                                              //     //         index]
+                                              //     //     .imageUrl,
+                                              //     categories[index]['imageUrl'],
+                                              //   ),
+                                              // ),
+                                              color: AppColors.white
+                                                  .withOpacity(.9),
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                            ),
+                                            child: ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              child: Image.network(
+                                                categories[index]['imageUrl'],
+                                                fit: BoxFit.fill,
+                                                // width: 80,
+                                                // height: 120,
+                                                errorBuilder: (context, error,
+                                                    stackTrace) {
+                                                  return Image.asset(
+                                                    fit: BoxFit.cover,
+                                                    Constants.errorImage,
+                                                    // width: 80,
+                                                    // height: 120,
+                                                  );
+                                                },
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        SizedBox(height: 5),
+                                        SizedBox(
+                                          width: 100,
+                                          child: Align(
+                                            alignment: Alignment.center,
+                                            child: Text(
+                                              maxLines: 2,
+                                              overflow: TextOverflow.ellipsis,
+                                              categories[index]['name'],
+                                              // productCategoriesDummyModelContents[
+                                              //         index]
+                                              //     .name,
+                                              style: AppTextStyles
+                                                  .nameHeadingTextStyle(
+                                                size: 12,
+                                              ),
+                                            ),
+                                          ),
+                                        )
+                                      ],
                                     ),
                                   ),
-                                ),
-                                SizedBox(height: 5),
-                                SizedBox(
-                                  width: 100,
-                                  child: Align(
-                                    alignment: Alignment.center,
-                                    child: Text(
-                                      maxLines: 2,
-                                      overflow: TextOverflow.ellipsis,
-                                      productCategoriesDummyModelContents[index]
-                                          .name,
-                                      style: AppTextStyles.nameHeadingTextStyle(
-                                        size: 12,
-                                      ),
-                                    ),
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
-                        );
+                                );
+                              });
+                        } else {
+                          return Center(
+                            child: Text('Loading...'),
+                          );
+                        }
                       }),
                 ],
               ),
@@ -227,5 +333,28 @@ class _SalesmanHomepageScreenState extends State<SalesmanHomepageScreen> {
         ],
       ),
     );
+  }
+
+  // Method to get salesman details
+  Stream<DocumentSnapshot> fetchSalesmanDetails() {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    final data = firestore
+        .collection('Users')
+        .doc('Staff')
+        .collection('Salesmen')
+        .doc('Muhammad Ahsan')
+        .snapshots();
+    return data;
+  }
+
+  // Method to fetch categories
+  Stream<QuerySnapshot> fetchCategories() {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    final data = firestore
+        .collection('Warehouses')
+        .doc('Alpha Warehouse')
+        .collection('Categories')
+        .snapshots();
+    return data;
   }
 }

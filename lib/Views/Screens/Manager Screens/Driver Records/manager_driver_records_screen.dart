@@ -1,6 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:project1/Models/Dummy%20Models/driver_list_dummy_model.dart';
 import 'package:project1/Utils/colors.dart';
+import 'package:project1/Utils/constants.dart';
 import 'package:project1/Utils/text_styles.dart';
 import 'package:project1/Views/Screens/Manager%20Screens/Driver%20Records/manager_driver_records_details_screen.dart';
 import 'package:project1/Views/Widgets/custom_appbar.dart';
@@ -16,21 +17,12 @@ class ManagerDriverRecordsScreen extends StatefulWidget {
 class _ManagerDriverRecordsScreenState
     extends State<ManagerDriverRecordsScreen> {
   var _searchController = TextEditingController();
-  List<DriversListModel> filteredDriversList = driversListContents;
-  List<DriversListModel> allDriversList = driversListContents;
-  void _filterDrivers(String query) {
-    if (query.isEmpty) {
-      setState(() {
-        filteredDriversList = allDriversList;
-      });
-    } else {
-      setState(() {
-        filteredDriversList = allDriversList
-            .where((driver) =>
-                driver.name.toLowerCase().contains(query.toLowerCase()))
-            .toList();
-      });
-    }
+  String searchedText = '';
+
+  void _onChanged(String value) {
+    setState(() {
+      searchedText = value.toLowerCase();
+    });
   }
 
   @override
@@ -45,13 +37,7 @@ class _ManagerDriverRecordsScreenState
             SizedBox(height: 20),
             TextFormField(
               controller: _searchController,
-              onChanged: _filterDrivers,
-              // validator: (value) {
-              //   if (value == null || value.isEmpty) {
-              //     return 'Enter driver name here';
-              //   }
-              //   return null;
-              // },
+              onChanged: _onChanged,
               keyboardType: TextInputType.name,
               decoration: InputDecoration(
                 hintText: 'Search salesman name...',
@@ -72,97 +58,152 @@ class _ManagerDriverRecordsScreenState
             ),
             SizedBox(height: 20),
             Expanded(
-                child: ListView.builder(
-                    itemCount: filteredDriversList.length,
-                    itemBuilder: (context, index) {
-                      return Column(
-                        children: [
-                          InkWell(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          ManagerDriverRecordsDetailsScreen(
-                                            driverName:
-                                                filteredDriversList[index].name,
-                                            driverRoute:
-                                                filteredDriversList[index]
-                                                    .address,
-                                          )));
-                            },
-                            borderRadius: BorderRadius.circular(40),
-                            child: Container(
-                              width: double.infinity,
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 30, vertical: 15),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(40),
-                                color: AppColors.white,
-                              ),
-                              child: Row(
+                child: StreamBuilder(
+                    stream: fetchSalesmenList(),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      } else if (snapshot.hasError) {
+                        return Center(
+                          child: Text('Error: ${snapshot.error}'),
+                        );
+                      } else if (!snapshot.hasData) {
+                        return Center(
+                          child: Text('No Records Found'),
+                        );
+                      } else if (snapshot.hasData) {
+                        var salesmen = snapshot.data?.docs ?? [];
+                        final filteredSalesmen = salesmen.where((salesman) {
+                          final salesmanName =
+                              (salesman['name'] ?? '').toLowerCase();
+                          return salesmanName.contains(searchedText);
+                        }).toList();
+                        return ListView.builder(
+                            itemCount: filteredSalesmen.length,
+                            itemBuilder: (context, index) {
+                              return Column(
                                 children: [
-                                  CircleAvatar(
-                                    backgroundImage:
-                                        AssetImage('assets/images/p1.jpeg'),
-                                  ),
-                                  SizedBox(width: 15),
-                                  Expanded(
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            SizedBox(
-                                              width: 150,
-                                              child: Text(
-                                                overflow: TextOverflow.ellipsis,
-                                                filteredDriversList[index].name,
-                                                style: AppTextStyles
-                                                    .nameHeadingTextStyle(
-                                                        size: 15),
+                                  InkWell(
+                                    onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  ManagerDriverRecordsDetailsScreen(
+                                                    salesmanName:
+                                                        filteredSalesmen[index]
+                                                            ['name'],
+                                                    salesmanRoute:
+                                                        filteredSalesmen[index]
+                                                            ['route'],
+                                                  )));
+                                    },
+                                    borderRadius: BorderRadius.circular(40),
+                                    child: Container(
+                                      width: double.infinity,
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 30, vertical: 15),
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(40),
+                                        color: AppColors.white,
+                                      ),
+                                      child: Row(
+                                        children: [
+                                          CircleAvatar(
+                                            child: ClipOval(
+                                              child: Image.network(
+                                                filteredSalesmen[index]
+                                                    ['imageUrl'],
+                                                errorBuilder: (context, error,
+                                                    stackTrace) {
+                                                  return Image.asset(
+                                                      Constants.errorImage);
+                                                },
                                               ),
                                             ),
-                                            Row(
+                                          ),
+                                          SizedBox(width: 15),
+                                          Expanded(
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
                                               children: [
-                                                Text(
-                                                  'Route: ',
-                                                  style: TextStyle(
-                                                    fontWeight: FontWeight.w500,
-                                                  ),
+                                                Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    SizedBox(
+                                                      width: 150,
+                                                      child: Text(
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                        filteredSalesmen[index]
+                                                            ['name'],
+                                                        style: AppTextStyles
+                                                            .nameHeadingTextStyle(
+                                                                size: 15),
+                                                      ),
+                                                    ),
+                                                    Row(
+                                                      children: [
+                                                        Text(
+                                                          'Route: ',
+                                                          style: TextStyle(
+                                                            fontWeight:
+                                                                FontWeight.w500,
+                                                          ),
+                                                        ),
+                                                        SizedBox(
+                                                          width: 150,
+                                                          child: Text(
+                                                              overflow:
+                                                                  TextOverflow
+                                                                      .ellipsis,
+                                                              filteredSalesmen[
+                                                                      index]
+                                                                  ['route']),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ],
                                                 ),
-                                                SizedBox(
-                                                  width: 150,
-                                                  child: Text(
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
-                                                      filteredDriversList[index]
-                                                          .address),
+                                                Icon(
+                                                  Icons.assessment,
                                                 ),
                                               ],
                                             ),
-                                          ],
-                                        ),
-                                        // Icon(
-                                        //   Icons.assessment,
-                                        // )
-                                      ],
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ),
+                                  SizedBox(height: 10),
                                 ],
-                              ),
-                            ),
-                          ),
-                          SizedBox(height: 10),
-                        ],
-                      );
+                              );
+                            });
+                      } else {
+                        return Center(
+                          child: Text('Loading...'),
+                        );
+                      }
                     })),
           ],
         ),
       ),
     );
+  }
+
+  // Method to fetch salesmen list
+  Stream<QuerySnapshot> fetchSalesmenList() {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    final data = firestore
+        .collection('Users')
+        .doc('Staff')
+        .collection('Salesmen')
+        .snapshots();
+    return data;
   }
 }

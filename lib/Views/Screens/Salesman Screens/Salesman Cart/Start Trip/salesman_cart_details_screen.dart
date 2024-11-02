@@ -3,6 +3,7 @@ import 'package:lottie/lottie.dart';
 import 'package:project1/Models/Dummy%20Models/cart_dummy_model.dart';
 import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/text_styles.dart';
+import 'package:project1/Views/Screens/Salesman%20Screens/Salesman%20Cart/Start%20Trip/Shop%20Final%20Order%20Summary/salesman_store_cart_screen.dart';
 import 'package:project1/Views/Screens/Salesman%20Screens/salesman_bottom_nav_bar_screen.dart';
 import 'package:project1/Views/Widgets/custom_appbar.dart';
 import 'package:project1/Views/Widgets/universal_button.dart';
@@ -181,16 +182,17 @@ class _SalesmanCartDetailsScreenState extends State<SalesmanCartDetailsScreen> {
                           buttonWidth: 150,
                           title: 'Start trip',
                           buttonColor: AppColors.universalButtonGreen,
+                          ontap: () {
+                            // var sp = await SharedPreferences.getInstance();
+                            // sp.setBool('tripStarted', false);
 
-                          ontap: widget.startTripButtonTapped,
-                          // ontap: () {
-                          //   widget.startTripButtonTapped;
-                          //   Navigator.push(
-                          //       context,
-                          //       MaterialPageRoute(
-                          //           builder: (context) =>
-                          //               DriverStoreCartScreen()));
-                          // },
+                            widget.startTripButtonTapped();
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        SalesmanStoreCartScreen()));
+                          },
                         ),
                         UniversalButton(
                             buttonWidth: 150,

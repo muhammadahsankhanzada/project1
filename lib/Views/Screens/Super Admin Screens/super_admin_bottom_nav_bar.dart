@@ -50,8 +50,10 @@ class SuperAdminBottomNavBar extends StatelessWidget {
                   return CupertinoPageScaffold(child: ManagerDeliveredScreen());
                 },
               );
+            default:
+              return Container();
           }
-          return Container();
+          // return Container();
         });
   }
 }
