@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:project1/Models/Dummy%20Models/product_categories_dummy_model.dart';
 import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/constants.dart';
 import 'package:project1/Utils/text_styles.dart';
@@ -442,4 +441,10 @@ class _SalesmanItemsListScreenState extends State<SalesmanItemsListScreen> {
         .snapshots();
     return data;
   }
+
+  // Method to add products to cart
+  // addToCart(){
+  //   FirebaseFirestore firestore= FirebaseFirestore.instance;
+  //   firestore.collection('Users').doc('Staff').collection('Salesmen').doc('Muhammad Ahsan').collection('Requests').doc('').set();
+  // }
 }

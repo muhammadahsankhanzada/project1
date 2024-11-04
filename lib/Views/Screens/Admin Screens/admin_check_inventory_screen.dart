@@ -5,7 +5,7 @@ import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/text_styles.dart';
 import 'package:project1/Views/Screens/Manager%20Screens/Available%20Products/manager_available_products_items_list_screen.dart';
 import 'package:project1/Views/Widgets/custom_appbar.dart';
-import 'package:project1/Models/products_model.dart' as Product;
+// import 'package:project1/Models/products_model.dart' as Product;
 
 class AdminCheckInventoryScreen extends StatefulWidget {
   const AdminCheckInventoryScreen({super.key});

@@ -1,11 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:project1/Models/Dummy%20Models/product_categories_dummy_model.dart';
+import 'package:project1/Data/Network/base_api_services.dart';
+import 'package:project1/Data/Network/network_api_services.dart';
 import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/constants.dart';
 import 'package:project1/Utils/text_styles.dart';
+import 'package:project1/ViewModels/auth_view_model.dart';
 import 'package:project1/Views/Screens/Salesman%20Screens/Salesman%20Category/salesman_items_list_screen.dart';
 import 'package:project1/Views/Screens/Salesman%20Screens/salesman_profile_screen.dart';
+import 'package:provider/provider.dart';
 
 class SalesmanHomepageScreen extends StatefulWidget {
   const SalesmanHomepageScreen({super.key});
@@ -16,8 +19,12 @@ class SalesmanHomepageScreen extends StatefulWidget {
 
 class _SalesmanHomepageScreenState extends State<SalesmanHomepageScreen> {
   var _searchController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
+    // final authProvider = Provider.of<AuthViewModel>(context);
+    // authProvider.loginApi(
+    //     {"email": "eve.holt@reqres.in", "password": "cityslicka"}, context);
     return Scaffold(
       backgroundColor: AppColors.lightWhiteBackground,
       body: Column(
