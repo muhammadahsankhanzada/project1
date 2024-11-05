@@ -4,8 +4,8 @@ import 'package:project1/Utils/constants.dart';
 import 'package:project1/Utils/text_styles.dart';
 import 'package:project1/Views/Widgets/custom_appbar.dart';
 
-class ManagerDriverRecordsTripDetailsScreen extends StatelessWidget {
-  const ManagerDriverRecordsTripDetailsScreen({super.key});
+class ManagerSalesmanRecordsTripDetailsScreen extends StatelessWidget {
+  const ManagerSalesmanRecordsTripDetailsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

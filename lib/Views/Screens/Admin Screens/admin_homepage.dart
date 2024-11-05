@@ -6,7 +6,7 @@ import 'package:project1/Utils/text_styles.dart';
 import 'package:project1/Views/Screens/Admin%20Screens/Accounts%20Management/admin_accounts_management_screen.dart';
 import 'package:project1/Views/Screens/Admin%20Screens/admin_check_inventory_screen.dart';
 import 'package:project1/Views/Screens/Admin%20Screens/Manager%20Records/admin_managers_list_screen.dart';
-import 'package:project1/Views/Screens/Manager%20Screens/Driver%20Records/manager_driver_records_screen.dart';
+import 'package:project1/Views/Screens/Manager%20Screens/Salesman%20Records/manager_salesman_records_screen.dart';
 import 'package:project1/Views/Screens/Super%20Admin%20Screens/Product%20Management/super_admin_product_management_screen.dart';
 import 'package:project1/Views/Screens/Super%20Admin%20Screens/Shop%20Management/super_admin_registered_shops_screen.dart';
 import 'package:project1/Views/Screens/Super%20Admin%20Screens/Warehouse%20Management/super_admin_registered_warehouses_screen.dart';
@@ -35,7 +35,7 @@ class AdminHomepage extends StatelessWidget {
       {
         'title': 'Salesman Records',
         'icon': Icons.directions_car,
-        'screen': ManagerDriverRecordsScreen(),
+        'screen': ManagerSalesmanRecordsScreen(),
       },
       {
         'title': 'Shop Records',

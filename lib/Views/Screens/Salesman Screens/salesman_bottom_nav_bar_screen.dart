@@ -22,11 +22,16 @@ class _SalesmanBottomNavBarScreenState
   //   checkStartTrip();
   // }
   ///
-  final CupertinoTabController _tabController = CupertinoTabController();
+  CupertinoTabController _tabController = CupertinoTabController();
+
   void goToShopsTab() {
     _tabController.index = 2;
     // Navigator.push(context,
     //     CupertinoPageRoute(builder: (context) => DriverStoreCartScreen()));
+  }
+
+  void goToShopCart() {
+    _tabController.index = 1;
   }
 
   // Future<bool?> checkStartTrip()async{
@@ -82,6 +87,7 @@ class _SalesmanBottomNavBarScreenState
                 builder: (context) {
                   return CupertinoPageScaffold(
                       child: SalesmanShopsListScreen(
+                    goToShopCart: goToShopCart,
                     isTripStarted: true,
                   ));
                 },

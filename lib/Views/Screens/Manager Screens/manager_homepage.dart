@@ -8,7 +8,7 @@ import 'package:project1/Views/Screens/Admin%20Screens/admin_check_inventory_scr
 import 'package:project1/Views/Screens/Manager%20Screens/Add%20Products/manager_add_product_warehouse_selection_screen.dart';
 import 'package:project1/Views/Screens/Manager%20Screens/Approved%20Requests/manager_approved_requests_screen.dart';
 import 'package:project1/Views/Screens/Manager%20Screens/Delete%20Products/manager_delete_product_warehouse_selection_screen.dart';
-import 'package:project1/Views/Screens/Manager%20Screens/Driver%20Records/manager_driver_records_screen.dart';
+import 'package:project1/Views/Screens/Manager%20Screens/Salesman%20Records/manager_salesman_records_screen.dart';
 import 'package:project1/Views/Screens/Manager%20Screens/Pending%20Requests/manager_pending_requests_screen.dart';
 
 class ManagerHomepage extends StatelessWidget {
@@ -228,7 +228,7 @@ class ManagerHomepage extends StatelessWidget {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                            ManagerDriverRecordsScreen()));
+                                            ManagerSalesmanRecordsScreen()));
                               }
                             }, managerHomepageContents[index].image,
                                 managerHomepageContents[index].title);

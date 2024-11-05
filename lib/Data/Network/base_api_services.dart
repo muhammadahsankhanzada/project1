@@ -1,7 +1,7 @@
 abstract class BaseApiServices {
-  // Get api method
+  // Get api abstract method
   Future<dynamic> getApiResponse(String url);
 
-  // Post api method
+  // Post api abstract method
   Future<dynamic> postApiResponse(String url, dynamic data);
 }

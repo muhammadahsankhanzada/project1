@@ -19,7 +19,7 @@ class _AdminCheckInventoryScreenState extends State<AdminCheckInventoryScreen> {
   @override
   void initState() {
     super.initState();
-    fetchCategories();
+    // fetchCategories();
     // showProducts();
   }
 
@@ -259,9 +259,10 @@ class _AdminCheckInventoryScreenState extends State<AdminCheckInventoryScreen> {
           .collection('Categories')
           .get();
 
-      for (var doc in querySnapshot.docs) {
+      // Create a list of futures for the product counts
+      List<Future<int>> productCountFutures =
+          querySnapshot.docs.map((doc) async {
         String categoryId = doc.id;
-        // Fetch product count for each category
         QuerySnapshot productSnapshot = await firestore
             .collection('Warehouses')
             .doc('Alpha Warehouse')
@@ -269,17 +270,19 @@ class _AdminCheckInventoryScreenState extends State<AdminCheckInventoryScreen> {
             .doc(categoryId)
             .collection('Products')
             .get();
+        return productSnapshot.docs.length;
+      }).toList();
 
-        int productsCount = productSnapshot.docs.length;
+      // Wait for all futures to complete
+      List<int> productCounts = await Future.wait(productCountFutures);
 
-        // Get category details
-
-        final data = doc.data() as Map<String, dynamic>?;
-        String name = data?['name'] ?? categoryId;
-        String imageUrl = data?['imageUrl'] ?? '';
-
+      for (int i = 0; i < querySnapshot.docs.length; i++) {
+        final doc = querySnapshot.docs[i];
+        String name = (doc.data() as Map<String, dynamic>)['name'] ?? doc.id;
+        String imageUrl =
+            (doc.data() as Map<String, dynamic>)['imageUrl'] ?? '';
         categories.add(CategoriesModel(
-            name: name, imageUrl: imageUrl, productsCount: productsCount));
+            name: name, imageUrl: imageUrl, productsCount: productCounts[i]));
       }
     } catch (error) {
       print('Error getting categories: $error');

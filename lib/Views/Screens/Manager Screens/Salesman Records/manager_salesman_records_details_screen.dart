@@ -3,25 +3,25 @@ import 'package:flutter/material.dart';
 import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/constants.dart';
 import 'package:project1/Utils/text_styles.dart';
-import 'package:project1/Views/Screens/Manager%20Screens/Driver%20Records/manager_driver_records_trip_details_screen.dart';
+import 'package:project1/Views/Screens/Manager%20Screens/Salesman%20Records/manager_salesman_records_trip_details_screen.dart';
 import 'package:project1/Views/Widgets/custom_appbar.dart';
 
-class ManagerDriverRecordsDetailsScreen extends StatefulWidget {
+class ManagerSalesmanRecordsDetailsScreen extends StatefulWidget {
   final String salesmanName;
   final String salesmanRoute;
-  const ManagerDriverRecordsDetailsScreen({
+  const ManagerSalesmanRecordsDetailsScreen({
     super.key,
     required this.salesmanName,
     required this.salesmanRoute,
   });
 
   @override
-  State<ManagerDriverRecordsDetailsScreen> createState() =>
-      _ManagerDriverRecordsDetailsScreenState();
+  State<ManagerSalesmanRecordsDetailsScreen> createState() =>
+      _ManagerSalesmanRecordsDetailsScreenState();
 }
 
-class _ManagerDriverRecordsDetailsScreenState
-    extends State<ManagerDriverRecordsDetailsScreen> {
+class _ManagerSalesmanRecordsDetailsScreenState
+    extends State<ManagerSalesmanRecordsDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     Map<String, dynamic> driverDetails = {
@@ -158,7 +158,7 @@ class _ManagerDriverRecordsDetailsScreenState
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                ManagerDriverRecordsTripDetailsScreen()));
+                                                ManagerSalesmanRecordsTripDetailsScreen()));
                                   },
                                   borderRadius: BorderRadius.circular(15),
                                   child: Container(

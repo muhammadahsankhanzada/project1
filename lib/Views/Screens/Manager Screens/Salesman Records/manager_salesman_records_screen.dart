@@ -3,19 +3,19 @@ import 'package:flutter/material.dart';
 import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/constants.dart';
 import 'package:project1/Utils/text_styles.dart';
-import 'package:project1/Views/Screens/Manager%20Screens/Driver%20Records/manager_driver_records_details_screen.dart';
+import 'package:project1/Views/Screens/Manager%20Screens/Salesman%20Records/manager_salesman_records_details_screen.dart';
 import 'package:project1/Views/Widgets/custom_appbar.dart';
 
-class ManagerDriverRecordsScreen extends StatefulWidget {
-  const ManagerDriverRecordsScreen({super.key});
+class ManagerSalesmanRecordsScreen extends StatefulWidget {
+  const ManagerSalesmanRecordsScreen({super.key});
 
   @override
-  State<ManagerDriverRecordsScreen> createState() =>
-      _ManagerDriverRecordsScreenState();
+  State<ManagerSalesmanRecordsScreen> createState() =>
+      _ManagerSalesmanRecordsScreenState();
 }
 
-class _ManagerDriverRecordsScreenState
-    extends State<ManagerDriverRecordsScreen> {
+class _ManagerSalesmanRecordsScreenState
+    extends State<ManagerSalesmanRecordsScreen> {
   var _searchController = TextEditingController();
   String searchedText = '';
 
@@ -91,7 +91,7 @@ class _ManagerDriverRecordsScreenState
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  ManagerDriverRecordsDetailsScreen(
+                                                  ManagerSalesmanRecordsDetailsScreen(
                                                     salesmanName:
                                                         filteredSalesmen[index]
                                                             ['name'],

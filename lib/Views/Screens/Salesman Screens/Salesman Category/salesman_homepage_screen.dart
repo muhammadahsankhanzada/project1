@@ -1,14 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:project1/Data/Network/base_api_services.dart';
-import 'package:project1/Data/Network/network_api_services.dart';
 import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/constants.dart';
 import 'package:project1/Utils/text_styles.dart';
-import 'package:project1/ViewModels/auth_view_model.dart';
 import 'package:project1/Views/Screens/Salesman%20Screens/Salesman%20Category/salesman_items_list_screen.dart';
 import 'package:project1/Views/Screens/Salesman%20Screens/salesman_profile_screen.dart';
-import 'package:provider/provider.dart';
 
 class SalesmanHomepageScreen extends StatefulWidget {
   const SalesmanHomepageScreen({super.key});
@@ -22,9 +18,13 @@ class _SalesmanHomepageScreenState extends State<SalesmanHomepageScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // final authProvider = Provider.of<AuthViewModel>(context);
+    // final authProvider = Provider.of<AuthProvider>(context);
     // authProvider.loginApi(
-    //     {"email": "eve.holt@reqres.in", "password": "cityslicka"}, context);
+    //     AuthModel(
+    //       email: "eve.holt@reqres.in",
+    //       password: "cityslicka",
+    //     ).toJson(),
+    //     context);
     return Scaffold(
       backgroundColor: AppColors.lightWhiteBackground,
       body: Column(

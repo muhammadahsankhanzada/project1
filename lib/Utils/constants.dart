@@ -14,5 +14,5 @@ class Constants {
   static const String errorImage = 'assets/images/errorImage.png';
 
   // Names
-  static const String mainWarehouse = 'Alpha Warehouse';
+  // static const String mainWarehouse = 'Alpha Warehouse';
 }

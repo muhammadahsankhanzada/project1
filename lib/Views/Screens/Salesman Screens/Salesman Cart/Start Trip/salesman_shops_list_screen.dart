@@ -7,8 +7,10 @@ import 'package:project1/Views/Widgets/custom_appbar.dart';
 import 'package:project1/Views/Widgets/universal_button.dart';
 
 class SalesmanShopsListScreen extends StatefulWidget {
+  final VoidCallback goToShopCart;
   final isTripStarted;
-  const SalesmanShopsListScreen({super.key, required this.isTripStarted});
+  const SalesmanShopsListScreen(
+      {super.key, required this.isTripStarted, required this.goToShopCart});
 
   @override
   State<SalesmanShopsListScreen> createState() =>
@@ -140,7 +142,10 @@ class _SalesmanShopsListScreenState extends State<SalesmanShopsListScreen> {
                                                   context,
                                                   MaterialPageRoute(
                                                       builder: (context) =>
-                                                          SalesmanStoreRequiredAndReturnItemsScreen()));
+                                                          SalesmanStoreRequiredAndReturnItemsScreen(
+                                                            goToShopCart: widget
+                                                                .goToShopCart,
+                                                          )));
                                             }),
                                       ],
                                     ),

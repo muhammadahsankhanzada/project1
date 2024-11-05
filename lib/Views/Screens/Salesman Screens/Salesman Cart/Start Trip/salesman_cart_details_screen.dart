@@ -10,8 +10,10 @@ import 'package:project1/Views/Widgets/universal_button.dart';
 
 class SalesmanCartDetailsScreen extends StatefulWidget {
   final VoidCallback startTripButtonTapped;
-  const SalesmanCartDetailsScreen(
-      {super.key, required this.startTripButtonTapped});
+  const SalesmanCartDetailsScreen({
+    super.key,
+    required this.startTripButtonTapped,
+  });
 
   @override
   State<SalesmanCartDetailsScreen> createState() =>
@@ -191,7 +193,11 @@ class _SalesmanCartDetailsScreenState extends State<SalesmanCartDetailsScreen> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
-                                        SalesmanStoreCartScreen()));
+                                        SalesmanStoreCartScreen(
+                                          itemsSelected: false,
+                                          goToShopsTab:
+                                              widget.startTripButtonTapped,
+                                        )));
                           },
                         ),
                         UniversalButton(

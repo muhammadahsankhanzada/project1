@@ -6,7 +6,7 @@ import 'package:project1/Utils/text_styles.dart';
 import 'package:project1/Views/Screens/Admin%20Screens/Accounts%20Management/admin_create_new_account_screen.dart';
 import 'package:project1/Views/Screens/Admin%20Screens/Accounts%20Management/admin_delete_account_screen.dart';
 import 'package:project1/Views/Screens/Admin%20Screens/Manager%20Records/admin_manager_records_details_screen.dart';
-import 'package:project1/Views/Screens/Manager%20Screens/Driver%20Records/manager_driver_records_details_screen.dart';
+import 'package:project1/Views/Screens/Manager%20Screens/Salesman%20Records/manager_salesman_records_details_screen.dart';
 import 'package:project1/Views/Screens/Super%20Admin%20Screens/User%20Management/super_admin_admin_records_screen.dart';
 import 'package:project1/Views/Widgets/custom_appbar.dart';
 
@@ -212,7 +212,7 @@ class _SuperAdminUserManagementScreenState
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) => isUserDriver
-                                                  ? ManagerDriverRecordsDetailsScreen(
+                                                  ? ManagerSalesmanRecordsDetailsScreen(
                                                       salesmanName: data[index]
                                                           ['name'],
                                                       salesmanRoute: data[index]

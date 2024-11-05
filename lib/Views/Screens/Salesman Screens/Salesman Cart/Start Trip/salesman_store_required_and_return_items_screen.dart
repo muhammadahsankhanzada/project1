@@ -5,7 +5,9 @@ import 'package:project1/Views/Screens/Salesman%20Screens/Salesman%20Cart/Start%
 import 'package:project1/Views/Screens/Salesman%20Screens/Salesman%20Cart/Start%20Trip/Shop%20Required%20Items/salesman_store_required_category_screen.dart';
 
 class SalesmanStoreRequiredAndReturnItemsScreen extends StatefulWidget {
-  const SalesmanStoreRequiredAndReturnItemsScreen({super.key});
+  final VoidCallback goToShopCart;
+  const SalesmanStoreRequiredAndReturnItemsScreen(
+      {super.key, required this.goToShopCart});
 
   @override
   State<SalesmanStoreRequiredAndReturnItemsScreen> createState() =>
@@ -175,6 +177,28 @@ class _SalesmanStoreRequiredAndReturnItemsScreenState
             ),
           ],
         ),
+        floatingActionButton: SizedBox(
+          height: 50,
+          width: 200,
+          child: FloatingActionButton(
+            onPressed: () {
+              widget.goToShopCart();
+              Navigator.pop(context);
+            },
+            child: Text(
+              'Go to Cart',
+              style: AppTextStyles.simpleHeadingTextStyle(
+                fontWeight: FontWeight.bold,
+                textColor: AppColors.white,
+              ),
+            ),
+            backgroundColor: AppColors.universalButtonGreen,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(30),
+            ),
+          ),
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       ),
     );
   }
