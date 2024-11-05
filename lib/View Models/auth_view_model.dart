@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:project1/Repositories/auth_repository.dart';
 
-class AuthProvider with ChangeNotifier {
+class AuthViewModel with ChangeNotifier {
   final _authRepo = AuthRepository();
 
   // This method will get data from ui and send to auth_repository
@@ -16,5 +16,6 @@ class AuthProvider with ChangeNotifier {
         print(error.toString());
       }
     });
+    notifyListeners();
   }
 }

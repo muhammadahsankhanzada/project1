@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:project1/Utils/colors.dart';
-import 'package:project1/Utils/constants.dart';
+import 'package:project1/Utils/image_urls.dart';
 import 'package:project1/Utils/text_styles.dart';
 import 'package:project1/Views/Screens/Admin%20Screens/Accounts%20Management/admin_accounts_management_screen.dart';
 import 'package:project1/Views/Screens/Admin%20Screens/admin_check_inventory_screen.dart';
@@ -65,7 +65,7 @@ class AdminHomepage extends StatelessWidget {
                 CircleAvatar(
                   radius: 18,
                   backgroundImage: AssetImage(
-                    Constants.myImage,
+                    ImageUrls.myImage,
                   ),
                 ),
                 SizedBox(width: 5),

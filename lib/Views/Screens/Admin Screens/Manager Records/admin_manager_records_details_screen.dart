@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:project1/Utils/colors.dart';
-import 'package:project1/Utils/constants.dart';
+import 'package:project1/Utils/image_urls.dart';
 import 'package:project1/Utils/text_styles.dart';
 import 'package:project1/Views/Screens/Admin%20Screens/Manager%20Records/Rejected%20Requests/admin_manager_rejected_requests_screen.dart';
 import 'package:project1/Views/Screens/Manager%20Screens/Approved%20Requests/manager_approved_requests_screen.dart';
@@ -68,7 +68,7 @@ class _AdminManagerRecordsDetailsScreenState
                           child: Image.network(
                             manager?['imageUrl'],
                             errorBuilder: (context, error, stackTrace) {
-                              return Image.asset(Constants.errorImage);
+                              return Image.asset(ImageUrls.errorImage);
                             },
                           ),
                         ),

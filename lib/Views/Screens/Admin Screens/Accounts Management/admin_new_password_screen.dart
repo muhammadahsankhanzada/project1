@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project1/Utils/colors.dart';
-import 'package:project1/Utils/constants.dart';
+import 'package:project1/Utils/image_urls.dart';
 import 'package:project1/Utils/text_styles.dart';
 import 'package:project1/Views/Widgets/custom_appbar.dart';
 import 'package:project1/Views/Widgets/custom_snackbar.dart';
@@ -38,7 +38,7 @@ class _AdminNewPasswordScreenState extends State<AdminNewPasswordScreen> {
               SizedBox(height: 10),
               CircleAvatar(
                 radius: 40,
-                backgroundImage: AssetImage(Constants.myImage),
+                backgroundImage: AssetImage(ImageUrls.myImage),
               ),
               SizedBox(height: 10),
               Column(

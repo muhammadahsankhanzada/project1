@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:project1/Models/Dummy%20Models/shops_list_dummy_model.dart';
 import 'package:project1/Utils/colors.dart';
-import 'package:project1/Utils/constants.dart';
+import 'package:project1/Utils/image_urls.dart';
 import 'package:project1/Utils/text_styles.dart';
 import 'package:project1/Views/Screens/Admin%20Screens/Shop%20Records/admin_shop_records_details_screen.dart';
 import 'package:project1/Views/Widgets/custom_appbar.dart';
@@ -109,7 +109,7 @@ class _AdminShopRecordsScreenState extends State<AdminShopRecordsScreen> {
                                 children: [
                                   CircleAvatar(
                                     backgroundImage:
-                                        AssetImage(Constants.myImage),
+                                        AssetImage(ImageUrls.myImage),
                                   ),
                                   SizedBox(width: 15),
                                   Expanded(

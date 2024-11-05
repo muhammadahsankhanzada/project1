@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:project1/Models/Dummy%20Models/manager_homepage_items.dart';
 import 'package:project1/Utils/colors.dart';
-import 'package:project1/Utils/constants.dart';
+import 'package:project1/Utils/image_urls.dart';
 import 'package:project1/Utils/text_styles.dart';
 import 'package:project1/Views/Screens/Admin%20Screens/admin_check_inventory_screen.dart';
 import 'package:project1/Views/Screens/Manager%20Screens/Add%20Products/manager_add_product_warehouse_selection_screen.dart';
@@ -99,7 +99,7 @@ class ManagerHomepage extends StatelessWidget {
                                 manager!['imageUrl'],
                                 errorBuilder: (context, error, stackTrace) {
                                   return Image.asset(
-                                    Constants.errorImage,
+                                    ImageUrls.errorImage,
                                     fit: BoxFit.cover,
                                     width: 40,
                                     height: 40,
@@ -171,7 +171,7 @@ class ManagerHomepage extends StatelessWidget {
                         decoration: BoxDecoration(
                           image: DecorationImage(
                               fit: BoxFit.fill,
-                              image: AssetImage(Constants.managerBack)),
+                              image: AssetImage(ImageUrls.managerBack)),
                         ),
                       ),
                       SizedBox(height: 10),

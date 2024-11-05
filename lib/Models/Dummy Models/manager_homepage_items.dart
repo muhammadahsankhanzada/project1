@@ -1,4 +1,4 @@
-import 'package:project1/Utils/constants.dart';
+import 'package:project1/Utils/image_urls.dart';
 
 class ManagerHomepageItems {
   final String title;
@@ -11,14 +11,14 @@ class ManagerHomepageItems {
 
 List<ManagerHomepageItems> managerHomepageContents = [
   ManagerHomepageItems(
-      title: 'Pending Requests', image: Constants.pendingRequests),
+      title: 'Pending Requests', image: ImageUrls.pendingRequests),
   ManagerHomepageItems(
-      title: 'Approved Requests', image: Constants.approvedRequests),
-  ManagerHomepageItems(title: 'Add Products', image: Constants.addProducts),
+      title: 'Approved Requests', image: ImageUrls.approvedRequests),
+  ManagerHomepageItems(title: 'Add Products', image: ImageUrls.addProducts),
   ManagerHomepageItems(
-      title: 'Delete Products', image: Constants.deleteProducts),
+      title: 'Delete Products', image: ImageUrls.deleteProducts),
   ManagerHomepageItems(
-      title: 'Available Products', image: Constants.availableProducts),
+      title: 'Available Products', image: ImageUrls.availableProducts),
   ManagerHomepageItems(
-      title: 'Salesman Records', image: Constants.driverRecords),
+      title: 'Salesman Records', image: ImageUrls.driverRecords),
 ];

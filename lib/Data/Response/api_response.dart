@@ -1,8 +1,10 @@
-import 'package:project1/Data/Response/status.dart';
+// Enums for status
+enum Status { LOADING, COMPLETED, ERROR }
 
-class ApiResponse<T> {
+// Class to check that api response is loading, completed or returned an error
+class ApiResponse<DataType> {
   Status? status;
-  T? data;
+  DataType? data;
   String? message;
 
   ApiResponse([this.status, this.data, this.message]);

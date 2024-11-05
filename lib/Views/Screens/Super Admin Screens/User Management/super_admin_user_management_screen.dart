@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:project1/Utils/colors.dart';
-import 'package:project1/Utils/constants.dart';
+import 'package:project1/Utils/image_urls.dart';
 import 'package:project1/Utils/text_styles.dart';
 import 'package:project1/Views/Screens/Admin%20Screens/Accounts%20Management/admin_create_new_account_screen.dart';
 import 'package:project1/Views/Screens/Admin%20Screens/Accounts%20Management/admin_delete_account_screen.dart';
@@ -250,7 +250,7 @@ class _SuperAdminUserManagementScreenState
                                                   errorBuilder: (context, error,
                                                       stackTrace) {
                                                     return Image.asset(
-                                                      Constants.errorImage,
+                                                      ImageUrls.errorImage,
                                                     );
                                                   },
                                                 ),

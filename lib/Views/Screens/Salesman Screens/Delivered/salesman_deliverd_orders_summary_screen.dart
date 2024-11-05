@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project1/Utils/colors.dart';
-import 'package:project1/Utils/constants.dart';
+import 'package:project1/Utils/image_urls.dart';
 import 'package:project1/Utils/text_styles.dart';
 import 'package:project1/Views/Widgets/custom_appbar.dart';
 
@@ -37,7 +37,7 @@ class SalesmanDeliverdOrdersSummaryScreen extends StatelessWidget {
                                   ClipRRect(
                                     borderRadius: BorderRadius.circular(10),
                                     child: Image.asset(
-                                      Constants.backgroundImage,
+                                      ImageUrls.backgroundImage,
                                       width: 100,
                                     ),
                                   ),

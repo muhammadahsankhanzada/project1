@@ -1,4 +1,4 @@
-import 'package:project1/Utils/constants.dart';
+import 'package:project1/Utils/image_urls.dart';
 
 class ShopListModel {
   final String name;
@@ -16,36 +16,36 @@ List<ShopListModel> shopsListContents = [
   ShopListModel(
     name: 'The Coffee House',
     address: '123 Brew Lane, Coffee City',
-    imageUrl: Constants.myImage,
+    imageUrl: ImageUrls.myImage,
   ),
   ShopListModel(
     name: 'The Book Nook',
     address: '456 Read St, Booktown',
-    imageUrl: Constants.myImage,
+    imageUrl: ImageUrls.myImage,
   ),
   ShopListModel(
     name: 'Gadget Galaxy',
     address: '789 Tech Ave, Gadget City',
-    imageUrl: Constants.myImage,
+    imageUrl: ImageUrls.myImage,
   ),
   ShopListModel(
     name: 'Fresh Produce Market',
     address: '321 Green Way, Farmtown',
-    imageUrl: Constants.myImage,
+    imageUrl: ImageUrls.myImage,
   ),
   ShopListModel(
     name: 'Fashion Forward',
     address: '654 Style St, Trendy Town',
-    imageUrl: Constants.myImage,
+    imageUrl: ImageUrls.myImage,
   ),
   ShopListModel(
     name: 'Fashion Fiesta',
     address: '101 Style Blvd, Trendy City',
-    imageUrl: Constants.myImage,
+    imageUrl: ImageUrls.myImage,
   ),
   ShopListModel(
     name: 'Gourmet Grocers',
     address: '202 Fresh Ave, Foodie Town',
-    imageUrl: Constants.myImage,
+    imageUrl: ImageUrls.myImage,
   ),
 ];

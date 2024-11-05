@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:project1/Utils/colors.dart';
-import 'package:project1/Utils/constants.dart';
+import 'package:project1/Utils/image_urls.dart';
 import 'package:project1/Utils/text_styles.dart';
 import 'package:project1/Views/Widgets/custom_appbar.dart';
 import 'package:project1/Views/Widgets/custom_snackbar.dart';
@@ -251,7 +251,7 @@ class _SalesmanItemsListScreenState extends State<SalesmanItemsListScreen> {
                                                         error, stackTrace) {
                                                       return Image.asset(
                                                         fit: BoxFit.fill,
-                                                        Constants.errorImage,
+                                                        ImageUrls.errorImage,
                                                         width: 80,
                                                         height: 120,
                                                       );

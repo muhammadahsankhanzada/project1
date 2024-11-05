@@ -1,10 +1,13 @@
+// Class to handle custom exeptions
 class AppExceptions implements Exception {
+  // _message shows the error message that will be given when calling exeptions
+  // _prefix is the messages that are written below in specific exeption classes
   final _message;
   final _prefix;
   AppExceptions([this._message, this._prefix]);
 
   String toString() {
-    return '$_prefix$_message';
+    return '$_prefix: ($_message)';
   }
 }
 

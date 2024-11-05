@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project1/Utils/colors.dart';
-import 'package:project1/Utils/constants.dart';
+import 'package:project1/Utils/image_urls.dart';
 import 'package:project1/Utils/text_styles.dart';
 import 'package:project1/Views/Screens/General%20Screens/forget_password_screen.dart';
 import 'package:project1/Views/Screens/Salesman%20Screens/salesman_bottom_nav_bar_screen.dart';
@@ -52,7 +52,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 color: AppColors.loginBackground.withOpacity(.3),
                 shape: BoxShape.circle,
               ),
-              child: Image.asset(Constants.logoImage),
+              child: Image.asset(ImageUrls.logoImage),
             ),
             SizedBox(height: 10),
             Text(

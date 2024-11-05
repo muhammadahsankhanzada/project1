@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project1/Utils/colors.dart';
-import 'package:project1/Utils/constants.dart';
+import 'package:project1/Utils/image_urls.dart';
 import 'package:project1/Utils/text_styles.dart';
 import 'package:project1/Views/Screens/Admin%20Screens/Accounts%20Management/admin_new_password_screen.dart';
 import 'package:project1/Views/Widgets/custom_appbar.dart';
@@ -49,7 +49,7 @@ class AdminPasswordResetRequestsScreen extends StatelessWidget {
                                 CircleAvatar(
                                   radius: 25,
                                   backgroundImage:
-                                      AssetImage(Constants.myImage),
+                                      AssetImage(ImageUrls.myImage),
                                 ),
                                 SizedBox(width: 10),
                                 Column(

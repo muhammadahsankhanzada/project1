@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:project1/Models/Dummy%20Models/warehouses_list_dummy_model.dart';
 import 'package:project1/Utils/colors.dart';
-import 'package:project1/Utils/constants.dart';
+import 'package:project1/Utils/image_urls.dart';
 import 'package:project1/Utils/text_styles.dart';
 import 'package:project1/Views/Screens/Admin%20Screens/Warehouse%20Records/admin_warehouse_details_screen.dart';
 import 'package:project1/Views/Widgets/custom_appbar.dart';
@@ -94,7 +94,7 @@ class _AdminWarehouseListScreenState extends State<AdminWarehouseListScreen> {
                                 children: [
                                   CircleAvatar(
                                     backgroundImage:
-                                        AssetImage(Constants.backgroundImage),
+                                        AssetImage(ImageUrls.backgroundImage),
                                   ),
                                   SizedBox(width: 15),
                                   Expanded(

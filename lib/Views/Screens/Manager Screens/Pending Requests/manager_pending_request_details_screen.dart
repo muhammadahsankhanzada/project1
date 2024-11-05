@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:project1/Utils/colors.dart';
-import 'package:project1/Utils/constants.dart';
+import 'package:project1/Utils/image_urls.dart';
 import 'package:project1/Utils/text_styles.dart';
 import 'package:project1/Views/Widgets/custom_appbar.dart';
 import 'package:project1/Views/Widgets/custom_snackbar.dart';
@@ -88,7 +88,7 @@ class _ManagerPendingRequestDetailsScreenState
                                               errorBuilder:
                                                   (context, error, stackTrace) {
                                                 return Image.asset(
-                                                  Constants.errorImage,
+                                                  ImageUrls.errorImage,
                                                   fit: BoxFit.cover,
                                                   height: 100,
                                                   width: 100,

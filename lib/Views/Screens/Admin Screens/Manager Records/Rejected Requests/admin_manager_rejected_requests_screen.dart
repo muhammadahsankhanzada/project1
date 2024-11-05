@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project1/Utils/colors.dart';
-import 'package:project1/Utils/constants.dart';
+import 'package:project1/Utils/image_urls.dart';
 import 'package:project1/Utils/text_styles.dart';
 import 'package:project1/Views/Screens/Admin%20Screens/Manager%20Records/Rejected%20Requests/admin_manager_rejected_requests_details_screen.dart';
 import 'package:project1/Views/Widgets/custom_appbar.dart';
@@ -45,7 +45,7 @@ class AdminManagerRejectedRequestsScreen extends StatelessWidget {
                           children: [
                             CircleAvatar(
                               radius: 35,
-                              backgroundImage: AssetImage(Constants.myImage),
+                              backgroundImage: AssetImage(ImageUrls.myImage),
                             ),
                             SizedBox(width: 10),
                             Column(
