@@ -39,35 +39,41 @@ class SuperAdminProductManagementScreen extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 20),
-              customContainer(
+              _buildButtonContainer(
                 ontap: () {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
                           builder: (context) =>
-                              ManagerAddProductWarehouseSelectionScreen()));
+                              ManagerAddProductWarehouseSelectionScreen(
+                                selectedScreen: 'Add Products',
+                              )));
                 },
                 title: 'Add Products',
                 icon: Icons.add_card,
               ),
-              customContainer(
+              _buildButtonContainer(
                 ontap: () {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
                           builder: (context) =>
-                              SuperAdminEditProductWarehouseSelectionScreen()));
+                              ManagerAddProductWarehouseSelectionScreen(
+                                selectedScreen: 'Edit Products',
+                              )));
                 },
                 title: 'Edit Products',
                 icon: Icons.edit,
               ),
-              customContainer(
+              _buildButtonContainer(
                 ontap: () {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
                           builder: (context) =>
-                              ManagerDeleteProductWarehouseSelectionScreen()));
+                              ManagerAddProductWarehouseSelectionScreen(
+                                selectedScreen: 'Delete Products',
+                              )));
                 },
                 title: 'Delete Products',
                 icon: Icons.delete,
@@ -79,9 +85,8 @@ class SuperAdminProductManagementScreen extends StatelessWidget {
     );
   }
 
-  //
-
-  customContainer(
+  // Go to different screens button
+  Widget _buildButtonContainer(
       {required VoidCallback ontap,
       required String title,
       required IconData icon}) {

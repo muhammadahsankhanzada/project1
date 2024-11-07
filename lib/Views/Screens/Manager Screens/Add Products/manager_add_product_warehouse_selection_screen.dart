@@ -1,13 +1,14 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/text_styles.dart';
-import 'package:project1/Views/Screens/Manager%20Screens/Add%20Products/manager_add_products_screen.dart';
-import 'package:project1/Views/Widgets/custom_snackbar.dart';
+import 'package:project1/View%20Models/warehouse_selection_view_model.dart';
 import 'package:project1/Views/Widgets/universal_button.dart';
+import 'package:provider/provider.dart';
 
 class ManagerAddProductWarehouseSelectionScreen extends StatefulWidget {
-  const ManagerAddProductWarehouseSelectionScreen({super.key});
+  final String selectedScreen;
+  const ManagerAddProductWarehouseSelectionScreen(
+      {super.key, required this.selectedScreen});
 
   @override
   State<ManagerAddProductWarehouseSelectionScreen> createState() =>
@@ -16,22 +17,29 @@ class ManagerAddProductWarehouseSelectionScreen extends StatefulWidget {
 
 class _ManagerAddProductWarehouseSelectionScreenState
     extends State<ManagerAddProductWarehouseSelectionScreen> {
-  List<bool> selectedWarehouses = [];
-  bool isSelectionModeOn = false;
-  List<String> warehouseValuesList = [];
+  late WarehouseSelectionViewModel _warehouseSelectionViewModel;
 
-  // Color containerBackgroundColor = AppColors.lightGreen;
   @override
   void initState() {
+    final viewModel =
+        Provider.of<WarehouseSelectionViewModel>(context, listen: false);
+    viewModel.fetchWarehouses();
     super.initState();
-
-    // Warehouses List
-    fetchWarehouses();
   }
 
-  void _updateSelectionMode() {
-    // Check if any warehouse is selected
-    isSelectionModeOn = selectedWarehouses.any((selected) => selected);
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Only set _warehouseSelectionViewModel if it is not already set
+    if (!mounted) return;
+    _warehouseSelectionViewModel =
+        Provider.of<WarehouseSelectionViewModel>(context, listen: false);
+  }
+
+  @override
+  void dispose() {
+    _warehouseSelectionViewModel.resetViewModel();
+    super.dispose();
   }
 
   @override
@@ -50,151 +58,110 @@ class _ManagerAddProductWarehouseSelectionScreenState
         centerTitle: true,
         backgroundColor: AppColors.lightWhiteBackground,
         actions: [
-          InkWell(
-            onTap: () {
-              bool selectAll = !isSelectionModeOn;
-              for (int i = 0; i < selectedWarehouses.length; i++) {
-                selectedWarehouses[i] = selectAll;
-              }
-              isSelectionModeOn = selectAll;
-              setState(() {});
-            },
-            borderRadius: BorderRadius.circular(5),
-            child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-              decoration: BoxDecoration(
-                color: AppColors.lightGreen1,
-                borderRadius: BorderRadius.circular(5),
-              ),
-              child: Text(
-                isSelectionModeOn ? 'Deselect all' : 'Select all',
-                style: AppTextStyles.simpleHeadingTextStyle(
-                  fontSize: 12,
-                  textColor: AppColors.white,
+          Consumer<WarehouseSelectionViewModel>(
+              builder: (context, value, child) {
+            return InkWell(
+              onTap: () {
+                value.selectAll();
+              },
+              borderRadius: BorderRadius.circular(5),
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                decoration: BoxDecoration(
+                  color: AppColors.lightGreen1,
+                  borderRadius: BorderRadius.circular(5),
+                ),
+                child: Text(
+                  value.isSelectionModeOn ? 'Deselect all' : 'Select all',
+                  style: AppTextStyles.simpleHeadingTextStyle(
+                    fontSize: 12,
+                    textColor: AppColors.white,
+                  ),
                 ),
               ),
-            ),
-          ),
+            );
+          }),
           SizedBox(width: 10),
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-        child: warehouseValuesList == []
-            ? Center(child: CircularProgressIndicator())
-            : Column(
-                children: [
-                  SizedBox(height: 10),
-                  Expanded(
-                    child: ListView.builder(
-                        itemCount: warehouseValuesList.length,
-                        shrinkWrap: true,
-                        // physics: NeverScrollableScrollPhysics(),
-                        itemBuilder: (context, index) {
-                          return Column(
-                            children: [
-                              InkWell(
-                                onLongPress: () {
-                                  print('longtap');
-                                  isSelectionModeOn = true;
-                                  selectedWarehouses[index] =
-                                      !selectedWarehouses[index];
-                                  _updateSelectionMode();
-                                  setState(() {});
-                                },
-                                onTap: () {
-                                  print('ontap');
-                                  if (isSelectionModeOn) {
-                                    selectedWarehouses[index] =
-                                        !selectedWarehouses[index];
-                                    _updateSelectionMode();
-
-                                    setState(() {});
-                                  } else {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                ManagerAddProductsScreen(
-                                                  warehouseList: [
-                                                    warehouseValuesList[index]
-                                                  ],
-                                                )));
-                                  }
-                                },
-                                borderRadius: BorderRadius.circular(10),
-                                child: Container(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 20, vertical: 15),
-                                  decoration: BoxDecoration(
-                                      color: selectedWarehouses[index]
-                                          ? AppColors.green.withOpacity(.7)
-                                          : AppColors.lightGreen1
-                                              .withOpacity(.7),
-                                      borderRadius: BorderRadius.circular(10)),
-                                  child: Center(
-                                      child: Text(
-                                    warehouseValuesList[index],
-                                    style: AppTextStyles.simpleHeadingTextStyle(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.bold,
-                                      textColor: AppColors.white,
-                                    ),
-                                  )),
+      body: Consumer<WarehouseSelectionViewModel>(
+          builder: (context, value, child) {
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+          child: value.warehouseValuesList == []
+              ? Center(child: CircularProgressIndicator())
+              : Column(
+                  children: [
+                    SizedBox(height: 10),
+                    Expanded(
+                      child: ListView.builder(
+                          itemCount: value.warehouseValuesList.length,
+                          shrinkWrap: true,
+                          itemBuilder: (context, index) {
+                            return Column(
+                              children: [
+                                InkWell(
+                                  onLongPress: () {
+                                    value.onLongPress(index);
+                                  },
+                                  onTap: () {
+                                    if (value.isSelectionModeOn) {
+                                      value.onTap(index);
+                                    } else {
+                                      List<String> selectedWarehouse = [];
+                                      selectedWarehouse.add(
+                                          value.warehouseValuesList[index]);
+                                      value.goToDifferentScreens(
+                                          widget.selectedScreen,
+                                          selectedWarehouse,
+                                          context);
+                                    }
+                                  },
+                                  borderRadius: BorderRadius.circular(10),
+                                  child: Container(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 20, vertical: 15),
+                                    decoration: BoxDecoration(
+                                        color: value.selectedWarehouses[index]
+                                            ? AppColors.green.withOpacity(.7)
+                                            : AppColors.lightGreen1
+                                                .withOpacity(.7),
+                                        borderRadius:
+                                            BorderRadius.circular(10)),
+                                    child: Center(
+                                        child: Text(
+                                      value.warehouseValuesList[index],
+                                      style:
+                                          AppTextStyles.simpleHeadingTextStyle(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.bold,
+                                        textColor: AppColors.white,
+                                      ),
+                                    )),
+                                  ),
                                 ),
-                              ),
-                              SizedBox(height: 10),
-                            ],
-                          );
-                        }),
-                  ),
-                  SizedBox(height: 10),
-                  Visibility(
-                    visible: isSelectionModeOn,
-                    child: UniversalButton(
-                        title: 'Continue',
-                        textSize: 15,
-                        ontap: () {
-                          List<String> selectedWarehouseNames = [];
-                          for (int i = 0; i < selectedWarehouses.length; i++) {
-                            if (selectedWarehouses[i]) {
-                              selectedWarehouseNames
-                                  .add(warehouseValuesList[i]);
+                                SizedBox(height: 10),
+                              ],
+                            );
+                          }),
+                    ),
+                    SizedBox(height: 10),
+                    Visibility(
+                      visible: value.isSelectionModeOn,
+                      child: UniversalButton(
+                          title: 'Continue',
+                          textSize: 15,
+                          ontap: () {
+                            if (value.getSelectedWarehouseNames().isNotEmpty) {
+                              value.goToDifferentScreens(widget.selectedScreen,
+                                  value.getSelectedWarehouseNames(), context);
                             }
-                          }
-                          if (selectedWarehouseNames.isNotEmpty) {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        ManagerAddProductsScreen(
-                                            warehouseList:
-                                                selectedWarehouseNames)));
-                          } else {
-                            customSnackbar(
-                                context, 'Select a Warehouse to continue');
-                          }
-                        }),
-                  ),
-                ],
-              ),
-      ),
+                          }),
+                    ),
+                  ],
+                ),
+        );
+      }),
     );
-  }
-
-  // Method to fetch warehouses list
-  fetchWarehouses() async {
-    FirebaseFirestore firestore = FirebaseFirestore.instance;
-
-    try {
-      QuerySnapshot warehouseSnapshot =
-          await firestore.collection('Warehouses').get();
-      warehouseValuesList =
-          warehouseSnapshot.docs.map((doc) => doc.id).toList();
-      selectedWarehouses = List<bool>.filled(warehouseValuesList.length, false);
-      setState(() {});
-    } catch (error) {
-      print('Error getting data: $error');
-    }
   }
 }
