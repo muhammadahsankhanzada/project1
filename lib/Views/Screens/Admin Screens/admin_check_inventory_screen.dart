@@ -5,6 +5,7 @@ import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/text_styles.dart';
 import 'package:project1/Views/Screens/Manager%20Screens/Available%20Products/manager_available_products_items_list_screen.dart';
 import 'package:project1/Views/Widgets/custom_appbar.dart';
+import 'package:shimmer/shimmer.dart';
 // import 'package:project1/Models/products_model.dart' as Product;
 
 class AdminCheckInventoryScreen extends StatefulWidget {
@@ -56,7 +57,9 @@ class _AdminCheckInventoryScreenState extends State<AdminCheckInventoryScreen> {
                     future: fetchCategories(),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
-                        return Center(child: CircularProgressIndicator());
+                        return Center(
+                          child: _buildListViewLoading(),
+                        );
                       } else if (snapshot.hasError) {
                         return Center(child: Text('Error: ${snapshot.error}'));
                       } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
@@ -71,7 +74,6 @@ class _AdminCheckInventoryScreenState extends State<AdminCheckInventoryScreen> {
 
                           return InkWell(
                             onTap: () {
-                              setState(() {});
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -125,7 +127,9 @@ class _AdminCheckInventoryScreenState extends State<AdminCheckInventoryScreen> {
                   future: fetchCategories(),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
-                      return Center(child: CircularProgressIndicator());
+                      return Center(
+                        child: _buildGridViewLoading(),
+                      );
                     } else if (snapshot.hasError) {
                       return Center(child: Text('Error: ${snapshot.error}'));
                     } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
@@ -288,5 +292,73 @@ class _AdminCheckInventoryScreenState extends State<AdminCheckInventoryScreen> {
       print('Error getting categories: $error');
     }
     return categories;
+  }
+
+  // Loading effect for listview builder
+  Widget _buildListViewLoading() {
+    return Shimmer.fromColors(
+        child: ListView.builder(
+          itemCount: 4,
+          itemBuilder: (context, index) {
+            return Column(
+              children: [
+                Row(
+                  children: [
+                    Container(
+                      width: 100,
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                      decoration: BoxDecoration(
+                          color: AppColors.white,
+                          borderRadius: BorderRadius.circular(20),
+                          border: Border.all(
+                            color: AppColors.white,
+                            width: 2,
+                          )),
+                      child: Center(
+                        child: Text(
+                          '',
+                          style: AppTextStyles.nameHeadingTextStyle(size: 15),
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: 10),
+                  ],
+                ),
+              ],
+            );
+          },
+          scrollDirection: Axis.horizontal,
+        ),
+        baseColor: AppColors.grey.withOpacity(.3),
+        highlightColor: AppColors.grey.withOpacity(.1));
+  }
+
+  // Loading effect for gridview builder
+  Widget _buildGridViewLoading() {
+    return Shimmer.fromColors(
+        child: GridView.builder(
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+            ),
+            itemCount: 5,
+            itemBuilder: (context, index) {
+              return Column(
+                children: [
+                  Container(
+                    height: 150,
+                    width: 180,
+                    decoration: BoxDecoration(
+                      color: AppColors.white,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                ],
+              );
+            }),
+        baseColor: AppColors.grey.withOpacity(.3),
+        highlightColor: AppColors.grey.withOpacity(.1));
   }
 }

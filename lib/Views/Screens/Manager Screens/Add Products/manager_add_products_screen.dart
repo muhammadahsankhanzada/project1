@@ -34,13 +34,6 @@ class _ManagerAddProductsScreenState extends State<ManagerAddProductsScreen> {
   String? _imageUrl;
   List<String> categoryValuesList = [];
 
-  // final List<String> categoryValues = [
-  //   'Electronics',
-  //   'Home Appliances',
-  //   'Fashion',
-  //   'Other',
-  // ];
-
   @override
   void initState() {
     super.initState();
@@ -114,7 +107,7 @@ class _ManagerAddProductsScreenState extends State<ManagerAddProductsScreen> {
                             )),
                 ),
                 SizedBox(height: 20),
-                textField(
+                _buildCustomTextField(
                     hint: 'Name',
                     icon: Icons.fastfood,
                     controller: _productNameController,
@@ -196,7 +189,7 @@ class _ManagerAddProductsScreenState extends State<ManagerAddProductsScreen> {
                 SizedBox(height: 20),
                 Visibility(
                   visible: selectedCategoryValue == 'Other',
-                  child: textField(
+                  child: _buildCustomTextField(
                       hint: 'New Category Name',
                       icon: Icons.new_label_outlined,
                       controller: _productNewCategoryNameController,
@@ -208,7 +201,7 @@ class _ManagerAddProductsScreenState extends State<ManagerAddProductsScreen> {
                         return null;
                       }),
                 ),
-                textField(
+                _buildCustomTextField(
                     hint: 'Price',
                     icon: Icons.attach_money,
                     controller: _productPriceController,
@@ -219,7 +212,7 @@ class _ManagerAddProductsScreenState extends State<ManagerAddProductsScreen> {
                       }
                       return null;
                     }),
-                textField(
+                _buildCustomTextField(
                     hint: 'Quantity',
                     icon: Icons.numbers,
                     controller: _productQuantityController,
@@ -238,7 +231,7 @@ class _ManagerAddProductsScreenState extends State<ManagerAddProductsScreen> {
                       if (_formKey.currentState!.validate() &&
                           selectedCategoryValue != null) {
                         String? categoryName;
-                        await uploadImage();
+                        await _uploadImage();
                         print(_pickedImage);
                         print(_imageUrl);
                         if (_productNameController.text.isNotEmpty &&
@@ -273,6 +266,9 @@ class _ManagerAddProductsScreenState extends State<ManagerAddProductsScreen> {
                                 .set(newProduct.toMap())
                                 .then((_) {
                               print('Document added with id: ${newProduct.id}');
+                              customSnackbar(
+                                  context, 'Product Added Successfully');
+                              Navigator.pop(context);
                             }).catchError((error) {
                               print('Error adding: $error');
                             });
@@ -293,7 +289,7 @@ class _ManagerAddProductsScreenState extends State<ManagerAddProductsScreen> {
     );
   }
 
-  textField({
+  Widget _buildCustomTextField({
     required String hint,
     required IconData icon,
     required TextEditingController controller,
@@ -327,7 +323,7 @@ class _ManagerAddProductsScreenState extends State<ManagerAddProductsScreen> {
   }
 
   // Upload image to firebase storage and get imageUrl
-  Future<void> uploadImage() async {
+  Future<void> _uploadImage() async {
     if (_pickedImage == null) return;
 
     try {

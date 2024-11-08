@@ -5,18 +5,18 @@ import 'package:project1/View%20Models/warehouse_selection_view_model.dart';
 import 'package:project1/Views/Widgets/universal_button.dart';
 import 'package:provider/provider.dart';
 
-class ManagerAddProductWarehouseSelectionScreen extends StatefulWidget {
+class ManagerWarehouseSelectionScreen extends StatefulWidget {
   final String selectedScreen;
-  const ManagerAddProductWarehouseSelectionScreen(
+  const ManagerWarehouseSelectionScreen(
       {super.key, required this.selectedScreen});
 
   @override
-  State<ManagerAddProductWarehouseSelectionScreen> createState() =>
-      _ManagerAddProductWarehouseSelectionScreenState();
+  State<ManagerWarehouseSelectionScreen> createState() =>
+      _ManagerWarehouseSelectionScreenState();
 }
 
-class _ManagerAddProductWarehouseSelectionScreenState
-    extends State<ManagerAddProductWarehouseSelectionScreen> {
+class _ManagerWarehouseSelectionScreenState
+    extends State<ManagerWarehouseSelectionScreen> {
   late WarehouseSelectionViewModel _warehouseSelectionViewModel;
 
   @override

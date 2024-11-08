@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/text_styles.dart';
-import 'package:project1/Views/Screens/Manager%20Screens/Delete%20Products/manager_delete_products_screen.dart';
+import 'package:project1/Views/Screens/Manager%20Screens/Delete%20Products/delete_products_screen.dart';
 import 'package:project1/Views/Widgets/custom_snackbar.dart';
 import 'package:project1/Views/Widgets/universal_button.dart';
 
@@ -115,7 +115,7 @@ class _ManagerDeleteProductWarehouseSelectionScreenState
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                ManagerDeleteProductsScreen(
+                                                DeleteProductsScreen(
                                                   warehouseList: [
                                                     warehouseValuesList[index]
                                                   ],
@@ -166,10 +166,9 @@ class _ManagerDeleteProductWarehouseSelectionScreenState
                             Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) =>
-                                        ManagerDeleteProductsScreen(
-                                            warehouseList:
-                                                selectedWarehouseNames)));
+                                    builder: (context) => DeleteProductsScreen(
+                                        warehouseList:
+                                            selectedWarehouseNames)));
                           } else {
                             customSnackbar(
                                 context, 'Select a Warehouse to continue');

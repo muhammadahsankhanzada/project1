@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/text_styles.dart';
-import 'package:project1/Views/Screens/Super%20Admin%20Screens/Product%20Management/super_admin_edit_products_screen.dart';
+import 'package:project1/Views/Screens/Super%20Admin%20Screens/Product%20Management/edit_products_screen.dart';
 import 'package:project1/Views/Widgets/custom_snackbar.dart';
 import 'package:project1/Views/Widgets/universal_button.dart';
 
@@ -112,7 +112,7 @@ class _SuperAdminEditProductWarehouseSelectionScreenState
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                SuperAdminEditProductsScreen(
+                                                EditProductsScreen(
                                                   warehouseList: [
                                                     warehouseValuesList[index]
                                                   ],
@@ -163,10 +163,9 @@ class _SuperAdminEditProductWarehouseSelectionScreenState
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) =>
-                                        SuperAdminEditProductsScreen(
-                                            warehouseList:
-                                                selectedWarehouseNames)));
+                                    builder: (context) => EditProductsScreen(
+                                        warehouseList:
+                                            selectedWarehouseNames)));
                           } else {
                             customSnackbar(
                                 context, 'Select a Warehouse to continue');

@@ -4,6 +4,7 @@ import 'package:project1/Models/available_products_model.dart';
 import 'package:project1/Models/categories_model.dart';
 import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/text_styles.dart';
+import 'package:shimmer/shimmer.dart';
 
 class ManagerAvailableProductsReturnItemsScreen extends StatefulWidget {
   final String categoryName;
@@ -56,7 +57,9 @@ class _ManagerAvailableProductsReturnItemsScreenState
                 future: fetchCategories(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Center(child: CircularProgressIndicator());
+                    return Center(
+                      child: _buildListViewLoading(),
+                    );
                   } else if (snapshot.hasError) {
                     return Center(child: Text('Error: ${snapshot.error}'));
                   } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
@@ -79,7 +82,6 @@ class _ManagerAvailableProductsReturnItemsScreenState
                           children: [
                             Row(
                               children: [
-                                SizedBox(width: 10),
                                 Material(
                                   elevation: 4,
                                   borderRadius: BorderRadius.circular(20),
@@ -103,6 +105,7 @@ class _ManagerAvailableProductsReturnItemsScreenState
                                     ),
                                   ),
                                 ),
+                                SizedBox(width: 10),
                               ],
                             ),
                           ],
@@ -269,5 +272,37 @@ class _ManagerAvailableProductsReturnItemsScreenState
       print('Error getting categories: $error');
     }
     return categories;
+  }
+
+  // Shimmer for listview loading
+  Widget _buildListViewLoading() {
+    return Shimmer.fromColors(
+        child: ListView.builder(
+          itemCount: 4,
+          itemBuilder: (context, index) {
+            return Column(
+              children: [
+                Row(
+                  children: [
+                    Container(
+                      height: 35,
+                      width: 100,
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                      decoration: BoxDecoration(
+                        color: AppColors.white,
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                    ),
+                    SizedBox(width: 10),
+                  ],
+                ),
+              ],
+            );
+          },
+          scrollDirection: Axis.horizontal,
+        ),
+        baseColor: AppColors.grey.withOpacity(.3),
+        highlightColor: AppColors.grey.withOpacity(.1));
   }
 }

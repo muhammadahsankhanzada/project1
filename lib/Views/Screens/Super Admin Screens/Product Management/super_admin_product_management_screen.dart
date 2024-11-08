@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/text_styles.dart';
-import 'package:project1/Views/Screens/Manager%20Screens/Add%20Products/manager_add_product_warehouse_selection_screen.dart';
-import 'package:project1/Views/Screens/Manager%20Screens/Delete%20Products/manager_delete_product_warehouse_selection_screen.dart';
-import 'package:project1/Views/Screens/Super%20Admin%20Screens/Product%20Management/super_admin_edit_product_warehouse_selection_screen.dart';
+import 'package:project1/Views/Screens/Manager%20Screens/Add%20Products/manager_warehouse_selection_screen.dart';
 import 'package:project1/Views/Widgets/custom_appbar.dart';
 
 class SuperAdminProductManagementScreen extends StatelessWidget {
@@ -44,8 +42,7 @@ class SuperAdminProductManagementScreen extends StatelessWidget {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) =>
-                              ManagerAddProductWarehouseSelectionScreen(
+                          builder: (context) => ManagerWarehouseSelectionScreen(
                                 selectedScreen: 'Add Products',
                               )));
                 },
@@ -57,8 +54,7 @@ class SuperAdminProductManagementScreen extends StatelessWidget {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) =>
-                              ManagerAddProductWarehouseSelectionScreen(
+                          builder: (context) => ManagerWarehouseSelectionScreen(
                                 selectedScreen: 'Edit Products',
                               )));
                 },
@@ -70,8 +66,7 @@ class SuperAdminProductManagementScreen extends StatelessWidget {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) =>
-                              ManagerAddProductWarehouseSelectionScreen(
+                          builder: (context) => ManagerWarehouseSelectionScreen(
                                 selectedScreen: 'Delete Products',
                               )));
                 },
