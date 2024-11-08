@@ -22,7 +22,7 @@ class SuperAdminWarehouseManagementScreen extends StatelessWidget {
             SizedBox(height: 30),
             Column(
               children: [
-                customContainer(
+                _buildCustomButton(
                   ontap: () {
                     Navigator.push(
                         context,
@@ -32,7 +32,7 @@ class SuperAdminWarehouseManagementScreen extends StatelessWidget {
                   },
                   title: 'Add Warehouse',
                 ),
-                customContainer(
+                _buildCustomButton(
                   backgroundColor: AppColors.black,
                   ontap: () {
                     Navigator.push(
@@ -43,7 +43,7 @@ class SuperAdminWarehouseManagementScreen extends StatelessWidget {
                   },
                   title: 'Delete Warehouse',
                 ),
-                customContainer(
+                _buildCustomButton(
                   backgroundColor: AppColors.white,
                   textColor: AppColors.black,
                   ontap: () {
@@ -57,128 +57,16 @@ class SuperAdminWarehouseManagementScreen extends StatelessWidget {
                 ),
               ],
             ),
-            // SizedBox(height: 20),
-            // Material(
-            //   elevation: 4,
-            //   borderRadius: BorderRadius.circular(10),
-            //   child: Container(
-            //     padding: EdgeInsets.symmetric(horizontal: 25, vertical: 15),
-            //     decoration: BoxDecoration(
-            //       color: AppColors.white,
-            //       borderRadius: BorderRadius.circular(10),
-            //     ),
-            //     child: Text(
-            //       'Registered Warehouses',
-            //       style: TextStyle(
-            //         fontWeight: FontWeight.bold,
-            //       ),
-            //     ),
-            //   ),
-            // ),
-            // SizedBox(height: 20),
-            // Expanded(
-            //     child: ListView.builder(
-            //         shrinkWrap: true,
-            //         itemCount: warehousesDummyListContents.length,
-            //         itemBuilder: (context, index) {
-            //           return Column(
-            //             children: [
-            //               InkWell(
-            //                 onTap: () {
-            //                   Navigator.push(
-            //                       context,
-            //                       MaterialPageRoute(
-            //                           builder: (context) =>
-            //                               AdminWarehouseDetailsScreen(
-            //                                 warehouseName:
-            //                                     warehousesDummyListContents[
-            //                                             index]
-            //                                         .name,
-            //                               )));
-            //                 },
-            //                 borderRadius: BorderRadius.circular(40),
-            //                 child: Container(
-            //                   width: double.infinity,
-            //                   padding: EdgeInsets.symmetric(
-            //                       horizontal: 30, vertical: 15),
-            //                   decoration: BoxDecoration(
-            //                     borderRadius: BorderRadius.circular(40),
-            //                     color: AppColors.white.withOpacity(.7),
-            //                   ),
-            //                   child: Row(
-            //                     children: [
-            //                       CircleAvatar(
-            //                         backgroundImage:
-            //                             AssetImage(Constants.backgroundImage),
-            //                       ),
-            //                       SizedBox(width: 15),
-            //                       Expanded(
-            //                         child: Row(
-            //                           mainAxisAlignment:
-            //                               MainAxisAlignment.spaceBetween,
-            //                           children: [
-            //                             Column(
-            //                               crossAxisAlignment:
-            //                                   CrossAxisAlignment.start,
-            //                               children: [
-            //                                 SizedBox(
-            //                                   width: 200,
-            //                                   child: Text(
-            //                                     overflow: TextOverflow.ellipsis,
-            //                                     warehousesDummyListContents[
-            //                                             index]
-            //                                         .name,
-            //                                     style: AppTextStyles
-            //                                         .nameHeadingTextStyle(
-            //                                             size: 15),
-            //                                   ),
-            //                                 ),
-            //                                 Row(
-            //                                   children: [
-            //                                     Text(
-            //                                       'Location: ',
-            //                                       style: TextStyle(
-            //                                         fontWeight: FontWeight.w500,
-            //                                       ),
-            //                                     ),
-            //                                     SizedBox(
-            //                                       width: 150,
-            //                                       child: Text(
-            //                                           overflow:
-            //                                               TextOverflow.ellipsis,
-            //                                           warehousesDummyListContents[
-            //                                                   index]
-            //                                               .address),
-            //                                     ),
-            //                                   ],
-            //                                 ),
-            //                               ],
-            //                             ),
-            //                             Icon(
-            //                               Icons.store,
-            //                             )
-            //                           ],
-            //                         ),
-            //                       ),
-            //                     ],
-            //                   ),
-            //                 ),
-            //               ),
-            //               SizedBox(height: 10),
-            //             ],
-            //           );
-            //         })),
           ],
         ),
       ),
     );
   }
 
-  //
-  customContainer({
+  // Go to different screens
+  Widget _buildCustomButton({
     required VoidCallback ontap,
     required String title,
-    // Color borderColor = AppColors.green,
     Color textColor = AppColors.white,
     Color backgroundColor = AppColors.loginBackground,
   }) {
@@ -191,14 +79,9 @@ class SuperAdminWarehouseManagementScreen extends StatelessWidget {
             elevation: 4,
             borderRadius: BorderRadius.circular(10),
             child: Container(
-              // width: 200,
               padding: EdgeInsets.symmetric(horizontal: 25, vertical: 15),
               decoration: BoxDecoration(
                 color: backgroundColor,
-                // border: Border.all(
-                //   color: borderColor,
-                //   width: 2,
-                // ),
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Center(

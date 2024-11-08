@@ -8,15 +8,14 @@ import 'package:project1/Views/Widgets/custom_appbar.dart';
 import 'package:shimmer/shimmer.dart';
 // import 'package:project1/Models/products_model.dart' as Product;
 
-class AdminCheckInventoryScreen extends StatefulWidget {
-  const AdminCheckInventoryScreen({super.key});
+class CheckInventoryScreen extends StatefulWidget {
+  const CheckInventoryScreen({super.key});
 
   @override
-  State<AdminCheckInventoryScreen> createState() =>
-      _AdminCheckInventoryScreenState();
+  State<CheckInventoryScreen> createState() => _CheckInventoryScreenState();
 }
 
-class _AdminCheckInventoryScreenState extends State<AdminCheckInventoryScreen> {
+class _CheckInventoryScreenState extends State<CheckInventoryScreen> {
   @override
   void initState() {
     super.initState();

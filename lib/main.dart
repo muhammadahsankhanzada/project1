@@ -1,10 +1,14 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:project1/Utils/colors.dart';
+import 'package:project1/View%20Models/add_products_view_model.dart';
+import 'package:project1/View%20Models/add_shop_view_model.dart';
+import 'package:project1/View%20Models/add_warehouse_view_model.dart';
 import 'package:project1/View%20Models/admin_create_new_account_view_model.dart';
 import 'package:project1/View%20Models/admin_delete_account_view_model.dart';
 import 'package:project1/View%20Models/auth_view_model.dart';
 import 'package:project1/View%20Models/delete_products_view_model.dart';
+import 'package:project1/View%20Models/delete_shop_view_model.dart';
 import 'package:project1/View%20Models/edit_products_view_model.dart';
 import 'package:project1/View%20Models/super_admin_home_view_model.dart';
 import 'package:project1/View%20Models/super_admin_user_management_view_model.dart';
@@ -26,15 +30,20 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        // General Screens Providers
         ChangeNotifierProvider(create: (_) => AuthViewModel()),
         ChangeNotifierProvider(create: (_) => SuperAdminHomeViewModel()),
-        ChangeNotifierProvider(
-            create: (_) => SuperAdminUserManagementViewModel()),
         ChangeNotifierProvider(create: (_) => AdminCreateNewAccountViewModel()),
         ChangeNotifierProvider(create: (_) => AdminDeleteAccountViewModel()),
         ChangeNotifierProvider(create: (_) => WarehouseSelectionViewModel()),
+        ChangeNotifierProvider(create: (_) => AddProductsViewModel()),
         ChangeNotifierProvider(create: (_) => EditProductsViewModel()),
         ChangeNotifierProvider(create: (_) => DeleteProductsViewModel()),
+        ChangeNotifierProvider(create: (_) => AddShopViewModel()),
+        ChangeNotifierProvider(create: (_) => DeleteShopViewModel()),
+        ChangeNotifierProvider(create: (_) => AddWarehouseViewModel()),
+        ChangeNotifierProvider(
+            create: (_) => SuperAdminUserManagementViewModel()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

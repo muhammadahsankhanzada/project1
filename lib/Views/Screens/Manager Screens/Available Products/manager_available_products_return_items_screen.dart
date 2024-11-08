@@ -122,7 +122,7 @@ class _ManagerAvailableProductsReturnItemsScreenState
                   future: fetchProducts(),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
-                      return Center(child: CircularProgressIndicator());
+                      return Center(child: _buildGridViewLoading());
                     } else if (snapshot.hasError) {
                       return Center(child: Text('Error: ${snapshot.error}'));
                     } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
@@ -302,7 +302,40 @@ class _ManagerAvailableProductsReturnItemsScreenState
           },
           scrollDirection: Axis.horizontal,
         ),
-        baseColor: AppColors.grey.withOpacity(.3),
-        highlightColor: AppColors.grey.withOpacity(.1));
+        baseColor: AppColors.shimmerBaseColor,
+        highlightColor: AppColors.shimmerHighlightColor);
+  }
+
+  // Shimmer for gridview loading
+  Widget _buildGridViewLoading() {
+    return Shimmer.fromColors(
+        child: GridView.builder(
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 3,
+              mainAxisSpacing: 5,
+              crossAxisSpacing: 5,
+            ),
+            itemCount: 8,
+            itemBuilder: (context, index) {
+              return Center(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                      height: 100,
+                      width: 120,
+                      decoration: BoxDecoration(
+                        color: AppColors.white,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            }),
+        baseColor: AppColors.shimmerBaseColor,
+        highlightColor: AppColors.shimmerHighlightColor);
   }
 }

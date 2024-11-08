@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/text_styles.dart';
-import 'package:project1/Views/Screens/Manager%20Screens/Add%20Products/manager_warehouse_selection_screen.dart';
+import 'package:project1/Views/Screens/General%20Screens/warehouse_selection_screen.dart';
 import 'package:project1/Views/Widgets/custom_appbar.dart';
 
 class SuperAdminProductManagementScreen extends StatelessWidget {
@@ -42,7 +42,7 @@ class SuperAdminProductManagementScreen extends StatelessWidget {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => ManagerWarehouseSelectionScreen(
+                          builder: (context) => WarehouseSelectionScreen(
                                 selectedScreen: 'Add Products',
                               )));
                 },
@@ -54,7 +54,7 @@ class SuperAdminProductManagementScreen extends StatelessWidget {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => ManagerWarehouseSelectionScreen(
+                          builder: (context) => WarehouseSelectionScreen(
                                 selectedScreen: 'Edit Products',
                               )));
                 },
@@ -66,7 +66,7 @@ class SuperAdminProductManagementScreen extends StatelessWidget {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => ManagerWarehouseSelectionScreen(
+                          builder: (context) => WarehouseSelectionScreen(
                                 selectedScreen: 'Delete Products',
                               )));
                 },

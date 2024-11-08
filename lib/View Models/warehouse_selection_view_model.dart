@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:project1/Views/Screens/Manager%20Screens/Add%20Products/manager_add_products_screen.dart';
-import 'package:project1/Views/Screens/Manager%20Screens/Delete%20Products/delete_products_screen.dart';
-import 'package:project1/Views/Screens/Super%20Admin%20Screens/Product%20Management/edit_products_screen.dart';
+import 'package:project1/Views/Screens/General%20Screens/add_products_screen.dart';
+import 'package:project1/Views/Screens/General%20Screens/delete_products_screen.dart';
+import 'package:project1/Views/Screens/General%20Screens/edit_products_screen.dart';
 
 class WarehouseSelectionViewModel with ChangeNotifier {
   bool _isSelectionModeOn = false;
@@ -59,8 +59,8 @@ class WarehouseSelectionViewModel with ChangeNotifier {
       Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-              builder: (context) => ManagerAddProductsScreen(
-                  warehouseList: selectedWarehouseNames)));
+              builder: (context) =>
+                  AddProductsScreen(warehouseList: selectedWarehouseNames)));
     }
     if (selectedScreen == 'Edit Products') {
       Navigator.pushReplacement(

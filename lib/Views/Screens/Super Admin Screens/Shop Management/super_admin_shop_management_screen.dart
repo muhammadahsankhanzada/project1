@@ -23,7 +23,7 @@ class SuperAdminShopManagementScreen extends StatelessWidget {
             Center(
               child: Column(
                 children: [
-                  customContainer(
+                  _buildCustomButton(
                     ontap: () {
                       Navigator.push(
                           context,
@@ -32,7 +32,7 @@ class SuperAdminShopManagementScreen extends StatelessWidget {
                     },
                     title: 'Add Shop',
                   ),
-                  customContainer(
+                  _buildCustomButton(
                     backgroundColor: AppColors.black,
                     ontap: () {
                       Navigator.push(
@@ -43,7 +43,7 @@ class SuperAdminShopManagementScreen extends StatelessWidget {
                     },
                     title: 'Delete Shop',
                   ),
-                  customContainer(
+                  _buildCustomButton(
                     backgroundColor: AppColors.white,
                     textColor: AppColors.black,
                     ontap: () {
@@ -59,126 +59,17 @@ class SuperAdminShopManagementScreen extends StatelessWidget {
               ),
             ),
             SizedBox(height: 20),
-            // Material(
-            //   elevation: 4,
-            //   borderRadius: BorderRadius.circular(10),
-            //   child: Container(
-            //     padding: EdgeInsets.symmetric(horizontal: 25, vertical: 15),
-            //     decoration: BoxDecoration(
-            //       color: AppColors.white,
-            //       borderRadius: BorderRadius.circular(10),
-            //     ),
-            //     child: Text(
-            //       'Registered Shops',
-            //       style: TextStyle(
-            //         fontWeight: FontWeight.bold,
-            //       ),
-            //     ),
-            //   ),
-            // ),
-            // SizedBox(height: 20),
-            // Expanded(
-            //     child: ListView.builder(
-            //         shrinkWrap: true,
-            //         itemCount: shopsListContents.length,
-            //         itemBuilder: (context, index) {
-            //           return Column(
-            //             children: [
-            //               InkWell(
-            //                 onTap: () {
-            //                   Navigator.push(
-            //                       context,
-            //                       MaterialPageRoute(
-            //                           builder: (context) =>
-            //                               AdminShopRecordsDetailsScreen(
-            //                                 shopName:
-            //                                     shopsListContents[index].name,
-            //                                 shopAddress:
-            //                                     shopsListContents[index]
-            //                                         .address,
-            //                               )));
-            //                 },
-            //                 borderRadius: BorderRadius.circular(40),
-            //                 child: Container(
-            //                   width: double.infinity,
-            //                   padding: EdgeInsets.symmetric(
-            //                       horizontal: 30, vertical: 15),
-            //                   decoration: BoxDecoration(
-            //                     borderRadius: BorderRadius.circular(40),
-            //                     color: AppColors.white.withOpacity(.7),
-            //                   ),
-            //                   child: Row(
-            //                     children: [
-            //                       CircleAvatar(
-            //                         backgroundImage: AssetImage(
-            //                             shopsListContents[index].imageUrl),
-            //                       ),
-            //                       SizedBox(width: 15),
-            //                       Expanded(
-            //                         child: Row(
-            //                           mainAxisAlignment:
-            //                               MainAxisAlignment.spaceBetween,
-            //                           children: [
-            //                             Column(
-            //                               crossAxisAlignment:
-            //                                   CrossAxisAlignment.start,
-            //                               children: [
-            //                                 SizedBox(
-            //                                   width: 200,
-            //                                   child: Text(
-            //                                     overflow: TextOverflow.ellipsis,
-            //                                     shopsListContents[index].name,
-            //                                     style: AppTextStyles
-            //                                         .nameHeadingTextStyle(
-            //                                             size: 15),
-            //                                   ),
-            //                                 ),
-            //                                 Row(
-            //                                   children: [
-            //                                     Text(
-            //                                       'Address: ',
-            //                                       style: TextStyle(
-            //                                         fontWeight: FontWeight.w500,
-            //                                       ),
-            //                                     ),
-            //                                     SizedBox(
-            //                                       width: 150,
-            //                                       child: Text(
-            //                                           overflow:
-            //                                               TextOverflow.ellipsis,
-            //                                           shopsListContents[index]
-            //                                               .address),
-            //                                     ),
-            //                                   ],
-            //                                 ),
-            //                               ],
-            //                             ),
-            //                             Icon(
-            //                               Icons.assessment,
-            //                             )
-            //                           ],
-            //                         ),
-            //                       ),
-            //                     ],
-            //                   ),
-            //                 ),
-            //               ),
-            //               SizedBox(height: 10),
-            //             ],
-            //           );
-            //         })),
           ],
         ),
       ),
     );
   }
 
-  //
-  customContainer({
+  // Go to different screens button
+  Widget _buildCustomButton({
     required VoidCallback ontap,
     required String title,
     Color textColor = AppColors.white,
-    // Color borderColor = AppColors.green,
     Color backgroundColor = AppColors.loginBackground,
   }) {
     return Column(

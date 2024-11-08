@@ -12,7 +12,7 @@ class SuperAdminAdminRecordsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Map<String, dynamic> driverDetails = {
+    Map<String, dynamic> adminDetails = {
       'Warehouse': 'Warehouse 01',
       'CNIC': '45402-6789012-3',
       'Phone Number': '0304-1234567',
@@ -51,7 +51,7 @@ class SuperAdminAdminRecordsScreen extends StatelessWidget {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        for (var key in driverDetails.keys)
+                        for (var key in adminDetails.keys)
                           Align(
                             alignment: Alignment.topLeft,
                             child: Text(
@@ -66,7 +66,7 @@ class SuperAdminAdminRecordsScreen extends StatelessWidget {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        for (var value in driverDetails.values)
+                        for (var value in adminDetails.values)
                           Align(
                             alignment: Alignment.topLeft,
                             child: Text(

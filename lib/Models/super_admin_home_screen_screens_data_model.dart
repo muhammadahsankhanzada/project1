@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:project1/Views/Screens/Admin%20Screens/admin_check_inventory_screen.dart';
+import 'package:project1/Views/Screens/General%20Screens/check_inventory_screen.dart';
 import 'package:project1/Views/Screens/Super%20Admin%20Screens/Product%20Management/super_admin_product_management_screen.dart';
 import 'package:project1/Views/Screens/Super%20Admin%20Screens/Shop%20Management/super_admin_shop_management_screen.dart';
 import 'package:project1/Views/Screens/Super%20Admin%20Screens/User%20Management/super_admin_user_management_screen.dart';
@@ -42,6 +42,6 @@ final List<SuperAdminHomeScreenScreensDataModel>
   SuperAdminHomeScreenScreensDataModel(
     title: 'Inventory',
     icon: Icons.store,
-    screen: AdminCheckInventoryScreen(),
+    screen: CheckInventoryScreen(),
   ),
 ];

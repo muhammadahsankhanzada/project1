@@ -26,4 +26,6 @@ class AppColors {
   static const searchBox = Color(0xffFFFFFF);
   static const cartButton = Color(0xff147755);
   static const popupBackground = Color(0xff78BFB5);
+  static Color shimmerBaseColor = Colors.grey.withOpacity(.3);
+  static Color shimmerHighlightColor = Colors.grey.withOpacity(.1);
 }
