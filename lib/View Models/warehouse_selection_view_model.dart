@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:project1/Views/Screens/General%20Screens/add_products_screen.dart';
-import 'package:project1/Views/Screens/General%20Screens/delete_products_screen.dart';
-import 'package:project1/Views/Screens/General%20Screens/edit_products_screen.dart';
+import 'package:project1/Views/Screens/General%20Screens/Product%20Management/add_products_screen.dart';
+import 'package:project1/Views/Screens/General%20Screens/Product%20Management/delete_products_screen.dart';
+import 'package:project1/Views/Screens/General%20Screens/Product%20Management/edit_products_screen.dart';
 
 class WarehouseSelectionViewModel with ChangeNotifier {
   bool _isSelectionModeOn = false;

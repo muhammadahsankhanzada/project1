@@ -7,10 +7,16 @@ import 'package:project1/View%20Models/add_warehouse_view_model.dart';
 import 'package:project1/View%20Models/admin_create_new_account_view_model.dart';
 import 'package:project1/View%20Models/admin_delete_account_view_model.dart';
 import 'package:project1/View%20Models/auth_view_model.dart';
+import 'package:project1/View%20Models/check_inventory_view_model.dart';
 import 'package:project1/View%20Models/delete_products_view_model.dart';
 import 'package:project1/View%20Models/delete_shop_view_model.dart';
+import 'package:project1/View%20Models/delete_warehouse_view_model.dart';
 import 'package:project1/View%20Models/edit_products_view_model.dart';
+import 'package:project1/View%20Models/inventory_required_items_view_model.dart';
+import 'package:project1/View%20Models/inventory_required_return_items_view_model.dart';
+import 'package:project1/View%20Models/inventory_return_items_view_model.dart';
 import 'package:project1/View%20Models/registered_shops_view_model.dart';
+import 'package:project1/View%20Models/registered_warehouses_view_model.dart';
 import 'package:project1/View%20Models/super_admin_home_view_model.dart';
 import 'package:project1/View%20Models/super_admin_user_management_view_model.dart';
 import 'package:project1/View%20Models/warehouse_selection_view_model.dart';
@@ -44,6 +50,16 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => DeleteShopViewModel()),
         ChangeNotifierProvider(create: (_) => RegisteredShopsViewModel()),
         ChangeNotifierProvider(create: (_) => AddWarehouseViewModel()),
+        ChangeNotifierProvider(create: (_) => DeleteWarehouseViewModel()),
+        ChangeNotifierProvider(create: (_) => RegisteredWarehousesViewModel()),
+        ChangeNotifierProvider(create: (_) => CheckInventoryViewModel()),
+        ChangeNotifierProvider(
+            create: (_) => InventoryRequiredReturnItemsViewModel()),
+
+        ChangeNotifierProvider(
+            create: (_) => InventoryRequiredItemsViewModel()),
+
+        ChangeNotifierProvider(create: (_) => InventoryReturnItemsViewModel()),
         ChangeNotifierProvider(
             create: (_) => SuperAdminUserManagementViewModel()),
       ],

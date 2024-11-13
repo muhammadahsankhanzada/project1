@@ -4,12 +4,12 @@ import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/image_urls.dart';
 import 'package:project1/Utils/text_styles.dart';
 import 'package:project1/Views/Screens/Admin%20Screens/Accounts%20Management/admin_accounts_management_screen.dart';
-import 'package:project1/Views/Screens/General%20Screens/check_inventory_screen.dart';
-import 'package:project1/Views/Screens/Admin%20Screens/Manager%20Records/admin_managers_list_screen.dart';
-import 'package:project1/Views/Screens/Manager%20Screens/Salesman%20Records/manager_salesman_records_screen.dart';
+import 'package:project1/Views/Screens/General%20Screens/Inventory/check_inventory_screen.dart';
+import 'package:project1/Views/Screens/General%20Screens/User%20Records/Manager%20Records/Approved%20Requests/managers_list_screen.dart';
+import 'package:project1/Views/Screens/General%20Screens/User%20Records/Salesman%20Records/salesman_records_screen.dart';
 import 'package:project1/Views/Screens/Super%20Admin%20Screens/Product%20Management/super_admin_product_management_screen.dart';
-import 'package:project1/Views/Screens/Super%20Admin%20Screens/Shop%20Management/super_admin_registered_shops_screen.dart';
-import 'package:project1/Views/Screens/Super%20Admin%20Screens/Warehouse%20Management/super_admin_registered_warehouses_screen.dart';
+import 'package:project1/Views/Screens/General%20Screens/Shop%20Management/registered_shops_screen.dart';
+import 'package:project1/Views/Screens/General%20Screens/Warehouse%20Management/registered_warehouses_screen.dart';
 
 class AdminHomepage extends StatelessWidget {
   const AdminHomepage({super.key});
@@ -35,22 +35,22 @@ class AdminHomepage extends StatelessWidget {
       {
         'title': 'Salesman Records',
         'icon': Icons.directions_car,
-        'screen': ManagerSalesmanRecordsScreen(),
+        'screen': SalesmanRecordsScreen(),
       },
       {
         'title': 'Shop Records',
         'icon': Icons.shop,
-        'screen': SuperAdminRegisteredShopsScreen(),
+        'screen': RegisteredShopsScreen(),
       },
       {
         'title': 'Manager Records',
         'icon': Icons.supervisor_account,
-        'screen': AdminManagersListScreen(),
+        'screen': ManagersListScreen(),
       },
       {
         'title': 'Warehouse Details',
         'icon': Icons.store,
-        'screen': SuperAdminRegisteredWarehousesScreen(),
+        'screen': RegisteredWarehousesScreen(),
       },
     ];
 

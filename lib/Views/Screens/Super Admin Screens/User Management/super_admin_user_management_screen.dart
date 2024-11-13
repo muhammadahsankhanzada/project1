@@ -5,9 +5,9 @@ import 'package:project1/Utils/text_styles.dart';
 import 'package:project1/View%20Models/super_admin_user_management_view_model.dart';
 import 'package:project1/Views/Screens/Admin%20Screens/Accounts%20Management/admin_create_new_account_screen.dart';
 import 'package:project1/Views/Screens/Admin%20Screens/Accounts%20Management/admin_delete_account_screen.dart';
-import 'package:project1/Views/Screens/Admin%20Screens/Manager%20Records/admin_manager_records_details_screen.dart';
-import 'package:project1/Views/Screens/Manager%20Screens/Salesman%20Records/manager_salesman_records_details_screen.dart';
-import 'package:project1/Views/Screens/Super%20Admin%20Screens/User%20Management/super_admin_admin_records_screen.dart';
+import 'package:project1/Views/Screens/General%20Screens/User%20Records/Manager%20Records/manager_records_details_screen.dart';
+import 'package:project1/Views/Screens/General%20Screens/User%20Records/Salesman%20Records/salesman_records_details_screen.dart';
+import 'package:project1/Views/Screens/General%20Screens/User%20Records/Admin%20Records/admin_records_screen.dart';
 import 'package:project1/Views/Widgets/custom_appbar.dart';
 import 'package:project1/Views/Widgets/stream_builder_helper_widget.dart';
 import 'package:provider/provider.dart';
@@ -187,17 +187,17 @@ class _SuperAdminUserManagementScreenState
                                     MaterialPageRoute(
                                         builder: (context) => value
                                                 .isUserSalesman
-                                            ? ManagerSalesmanRecordsDetailsScreen(
+                                            ? SalesmanRecordsDetailsScreen(
                                                 salesmanName: data[index]
                                                     ['name'],
                                                 salesmanRoute: data[index]
                                                     ['address'],
                                               )
                                             : value.isUserManager
-                                                ? AdminManagerRecordsDetailsScreen(
+                                                ? ManagerRecordsDetailsScreen(
                                                     managerName: data[index]
                                                         ['name'])
-                                                : SuperAdminAdminRecordsScreen(
+                                                : AdminRecordsScreen(
                                                     adminName: data[index]
                                                         ['name'],
                                                   )));

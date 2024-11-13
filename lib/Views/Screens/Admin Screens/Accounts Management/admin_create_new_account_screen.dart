@@ -27,27 +27,6 @@ class _AdminCreateNewAccountScreenState
   var _cnicController = TextEditingController();
   var _addressController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-  // String? selectedVehicleValue;
-  // final List<String> vehicleValuesList = [
-  //   'Alto (20393)',
-  //   'Suzuki (32030)',
-  //   'Mehran (39843)',
-  // ];
-  // String? selectedRoleValue;
-  // final List<String> roleValuesList = [
-  //   'Salesman',
-  //   'Manager',
-  //   'Admin',
-  // ];
-  // String? selectedWarehouseValue;
-  // final List<String> warehouseValuesList = [];
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   for (int i = 0; i < warehousesDummyListContents.length; i++) {
-  //     warehouseValuesList.add(warehousesDummyListContents[i].name);
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {

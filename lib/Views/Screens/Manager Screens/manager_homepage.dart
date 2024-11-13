@@ -4,10 +4,10 @@ import 'package:project1/Models/Dummy%20Models/manager_homepage_items.dart';
 import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/image_urls.dart';
 import 'package:project1/Utils/text_styles.dart';
-import 'package:project1/Views/Screens/General%20Screens/check_inventory_screen.dart';
+import 'package:project1/Views/Screens/General%20Screens/Inventory/check_inventory_screen.dart';
 import 'package:project1/Views/Screens/General%20Screens/warehouse_selection_screen.dart';
 import 'package:project1/Views/Screens/Manager%20Screens/Approved%20Requests/manager_approved_requests_screen.dart';
-import 'package:project1/Views/Screens/Manager%20Screens/Salesman%20Records/manager_salesman_records_screen.dart';
+import 'package:project1/Views/Screens/General%20Screens/User%20Records/Salesman%20Records/salesman_records_screen.dart';
 import 'package:project1/Views/Screens/Manager%20Screens/Pending%20Requests/manager_pending_requests_screen.dart';
 
 class ManagerHomepage extends StatelessWidget {
@@ -231,7 +231,7 @@ class ManagerHomepage extends StatelessWidget {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                            ManagerSalesmanRecordsScreen()));
+                                            SalesmanRecordsScreen()));
                               }
                             }, managerHomepageContents[index].image,
                                 managerHomepageContents[index].title);

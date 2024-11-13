@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/text_styles.dart';
-import 'package:project1/Views/Screens/Super%20Admin%20Screens/Shop%20Management/super_admin_add_shop_screen.dart';
-import 'package:project1/Views/Screens/Super%20Admin%20Screens/Shop%20Management/super_admin_delete_shop_screen.dart';
-import 'package:project1/Views/Screens/Super%20Admin%20Screens/Shop%20Management/super_admin_registered_shops_screen.dart';
+import 'package:project1/Views/Screens/General%20Screens/Shop%20Management/add_shop_screen.dart';
+import 'package:project1/Views/Screens/General%20Screens/Shop%20Management/delete_shop_screen.dart';
+import 'package:project1/Views/Screens/General%20Screens/Shop%20Management/registered_shops_screen.dart';
 import 'package:project1/Views/Widgets/custom_appbar.dart';
 
 class SuperAdminShopManagementScreen extends StatelessWidget {
@@ -28,7 +28,7 @@ class SuperAdminShopManagementScreen extends StatelessWidget {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => SuperAdminAddShopScreen()));
+                              builder: (context) => AddShopScreen()));
                     },
                     title: 'Add Shop',
                   ),
@@ -38,8 +38,7 @@ class SuperAdminShopManagementScreen extends StatelessWidget {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) =>
-                                  SuperAdminDeleteShopScreen()));
+                              builder: (context) => DeleteShopScreen()));
                     },
                     title: 'Delete Shop',
                   ),
@@ -50,8 +49,7 @@ class SuperAdminShopManagementScreen extends StatelessWidget {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) =>
-                                  SuperAdminRegisteredShopsScreen()));
+                              builder: (context) => RegisteredShopsScreen()));
                     },
                     title: 'Registered Shops',
                   ),

@@ -1,59 +1,55 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:project1/Utils/colors.dart';
-import 'package:project1/Utils/image_urls.dart';
 import 'package:project1/Utils/text_styles.dart';
-import 'package:project1/View%20Models/admin_delete_account_view_model.dart';
+import 'package:project1/View%20Models/delete_warehouse_view_model.dart';
 import 'package:project1/Views/Widgets/custom_appbar.dart';
-import 'package:project1/Views/Widgets/custom_snackbar.dart';
-import 'package:project1/Views/Widgets/search_box_widget.dart';
 import 'package:project1/Views/Widgets/stream_builder_helper_widget.dart';
 import 'package:project1/Views/Widgets/universal_button.dart';
 import 'package:provider/provider.dart';
 
-class AdminDeleteAccountScreen extends StatefulWidget {
-  const AdminDeleteAccountScreen({super.key});
+class DeleteWarehouseScreen extends StatefulWidget {
+  const DeleteWarehouseScreen({super.key});
 
   @override
-  State<AdminDeleteAccountScreen> createState() =>
-      _AdminCreateNewAccountScreenState();
+  State<DeleteWarehouseScreen> createState() => _DeleteWarehouseScreenState();
 }
 
-class _AdminCreateNewAccountScreenState
-    extends State<AdminDeleteAccountScreen> {
-  final _formKey = GlobalKey<FormState>();
-  var _searchUserController = TextEditingController();
+class _DeleteWarehouseScreenState extends State<DeleteWarehouseScreen> {
+  var _formKey = GlobalKey<FormState>();
+  var _searchController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    Future.microtask(() {
+      context.read<DeleteWarehouseViewModel>().resetState();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.lightWhiteBackground,
-      appBar: CustomAppbar(title: 'Delete Account'),
+      appBar: CustomAppbar(title: 'Delete Warehouse'),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-          child: Consumer<AdminDeleteAccountViewModel>(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: Consumer<DeleteWarehouseViewModel>(
               builder: (context, value, child) {
             return Form(
               key: _formKey,
               child: Column(
                 children: [
-                  SizedBox(height: 20),
+                  SizedBox(height: 30),
                   Align(
                     alignment: Alignment.topLeft,
                     child: Text(
-                      'Account Deletion',
+                      'Delete Warehouse',
                       style: AppTextStyles.nameHeadingTextStyle(size: 20),
                     ),
                   ),
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: Text(
-                      'Permanently remove a user account and all associated data from the system.',
-                      style: AppTextStyles.belowMainHeadingTextStyle(
-                          fontSize: 15, textColor: AppColors.red.shade400),
-                    ),
-                  ),
-                  SizedBox(height: 30),
+                  SizedBox(height: 20),
                   AnimatedContainer(
                     duration: Duration(milliseconds: 500),
                     decoration: BoxDecoration(
@@ -63,11 +59,26 @@ class _AdminCreateNewAccountScreenState
                     ),
                     child: Column(
                       children: [
-                        SearchBoxWidget(
-                          controller: _searchUserController,
-                          hintText: 'Enter Email / Phone Number',
-                          keyboardType: TextInputType.name,
-                          onChanged: value.onChanged,
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 10, vertical: 5),
+                          child: TextFormField(
+                            controller: _searchController,
+                            onChanged: value.onChanged,
+                            keyboardType: TextInputType.name,
+                            decoration: InputDecoration(
+                              hintText: 'Search warehouse name...',
+                              contentPadding:
+                                  EdgeInsets.symmetric(horizontal: 30),
+                              suffixIcon: Icon(
+                                Icons.search,
+                              ),
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide.none,
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                            ),
+                          ),
                         ),
                         AnimatedSize(
                           duration: Duration(milliseconds: 500),
@@ -80,7 +91,7 @@ class _AdminCreateNewAccountScreenState
                                   indent: 30,
                                   endIndent: 30,
                                 ),
-                                _buildUserAccountsListWidget(),
+                                _buildSteamBuilder(),
                               ],
                             ),
                           ),
@@ -90,7 +101,7 @@ class _AdminCreateNewAccountScreenState
                   ),
                   SizedBox(height: 20),
                   Visibility(
-                    visible: value.isUserNameSelected,
+                    visible: value.isWarehouseSelected,
                     child: Container(
                       width: 300,
                       padding: EdgeInsets.all(15),
@@ -104,10 +115,10 @@ class _AdminCreateNewAccountScreenState
                           CircleAvatar(
                             radius: 25,
                             backgroundImage:
-                                NetworkImage(value.selectedUserImage),
+                                NetworkImage(value.selectedWarehouseImage),
                           ),
                           Text(
-                            value.selectedUserName,
+                            value.selectedWarehouseName,
                             style: AppTextStyles.simpleHeadingTextStyle(
                               fontWeight: FontWeight.bold,
                             ),
@@ -149,21 +160,21 @@ class _AdminCreateNewAccountScreenState
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      value.selectedUserAddress,
+                                      value.selectedWarehouseAddress,
                                       style:
                                           AppTextStyles.simpleHeadingTextStyle(
                                         fontWeight: FontWeight.w400,
                                       ),
                                     ),
                                     Text(
-                                      value.selectedUserContact,
+                                      value.selectedWarehouseContact,
                                       style:
                                           AppTextStyles.simpleHeadingTextStyle(
                                         fontWeight: FontWeight.w400,
                                       ),
                                     ),
                                     Text(
-                                      value.selectedUserEmail,
+                                      value.selectedWarehouseEmail,
                                       style:
                                           AppTextStyles.simpleHeadingTextStyle(
                                         fontWeight: FontWeight.w400,
@@ -181,15 +192,16 @@ class _AdminCreateNewAccountScreenState
                   ),
                   SizedBox(height: 20),
                   Visibility(
-                    visible: value.isUserNameSelected,
+                    visible: value.isWarehouseSelected,
                     child: UniversalButton(
                         buttonWidth: 250,
-                        title: 'Delete Account',
+                        title: 'Delete Warehouse',
                         ontap: () {
                           if (_formKey.currentState!.validate()) {}
+
                           showDialog(
                               context: context,
-                              builder: (BuildContext context) {
+                              builder: (BuildContext dialogBoxContext) {
                                 return AlertDialog(
                                   contentPadding: EdgeInsets.zero,
                                   content: Container(
@@ -205,13 +217,13 @@ class _AdminCreateNewAccountScreenState
                                       children: [
                                         SizedBox(height: 20),
                                         Text(
-                                          'Confirm Deletion?',
+                                          'Confirm Deletion',
                                           style: AppTextStyles
                                               .nameHeadingTextStyle(),
                                         ),
                                         SizedBox(height: 20),
                                         Text(
-                                          'Are you sure you want to delete this user\'s account.',
+                                          'Are you sure you want to delete this warehouse.',
                                           style: AppTextStyles
                                               .belowMainHeadingTextStyle(),
                                         ),
@@ -224,7 +236,6 @@ class _AdminCreateNewAccountScreenState
                                                 title: 'Cancel',
                                                 buttonHeight: 40,
                                                 buttonWidth: 110,
-                                                buttonColor: AppColors.black,
                                                 ontap: () {
                                                   Navigator.pop(context);
                                                 }),
@@ -232,12 +243,14 @@ class _AdminCreateNewAccountScreenState
                                                 title: 'Delete',
                                                 buttonHeight: 40,
                                                 buttonWidth: 110,
-                                                buttonColor: AppColors.green,
+                                                buttonColor: AppColors
+                                                    .universalButtonGreen,
                                                 ontap: () {
-                                                  Navigator.pop(context);
-
-                                                  customSnackbar(context,
-                                                      'Account deleted.');
+                                                  value.deleteWarehouse(
+                                                      value
+                                                          .selectedWarehouseName,
+                                                      context,
+                                                      dialogBoxContext);
                                                 }),
                                           ],
                                         ),
@@ -248,6 +261,7 @@ class _AdminCreateNewAccountScreenState
                               });
                         }),
                   ),
+                  SizedBox(height: 20),
                 ],
               ),
             );
@@ -257,50 +271,52 @@ class _AdminCreateNewAccountScreenState
     );
   }
 
-  Widget _buildUserAccountsListWidget() {
-    return Consumer<AdminDeleteAccountViewModel>(
-        builder: (context, value, child) {
-      return StreamBuilderHelperWidget(
-        stream: value.fetchUserRecords(),
-        onSuccess: (result) {
-          var data = result.docs;
+  // To search, filter and show warehouses
+  Widget _buildSteamBuilder() {
+    return Consumer<DeleteWarehouseViewModel>(builder: (context, value, child) {
+      return StreamBuilderHelperWidget<QuerySnapshot>(
+          stream: value.warehousesStream,
+          onSuccess: (data) {
+            final filteredWarehouses = value.getFilteredWarehouses(data.docs);
 
-          final filteredUsers = value.filterUsernames(data);
-
-          return ListView.builder(
-              shrinkWrap: true,
-              itemCount: filteredUsers.length,
-              itemBuilder: (context, index) {
-                return ListTile(
-                  onTap: () {
-                    value.selectedUserName = filteredUsers[index]['name'];
-                    value.selectedUserImage = filteredUsers[index]['imageUrl'];
-                    value.selectedUserAddress = filteredUsers[index]['address'];
-                    value.selectedUserContact = '030238928223';
-                    value.selectedUserEmail = 'asfdf@gmail.com';
-                    _searchUserController.text = '';
-                    value.isUserNameSelected = true;
-                    value.isSearching = false;
-                  },
-                  leading: CircleAvatar(
-                    child: ClipOval(
-                      child: Image.network(
-                        filteredUsers[index]['imageUrl'],
-                        errorBuilder: (context, error, stackTrace) {
-                          return Image.asset(ImageUrls.errorImage);
-                        },
+            return SizedBox(
+              height: 300,
+              child: filteredWarehouses.isEmpty
+                  ? Center(
+                      child: Text(
+                      'No Warehouses found',
+                      style: AppTextStyles.simpleHeadingTextStyle(
+                        fontWeight: FontWeight.bold,
                       ),
+                    ))
+                  : ListView.builder(
+                      padding: EdgeInsets.only(left: 20),
+                      itemCount: filteredWarehouses.length,
+                      itemBuilder: (context, index) {
+                        final warehouse = filteredWarehouses[index];
+                        final warehouseImage = warehouse['imageUrl'];
+                        final warehouseName = warehouse['name'] ?? 'No Name';
+                        final warehouseAddress =
+                            warehouse['address'] ?? 'No Address';
+
+                        return ListTile(
+                          leading: CircleAvatar(
+                            backgroundImage: NetworkImage(warehouseImage),
+                          ),
+                          title: Text(warehouseName),
+                          subtitle: Text(warehouseAddress),
+                          onTap: () {
+                            value.selectWarehouse(warehouse);
+                            _searchController.text = '';
+                          },
+                        );
+                      },
                     ),
-                  ),
-                  title: Text(filteredUsers[index]['name'].toString()),
-                  subtitle: Text(filteredUsers[index]['address']),
-                );
-              });
-        },
-        loadingWidget: CircularProgressIndicator(),
-        errorWidget: Text('Error Fetching Records'),
-        emptyWidget: Text('No Records Found'),
-      );
+            );
+          },
+          loadingWidget: CircularProgressIndicator(),
+          emptyWidget: Text('No Warehouses Found.'),
+          errorWidget: Text('Error Searching Warehouses'));
     });
   }
 }

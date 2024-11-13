@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/text_styles.dart';
-import 'package:project1/Views/Screens/Super%20Admin%20Screens/Warehouse%20Management/super_admin_add_warehouse_screen.dart';
-import 'package:project1/Views/Screens/Super%20Admin%20Screens/Warehouse%20Management/super_admin_registered_warehouses_screen.dart';
-import 'package:project1/Views/Screens/Super%20Admin%20Screens/Warehouse%20Management/super_admin_remove_warehouse_screen.dart';
+import 'package:project1/Views/Screens/General%20Screens/Warehouse%20Management/add_warehouse_screen.dart';
+import 'package:project1/Views/Screens/General%20Screens/Warehouse%20Management/registered_warehouses_screen.dart';
+import 'package:project1/Views/Screens/General%20Screens/Warehouse%20Management/delete_warehouse_screen.dart';
 import 'package:project1/Views/Widgets/custom_appbar.dart';
 
 class SuperAdminWarehouseManagementScreen extends StatelessWidget {
@@ -27,8 +27,7 @@ class SuperAdminWarehouseManagementScreen extends StatelessWidget {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) =>
-                                SuperAdminAddWarehouseScreen()));
+                            builder: (context) => AddWarehouseScreen()));
                   },
                   title: 'Add Warehouse',
                 ),
@@ -38,8 +37,7 @@ class SuperAdminWarehouseManagementScreen extends StatelessWidget {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) =>
-                                SuperAdminRemoveWarehouseScreen()));
+                            builder: (context) => DeleteWarehouseScreen()));
                   },
                   title: 'Delete Warehouse',
                 ),
@@ -51,7 +49,7 @@ class SuperAdminWarehouseManagementScreen extends StatelessWidget {
                         context,
                         MaterialPageRoute(
                             builder: (context) =>
-                                SuperAdminRegisteredWarehousesScreen()));
+                                RegisteredWarehousesScreen()));
                   },
                   title: 'Registered Warehouses',
                 ),
