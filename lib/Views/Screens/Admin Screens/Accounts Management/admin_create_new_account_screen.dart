@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/text_styles.dart';
-import 'package:project1/View%20Models/admin_create_new_account_view_model.dart';
+import 'package:project1/View%20Models/General%20View%20Models/create_new_account_view_model.dart';
 import 'package:project1/Views/Widgets/custom_appbar.dart';
 import 'package:project1/Views/Widgets/custom_snackbar.dart';
 import 'package:project1/Views/Widgets/universal_button.dart';
@@ -29,6 +29,14 @@ class _AdminCreateNewAccountScreenState
   final _formKey = GlobalKey<FormState>();
 
   @override
+  void initState() {
+    super.initState();
+    Future.microtask(() {
+      context.read<CreateNewAccountViewModel>().resetState();
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.lightWhiteBackground,
@@ -38,7 +46,7 @@ class _AdminCreateNewAccountScreenState
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-          child: Consumer<AdminCreateNewAccountViewModel>(
+          child: Consumer<CreateNewAccountViewModel>(
               builder: (context, value, child) {
             return Form(
               key: _formKey,
@@ -85,8 +93,10 @@ class _AdminCreateNewAccountScreenState
                     child: Column(
                       children: [
                         InkWell(
-                          onTap: () {},
-                          borderRadius: BorderRadius.circular(10),
+                          onTap: () {
+                            value.pickImageOnTap();
+                          },
+                          borderRadius: BorderRadius.circular(30),
                           child: Container(
                               height: 200,
                               width: double.infinity,
@@ -94,11 +104,19 @@ class _AdminCreateNewAccountScreenState
                                 border: Border.all(color: AppColors.grey),
                                 borderRadius: BorderRadius.circular(30),
                               ),
-                              child: Icon(
-                                Icons.camera_alt,
-                                size: 30,
-                                color: AppColors.black,
-                              )),
+                              child: value.pickedImage != null
+                                  ? ClipRRect(
+                                      borderRadius: BorderRadius.circular(30),
+                                      child: Image.file(
+                                        fit: BoxFit.fill,
+                                        value.pickedImage!,
+                                      ),
+                                    )
+                                  : Icon(
+                                      Icons.camera_alt,
+                                      size: 30,
+                                      color: AppColors.black,
+                                    )),
                         ),
                         SizedBox(height: 20),
                         _buildTextFieldWidget(
@@ -255,19 +273,35 @@ class _AdminCreateNewAccountScreenState
                             buttonWidth: 250,
                             title: 'Create',
                             ontap: () {
-                              if (_formKey.currentState!.validate()) {}
-                              if (value.selectedRoleValue == 'Salesman') {
-                                customSnackbar(context,
-                                    'Salesman account successfully created');
+                              if (_formKey.currentState!.validate()) {
+                                value.registerUser(
+                                  context: context,
+                                  name: _nameController.text,
+                                  contact: _phoneNumberController.text,
+                                  password: _passwordController.text,
+                                  confirmPassword:
+                                      _confirmPasswordController.text,
+                                  age: _ageController.text,
+                                  cnic: _cnicController.text,
+                                  address: _addressController.text,
+                                  email: _emailController.text,
+                                  route: _routeController.text,
+                                );
                               }
-                              if (value.selectedRoleValue == 'Manager') {
-                                customSnackbar(context,
-                                    'Manager account successfully created');
-                              }
-                              if (value.selectedRoleValue == 'Admin') {
-                                customSnackbar(context,
-                                    'Admin account successfully created');
-                              }
+
+                              ///////////////////////////////////////
+                              // if (value.selectedRoleValue == 'Salesman') {
+                              //   customSnackbar(context,
+                              //       'Salesman account successfully created');
+                              // }
+                              // if (value.selectedRoleValue == 'Manager') {
+                              //   customSnackbar(context,
+                              //       'Manager account successfully created');
+                              // }
+                              // if (value.selectedRoleValue == 'Admin') {
+                              //   customSnackbar(context,
+                              //       'Admin account successfully created');
+                              // }
                             }),
                         SizedBox(height: 20),
                       ],

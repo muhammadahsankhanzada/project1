@@ -5,9 +5,15 @@ import 'package:project1/Views/Screens/Admin%20Screens/admin_check_reports_scree
 import 'package:project1/Views/Screens/Admin%20Screens/admin_delivered_screen.dart';
 import 'package:project1/Views/Screens/Admin%20Screens/admin_homepage.dart';
 
-class AdminBottomNavBarScreen extends StatelessWidget {
+class AdminBottomNavBarScreen extends StatefulWidget {
   const AdminBottomNavBarScreen({super.key});
 
+  @override
+  State<AdminBottomNavBarScreen> createState() =>
+      _AdminBottomNavBarScreenState();
+}
+
+class _AdminBottomNavBarScreenState extends State<AdminBottomNavBarScreen> {
   @override
   Widget build(BuildContext context) {
     return CupertinoTabScaffold(
@@ -52,7 +58,11 @@ class AdminBottomNavBarScreen extends StatelessWidget {
               );
 
             default:
-              return Container();
+              return Container(
+                child: Center(
+                  child: Text('No Routes Defined'),
+                ),
+              );
           }
           // return Container();
         });

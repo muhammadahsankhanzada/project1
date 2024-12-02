@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/image_urls.dart';
 import 'package:project1/Utils/text_styles.dart';
+import 'package:project1/View%20Models/General%20View%20Models/login_view_model.dart';
 import 'package:project1/Views/Screens/General%20Screens/forget_password_screen.dart';
-import 'package:project1/Views/Screens/Salesman%20Screens/salesman_bottom_nav_bar_screen.dart';
 import 'package:project1/Views/Widgets/universal_button.dart';
+import 'package:project1/Views/Widgets/universal_button_with_custom_widget.dart';
+import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -17,7 +19,7 @@ class _LoginScreenState extends State<LoginScreen> {
   var emailController = TextEditingController();
   var passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-  bool isLoading = false;
+  // bool isLoading = false;
 
   @override
   void dispose() {
@@ -29,15 +31,8 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
+    final viewModel = Provider.of<LoginViewModel>(context);
     return Scaffold(
-      // backgroundColor: AppColors.lightGreen,
-      // appBar: AppBar(
-      //     title: Text(
-      //       'Login',
-      //       style: AppTextStyles.nameHeadingTextStyle(),
-      //     ),
-      //     centerTitle: true,
-      //     backgroundColor: AppColors.green),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -153,51 +148,30 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                       SizedBox(height: 30),
-                      UniversalButton(
-                          ontap: () {
-                            // if (_formKey.currentState!.validate()) {
-                            //   // login();
-                            //   if (emailController.text == 'driver' &&
-                            //       passwordController.text == '123') {
-                            //     Navigator.push(
-                            //         context,
-                            //         MaterialPageRoute(
-                            //             builder: (context) =>
-                            //                 DriverHomepageScreen()));
-                            //   }
-                            //   if (emailController.text == 'manager' &&
-                            //       passwordController.text == '123') {
-                            //     Navigator.push(
-                            //         context,
-                            //         MaterialPageRoute(
-                            //             builder: (context) =>
-                            //                 ManagerHomepage()));
-                            //   }
-                            //   if (emailController.text == 'admin' &&
-                            //       passwordController.text == '123') {
-                            //     Navigator.push(
-                            //         context,
-                            //         MaterialPageRoute(
-                            //             builder: (context) =>
-                            //                 AdminHomepage()));
-                            //   }
-                            //   if (emailController.text == 'superadmin' &&
-                            //       passwordController.text == '123') {
-                            //     Navigator.push(
-                            //         context,
-                            //         MaterialPageRoute(
-                            //             builder: (context) =>
-                            //                 SuperAdminHomepage()));
-                            //   }
-                            // }
-
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        SalesmanBottomNavBarScreen()));
-                          },
-                          title: 'Login'),
+                      Consumer<LoginViewModel>(
+                          builder: (context, value, child) {
+                        return UniversalButtonWithCustomWidget(
+                            ontap: () {
+                              if (_formKey.currentState!.validate()) {
+                                viewModel.login(context, emailController.text,
+                                    passwordController.text);
+                              }
+                            },
+                            child: value.isLoading
+                                ? SizedBox(
+                                    height: 20,
+                                    width: 20,
+                                    child: CircularProgressIndicator(
+                                      color: AppColors.white,
+                                      strokeWidth: 2,
+                                    ),
+                                  )
+                                : Text('Login',
+                                    style: TextStyle(
+                                      color: AppColors.white,
+                                      fontSize: 15,
+                                    )));
+                      }),
                     ],
                   ),
                 ),
@@ -207,60 +181,5 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ),
     );
-  }
-
-  //Login Function
-  login() async {
-    isLoading = true;
-    setState(() {});
-    // try {
-    //   await FirebaseAuth.instance.signInWithEmailAndPassword(
-    //     email: emailController.text,
-    //     password: passwordController.text,
-    //   );
-
-    //   // To store data locally
-    //   final data = await FirestoreDatabaseMethods.getUserDataFromFirebase(
-    //       emailController.text);
-    //   if (data != null) {
-    //     SharedPrefsHelper.setUserId(data['Id']);
-    //     SharedPrefsHelper.setUserName(data['Name']);
-    //     SharedPrefsHelper.setUserEmail(data['Email']);
-    //     SharedPrefsHelper.setUserWallet(data['Wallet']);
-    //     SharedPrefsHelper.setUserProfilePic(data['ProfilePic']);
-    //   } else {}
-
-    //   isLoading = false;
-    //   setState(() {});
-    //   Navigator.pushReplacementNamed(context, RouteNames.bottomNavBarScreen);
-    //   CustomSnackbar.customSnackbar(context, 'Login Successful');
-    // } on FirebaseException catch (e) {
-    //   if (e.code == 'user-not-found') {
-    //     isLoading = false;
-    //     setState(() {});
-    //     CustomSnackbar.customSnackbar(context, 'User not found',
-    //         backgroundColor: AppColors.red);
-    //   } else if (e.code == 'invalid-email') {
-    //     isLoading = false;
-    //     setState(() {});
-    //     CustomSnackbar.customSnackbar(context, 'Invalid Email',
-    //         backgroundColor: AppColors.red);
-    //   } else if (e.code == 'wrong-password') {
-    //     isLoading = false;
-    //     setState(() {});
-    //     CustomSnackbar.customSnackbar(context, 'Invalid Password',
-    //         backgroundColor: AppColors.red);
-    //   } else if (e.code == 'invalid-credential') {
-    //     isLoading = false;
-    //     setState(() {});
-    //     CustomSnackbar.customSnackbar(context, 'Invalid Username/Password',
-    //         backgroundColor: AppColors.red);
-    //   } else {
-    //     isLoading = false;
-    //     setState(() {});
-    //     CustomSnackbar.customSnackbar(context, e.code,
-    //         backgroundColor: AppColors.red);
-    //   }
-    // }
   }
 }

@@ -36,4 +36,15 @@ class ProductModel {
       'quantity': quantity,
     };
   }
+
+  // Factory constructor to create a ProductsModel from a Map (JSON object)
+  factory ProductModel.fromJson(Map<String, dynamic> json) {
+    return ProductModel(
+      id: json['id'] ?? '',
+      name: json['name'] ?? '',
+      imageUrl: json['imageUrl'] ?? '',
+      price: json['price'] ?? 0,
+      quantity: json['quantity'] ?? 0,
+    );
+  }
 }

@@ -1,13 +1,17 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/image_urls.dart';
 import 'package:project1/Utils/text_styles.dart';
+import 'package:project1/View%20Models/Manager%20View%20Models/manager_pending_requests_view_model.dart';
 import 'package:project1/Views/Screens/Manager%20Screens/Pending%20Requests/manager_pending_request_details_screen.dart';
 import 'package:project1/Views/Widgets/custom_appbar.dart';
+import 'package:project1/Views/Widgets/future_builder_helper_widget.dart';
+import 'package:project1/Views/Widgets/stream_builder_helper_widget.dart';
+import 'package:provider/provider.dart';
 
 class ManagerPendingRequestsScreen extends StatelessWidget {
-  const ManagerPendingRequestsScreen({super.key});
+  final String managerName;
+  const ManagerPendingRequestsScreen({super.key, required this.managerName});
 
   @override
   Widget build(BuildContext context) {
@@ -19,209 +23,117 @@ class ManagerPendingRequestsScreen extends StatelessWidget {
         child: Column(
           children: [
             SizedBox(height: 10),
-            Expanded(
-              child: StreamBuilder(
-                  stream: fetchPendingRequests(),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    } else if (snapshot.hasError) {
-                      return Center(
-                        child: Text('Error: ${snapshot.error}'),
-                      );
-                    } else if (!snapshot.hasData) {
-                      return Center(
-                        child: Text('No Pending Requests Found'),
-                      );
-                    } else if (snapshot.hasData) {
-                      final pendingRequests = snapshot.data?.docs ?? [];
-                      return ListView.builder(
-                          itemCount: pendingRequests.length,
-                          itemBuilder: (context, index) {
-                            return Column(
-                              children: [
-                                InkWell(
-                                  onTap: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                ManagerPendingRequestDetailsScreen(
-                                                  salesmanId:
-                                                      pendingRequests[index].id,
-                                                )));
-                                  },
-                                  borderRadius: BorderRadius.circular(10),
-                                  child: Material(
-                                    elevation: 3,
-                                    borderRadius: BorderRadius.circular(10),
-                                    child: Container(
-                                      padding: EdgeInsets.all(15),
-                                      decoration: BoxDecoration(
-                                        color: AppColors.containerBackground,
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                      child: Row(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          CircleAvatar(
-                                            radius: 35,
-                                            child: ClipOval(
-                                              child: Image.network(
-                                                fit: BoxFit.cover,
-                                                width: 70,
-                                                height: 70,
-                                                pendingRequests[index]
-                                                    ['imageUrl'],
-                                                errorBuilder: (context, error,
-                                                    stackTrace) {
-                                                  return Image.asset(
-                                                    ImageUrls.errorImage,
-                                                    fit: BoxFit.cover,
-                                                    width: 70,
-                                                    height: 70,
-                                                  );
-                                                },
-                                              ),
-                                            ),
-                                          ),
-                                          SizedBox(width: 10),
-                                          Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                pendingRequests[index]['name'],
-                                                style: AppTextStyles
-                                                    .belowMainHeadingTextStyle(
-                                                        fontSize: 18),
-                                              ),
-                                              SizedBox(
-                                                width: 200,
-                                                child: Text(
-                                                  'Route: ${pendingRequests[index]['route']}',
-                                                  maxLines: 2,
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  style: AppTextStyles
-                                                      .simpleHeadingTextStyle(
-                                                    fontSize: 15,
-                                                  ),
-                                                ),
-                                              ),
-                                              SizedBox(height: 10),
-                                              Text(
-                                                'Requested Products: ${pendingRequests[index]['productsRequested']}',
-                                                style: AppTextStyles
-                                                    .simpleHeadingTextStyle(
-                                                  fontSize: 15,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(height: 10),
-                              ],
-                            );
-                          });
-                    } else {
-                      return Center(
-                        child: Text('Loading...'),
-                      );
-                    }
-                  }),
-            ),
-            // for (int i = 0; i < 3; i++)
-            // Column(
-            //   children: [
-            //     InkWell(
-            //       onTap: () {
-            //         Navigator.push(
-            //             context,
-            //             MaterialPageRoute(
-            //                 builder: (context) =>
-            //                     ManagerPendingRequestDetailsScreen()));
-            //       },
-            //       borderRadius: BorderRadius.circular(10),
-            //       child: Material(
-            //         elevation: 3,
-            //         borderRadius: BorderRadius.circular(10),
-            //         child: Container(
-            //           padding: EdgeInsets.all(15),
-            //           // margin: EdgeInsets.only(bottom: 10),
-            //           decoration: BoxDecoration(
-            //             color: AppColors.containerBackground,
-            //             borderRadius: BorderRadius.circular(10),
-            //           ),
-            //           child: Row(
-            //             crossAxisAlignment: CrossAxisAlignment.start,
-            //             children: [
-            //               CircleAvatar(
-            //                 radius: 35,
-            //                 backgroundImage:
-            //                     AssetImage('assets/images/p2.jpeg'),
-            //               ),
-            //               SizedBox(width: 10),
-            //               Column(
-            //                 crossAxisAlignment: CrossAxisAlignment.start,
-            //                 children: [
-            //                   Text(
-            //                     'Muhammad Ahsan',
-            //                     style:
-            //                         AppTextStyles.belowMainHeadingTextStyle(
-            //                             fontSize: 18),
-            //                   ),
-            //                   SizedBox(
-            //                     width: 200,
-            //                     child: Text(
-            //                       'Route: Shah Faisal, Karachi',
-            //                       maxLines: 2,
-            //                       overflow: TextOverflow.ellipsis,
-            //                       style: AppTextStyles.simpleHeadingTextStyle(
-            //                         fontSize: 15,
-            //                       ),
-            //                     ),
-            //                   ),
-            //                   SizedBox(height: 10),
-            //                   Text(
-            //                     'Requested Products: 30',
-            //                     style: AppTextStyles.simpleHeadingTextStyle(
-            //                       fontSize: 15,
-            //                     ),
-            //                   ),
-            //                 ],
-            //               ),
-            //             ],
-            //           ),
-            //         ),
-            //       ),
-            //     ),
-            //     SizedBox(height: 10),
-            //   ],
-            // ),
+            _buildShowPendingRequests(),
           ],
         ),
       ),
     );
   }
 
-  // Method to get pending requests list
-  Stream<QuerySnapshot> fetchPendingRequests() {
-    FirebaseFirestore firestore = FirebaseFirestore.instance;
-    final data = firestore
-        .collection('Users')
-        .doc('Staff')
-        .collection('Managers')
-        .doc('Ahsan')
-        .collection('Pending Requests')
-        .snapshots();
-    return data;
+  // Stream to show pending requests list
+  Widget _buildShowPendingRequests() {
+    return Consumer<ManagerPendingRequestsViewModel>(
+        builder: (context, value, child) {
+      return FutureBuilderHelperWidget(
+        future: value.fetchPendingRequests(managerName),
+        onSuccess: (pendingRequests) {
+          return Expanded(
+            child: ListView.builder(
+                itemCount: pendingRequests.length,
+                itemBuilder: (context, index) {
+                  return Column(
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      ManagerPendingRequestDetailsScreen(
+                                        salesmanId: pendingRequests[index]
+                                            ['id'],
+                                      )));
+                        },
+                        borderRadius: BorderRadius.circular(10),
+                        child: Material(
+                          elevation: 3,
+                          borderRadius: BorderRadius.circular(10),
+                          child: Container(
+                            padding: EdgeInsets.all(15),
+                            decoration: BoxDecoration(
+                              color: AppColors.containerBackground,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                CircleAvatar(
+                                  radius: 35,
+                                  child: ClipOval(
+                                    child: Image.network(
+                                      fit: BoxFit.cover,
+                                      width: 70,
+                                      height: 70,
+                                      pendingRequests[index]['imageUrl'],
+                                      errorBuilder:
+                                          (context, error, stackTrace) {
+                                        return Image.asset(
+                                          ImageUrls.errorImage,
+                                          fit: BoxFit.cover,
+                                          width: 70,
+                                          height: 70,
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(width: 10),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      pendingRequests[index]['name'],
+                                      style: AppTextStyles
+                                          .belowMainHeadingTextStyle(
+                                              fontSize: 18),
+                                    ),
+                                    SizedBox(
+                                      width: 200,
+                                      child: Text(
+                                        'Route: ${pendingRequests[index]['route']}',
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: AppTextStyles
+                                            .simpleHeadingTextStyle(
+                                          fontSize: 15,
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(height: 10),
+                                    Text(
+                                      'Requested Products: ${pendingRequests[index]['productsRequested']}',
+                                      style:
+                                          AppTextStyles.simpleHeadingTextStyle(
+                                        fontSize: 15,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                    ],
+                  );
+                }),
+          );
+        },
+        loadingWidget: CircularProgressIndicator(),
+        emptyWidget: Text('No Pending Requests Found'),
+        errorWidget: Text('Error Getting Pending Requests'),
+      );
+    });
   }
 }

@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-class AdminDeleteAccountViewModel with ChangeNotifier {
+class DeleteAccountViewModel with ChangeNotifier {
   bool _isUserNameSelected = false;
   bool _isSearching = false;
   String _searchedText = '';

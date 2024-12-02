@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:project1/Models/categories_model.dart';
 import 'package:project1/Utils/colors.dart';
+import 'package:project1/Utils/image_urls.dart';
 import 'package:project1/Utils/text_styles.dart';
-import 'package:project1/View%20Models/check_inventory_view_model.dart';
-import 'package:project1/Views/Screens/General%20Screens/Inventory/inventory_required_return_items_screen.dart';
+import 'package:project1/View%20Models/General%20View%20Models/check_inventory_view_model.dart';
+import 'package:project1/Views/Screens/General%20Screens/Inventory/inventory_new_and_return_items_screen.dart';
 import 'package:project1/Views/Widgets/custom_appbar.dart';
 import 'package:project1/Views/Widgets/future_builder_helper_widget.dart';
 import 'package:provider/provider.dart';
@@ -78,7 +79,7 @@ class _CheckInventoryScreenState extends State<CheckInventoryScreen> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) =>
-                                    InventoryRequiredReturnItemsScreen(
+                                    InventoryNewAndReturnItemsScreen(
                                         categoryName: category.name,
                                         categoryIndex: index)));
                       },
@@ -131,6 +132,8 @@ class _CheckInventoryScreenState extends State<CheckInventoryScreen> {
             physics: NeverScrollableScrollPhysics(),
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
+              mainAxisSpacing: 10,
+              crossAxisSpacing: 10,
             ),
             itemCount: categories.length,
             itemBuilder: (context, index) {
@@ -144,7 +147,7 @@ class _CheckInventoryScreenState extends State<CheckInventoryScreen> {
                           context,
                           MaterialPageRoute(
                               builder: (context) =>
-                                  InventoryRequiredReturnItemsScreen(
+                                  InventoryNewAndReturnItemsScreen(
                                     categoryName: category.name,
                                     categoryIndex: index,
                                   )));
@@ -158,13 +161,21 @@ class _CheckInventoryScreenState extends State<CheckInventoryScreen> {
                             height: 150,
                             width: 180,
                             decoration: BoxDecoration(
-                              image: DecorationImage(
-                                  fit: BoxFit.fill,
-                                  image: NetworkImage(
-                                    category.imageUrl,
-                                  )),
                               color: AppColors.white.withOpacity(.7),
                               borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(10),
+                              child: Image.network(
+                                fit: BoxFit.cover,
+                                category.imageUrl,
+                                errorBuilder: (context, error, stackTrace) {
+                                  return Image.asset(
+                                    ImageUrls.errorImage,
+                                    fit: BoxFit.cover,
+                                  );
+                                },
+                              ),
                             ),
                           ),
                         ),

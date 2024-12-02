@@ -1,27 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/text_styles.dart';
-import 'package:project1/View%20Models/inventory_required_return_items_view_model.dart';
-import 'package:project1/Views/Screens/General%20Screens/Inventory/inventory_required_items_screen.dart';
+import 'package:project1/View%20Models/General%20View%20Models/inventory_new_and_return_items_view_model.dart';
+import 'package:project1/Views/Screens/General%20Screens/Inventory/inventory_new_items_screen.dart';
 import 'package:project1/Views/Screens/General%20Screens/Inventory/inventory_return_items_screen.dart';
 import 'package:provider/provider.dart';
 
-class InventoryRequiredReturnItemsScreen extends StatefulWidget {
+class InventoryNewAndReturnItemsScreen extends StatefulWidget {
   final int categoryIndex;
   final String categoryName;
-  const InventoryRequiredReturnItemsScreen({
+  const InventoryNewAndReturnItemsScreen({
     super.key,
     required this.categoryIndex,
     required this.categoryName,
   });
 
   @override
-  State<InventoryRequiredReturnItemsScreen> createState() =>
-      _InventoryRequiredReturnItemsScreenState();
+  State<InventoryNewAndReturnItemsScreen> createState() =>
+      _InventoryNewAndReturnItemsScreenState();
 }
 
-class _InventoryRequiredReturnItemsScreenState
-    extends State<InventoryRequiredReturnItemsScreen> {
+class _InventoryNewAndReturnItemsScreenState
+    extends State<InventoryNewAndReturnItemsScreen> {
+  @override
+  void initState() {
+    super.initState();
+    Future.microtask(() {
+      context.read<InventoryNewAndReturnItemsViewModel>().resetState();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -42,7 +50,7 @@ class _InventoryRequiredReturnItemsScreenState
                         },
                         child: Icon(Icons.arrow_back)),
                     SizedBox(height: 20),
-                    Consumer<InventoryRequiredReturnItemsViewModel>(
+                    Consumer<InventoryNewAndReturnItemsViewModel>(
                         builder: (context, value, child) {
                       return TabBar(
                         labelPadding: EdgeInsets.zero,
@@ -117,7 +125,7 @@ class _InventoryRequiredReturnItemsScreenState
               ),
               Expanded(
                 child: TabBarView(children: [
-                  InventoryRequiredItemsScreen(
+                  InventoryNewItemsScreen(
                     categoryName: widget.categoryName,
                     categoryindex: widget.categoryIndex,
                   ),

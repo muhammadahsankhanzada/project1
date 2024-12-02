@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:pie_chart/pie_chart.dart' as pie;
 import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/text_styles.dart';
+import 'package:project1/View%20Models/Super%20Admin%20View%20Models/super_admin_reports_and_analytics_view_model.dart';
 import 'package:project1/Views/Widgets/custom_appbar.dart';
+import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class SuperAdminReportsAndAnalyticsScreen extends StatefulWidget {
@@ -15,19 +17,10 @@ class SuperAdminReportsAndAnalyticsScreen extends StatefulWidget {
 
 class _SuperAdminReportsAndAnalyticsScreenState
     extends State<SuperAdminReportsAndAnalyticsScreen> {
-  final Map<String, double> acquisionReportsDataMap = {
-    "Social": 60,
-    "Organic Search": 25,
-    "Direct": 15,
-  };
-
-  final List<Color> acquisionReportsColorList = [
-    AppColors.universalButtonGreen,
-    AppColors.green,
-    AppColors.lightGreen1,
-  ];
   @override
   Widget build(BuildContext context) {
+    final viewModel =
+        Provider.of<SuperAdminReportsAndAnalyticsViewModel>(context);
     return Scaffold(
       backgroundColor: AppColors.lightWhiteBackground,
       appBar: CustomAppbar(title: 'Reports and Analytics'),
@@ -36,95 +29,12 @@ class _SuperAdminReportsAndAnalyticsScreenState
           padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
           child: Column(
             children: [
-              Material(
-                elevation: 4,
-                borderRadius: BorderRadius.circular(15),
-                child: Container(
-                  // height: 200,
-                  width: double.infinity,
-                  padding: EdgeInsets.all(20),
-                  decoration: BoxDecoration(
-                    color: AppColors.white,
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'AUDIENCE',
-                        style: AppTextStyles.simpleHeadingTextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      Text(
-                        '493 Visitors',
-                        style: AppTextStyles.simpleHeadingTextStyle(
-                          fontSize: 13,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 200,
-                        child: SfCartesianChart(
-                          plotAreaBorderWidth: 0,
-                          // title: ChartTitle(text: 'Sales Data'),
-                          primaryXAxis: CategoryAxis(
-                            axisLine: AxisLine(width: 0),
-                            labelStyle: AppTextStyles.simpleHeadingTextStyle(
-                              fontWeight: FontWeight.bold,
-                            ),
-                            majorGridLines: MajorGridLines(width: 0),
-                          ),
-                          primaryYAxis: NumericAxis(
-                            isVisible: false,
-                            majorGridLines: MajorGridLines(width: 0),
-                          ),
-                          series: <ColumnSeries<SalesData, String>>[
-                            ColumnSeries<SalesData, String>(
-                              dataSource: getChartData(),
-                              width: 0.3,
-                              color: AppColors.lightGreen1,
-                              borderRadius: BorderRadius.circular(20),
-                              xValueMapper: (SalesData data, _) => data.year,
-                              yValueMapper: (SalesData data, _) => data.sales,
-                              dataLabelSettings:
-                                  DataLabelSettings(isVisible: true),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+              _buildAudienceReports('AUDIENCE', 493, viewModel.getChartData()),
               SizedBox(height: 15),
-              Material(
-                elevation: 4,
-                borderRadius: BorderRadius.circular(15),
-                child: Container(
-                  // height: 200,
-                  width: double.infinity,
-                  padding: EdgeInsets.all(20),
-                  decoration: BoxDecoration(
-                    color: AppColors.white,
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'ACQUISION',
-                        style: AppTextStyles.simpleHeadingTextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      customPieChart(
-                          acquisionReportsDataMap, acquisionReportsColorList),
-                    ],
-                  ),
-                ),
-              ),
+              _buildAcquisionReports(
+                  'ACQUISION',
+                  viewModel.acquisionReportsDataMap,
+                  viewModel.acquisionReportsColorList),
             ],
           ),
         ),
@@ -132,52 +42,126 @@ class _SuperAdminReportsAndAnalyticsScreenState
     );
   }
 
-  //Pie Chart
-  customPieChart(Map<String, double> dataMap, List<Color> colorList) {
-    return Column(
-      children: [
-        Align(
-          alignment: Alignment.topCenter,
-          child: SizedBox(
-            width: 350,
-            child: pie.PieChart(
-              dataMap: dataMap,
-              colorList: colorList,
-              legendOptions: pie.LegendOptions(
-                legendShape: BoxShape.rectangle,
-                legendPosition: pie.LegendPosition.left,
-              ),
-              chartType: pie.ChartType.disc,
-              ringStrokeWidth: 10,
-              chartValuesOptions: pie.ChartValuesOptions(
-                showChartValuesInPercentage: true,
-                showChartValues: true,
+  // Audience reports widget
+  Widget _buildAudienceReports(
+    String reportsTitle,
+    int visitors,
+    List<SalesData> dataSource,
+  ) {
+    return Material(
+      elevation: 4,
+      borderRadius: BorderRadius.circular(15),
+      child: Container(
+        width: double.infinity,
+        padding: EdgeInsets.all(20),
+        decoration: BoxDecoration(
+          color: AppColors.white,
+          borderRadius: BorderRadius.circular(15),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              reportsTitle,
+              style: AppTextStyles.simpleHeadingTextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
               ),
             ),
-          ),
+            Text(
+              '$visitors Visitors',
+              style: AppTextStyles.simpleHeadingTextStyle(
+                fontSize: 13,
+              ),
+            ),
+            SizedBox(
+              height: 200,
+              child: SfCartesianChart(
+                plotAreaBorderWidth: 0,
+                primaryXAxis: CategoryAxis(
+                  axisLine: AxisLine(width: 0),
+                  labelStyle: AppTextStyles.simpleHeadingTextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
+                  majorGridLines: MajorGridLines(width: 0),
+                ),
+                primaryYAxis: NumericAxis(
+                  isVisible: false,
+                  majorGridLines: MajorGridLines(width: 0),
+                ),
+                series: <ColumnSeries<SalesData, String>>[
+                  ColumnSeries<SalesData, String>(
+                    dataSource: dataSource,
+                    width: 0.3,
+                    color: AppColors.lightGreen1,
+                    borderRadius: BorderRadius.circular(20),
+                    xValueMapper: (SalesData data, _) => data.year,
+                    yValueMapper: (SalesData data, _) => data.sales,
+                    dataLabelSettings: DataLabelSettings(isVisible: true),
+                  ),
+                ],
+              ),
+            ),
+          ],
         ),
-      ],
+      ),
     );
   }
 
-  //
-  List<SalesData> getChartData() {
-    final List<SalesData> chartData = [
-      SalesData('Mon', 35),
-      SalesData('Tue', 28),
-      SalesData('Wed', 34),
-      SalesData('Thu', 32),
-      SalesData('Fri', 50),
-      SalesData('Sat', 45),
-      SalesData('Sun', 30),
-    ];
-    return chartData;
+  // Acquision reports widget
+  Widget _buildAcquisionReports(
+    String reportsTitle,
+    Map<String, double> dataMap,
+    List<Color> colorList,
+  ) {
+    return Material(
+      elevation: 4,
+      borderRadius: BorderRadius.circular(15),
+      child: Container(
+        width: double.infinity,
+        padding: EdgeInsets.all(20),
+        decoration: BoxDecoration(
+          color: AppColors.white,
+          borderRadius: BorderRadius.circular(15),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              reportsTitle,
+              style: AppTextStyles.simpleHeadingTextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            Column(
+              children: [
+                Align(
+                  alignment: Alignment.topCenter,
+                  child: SizedBox(
+                    width: 350,
+                    child: pie.PieChart(
+                      animationDuration: Duration(seconds: 1),
+                      dataMap: dataMap,
+                      colorList: colorList,
+                      legendOptions: pie.LegendOptions(
+                        legendShape: BoxShape.rectangle,
+                        legendPosition: pie.LegendPosition.left,
+                      ),
+                      chartType: pie.ChartType.disc,
+                      ringStrokeWidth: 10,
+                      chartValuesOptions: pie.ChartValuesOptions(
+                        showChartValuesInPercentage: true,
+                        showChartValues: true,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
   }
-}
-
-class SalesData {
-  SalesData(this.year, this.sales);
-
-  final String year;
-  final double sales;
 }

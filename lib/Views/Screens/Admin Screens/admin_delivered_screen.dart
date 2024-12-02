@@ -19,12 +19,7 @@ class AdminDeliveredScreen extends StatelessWidget {
             TextFormField(
               // controller: _searchController,
               // onChanged: _filterShops,
-              // validator: (value) {
-              //   if (value == null || value.isEmpty) {
-              //     return 'Enter driver name here';
-              //   }
-              //   return null;
-              // },
+
               keyboardType: TextInputType.name,
               decoration: InputDecoration(
                 hintText: 'Search delivery number...',
@@ -78,7 +73,6 @@ class AdminDeliveredScreen extends StatelessWidget {
                                 ),
                                 child: Row(
                                   children: [
-                                    // SizedBox(width: 15),
                                     Expanded(
                                       child: Row(
                                         mainAxisAlignment:

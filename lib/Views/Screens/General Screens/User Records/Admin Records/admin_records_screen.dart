@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/text_styles.dart';
+import 'package:project1/View%20Models/Admin%20View%20Models/admin_records_view_model.dart';
 import 'package:project1/Views/Widgets/custom_appbar.dart';
+import 'package:provider/provider.dart';
 
 class AdminRecordsScreen extends StatelessWidget {
   final String adminName;
@@ -12,78 +14,75 @@ class AdminRecordsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Map<String, dynamic> adminDetails = {
-      'Warehouse': 'Warehouse 01',
-      'CNIC': '45402-6789012-3',
-      'Phone Number': '0304-1234567',
-      'Address': 'Shah Faisal Colony, Karachi',
-      'Email': 'ahsan@gmail.com',
-      'Password': '12345',
-      'Age': 24,
-    };
     return Scaffold(
       backgroundColor: AppColors.lightWhiteBackground,
       appBar: CustomAppbar(title: 'Admin Info'),
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 15),
-          child: Column(
-            children: [
-              SizedBox(height: 20),
-              CircleAvatar(
-                radius: 50,
-                backgroundImage: AssetImage('assets/images/p2.jpeg'),
-              ),
-              SizedBox(height: 10),
-              Text(
-                adminName,
-                style: AppTextStyles.nameHeadingTextStyle(size: 15),
-              ),
-              SizedBox(height: 20),
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 13),
-                decoration: BoxDecoration(
-                  color: AppColors.lightGreen1.withOpacity(.3),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Row(
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        for (var key in adminDetails.keys)
-                          Align(
-                            alignment: Alignment.topLeft,
-                            child: Text(
-                              '${key}:',
-                              style:
-                                  AppTextStyles.nameHeadingTextStyle(size: 15),
-                            ),
-                          ),
-                      ],
-                    ),
-                    SizedBox(width: 20),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        for (var value in adminDetails.values)
-                          Align(
-                            alignment: Alignment.topLeft,
-                            child: Text(
-                              value.toString(),
-                              style: AppTextStyles.belowMainHeadingTextStyle(
-                                  fontSize: 15),
-                            ),
-                          ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
+          child: _buildShowAdminDetails(),
         ),
       ),
     );
+  }
+
+  // Show admin details
+  Widget _buildShowAdminDetails() {
+    return Consumer<AdminRecordsViewModel>(builder: (context, value, child) {
+      return Column(
+        children: [
+          SizedBox(height: 20),
+          CircleAvatar(
+            radius: 50,
+            backgroundImage: AssetImage('assets/images/p2.jpeg'),
+          ),
+          SizedBox(height: 10),
+          Text(
+            adminName,
+            style: AppTextStyles.nameHeadingTextStyle(size: 15),
+          ),
+          SizedBox(height: 20),
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 13),
+            decoration: BoxDecoration(
+              color: AppColors.lightGreen1.withOpacity(.3),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Row(
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    for (var key in value.adminDetails.keys)
+                      Align(
+                        alignment: Alignment.topLeft,
+                        child: Text(
+                          '${key}:',
+                          style: AppTextStyles.nameHeadingTextStyle(size: 15),
+                        ),
+                      ),
+                  ],
+                ),
+                SizedBox(width: 20),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    for (var value in value.adminDetails.values)
+                      Align(
+                        alignment: Alignment.topLeft,
+                        child: Text(
+                          value.toString(),
+                          style: AppTextStyles.belowMainHeadingTextStyle(
+                              fontSize: 15),
+                        ),
+                      ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
+      );
+    });
   }
 }

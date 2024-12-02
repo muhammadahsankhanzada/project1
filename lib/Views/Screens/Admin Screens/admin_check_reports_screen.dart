@@ -2,77 +2,46 @@ import 'package:flutter/material.dart';
 import 'package:pie_chart/pie_chart.dart';
 import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/text_styles.dart';
+import 'package:project1/View%20Models/Admin%20View%20Models/admin_check_reports_view_model.dart';
 import 'package:project1/Views/Widgets/custom_appbar.dart';
+import 'package:provider/provider.dart';
 
 class AdminCheckReportsScreen extends StatelessWidget {
   const AdminCheckReportsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final Map<String, double> deliveryReportsDataMap = {
-      "Total Deliveries": 40,
-      "Pending Deliveries": 20,
-      "Late Deliveries": 10,
-      "On time Deliveries": 30,
-    };
-
-    final List<Color> deliveryReportsColorList = [
-      Colors.blue,
-      Colors.red,
-      Colors.orange,
-      Colors.green,
-    ];
-    final Map<String, double> inventoryAndStocksReportsDataMap = {
-      "Stock Available": 70,
-      "Stock Required": 20,
-      "Incoming Shipments": 10,
-    };
-
-    final List<Color> inventoryAndStocksReportsColorList = [
-      Colors.blue,
-      Colors.red,
-      Colors.green,
-    ];
-    final Map<String, double> orderReportsDataMap = {
-      "Orders Recieved": 50,
-      "Orders Canceled": 10,
-      "Orders Completed": 40,
-    };
-
-    final List<Color> orderReportsColorList = [
-      Colors.blue,
-      Colors.red,
-      Colors.green,
-    ];
-
     return Scaffold(
       backgroundColor: AppColors.lightWhiteBackground,
       appBar: CustomAppbar(title: 'Reports'),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15),
-          child: Column(
-            children: [
-              // SizedBox(height: 20),
-
-              SizedBox(height: 20),
-              customPieChart('Delivery Reports', deliveryReportsDataMap,
-                  deliveryReportsColorList),
-              customPieChart(
-                  'Inventory and Stock Reports',
-                  inventoryAndStocksReportsDataMap,
-                  inventoryAndStocksReportsColorList),
-              customPieChart(
-                  'Order Reports', orderReportsDataMap, orderReportsColorList),
-            ],
-          ),
+          child: Consumer<AdminCheckReportsViewModel>(
+              builder: (context, value, child) {
+            return Column(
+              children: [
+                SizedBox(height: 20),
+                _buildCustomPieChart(
+                    'Delivery Reports',
+                    value.deliveryReportsDataMap,
+                    value.deliveryReportsColorList),
+                _buildCustomPieChart(
+                    'Inventory and Stock Reports',
+                    value.inventoryAndStocksReportsDataMap,
+                    value.inventoryAndStocksReportsColorList),
+                _buildCustomPieChart('Order Reports', value.orderReportsDataMap,
+                    value.orderReportsColorList),
+              ],
+            );
+          }),
         ),
       ),
     );
   }
 
   //Pie Chart
-  customPieChart(
+  Widget _buildCustomPieChart(
       String title, Map<String, double> dataMap, List<Color> colorList) {
     return Column(
       children: [

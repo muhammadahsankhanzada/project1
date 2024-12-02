@@ -4,10 +4,11 @@ import 'package:project1/Models/super_admin_home_screen_screens_data_model.dart'
 import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/image_urls.dart';
 import 'package:project1/Utils/text_styles.dart';
-import 'package:project1/View%20Models/super_admin_home_view_model.dart';
+import 'package:project1/View%20Models/Super%20Admin%20View%20Models/super_admin_home_view_model.dart';
 import 'package:project1/Views/Widgets/search_box_widget.dart';
 import 'package:project1/Views/Widgets/stream_builder_helper_widget.dart';
 import 'package:provider/provider.dart';
+import 'package:shimmer/shimmer.dart';
 
 class SuperAdminHomepage extends StatefulWidget {
   const SuperAdminHomepage({super.key});
@@ -154,7 +155,6 @@ class _SuperAdminHomepageState extends State<SuperAdminHomepage> {
                                   dashboardData['pendingOrdersPercentage'],
                             },
                           ];
-
                           return GridView.builder(
                             shrinkWrap: true,
                             physics: NeverScrollableScrollPhysics(),
@@ -176,7 +176,7 @@ class _SuperAdminHomepageState extends State<SuperAdminHomepage> {
                             },
                           );
                         },
-                        loadingWidget: CircularProgressIndicator(),
+                        loadingWidget: _buildDashboardReportsLoading(),
                         errorWidget: Text('Error loading data'),
                         emptyWidget: Text('No reports available'),
                       );
@@ -329,5 +329,32 @@ class _SuperAdminHomepageState extends State<SuperAdminHomepage> {
         ),
       ),
     );
+  }
+
+  // Dashboard reports loading
+  Widget _buildDashboardReportsLoading() {
+    return Shimmer.fromColors(
+        child: GridView.builder(
+          shrinkWrap: true,
+          physics: NeverScrollableScrollPhysics(),
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            mainAxisSpacing: 8,
+            crossAxisSpacing: 10,
+            childAspectRatio: 2.2,
+          ),
+          itemCount: 4,
+          itemBuilder: (context, index) {
+            return Container(
+              width: 180,
+              decoration: BoxDecoration(
+                color: AppColors.white,
+                borderRadius: BorderRadius.circular(10),
+              ),
+            );
+          },
+        ),
+        baseColor: AppColors.shimmerBaseColor,
+        highlightColor: AppColors.shimmerHighlightColor);
   }
 }

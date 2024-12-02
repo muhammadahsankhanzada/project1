@@ -1,299 +1,260 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:project1/Models/Dummy%20Models/manager_homepage_items.dart';
 import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/image_urls.dart';
 import 'package:project1/Utils/text_styles.dart';
+import 'package:project1/View%20Models/Manager%20View%20Models/manager_homepage_view_model.dart';
 import 'package:project1/Views/Screens/General%20Screens/Inventory/check_inventory_screen.dart';
 import 'package:project1/Views/Screens/General%20Screens/warehouse_selection_screen.dart';
 import 'package:project1/Views/Screens/Manager%20Screens/Approved%20Requests/manager_approved_requests_screen.dart';
 import 'package:project1/Views/Screens/General%20Screens/User%20Records/Salesman%20Records/salesman_records_screen.dart';
 import 'package:project1/Views/Screens/Manager%20Screens/Pending%20Requests/manager_pending_requests_screen.dart';
+import 'package:project1/Views/Widgets/future_builder_helper_widget.dart';
+import 'package:project1/Views/Widgets/stream_builder_helper_widget.dart';
+import 'package:provider/provider.dart';
 
 class ManagerHomepage extends StatelessWidget {
   const ManagerHomepage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-        length: 2,
-        child: Scaffold(
-          backgroundColor: AppColors.lightWhiteBackground,
-          appBar: AppBar(
-            title: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                // SizedBox(
-                //   width: 10,
-                // ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.people,
-                      color: AppColors.universalButtonGreen,
-                    ),
-                    SizedBox(width: 10),
-                    Text(
-                      'Manager',
-                      style: AppTextStyles.simpleHeadingTextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        textColor: AppColors.universalButtonGreen,
-                      ),
-                    ),
-                  ],
-                ),
-                // Row(
-                //   children: [
-                //     InkWell(
-                //         onTap: () {
-                //           Navigator.pushReplacement(
-                //               context,
-                //               MaterialPageRoute(
-                //                   builder: (context) => LoginScreen()));
+    return Scaffold(
+      backgroundColor: AppColors.lightWhiteBackground,
+      appBar: _buildShowAppBar(),
+      body: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          _buildShowUserInfo(),
+          SizedBox(height: 10),
+          _buildSearchField(),
+          SizedBox(height: 10),
+          _buildShowGridViewContainers(),
+        ],
+      ),
+    );
+  }
 
-                //           customSnackbar(context, 'Logout');
-                //         },
-                //         child: Icon(Icons.logout)),
-                //     SizedBox(width: 10),
-                //   ],
-                // ),
-              ],
-            ),
-            centerTitle: true,
-            backgroundColor: AppColors.lightWhiteBackground,
-          ),
-          body: Column(
-            mainAxisSize: MainAxisSize.min,
+  // Appbar
+  PreferredSizeWidget _buildShowAppBar() {
+    return AppBar(
+      title: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              StreamBuilder(
-                  stream: fetchManagerDetails(),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return Center(
-                        child: CircularProgressIndicator(),
+              Icon(
+                Icons.people,
+                color: AppColors.universalButtonGreen,
+              ),
+              SizedBox(width: 10),
+              Text(
+                'Manager',
+                style: AppTextStyles.simpleHeadingTextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  textColor: AppColors.universalButtonGreen,
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+      centerTitle: true,
+      backgroundColor: AppColors.lightWhiteBackground,
+    );
+  }
+
+  // Show user info
+  Widget _buildShowUserInfo() {
+    return Consumer<ManagerHomepageViewModel>(builder: (context, value, child) {
+      return FutureBuilderHelperWidget(
+        future: value.fetchManagerDetails(),
+        onSuccess: (managerInfo) {
+          return Row(
+            children: [
+              SizedBox(width: 20),
+              CircleAvatar(
+                radius: 20,
+                child: ClipOval(
+                  child: Image.network(
+                    fit: BoxFit.cover,
+                    width: 40,
+                    height: 40,
+                    managerInfo['imageUrl'] ?? '',
+                    errorBuilder: (context, error, stackTrace) {
+                      return Image.asset(
+                        ImageUrls.errorImage,
+                        fit: BoxFit.cover,
+                        width: 40,
+                        height: 40,
                       );
-                    } else if (snapshot.hasError) {
-                      return Center(
-                        child: Text('Error: ${snapshot.error}'),
-                      );
-                    } else if (!snapshot.hasData) {
-                      return Center(
-                        child: Text('Record not Found'),
-                      );
-                    } else if (snapshot.hasData) {
-                      final manager =
-                          snapshot.data?.data() as Map<String, dynamic>?;
-                      return Row(
-                        children: [
-                          SizedBox(width: 20),
-                          CircleAvatar(
-                            radius: 20,
-                            child: ClipOval(
-                              child: Image.network(
-                                fit: BoxFit.cover,
-                                width: 40,
-                                height: 40,
-                                manager!['imageUrl'],
-                                errorBuilder: (context, error, stackTrace) {
-                                  return Image.asset(
-                                    ImageUrls.errorImage,
-                                    fit: BoxFit.cover,
-                                    width: 40,
-                                    height: 40,
-                                  );
-                                },
-                              ),
-                            ),
-                          ),
-                          SizedBox(width: 10),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                manager['name'],
-                                style: AppTextStyles.nameHeadingTextStyle(
-                                    size: 13),
-                              ),
-                              Text(
-                                'Warehouse Manager',
-                                style: AppTextStyles.simpleHeadingTextStyle(
-                                    fontSize: 13),
-                              ),
-                            ],
-                          )
-                        ],
-                      );
-                    } else {
-                      return Center(
-                        child: Text('Loading...'),
-                      );
-                    }
-                  }),
-              SizedBox(height: 10),
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 15),
-                child: TextFormField(
-                  // controller: _searchController,
-                  // validator: (value) {
-                  //   if (value == null || value.isEmpty) {
-                  //     return 'Enter driver name here';
-                  //   }
-                  //   return null;
-                  // },
-                  keyboardType: TextInputType.name,
-                  decoration: InputDecoration(
-                    hintText: 'Search',
-                    filled: true,
-                    fillColor: AppColors.white,
-                    contentPadding: EdgeInsets.symmetric(horizontal: 30),
-                    suffixIcon: Icon(
-                      Icons.search,
-                    ),
-                    border: OutlineInputBorder(
-                      borderSide: BorderSide.none,
-                      borderRadius: BorderRadius.circular(30),
-                    ),
+                    },
                   ),
                 ),
               ),
-              SizedBox(height: 10),
-              Expanded(
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      Container(
-                        padding: EdgeInsets.only(left: 10),
-                        width: double.infinity,
-                        height: 200,
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                              fit: BoxFit.fill,
-                              image: AssetImage(ImageUrls.managerBack)),
-                        ),
-                      ),
-                      SizedBox(height: 10),
-                      GridView.builder(
-                          shrinkWrap: true,
-                          physics: NeverScrollableScrollPhysics(),
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                            childAspectRatio: 1.9,
-                            crossAxisCount: 2,
-                            // mainAxisSpacing: 5,
-                            // crossAxisSpacing: 5,
-                          ),
-                          itemCount: managerHomepageContents.length,
-                          itemBuilder: (context, index) {
-                            return categoryContainer(() {
-                              if (index % 6 == 0) {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            ManagerPendingRequestsScreen()));
-                              }
-                              if (index % 6 == 1) {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            ManagerApprovedRequestsScreen()));
-                              }
-                              if (index % 6 == 2) {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            WarehouseSelectionScreen(
-                                              selectedScreen: 'Add Products',
-                                            )));
-                              }
-                              if (index % 6 == 3) {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            WarehouseSelectionScreen(
-                                              selectedScreen: 'Delete Products',
-                                            )));
-                              }
-                              if (index % 6 == 4) {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            CheckInventoryScreen()));
-                              }
-                              if (index % 6 == 5) {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            SalesmanRecordsScreen()));
-                              }
-                            }, managerHomepageContents[index].image,
-                                managerHomepageContents[index].title);
-                          }),
-                    ],
+              SizedBox(width: 10),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    managerInfo['name'] ?? 'Loading...',
+                    style: AppTextStyles.nameHeadingTextStyle(size: 13),
                   ),
-                ),
+                  Text(
+                    'Warehouse Manager',
+                    style: AppTextStyles.simpleHeadingTextStyle(fontSize: 13),
+                  ),
+                ],
               )
             ],
-          ),
-        ));
+          );
+        },
+        loadingWidget: CircularProgressIndicator(),
+        emptyWidget: Text('User Info Not Found'),
+        errorWidget: Text('Error Getting User Info'),
+      );
+    });
   }
 
-  // Method to get manager details
-  Stream<DocumentSnapshot> fetchManagerDetails() {
-    FirebaseFirestore firestore = FirebaseFirestore.instance;
-    final data = firestore
-        .collection('Users')
-        .doc('Staff')
-        .collection('Managers')
-        .doc('Ahsan')
-        .snapshots();
-    return data;
-  }
-}
+  // Show search bar
+  Widget _buildSearchField() {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 15),
+      child: TextFormField(
+        // controller: _searchController,
 
-categoryContainer(VoidCallback ontap, String image, String title) {
-  return Container(
-    padding: EdgeInsets.symmetric(
-      horizontal: 15,
-      vertical: 10,
-    ),
-    child: InkWell(
-      borderRadius: BorderRadius.circular(15),
-      onTap: ontap,
-      child: Material(
-        elevation: 5,
-        borderRadius: BorderRadius.circular(15),
-        child: Container(
-          padding: EdgeInsets.all(15),
-          decoration: BoxDecoration(
-            color: AppColors.white,
-            borderRadius: BorderRadius.circular(15),
+        keyboardType: TextInputType.name,
+        decoration: InputDecoration(
+          hintText: 'Search',
+          filled: true,
+          fillColor: AppColors.white,
+          contentPadding: EdgeInsets.symmetric(horizontal: 30),
+          suffixIcon: Icon(
+            Icons.search,
           ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              // Image.asset(
-              //   image,
-              //   width: 100,
-              //   height: 60,
-              // ),
-              // SizedBox(height: 10),
-              Text(
-                title,
-                style: AppTextStyles.belowMainHeadingTextStyle(fontSize: 14),
-              ),
-            ],
+          border: OutlineInputBorder(
+            borderSide: BorderSide.none,
+            borderRadius: BorderRadius.circular(30),
           ),
         ),
       ),
-    ),
-  );
+    );
+  }
+
+  // Show grid view containers
+  Widget _buildShowGridViewContainers() {
+    return Expanded(
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            Container(
+              padding: EdgeInsets.only(left: 10),
+              width: double.infinity,
+              height: 200,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                    fit: BoxFit.fill, image: AssetImage(ImageUrls.managerBack)),
+              ),
+            ),
+            SizedBox(height: 10),
+            GridView.builder(
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  childAspectRatio: 1.9,
+                  crossAxisCount: 2,
+                ),
+                itemCount: managerHomepageContents.length,
+                itemBuilder: (context, index) {
+                  return _buildButtonContainer(() {
+                    if (index % 6 == 0) {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  ManagerPendingRequestsScreen(
+                                    managerName: 'Ahsan',
+                                  )));
+                    }
+                    if (index % 6 == 1) {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  ManagerApprovedRequestsScreen(
+                                    managerName: 'Ahsan',
+                                  )));
+                    }
+                    if (index % 6 == 2) {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => WarehouseSelectionScreen(
+                                    selectedScreen: 'Add Products',
+                                  )));
+                    }
+                    if (index % 6 == 3) {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => WarehouseSelectionScreen(
+                                    selectedScreen: 'Delete Products',
+                                  )));
+                    }
+                    if (index % 6 == 4) {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => CheckInventoryScreen()));
+                    }
+                    if (index % 6 == 5) {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => SalesmanRecordsScreen()));
+                    }
+                  }, managerHomepageContents[index].image,
+                      managerHomepageContents[index].title);
+                }),
+          ],
+        ),
+      ),
+    );
+  }
+
+  // Go to different screens button
+  Widget _buildButtonContainer(VoidCallback ontap, String image, String title) {
+    return Container(
+      padding: EdgeInsets.symmetric(
+        horizontal: 15,
+        vertical: 10,
+      ),
+      child: InkWell(
+        borderRadius: BorderRadius.circular(15),
+        onTap: ontap,
+        child: Material(
+          elevation: 5,
+          borderRadius: BorderRadius.circular(15),
+          child: Container(
+            padding: EdgeInsets.all(15),
+            decoration: BoxDecoration(
+              color: AppColors.white,
+              borderRadius: BorderRadius.circular(15),
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  title,
+                  style: AppTextStyles.belowMainHeadingTextStyle(fontSize: 14),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
 }

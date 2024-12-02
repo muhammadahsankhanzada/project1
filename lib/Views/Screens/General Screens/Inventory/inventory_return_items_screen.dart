@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:project1/Models/available_products_model.dart';
 import 'package:project1/Models/categories_model.dart';
+import 'package:project1/Models/products_model.dart';
 import 'package:project1/Utils/colors.dart';
+import 'package:project1/Utils/image_urls.dart';
 import 'package:project1/Utils/text_styles.dart';
-import 'package:project1/View%20Models/inventory_return_items_view_model.dart';
+import 'package:project1/View%20Models/General%20View%20Models/inventory_return_items_view_model.dart';
 import 'package:project1/Views/Widgets/future_builder_helper_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
@@ -129,8 +131,8 @@ class _InventoryReturnItemsScreenState
   Widget _buildShowProducts() {
     return Consumer<InventoryReturnItemsViewModel>(
         builder: (context, value, child) {
-      return FutureBuilderHelperWidget<List<AvailableProductsModel>>(
-        future: value.fetchProducts(),
+      return FutureBuilderHelperWidget<List<ProductModel>>(
+        future: context.read<InventoryReturnItemsViewModel>().fetchProducts(),
         onSuccess: (products) {
           return GridView.builder(
               shrinkWrap: true,
@@ -158,6 +160,16 @@ class _InventoryReturnItemsScreenState
                                   image: NetworkImage(product.imageUrl)),
                               color: AppColors.white.withOpacity(.9),
                               borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(10),
+                              child: Image.network(
+                                fit: BoxFit.cover,
+                                product.imageUrl,
+                                errorBuilder: (context, error, stackTrace) {
+                                  return Image.asset(ImageUrls.errorImage);
+                                },
+                              ),
                             ),
                           ),
                           Align(

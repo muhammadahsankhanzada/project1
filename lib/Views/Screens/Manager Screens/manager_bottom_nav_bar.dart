@@ -50,7 +50,11 @@ class ManagerBottomNavBar extends StatelessWidget {
                 },
               );
             default:
-              return Container();
+              return Container(
+                child: Center(
+                  child: Text('No Routes Defined'),
+                ),
+              );
           }
           // return Container();
         });

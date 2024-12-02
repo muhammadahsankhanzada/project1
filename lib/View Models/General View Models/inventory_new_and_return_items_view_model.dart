@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class InventoryRequiredReturnItemsViewModel with ChangeNotifier {
+class InventoryNewAndReturnItemsViewModel with ChangeNotifier {
   // Selected Tab index
   int _selectedTabIndex = 0;
 
@@ -13,6 +13,12 @@ class InventoryRequiredReturnItemsViewModel with ChangeNotifier {
   // Update the selected tab index
   void onTabChanged(int index) {
     _selectedTabIndex = index;
+    notifyListeners();
+  }
+
+  // Reset state
+  void resetState() {
+    selectedTabIndex = 0;
     notifyListeners();
   }
 }

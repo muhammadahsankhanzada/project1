@@ -30,7 +30,10 @@ class FutureBuilderHelperWidget<T> extends StatelessWidget {
           return Center(
             child: errorWidget ?? Text('Error: ${snapshot.error}'),
           );
-        } else if (!snapshot.hasData || snapshot.data == null) {
+        } else if (!snapshot.hasData ||
+            snapshot.data == null ||
+            snapshot.data == [] ||
+            snapshot.data == '') {
           return Center(
             child: emptyWidget ?? Text('No Data'),
           );

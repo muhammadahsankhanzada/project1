@@ -30,7 +30,10 @@ class StreamBuilderHelperWidget<T> extends StatelessWidget {
           return Center(
               child: errorWidget ??
                   Center(child: Text('Error: ${snapshot.error}')));
-        } else if (!snapshot.hasData || snapshot.data == null) {
+        } else if (!snapshot.hasData ||
+            snapshot.data == null ||
+            snapshot.data == [] ||
+            snapshot.data == '') {
           return Center(child: emptyWidget ?? Center(child: Text('No Data')));
         } else {
           return onSuccess(snapshot.data!);

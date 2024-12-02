@@ -1,8 +1,10 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:project1/Utils/app_urls.dart';
 import 'package:project1/Views/Screens/General%20Screens/Product%20Management/add_products_screen.dart';
 import 'package:project1/Views/Screens/General%20Screens/Product%20Management/delete_products_screen.dart';
 import 'package:project1/Views/Screens/General%20Screens/Product%20Management/edit_products_screen.dart';
+import 'package:http/http.dart' as http;
 
 class WarehouseSelectionViewModel with ChangeNotifier {
   bool _isSelectionModeOn = false;
@@ -80,13 +82,20 @@ class WarehouseSelectionViewModel with ChangeNotifier {
 
   // Method to fetch warehouses list
   fetchWarehouses() async {
-    FirebaseFirestore firestore = FirebaseFirestore.instance;
     try {
-      QuerySnapshot warehouseSnapshot =
-          await firestore.collection('Warehouses').get();
-      warehouseValuesList =
-          warehouseSnapshot.docs.map((doc) => doc.id).toList();
-      selectedWarehouses = List<bool>.filled(warehouseValuesList.length, false);
+      final response = await http.get(Uri.parse(AppUrls.getWarehousesList));
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> data = jsonDecode(response.body);
+        warehouseValuesList = List<String>.from(data['warehouseList']);
+        // QuerySnapshot warehouseSnapshot =
+        //     await firestore.collection('Warehouses').get();
+        // warehouseValuesList =
+        //     warehouseSnapshot.docs.map((doc) => doc.id).toList();
+        selectedWarehouses =
+            List<bool>.filled(warehouseValuesList.length, false);
+      } else {
+        print('Failed to load warehouses list');
+      }
     } catch (error) {
       print('Error getting data: $error');
     }

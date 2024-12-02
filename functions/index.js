@@ -20,6 +20,36 @@
 // Initializing firebase functions inside index.js
 const { onRequest } = require("firebase-functions/v2/https");
 
+// Example url
+// http://localhost:5001/project1-4ee2b/us-central1/getUserData
+
+
+// Manager methods
+const getManagerInfo = require('./Manager/getManagerInfo');
+exports.getManagerInfo = onRequest(getManagerInfo);
+const getManagerPendingRequestsList = require('./Manager/getManagerPendingRequestsList');
+exports.getManagerPendingRequestsList = onRequest(getManagerPendingRequestsList);
+const getManagerPendingRequestDetails = require('./Manager/getManagerPendingRequestDetails');
+exports.getManagerPendingRequestDetails = onRequest(getManagerPendingRequestDetails);
+const getManagerApprovedRequestsList = require('./Manager/getManagerApprovedRequestsList');
+exports.getManagerApprovedRequestsList = onRequest(getManagerApprovedRequestsList);
+const getManagerApprovedRequestDetails = require('./Manager/getManagerApprovedRequestDetails');
+exports.getManagerApprovedRequestDetails = onRequest(getManagerApprovedRequestDetails);
+const getSalesmanRecords = require('./General/getSalesmanRecords');
+exports.getSalesmanRecords = onRequest(getSalesmanRecords);
+const getSalesmanRecordsDetails = require('./General/getSalesmanRecordsDetails');
+exports.getSalesmanRecordsDetails = onRequest(getSalesmanRecordsDetails);
+const getInventory = require('./General/getInventory');
+exports.getInventory = onRequest(getInventory);
+const getInventoryNewItems = require('./General/getInventoryNewItems');
+exports.getInventoryNewItems = onRequest(getInventoryNewItems);
+const getInventoryReturnItems = require('./General/getInventoryReturnItems');
+exports.getInventoryReturnItems = onRequest(getInventoryReturnItems);
+
+const getWarehousesList = require('./General/getWarehousesList');
+exports.getWarehousesList = onRequest(getWarehousesList);
+
+
 // Request methods
 const getUserData = require('./getRequests/getUserData');
 const postUserData = require('./postRequests/postUserData');

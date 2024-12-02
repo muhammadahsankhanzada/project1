@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/image_urls.dart';
 import 'package:project1/Utils/text_styles.dart';
-import 'package:project1/View%20Models/admin_delete_account_view_model.dart';
+import 'package:project1/View%20Models/General%20View%20Models/delete_account_view_model.dart';
 import 'package:project1/Views/Widgets/custom_appbar.dart';
 import 'package:project1/Views/Widgets/custom_snackbar.dart';
 import 'package:project1/Views/Widgets/search_box_widget.dart';
@@ -31,7 +31,7 @@ class _AdminCreateNewAccountScreenState
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-          child: Consumer<AdminDeleteAccountViewModel>(
+          child: Consumer<DeleteAccountViewModel>(
               builder: (context, value, child) {
             return Form(
               key: _formKey,
@@ -258,8 +258,7 @@ class _AdminCreateNewAccountScreenState
   }
 
   Widget _buildUserAccountsListWidget() {
-    return Consumer<AdminDeleteAccountViewModel>(
-        builder: (context, value, child) {
+    return Consumer<DeleteAccountViewModel>(builder: (context, value, child) {
       return StreamBuilderHelperWidget(
         stream: value.fetchUserRecords(),
         onSuccess: (result) {

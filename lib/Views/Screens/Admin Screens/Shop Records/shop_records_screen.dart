@@ -3,17 +3,17 @@ import 'package:project1/Models/Dummy%20Models/shops_list_dummy_model.dart';
 import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/image_urls.dart';
 import 'package:project1/Utils/text_styles.dart';
-import 'package:project1/Views/Screens/Admin%20Screens/Shop%20Records/admin_shop_records_details_screen.dart';
+import 'package:project1/Views/Screens/Admin%20Screens/Shop%20Records/shop_records_details_screen.dart';
 import 'package:project1/Views/Widgets/custom_appbar.dart';
 
-class AdminShopRecordsScreen extends StatefulWidget {
-  const AdminShopRecordsScreen({super.key});
+class ShopRecordsScreen extends StatefulWidget {
+  const ShopRecordsScreen({super.key});
 
   @override
-  State<AdminShopRecordsScreen> createState() => _AdminShopRecordsScreenState();
+  State<ShopRecordsScreen> createState() => _ShopRecordsScreenState();
 }
 
-class _AdminShopRecordsScreenState extends State<AdminShopRecordsScreen> {
+class _ShopRecordsScreenState extends State<ShopRecordsScreen> {
   var _searchController = TextEditingController();
   List<ShopListModel> filteredShopsList = shopsListContents;
   List<ShopListModel> allShopsList = shopsListContents;
@@ -82,7 +82,7 @@ class _AdminShopRecordsScreenState extends State<AdminShopRecordsScreen> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          AdminShopRecordsDetailsScreen(
+                                          ShopRecordsDetailsScreen(
                                             shopName:
                                                 filteredShopsList[index].name,
                                             shopAddress:

@@ -2,8 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/text_styles.dart';
-import 'package:project1/View%20Models/registered_shops_view_model.dart';
-import 'package:project1/Views/Screens/Admin%20Screens/Shop%20Records/admin_shop_records_details_screen.dart';
+import 'package:project1/View%20Models/General%20View%20Models/registered_shops_view_model.dart';
+import 'package:project1/Views/Screens/Admin%20Screens/Shop%20Records/shop_records_details_screen.dart';
 import 'package:project1/Views/Widgets/custom_appbar.dart';
 import 'package:project1/Views/Widgets/stream_builder_helper_widget.dart';
 import 'package:provider/provider.dart';
@@ -105,7 +105,7 @@ class _RegisteredShopsScreenState extends State<RegisteredShopsScreen> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                            AdminShopRecordsDetailsScreen(
+                                            ShopRecordsDetailsScreen(
                                               shopName: shopName,
                                               shopAddress: shopAddress,
                                               shopImage: shopImage,

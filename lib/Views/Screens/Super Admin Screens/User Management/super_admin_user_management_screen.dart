@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/image_urls.dart';
 import 'package:project1/Utils/text_styles.dart';
-import 'package:project1/View%20Models/super_admin_user_management_view_model.dart';
+import 'package:project1/View%20Models/Super%20Admin%20View%20Models/super_admin_user_management_view_model.dart';
 import 'package:project1/Views/Screens/Admin%20Screens/Accounts%20Management/admin_create_new_account_screen.dart';
 import 'package:project1/Views/Screens/Admin%20Screens/Accounts%20Management/admin_delete_account_screen.dart';
 import 'package:project1/Views/Screens/General%20Screens/User%20Records/Manager%20Records/manager_records_details_screen.dart';
@@ -217,12 +217,19 @@ class _SuperAdminUserManagementScreenState
                                   child: Row(
                                     children: [
                                       CircleAvatar(
+                                        radius: 20,
                                         child: ClipOval(
                                           child: Image.network(
+                                            width: 40,
+                                            height: 40,
+                                            fit: BoxFit.cover,
                                             data[index]['imageUrl'],
                                             errorBuilder:
                                                 (context, error, stackTrace) {
                                               return Image.asset(
+                                                width: 40,
+                                                height: 40,
+                                                fit: BoxFit.cover,
                                                 ImageUrls.errorImage,
                                               );
                                             },
@@ -253,7 +260,9 @@ class _SuperAdminUserManagementScreenState
                                                 Row(
                                                   children: [
                                                     Text(
-                                                      'Address: ',
+                                                      value.isUserSalesman
+                                                          ? 'Route: '
+                                                          : 'Address: ',
                                                       style: TextStyle(
                                                         fontWeight:
                                                             FontWeight.w500,
@@ -264,8 +273,11 @@ class _SuperAdminUserManagementScreenState
                                                       child: Text(
                                                           overflow: TextOverflow
                                                               .ellipsis,
-                                                          data[index]
-                                                              ['address']),
+                                                          value.isUserSalesman
+                                                              ? data[index]
+                                                                  ['route']
+                                                              : data[index]
+                                                                  ['address']),
                                                     ),
                                                   ],
                                                 ),

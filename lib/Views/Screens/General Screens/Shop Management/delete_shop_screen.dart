@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/text_styles.dart';
-import 'package:project1/View%20Models/delete_shop_view_model.dart';
+import 'package:project1/View%20Models/General%20View%20Models/delete_shop_view_model.dart';
 import 'package:project1/Views/Widgets/custom_appbar.dart';
 import 'package:project1/Views/Widgets/stream_builder_helper_widget.dart';
 import 'package:project1/Views/Widgets/universal_button.dart';

@@ -1,12 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/image_urls.dart';
 import 'package:project1/Utils/text_styles.dart';
+import 'package:project1/View%20Models/Manager%20View%20Models/manager_rejected_requests_details_view_model.dart';
 import 'package:project1/Views/Widgets/custom_appbar.dart';
+import 'package:project1/Views/Widgets/stream_builder_helper_widget.dart';
+import 'package:provider/provider.dart';
 
-class ManagerRejectedRequestsDetailsScreen extends StatelessWidget {
-  const ManagerRejectedRequestsDetailsScreen({super.key});
+class ManagerRejectedRequestsDetailsScreen extends StatefulWidget {
+  final String salesmanId;
+  final String salesmanName;
+  const ManagerRejectedRequestsDetailsScreen(
+      {super.key, required this.salesmanId, required this.salesmanName});
 
+  @override
+  State<ManagerRejectedRequestsDetailsScreen> createState() =>
+      _ManagerRejectedRequestsDetailsScreenState();
+}
+
+class _ManagerRejectedRequestsDetailsScreenState
+    extends State<ManagerRejectedRequestsDetailsScreen> {
+  int totalAmount = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -15,13 +30,32 @@ class ManagerRejectedRequestsDetailsScreen extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: SingleChildScrollView(
-          child: Column(
+          child: _buildShowOrderDetails(),
+        ),
+      ),
+    );
+  }
+
+  // Show request summary
+  Widget _buildShowOrderDetails() {
+    return Consumer<ManagerRejectedRequestsDetailsViewModel>(
+        builder: (context, value, child) {
+      return StreamBuilderHelperWidget(
+        stream: value.fetchRejectedRequestDetails(widget.salesmanId),
+        onSuccess: (result) {
+          final products = result.docs;
+          // Calculating total amount
+          totalAmount = 0;
+          for (var product in products) {
+            totalAmount += int.parse(product['price'].toString());
+          }
+          return Column(
             children: [
               SizedBox(height: 30),
               Align(
                 alignment: Alignment.topLeft,
                 child: Text(
-                  'Muhammad Ahsan',
+                  widget.salesmanName,
                   style: AppTextStyles.simpleHeadingTextStyle(fontSize: 18),
                 ),
               ),
@@ -36,17 +70,33 @@ class ManagerRejectedRequestsDetailsScreen extends StatelessWidget {
                     ListView.builder(
                         shrinkWrap: true,
                         physics: NeverScrollableScrollPhysics(),
-                        itemCount: 3,
+                        itemCount: products.length,
                         itemBuilder: (context, index) {
+                          // Formatting date time of product addition
+                          DateTime dateTime =
+                              products[index]['dateTime'].toDate();
+                          String formattedDate =
+                              DateFormat('dd MMM, hh:mm a').format(dateTime);
                           return Column(
                             children: [
                               Row(
                                 children: [
                                   ClipRRect(
                                     borderRadius: BorderRadius.circular(10),
-                                    child: Image.asset(
-                                      ImageUrls.backgroundImage,
+                                    child: Image.network(
+                                      fit: BoxFit.fill,
+                                      height: 100,
                                       width: 100,
+                                      products[index]['imageUrl'],
+                                      errorBuilder:
+                                          (context, error, stackTrace) {
+                                        return Image.asset(
+                                          ImageUrls.errorImage,
+                                          fit: BoxFit.cover,
+                                          height: 100,
+                                          width: 100,
+                                        );
+                                      },
                                     ),
                                   ),
                                   SizedBox(width: 20),
@@ -56,20 +106,20 @@ class ManagerRejectedRequestsDetailsScreen extends StatelessWidget {
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
                                       Text(
-                                        'Iphone 15 pro max',
+                                        products[index]['name'],
                                         style: AppTextStyles
                                             .simpleHeadingTextStyle(
                                                 fontSize: 14),
                                       ),
                                       Text(
-                                        'New',
+                                        products[index]['new'] ? 'New' : 'Old',
                                         style:
                                             AppTextStyles.nameHeadingTextStyle(
                                           size: 13,
                                         ),
                                       ),
                                       Text(
-                                        '29Nov, 01:20 pm',
+                                        formattedDate,
                                         style: AppTextStyles
                                             .simpleHeadingTextStyle(
                                                 fontSize: 14),
@@ -84,7 +134,7 @@ class ManagerRejectedRequestsDetailsScreen extends StatelessWidget {
                                           CrossAxisAlignment.end,
                                       children: [
                                         Text(
-                                          'Rs. 95000/-',
+                                          'Rs. ${products[index]['price']}/-',
                                           style: AppTextStyles
                                               .belowMainHeadingTextStyle(
                                                   fontSize: 16),
@@ -112,7 +162,7 @@ class ManagerRejectedRequestsDetailsScreen extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          '30',
+                          products.length.toString(),
                           style: AppTextStyles.simpleHeadingTextStyle(),
                         ),
                       ],
@@ -125,7 +175,7 @@ class ManagerRejectedRequestsDetailsScreen extends StatelessWidget {
                           style: AppTextStyles.nameHeadingTextStyle(),
                         ),
                         Text(
-                          'xxxxx',
+                          'Rs. ${totalAmount.toString()}/-',
                           style: AppTextStyles.simpleHeadingTextStyle(),
                         ),
                       ],
@@ -135,9 +185,12 @@ class ManagerRejectedRequestsDetailsScreen extends StatelessWidget {
               ),
               SizedBox(height: 50),
             ],
-          ),
-        ),
-      ),
-    );
+          );
+        },
+        loadingWidget: CircularProgressIndicator(),
+        emptyWidget: Text('Order Details Not Found'),
+        errorWidget: Text('Error Getting Order Details'),
+      );
+    });
   }
 }
