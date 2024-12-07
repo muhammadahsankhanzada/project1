@@ -21,14 +21,18 @@ import 'package:project1/View%20Models/Manager%20View%20Models/manager_approved_
 import 'package:project1/View%20Models/Manager%20View%20Models/manager_homepage_view_model.dart';
 import 'package:project1/View%20Models/Manager%20View%20Models/manager_pending_requests_details_view_model.dart';
 import 'package:project1/View%20Models/Manager%20View%20Models/manager_pending_requests_view_model.dart';
+import 'package:project1/View%20Models/Manager%20View%20Models/manager_product_collection_select_salesman_view_model.dart';
 import 'package:project1/View%20Models/Manager%20View%20Models/manager_records_details_view_model.dart';
 import 'package:project1/View%20Models/Manager%20View%20Models/manager_rejected_requests_details_view_model.dart';
 import 'package:project1/View%20Models/Manager%20View%20Models/manager_rejected_requests_view_model.dart';
 import 'package:project1/View%20Models/Manager%20View%20Models/managers_list_view_model.dart';
+import 'package:project1/View%20Models/Salesman%20View%20Models/salesman_cart_details_view_model.dart';
+import 'package:project1/View%20Models/Salesman%20View%20Models/salesman_end_trip_view_model.dart';
 import 'package:project1/View%20Models/Salesman%20View%20Models/salesman_homepage_view_model.dart';
 import 'package:project1/View%20Models/Salesman%20View%20Models/salesman_items_list_view_model.dart';
 import 'package:project1/View%20Models/Salesman%20View%20Models/salesman_records_details_view_model.dart';
 import 'package:project1/View%20Models/Salesman%20View%20Models/salesman_records_view_model.dart';
+import 'package:project1/View%20Models/Salesman%20View%20Models/salesman_warehouse_cart_view_model.dart';
 import 'package:project1/View%20Models/auth_view_model.dart';
 import 'package:project1/View%20Models/General%20View%20Models/check_inventory_view_model.dart';
 import 'package:project1/View%20Models/General%20View%20Models/delete_products_view_model.dart';
@@ -44,11 +48,8 @@ import 'package:project1/View%20Models/Super%20Admin%20View%20Models/super_admin
 import 'package:project1/View%20Models/Super%20Admin%20View%20Models/super_admin_reports_and_analytics_view_model.dart';
 import 'package:project1/View%20Models/Super%20Admin%20View%20Models/super_admin_user_management_view_model.dart';
 import 'package:project1/View%20Models/General%20View%20Models/warehouse_selection_view_model.dart';
-import 'package:project1/Views/Screens/Admin%20Screens/admin_bottom_nav_bar_screen.dart';
-import 'package:project1/Views/Screens/General%20Screens/login_screen.dart';
 import 'package:project1/Views/Screens/Manager%20Screens/manager_bottom_nav_bar.dart';
 import 'package:project1/Views/Screens/Salesman%20Screens/salesman_bottom_nav_bar_screen.dart';
-import 'package:project1/Views/Screens/Super%20Admin%20Screens/super_admin_bottom_nav_bar.dart';
 import 'package:project1/firebase_options.dart';
 import 'package:provider/provider.dart';
 
@@ -65,7 +66,7 @@ Future<void> main() async {
     FirebaseFirestore.instance.useFirestoreEmulator('localhost', 8080);
 
     // Storage emulator
-    // FirebaseStorage.instance.useStorageEmulator('localhost', 9199);
+    FirebaseStorage.instance.useStorageEmulator('localhost', 9199);
 
     // Functions emulator
     FirebaseFunctions.instance.useFunctionsEmulator('localhost', 5001);
@@ -87,11 +88,16 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => SuperAdminHomeViewModel()),
         ChangeNotifierProvider(create: (_) => CreateNewAccountViewModel()),
         ChangeNotifierProvider(create: (_) => DeleteAccountViewModel()),
+
         ChangeNotifierProvider(create: (_) => SalesmanHomepageViewModel()),
+        ChangeNotifierProvider(create: (_) => SalesmanEndTripViewModel()),
         ChangeNotifierProvider(create: (_) => SalesmanItemsListViewModel()),
         ChangeNotifierProvider(create: (_) => SalesmanRecordsViewModel()),
         ChangeNotifierProvider(
             create: (_) => SalesmanRecordsDetailsViewModel()),
+        ChangeNotifierProvider(create: (_) => SalesmanWarehouseCartViewModel()),
+        ChangeNotifierProvider(create: (_) => SalesmanCartDetailsViewModel()),
+
         ChangeNotifierProvider(create: (_) => ManagerHomepageViewModel()),
         ChangeNotifierProvider(create: (_) => ManagersListViewModel()),
         ChangeNotifierProvider(create: (_) => ManagerRecordsDetailsViewModel()),
@@ -107,6 +113,9 @@ class MyApp extends StatelessWidget {
             create: (_) => ManagerRejectedRequestsViewModel()),
         ChangeNotifierProvider(
             create: (_) => ManagerRejectedRequestsDetailsViewModel()),
+        ChangeNotifierProvider(
+            create: (_) => ManagerProductCollectionSelectSalesmanViewModel()),
+
         ChangeNotifierProvider(create: (_) => AdminRecordsViewModel()),
         ChangeNotifierProvider(create: (_) => AdminHomepageViewModel()),
         ChangeNotifierProvider(create: (_) => AdminCheckReportsViewModel()),
@@ -142,7 +151,7 @@ class MyApp extends StatelessWidget {
         ),
         // initialRoute:  RouteNames.login,
         // onGenerateRoute: Routes.generateRoute,
-        home: ManagerBottomNavBar(),
+        home: SalesmanBottomNavBarScreen(),
       ),
     );
   }

@@ -1,7 +1,7 @@
 service firebase.storage {
   match /b/{bucket}/o {
     match /{allPaths=**} {
-      allow read, write: if true;  // Open access for local emulator testing
+      allow read, write: if true;  // Adjust as needed
     }
   }
 }

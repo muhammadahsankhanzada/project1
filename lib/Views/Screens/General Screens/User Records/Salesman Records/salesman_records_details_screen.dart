@@ -8,7 +8,6 @@ import 'package:project1/View%20Models/Salesman%20View%20Models/salesman_records
 import 'package:project1/Views/Screens/General%20Screens/User%20Records/Salesman%20Records/salesman_records_trip_details_screen.dart';
 import 'package:project1/Views/Widgets/custom_appbar.dart';
 import 'package:project1/Views/Widgets/future_builder_helper_widget.dart';
-import 'package:project1/Views/Widgets/stream_builder_helper_widget.dart';
 import 'package:provider/provider.dart';
 
 class SalesmanRecordsDetailsScreen extends StatefulWidget {

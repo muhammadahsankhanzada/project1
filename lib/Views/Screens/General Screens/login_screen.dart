@@ -4,7 +4,6 @@ import 'package:project1/Utils/image_urls.dart';
 import 'package:project1/Utils/text_styles.dart';
 import 'package:project1/View%20Models/General%20View%20Models/login_view_model.dart';
 import 'package:project1/Views/Screens/General%20Screens/forget_password_screen.dart';
-import 'package:project1/Views/Widgets/universal_button.dart';
 import 'package:project1/Views/Widgets/universal_button_with_custom_widget.dart';
 import 'package:provider/provider.dart';
 

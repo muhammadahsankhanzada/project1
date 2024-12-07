@@ -28,6 +28,9 @@ class _AddProductsScreenState extends State<AddProductsScreen> {
   @override
   void initState() {
     super.initState();
+    Future.microtask(() {
+      context.read<AddProductsViewModel>().resetState();
+    });
     for (var warehouse in widget.warehouseList) {
       print(warehouse);
     }

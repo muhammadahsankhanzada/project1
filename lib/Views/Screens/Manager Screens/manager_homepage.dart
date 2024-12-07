@@ -9,8 +9,8 @@ import 'package:project1/Views/Screens/General%20Screens/warehouse_selection_scr
 import 'package:project1/Views/Screens/Manager%20Screens/Approved%20Requests/manager_approved_requests_screen.dart';
 import 'package:project1/Views/Screens/General%20Screens/User%20Records/Salesman%20Records/salesman_records_screen.dart';
 import 'package:project1/Views/Screens/Manager%20Screens/Pending%20Requests/manager_pending_requests_screen.dart';
+import 'package:project1/Views/Screens/Manager%20Screens/Product%20Collection/manager_product_collection_select_salesman_screen.dart';
 import 'package:project1/Views/Widgets/future_builder_helper_widget.dart';
-import 'package:project1/Views/Widgets/stream_builder_helper_widget.dart';
 import 'package:provider/provider.dart';
 
 class ManagerHomepage extends StatelessWidget {
@@ -168,7 +168,7 @@ class ManagerHomepage extends StatelessWidget {
                 itemCount: managerHomepageContents.length,
                 itemBuilder: (context, index) {
                   return _buildButtonContainer(() {
-                    if (index % 6 == 0) {
+                    if (index % 7 == 0) {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -177,7 +177,7 @@ class ManagerHomepage extends StatelessWidget {
                                     managerName: 'Ahsan',
                                   )));
                     }
-                    if (index % 6 == 1) {
+                    if (index % 7 == 1) {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -186,7 +186,7 @@ class ManagerHomepage extends StatelessWidget {
                                     managerName: 'Ahsan',
                                   )));
                     }
-                    if (index % 6 == 2) {
+                    if (index % 7 == 2) {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -194,7 +194,7 @@ class ManagerHomepage extends StatelessWidget {
                                     selectedScreen: 'Add Products',
                                   )));
                     }
-                    if (index % 6 == 3) {
+                    if (index % 7 == 3) {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -202,17 +202,24 @@ class ManagerHomepage extends StatelessWidget {
                                     selectedScreen: 'Delete Products',
                                   )));
                     }
-                    if (index % 6 == 4) {
+                    if (index % 7 == 4) {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (context) => CheckInventoryScreen()));
                     }
-                    if (index % 6 == 5) {
+                    if (index % 7 == 5) {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (context) => SalesmanRecordsScreen()));
+                    }
+                    if (index % 7 == 6) {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  ManagerProductCollectionSelectSalesmanScreen()));
                     }
                   }, managerHomepageContents[index].image,
                       managerHomepageContents[index].title);

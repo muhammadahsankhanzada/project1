@@ -2,40 +2,34 @@ import 'package:flutter/material.dart';
 import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/image_urls.dart';
 import 'package:project1/Utils/text_styles.dart';
-import 'package:project1/View%20Models/Salesman%20View%20Models/salesman_records_view_model.dart';
-import 'package:project1/Views/Screens/General%20Screens/User%20Records/Salesman%20Records/salesman_records_details_screen.dart';
+import 'package:project1/View%20Models/Manager%20View%20Models/manager_product_collection_select_salesman_view_model.dart';
+import 'package:project1/Views/Screens/Manager%20Screens/Product%20Collection/manager_product_collection_products_screen.dart';
 import 'package:project1/Views/Widgets/custom_appbar.dart';
 import 'package:project1/Views/Widgets/future_builder_helper_widget.dart';
 import 'package:provider/provider.dart';
 
-class SalesmanRecordsScreen extends StatefulWidget {
-  const SalesmanRecordsScreen({super.key});
-
-  @override
-  State<SalesmanRecordsScreen> createState() => _SalesmanRecordsScreenState();
-}
-
-class _SalesmanRecordsScreenState extends State<SalesmanRecordsScreen> {
-  var _searchController = TextEditingController();
+class ManagerProductCollectionSelectSalesmanScreen extends StatelessWidget {
+  const ManagerProductCollectionSelectSalesmanScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final _searchController = TextEditingController();
     return Scaffold(
       backgroundColor: AppColors.lightWhiteBackground,
-      appBar: CustomAppbar(title: 'Salesman Records'),
+      appBar: CustomAppbar(title: 'Select Salesman'),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15),
         child: Column(
           children: [
             SizedBox(height: 20),
-            Consumer<SalesmanRecordsViewModel>(
+            Consumer<ManagerProductCollectionSelectSalesmanViewModel>(
                 builder: (context, value, child) {
               return TextFormField(
                 controller: _searchController,
                 onChanged: value.onChanged,
                 keyboardType: TextInputType.name,
                 decoration: InputDecoration(
-                  hintText: 'Search salesman name...',
+                  hintText: 'Enter salesman name...',
                   filled: true,
                   fillColor: AppColors.white,
                   contentPadding: EdgeInsets.symmetric(horizontal: 20),
@@ -63,8 +57,8 @@ class _SalesmanRecordsScreenState extends State<SalesmanRecordsScreen> {
   // Salesmen listview widget
   Widget _buildSalesmanList() {
     return Expanded(
-      child:
-          Consumer<SalesmanRecordsViewModel>(builder: (context, value, child) {
+      child: Consumer<ManagerProductCollectionSelectSalesmanViewModel>(
+          builder: (context, value, child) {
         return FutureBuilderHelperWidget(
           future: value.fetchSalesmenList(),
           onSuccess: (salesmen) {
@@ -82,11 +76,12 @@ class _SalesmanRecordsScreenState extends State<SalesmanRecordsScreen> {
                               context,
                               MaterialPageRoute(
                                   builder: (context) =>
-                                      SalesmanRecordsDetailsScreen(
+                                      ManagerProductCollectionProductsScreen(
+                                        warehouseName: filteredSalesmen[index]
+                                                ['warehouse'] ??
+                                            'Alpha Warehouse',
                                         salesmanName: filteredSalesmen[index]
                                             ['name'],
-                                        salesmanRoute: filteredSalesmen[index]
-                                            ['route'],
                                       )));
                         },
                         borderRadius: BorderRadius.circular(40),
@@ -156,7 +151,7 @@ class _SalesmanRecordsScreenState extends State<SalesmanRecordsScreen> {
                                       ],
                                     ),
                                     Icon(
-                                      Icons.assessment,
+                                      Icons.arrow_forward_ios,
                                     ),
                                   ],
                                 ),

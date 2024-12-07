@@ -21,4 +21,6 @@ List<ManagerHomepageItems> managerHomepageContents = [
       title: 'Available Products', image: ImageUrls.availableProducts),
   ManagerHomepageItems(
       title: 'Salesman Records', image: ImageUrls.driverRecords),
+  ManagerHomepageItems(
+      title: 'Product Collection', image: ImageUrls.driverRecords),
 ];

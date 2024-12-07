@@ -1,12 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:project1/Services/shared_prefs_helper.dart';
 import 'package:project1/Utils/colors.dart';
 import 'package:project1/Views/Screens/Salesman%20Screens/Delivered/salesman_end_trip_screen.dart';
 import 'package:project1/Views/Screens/Salesman%20Screens/Salesman%20Cart/Start%20Trip/salesman_shops_list_screen.dart';
 import 'package:project1/Views/Screens/Salesman%20Screens/Salesman%20Cart/salesman_warehouse_cart_screen.dart';
 import 'package:project1/Views/Screens/Salesman%20Screens/Salesman%20Category/salesman_homepage_screen.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class SalesmanBottomNavBarScreen extends StatefulWidget {
   const SalesmanBottomNavBarScreen({super.key});

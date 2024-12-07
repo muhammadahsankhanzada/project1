@@ -1,12 +1,12 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:project1/Utils/colors.dart';
 import 'package:project1/Utils/image_urls.dart';
 import 'package:project1/Utils/text_styles.dart';
 import 'package:project1/View%20Models/Salesman%20View%20Models/salesman_items_list_view_model.dart';
 import 'package:project1/Views/Widgets/custom_appbar.dart';
 import 'package:project1/Views/Widgets/custom_snackbar.dart';
-import 'package:project1/Views/Widgets/stream_builder_helper_widget.dart';
+import 'package:project1/Views/Widgets/future_builder_helper_widget.dart';
 import 'package:project1/Views/Widgets/universal_button.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
@@ -28,23 +28,14 @@ class SalesmanItemsListScreen extends StatefulWidget {
 
 class _SalesmanItemsListScreenState extends State<SalesmanItemsListScreen> {
   var _searchController = TextEditingController();
-  int quantity = 1;
-  String selectedCategoryName = '';
-  int selectedCategoryIndex = 0;
-  String searchedText = '';
 
-  void _onChanged(String value) {
-    setState(() {
-      searchedText = value.toLowerCase();
-    });
-  }
-
-  // Initial Index of Category
   @override
   void initState() {
     super.initState();
-    selectedCategoryIndex = widget.categoryIndex;
-    selectedCategoryName = widget.categoryName;
+    final viewModel =
+        Provider.of<SalesmanItemsListViewModel>(context, listen: false);
+    viewModel.selectedCategoryIndex = widget.categoryIndex;
+    viewModel.selectedCategoryName = widget.categoryName;
   }
 
   @override
@@ -68,21 +59,20 @@ class _SalesmanItemsListScreenState extends State<SalesmanItemsListScreen> {
 
   // Show categories list
   Widget _buildShowCategories() {
-    return Consumer<SalesmanItemsListViewModel>(
-        builder: (context, value, child) {
-      return Padding(
-        padding: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
-        child: Container(
-          height: 35,
-          width: double.infinity,
-          child: StreamBuilderHelperWidget(
-            stream: fetchCategories(),
-            onSuccess: (result) {
-              final categories = result.docs;
-
+    return Padding(
+      padding: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
+      child: Container(
+        height: 35,
+        width: double.infinity,
+        child: FutureBuilderHelperWidget(
+          future: context.read<SalesmanItemsListViewModel>().fetchCategories(),
+          onSuccess: (categories) {
+            return Consumer<SalesmanItemsListViewModel>(
+                builder: (context, value, child) {
               return ListView.builder(
                 itemCount: categories.length,
                 itemBuilder: (context, index) {
+                  final category = categories[index];
                   return Column(
                     children: [
                       Row(
@@ -90,13 +80,9 @@ class _SalesmanItemsListScreenState extends State<SalesmanItemsListScreen> {
                           InkWell(
                             borderRadius: BorderRadius.circular(30),
                             onTap: () {
-                              setState(() {
-                                selectedCategoryIndex = index;
-                                selectedCategoryName =
-                                    categories[index]['name'];
-                                searchedText = '';
-                                _searchController.text = '';
-                              });
+                              value.updateSelectedCategory(
+                                  index, category.name);
+                              _searchController.text = '';
                             },
                             child: Material(
                               elevation: 4,
@@ -105,13 +91,13 @@ class _SalesmanItemsListScreenState extends State<SalesmanItemsListScreen> {
                                 padding: EdgeInsets.symmetric(
                                     horizontal: 12, vertical: 6),
                                 decoration: BoxDecoration(
-                                  color: selectedCategoryIndex == index
+                                  color: value.selectedCategoryIndex == index
                                       ? AppColors.lightGreen1
                                       : Colors.white,
                                   borderRadius: BorderRadius.circular(30),
                                 ),
                                 child: Text(
-                                  categories[index]['name'],
+                                  category.name,
                                   style: AppTextStyles.nameHeadingTextStyle(
                                       size: 15),
                                 ),
@@ -127,23 +113,25 @@ class _SalesmanItemsListScreenState extends State<SalesmanItemsListScreen> {
                 },
                 scrollDirection: Axis.horizontal,
               );
-            },
-            loadingWidget: _buildListViewLoading(),
-            emptyWidget: Text('No Categories Found'),
-            errorWidget: Text('Error Getting Categories'),
-          ),
+            });
+          },
+          loadingWidget: _buildListViewLoading(),
+          emptyWidget: Text('No Categories Found'),
+          errorWidget: Text('Error Getting Categories'),
         ),
-      );
-    });
+      ),
+    );
   }
 
   // Search bar
   Widget _buildShowSearchBar() {
+    final viewModel =
+        Provider.of<SalesmanItemsListViewModel>(context, listen: false);
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 15),
       child: TextFormField(
         controller: _searchController,
-        onChanged: _onChanged,
+        onChanged: viewModel.onChanged,
         keyboardType: TextInputType.name,
         decoration: InputDecoration(
           hintText: 'Search',
@@ -176,16 +164,13 @@ class _SalesmanItemsListScreenState extends State<SalesmanItemsListScreen> {
                 children: [
                   Consumer<SalesmanItemsListViewModel>(
                       builder: (context, value, child) {
-                    return StreamBuilderHelperWidget(
-                      stream: fetchProducts(),
-                      onSuccess: (result) {
-                        final products = result.docs;
-
+                    return FutureBuilderHelperWidget(
+                      future: value.fetchProducts(),
+                      onSuccess: (products) {
                         // Filter shops based on the searchedText
-                        final filteredProducts = products.where((product) {
-                          final productName =
-                              (product['name'] ?? '').toLowerCase();
-                          return productName.contains(searchedText);
+                        final filter = products.where((product) {
+                          final productName = (product.name).toLowerCase();
+                          return productName.contains(value.searchedText);
                         }).toList();
                         return GridView.builder(
                             shrinkWrap: true,
@@ -195,8 +180,12 @@ class _SalesmanItemsListScreenState extends State<SalesmanItemsListScreen> {
                                     crossAxisCount: 2,
                                     mainAxisSpacing: 15,
                                     crossAxisSpacing: 15),
-                            itemCount: filteredProducts.length,
+                            itemCount: filter.length,
                             itemBuilder: (context, index) {
+                              final filteredProducts = filter[index];
+                              final productId = filteredProducts.id;
+
+                              value.initializeProductDetails(filteredProducts);
                               return Container(
                                 width: 180,
                                 padding: EdgeInsets.only(
@@ -218,7 +207,7 @@ class _SalesmanItemsListScreenState extends State<SalesmanItemsListScreen> {
                                           borderRadius:
                                               BorderRadius.circular(10),
                                           child: Image.network(
-                                            filteredProducts[index]['imageUrl'],
+                                            filteredProducts.imageUrl,
                                             fit: BoxFit.fill,
                                             width: 80,
                                             height: 120,
@@ -241,7 +230,7 @@ class _SalesmanItemsListScreenState extends State<SalesmanItemsListScreen> {
                                             SizedBox(
                                               width: 60,
                                               child: Text(
-                                                filteredProducts[index]['name'],
+                                                filteredProducts.name,
                                                 maxLines: 2,
                                                 overflow: TextOverflow.ellipsis,
                                                 style: AppTextStyles
@@ -250,7 +239,9 @@ class _SalesmanItemsListScreenState extends State<SalesmanItemsListScreen> {
                                               ),
                                             ),
                                             Text(
-                                              'New',
+                                              filteredProducts.isProductNew!
+                                                  ? 'New'
+                                                  : 'Old',
                                               style: AppTextStyles
                                                   .simpleHeadingTextStyle(
                                                       fontSize: 10,
@@ -275,21 +266,30 @@ class _SalesmanItemsListScreenState extends State<SalesmanItemsListScreen> {
                                                 children: [
                                                   InkWell(
                                                     onTap: () {
-                                                      if (quantity > 1) {
-                                                        quantity--;
-                                                        setState(() {});
-                                                      }
+                                                      value.updateQuantity(
+                                                          productId, false);
                                                     },
                                                     child: Icon(
                                                       Icons.remove_circle,
                                                       size: 15,
                                                     ),
                                                   ),
-                                                  Text(quantity.toString()),
+                                                  SizedBox(
+                                                    width: 18,
+                                                    child: Center(
+                                                      child: Text(
+                                                        '${value.getProductQuantity(productId)}',
+                                                        maxLines: 1,
+                                                        style: AppTextStyles
+                                                            .simpleHeadingTextStyle(
+                                                                fontSize: 12),
+                                                      ),
+                                                    ),
+                                                  ),
                                                   InkWell(
                                                     onTap: () {
-                                                      quantity++;
-                                                      setState(() {});
+                                                      value.updateQuantity(
+                                                          productId, true);
                                                     },
                                                     child: Icon(
                                                       Icons.add_circle,
@@ -299,13 +299,18 @@ class _SalesmanItemsListScreenState extends State<SalesmanItemsListScreen> {
                                                 ],
                                               ),
                                             ),
-                                            Text(
-                                              'Rs. ${((filteredProducts[index]['price'] as double) * quantity).toStringAsFixed(0)}/-',
-                                              style: AppTextStyles
-                                                  .simpleHeadingTextStyle(
-                                                      fontSize: 12,
-                                                      fontWeight:
-                                                          FontWeight.bold),
+                                            SizedBox(
+                                              width: 60,
+                                              child: Text(
+                                                overflow: TextOverflow.ellipsis,
+                                                maxLines: 1,
+                                                'Rs. ${(value.getProductPrice(productId) * value.getProductQuantity(productId)).toStringAsFixed(0)}/-',
+                                                style: AppTextStyles
+                                                    .simpleHeadingTextStyle(
+                                                        fontSize: 12,
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                              ),
                                             ),
                                             Text(
                                               'Rate',
@@ -337,11 +342,48 @@ class _SalesmanItemsListScreenState extends State<SalesmanItemsListScreen> {
                                         buttonColor: AppColors.cartButton,
                                         textSize: 12,
                                         ontap: () {
+                                          final now = DateTime.now();
+                                          String dateTime =
+                                              DateFormat('d MMM, hh:mm a')
+                                                  .format(now);
+                                          // DatabaseHelper.dbInstance
+                                          //     .deleteTheDatabase(
+                                          //         databaseName:
+                                          //             TablesData.dbName);
+                                          value.saveDataLocally(
+                                            productId: productId,
+                                            productName: filteredProducts.name,
+                                            productImageUrl:
+                                                filteredProducts.imageUrl,
+                                            productType:
+                                                filteredProducts.isProductNew!
+                                                    ? 'New'
+                                                    : 'Old',
+                                            productQuantity: value
+                                                .getProductQuantity(productId),
+                                            productPrice: value
+                                                .getProductPrice(productId),
+                                            dateTime: dateTime,
+                                          );
+
                                           customSnackbar(
                                             context,
                                             duration: Duration(seconds: 1),
                                             'Item added to cart',
                                           );
+                                          print('Product Id: $productId');
+                                          print(
+                                              'Product ImageUrl: ${filteredProducts.imageUrl}');
+                                          print(
+                                              'Product Name: ${filteredProducts.name}');
+                                          print(
+                                              'Product Type: ${filteredProducts.isProductNew! ? 'New' : 'Old'}');
+                                          print(
+                                              'Product Quantity: ${value.getProductQuantity(productId)}');
+                                          print(
+                                              'Product Price: ${value.getProductPrice(productId)}');
+                                          print(
+                                              'Total Price: ${value.getProductPrice(productId) * value.getProductQuantity(productId)}');
                                         }),
                                   ],
                                 ),
@@ -416,28 +458,28 @@ class _SalesmanItemsListScreenState extends State<SalesmanItemsListScreen> {
   }
 
   // Method to fetch categories
-  Stream<QuerySnapshot> fetchCategories() {
-    FirebaseFirestore firestore = FirebaseFirestore.instance;
-    final data = firestore
-        .collection('Warehouses')
-        .doc('Alpha Warehouse')
-        .collection('Categories')
-        .snapshots();
-    return data;
-  }
+  // Stream<QuerySnapshot> fetchCategories() {
+  //   FirebaseFirestore firestore = FirebaseFirestore.instance;
+  //   final data = firestore
+  //       .collection('Warehouses')
+  //       .doc('Alpha Warehouse')
+  //       .collection('Categories')
+  //       .snapshots();
+  //   return data;
+  // }
 
   // Method to fetch products
-  Stream<QuerySnapshot> fetchProducts() {
-    FirebaseFirestore firestore = FirebaseFirestore.instance;
-    final data = firestore
-        .collection('Warehouses')
-        .doc('Alpha Warehouse')
-        .collection('Categories')
-        .doc(selectedCategoryName)
-        .collection('Products')
-        .snapshots();
-    return data;
-  }
+  // Stream<QuerySnapshot> fetchProducts() {
+  //   FirebaseFirestore firestore = FirebaseFirestore.instance;
+  //   final data = firestore
+  //       .collection('Warehouses')
+  //       .doc('Alpha Warehouse')
+  //       .collection('Categories')
+  //       .doc(context.read<SalesmanItemsListViewModel>().selectedCategoryName)
+  //       .collection('Products')
+  //       .snapshots();
+  //   return data;
+  // }
 
   // Method to add products to cart
   // addToCart(){

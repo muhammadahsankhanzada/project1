@@ -27,40 +27,73 @@ const { onRequest } = require("firebase-functions/v2/https");
 // Manager methods
 const getManagerInfo = require('./Manager/getManagerInfo');
 exports.getManagerInfo = onRequest(getManagerInfo);
+
 const getManagerPendingRequestsList = require('./Manager/getManagerPendingRequestsList');
 exports.getManagerPendingRequestsList = onRequest(getManagerPendingRequestsList);
+
 const getManagerPendingRequestDetails = require('./Manager/getManagerPendingRequestDetails');
 exports.getManagerPendingRequestDetails = onRequest(getManagerPendingRequestDetails);
+
 const getManagerApprovedRequestsList = require('./Manager/getManagerApprovedRequestsList');
 exports.getManagerApprovedRequestsList = onRequest(getManagerApprovedRequestsList);
+
 const getManagerApprovedRequestDetails = require('./Manager/getManagerApprovedRequestDetails');
 exports.getManagerApprovedRequestDetails = onRequest(getManagerApprovedRequestDetails);
+
 const getSalesmanRecords = require('./General/getSalesmanRecords');
 exports.getSalesmanRecords = onRequest(getSalesmanRecords);
+
 const getSalesmanRecordsDetails = require('./General/getSalesmanRecordsDetails');
 exports.getSalesmanRecordsDetails = onRequest(getSalesmanRecordsDetails);
+
 const getInventory = require('./General/getInventory');
 exports.getInventory = onRequest(getInventory);
+
 const getInventoryNewItems = require('./General/getInventoryNewItems');
 exports.getInventoryNewItems = onRequest(getInventoryNewItems);
+
 const getInventoryReturnItems = require('./General/getInventoryReturnItems');
 exports.getInventoryReturnItems = onRequest(getInventoryReturnItems);
 
 const getWarehousesList = require('./General/getWarehousesList');
 exports.getWarehousesList = onRequest(getWarehousesList);
 
+const getCategoriesList = require('./General/getCategoriesList');
+exports.getCategoriesList = onRequest(getCategoriesList);
+
+const getProductsList = require('./General/getProductsList');
+exports.getProductsList = onRequest(getProductsList);
+
+const getProductsWithData = require('./General/getProductsWithData');
+exports.getProductsWithData = onRequest(getProductsWithData);
+
+const getSalesmanInfo = require('./Salesman/getSalesmanInfo');
+exports.getSalesmanInfo = onRequest(getSalesmanInfo);
+
+const getSalesmanTripsList = require('./General/getSalesmanTripsList');
+exports.getSalesmanTripsList = onRequest(getSalesmanTripsList);
+
+const postAddProduct = require('./General/postAddProduct');
+exports.postAddProduct = onRequest(postAddProduct);
+
+const postDeleteProduct = require('./General/postDeleteProduct');
+exports.postDeleteProduct = onRequest(postDeleteProduct);
+
+const assignProductsToSalesman = require('./postRequests/assignProductsToSalesman');
+exports.assignProductsToSalesman = onRequest(assignProductsToSalesman);
+
 
 // Request methods
-const getUserData = require('./getRequests/getUserData');
-const postUserData = require('./postRequests/postUserData');
-const updateUserData = require('./putRequests/updateUserData');
-const deleteUserData = require('./deleteRequests/deleteUserData');
+// const getUserData = require('./getRequests/getUserData');
+// const postUserData = require('./postRequests/postUserData');
+// const updateUserData = require('./putRequests/updateUserData');
+// const deleteUserData = require('./deleteRequests/deleteUserData');
 
 // Defining cloud functions for each http method
-exports.getUserData = onRequest(getUserData);
-exports.postUserData = onRequest(postUserData);
-exports.updateUserData = onRequest(updateUserData);
-exports.deleteUserData = onRequest(deleteUserData);
+// exports.getUserData = onRequest(getUserData);
+// exports.postUserData = onRequest(postUserData);
+// exports.updateUserData = onRequest(updateUserData);
+// exports.deleteUserData = onRequest(deleteUserData);
 
 
 

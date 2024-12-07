@@ -4,15 +4,16 @@ class ProductModel {
   String id;
   String name;
   String imageUrl;
-  // String category;
   double price;
   int quantity;
+  bool? isProductNew;
   ProductModel({
     required this.id,
     required this.name,
     required this.imageUrl,
     required this.price,
     required this.quantity,
+    this.isProductNew,
   });
 
   // Factory constructor to get and convert data recieved from Firestore document
@@ -24,6 +25,7 @@ class ProductModel {
       imageUrl: data['imageUrl'] ?? '',
       price: data['price']?.toDouble() ?? 0.0,
       quantity: data['quantity'].toInt() ?? 0,
+      isProductNew: data['new'] ?? true,
     );
   }
 
@@ -34,6 +36,7 @@ class ProductModel {
       'imageUrl': imageUrl,
       'price': price,
       'quantity': quantity,
+      'new': isProductNew,
     };
   }
 
@@ -43,8 +46,9 @@ class ProductModel {
       id: json['id'] ?? '',
       name: json['name'] ?? '',
       imageUrl: json['imageUrl'] ?? '',
-      price: json['price'] ?? 0,
+      price: json['price']?.toDouble() ?? 0.0,
       quantity: json['quantity'] ?? 0,
+      isProductNew: json['new'] ?? true,
     );
   }
 }

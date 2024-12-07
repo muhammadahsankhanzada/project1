@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:project1/Models/Dummy%20Models/cart_dummy_model.dart';
 import 'package:project1/Utils/colors.dart';
+import 'package:project1/Utils/tables_data.dart';
 import 'package:project1/Utils/text_styles.dart';
+import 'package:project1/View%20Models/Salesman%20View%20Models/salesman_cart_details_view_model.dart';
 import 'package:project1/Views/Screens/Salesman%20Screens/Salesman%20Cart/Start%20Trip/Shop%20Final%20Order%20Summary/salesman_store_cart_screen.dart';
 import 'package:project1/Views/Screens/Salesman%20Screens/salesman_bottom_nav_bar_screen.dart';
 import 'package:project1/Views/Widgets/custom_appbar.dart';
+import 'package:project1/Views/Widgets/future_builder_helper_widget.dart';
 import 'package:project1/Views/Widgets/universal_button.dart';
+import 'package:provider/provider.dart';
 
 class SalesmanCartDetailsScreen extends StatefulWidget {
   final VoidCallback startTripButtonTapped;
@@ -24,7 +27,6 @@ class _SalesmanCartDetailsScreenState extends State<SalesmanCartDetailsScreen> {
   bool isRequestButtonClicked = false;
   bool isRequestApproved = false;
 
-  int quantity = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -91,30 +93,64 @@ class _SalesmanCartDetailsScreenState extends State<SalesmanCartDetailsScreen> {
                     Divider(
                       color: AppColors.black,
                     ),
-                    for (int i = 0; i < driverCartContents.length; i++)
-                      Row(
-                        children: [
-                          Expanded(
-                            flex: 2,
-                            child: Text(
-                              driverCartContents[i].name,
-                              style: AppTextStyles.belowMainHeadingTextStyle(),
-                            ),
-                          ),
-                          Expanded(
-                            child: Text(
-                              'x${driverCartContents[i].quantity}',
-                              style: AppTextStyles.nameHeadingTextStyle(),
-                            ),
-                          ),
-                          Expanded(
-                            child: Text(
-                              'Rs. ${(driverCartContents[i].price * driverCartContents[i].quantity).toStringAsFixed(0)}',
-                              style: AppTextStyles.belowMainHeadingTextStyle(),
-                            ),
-                          ),
-                        ],
-                      ),
+                    FutureBuilderHelperWidget(
+                      future: context
+                          .read<SalesmanCartDetailsViewModel>()
+                          .fetchCartItems(),
+                      onSuccess: (products) {
+                        return ListView.builder(
+                            itemCount: products.length,
+                            shrinkWrap: true,
+                            physics: NeverScrollableScrollPhysics(),
+                            itemBuilder: (context, index) {
+                              final product = products[index];
+                              return Row(
+                                // mainAxisAlignment:
+                                // MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Expanded(
+                                    flex: 1,
+                                    child: Text(
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      product[TablesData
+                                          .salesmanCartTable.productName],
+                                      style: AppTextStyles
+                                          .belowMainHeadingTextStyle(),
+                                    ),
+                                  ),
+                                  SizedBox(width: 10),
+                                  Expanded(
+                                    flex: 1,
+                                    child: Text(
+                                      textAlign: TextAlign.center,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      'x${product[TablesData.salesmanCartTable.productQuantity]}',
+                                      style:
+                                          AppTextStyles.nameHeadingTextStyle(),
+                                    ),
+                                  ),
+                                  SizedBox(width: 10),
+                                  Expanded(
+                                    flex: 1,
+                                    child: Text(
+                                      textAlign: TextAlign.end,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      'Rs. ${(product[TablesData.salesmanCartTable.productPrice] * product[TablesData.salesmanCartTable.productQuantity]).toStringAsFixed(0)}',
+                                      style: AppTextStyles
+                                          .belowMainHeadingTextStyle(),
+                                    ),
+                                  ),
+                                ],
+                              );
+                            });
+                      },
+                      loadingWidget: CircularProgressIndicator(),
+                      emptyWidget: Text('Cart is empty'),
+                      errorWidget: Text('Error getting cart items'),
+                    ),
                     SizedBox(height: 30),
                     Divider(
                       color: AppColors.black,
@@ -122,15 +158,22 @@ class _SalesmanCartDetailsScreenState extends State<SalesmanCartDetailsScreen> {
                     Row(
                       children: [
                         Text(
-                          'Total Quantity',
+                          'Total Items',
                           style: AppTextStyles.belowMainHeadingTextStyle(
                               fontSize: 18),
                         ),
                         Spacer(),
-                        Text(
-                          'x26',
-                          style: AppTextStyles.nameHeadingTextStyle(size: 18),
-                        ),
+                        FutureBuilderHelperWidget(
+                            future: context
+                                .read<SalesmanCartDetailsViewModel>()
+                                .fetchCartItems(),
+                            onSuccess: (products) {
+                              return Text(
+                                products.length.toString(),
+                                style: AppTextStyles.nameHeadingTextStyle(
+                                    size: 18),
+                              );
+                            }),
                       ],
                     ),
                     Row(
@@ -138,13 +181,21 @@ class _SalesmanCartDetailsScreenState extends State<SalesmanCartDetailsScreen> {
                         Text(
                           'Total Amount',
                           style: AppTextStyles.belowMainHeadingTextStyle(
-                              fontSize: 18),
+                              fontSize: 16),
                         ),
                         Spacer(),
-                        Text(
-                          '5000',
-                          style: AppTextStyles.nameHeadingTextStyle(size: 18),
-                        ),
+                        FutureBuilderHelperWidget(
+                            future: context
+                                .read<SalesmanCartDetailsViewModel>()
+                                .getTotalPrice(),
+                            onSuccess: (totalPrice) {
+                              return Text(
+                                'Rs. ${totalPrice.toStringAsFixed(0)}/-',
+                                // '5000',
+                                style: AppTextStyles.nameHeadingTextStyle(
+                                    size: 16),
+                              );
+                            }),
                       ],
                     ),
                     SizedBox(height: 10),
@@ -288,6 +339,7 @@ class _SalesmanCartDetailsScreenState extends State<SalesmanCartDetailsScreen> {
                                                         ontap: () {
                                                           isRequestButtonClicked =
                                                               true;
+                                                          //////////////////
                                                           Navigator.pop(
                                                               context);
                                                           setState(() {});

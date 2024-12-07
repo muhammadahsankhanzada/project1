@@ -6,7 +6,6 @@ import 'package:project1/View%20Models/Manager%20View%20Models/manager_approved_
 import 'package:project1/Views/Screens/Manager%20Screens/Approved%20Requests/manager_approved_requests_details_screen.dart';
 import 'package:project1/Views/Widgets/custom_appbar.dart';
 import 'package:project1/Views/Widgets/future_builder_helper_widget.dart';
-import 'package:project1/Views/Widgets/stream_builder_helper_widget.dart';
 import 'package:provider/provider.dart';
 
 class ManagerApprovedRequestsScreen extends StatelessWidget {

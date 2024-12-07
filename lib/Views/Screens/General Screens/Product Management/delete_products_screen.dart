@@ -23,6 +23,9 @@ class _DeleteProductsScreenState extends State<DeleteProductsScreen> {
   @override
   void initState() {
     super.initState();
+    Future.microtask(() {
+      context.read<DeleteProductsViewModel>().resetState();
+    });
     for (var warehouse in widget.warehouseList) {
       print(warehouse);
     }
@@ -129,6 +132,7 @@ class _DeleteProductsScreenState extends State<DeleteProductsScreen> {
                                               ontap: () {
                                                 value.deleteProduct(
                                                     value.selectedProductValue!,
+                                                    widget.warehouseList,
                                                     context);
                                               }),
                                           UniversalButton(
